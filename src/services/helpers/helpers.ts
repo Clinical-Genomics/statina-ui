@@ -47,13 +47,13 @@ export const createErrorMessage = (error: AxiosError) => {
   }
 };
 
-export const parseDate = (date: string) => {
+export const dateToNumber = (date: string) => {
   const re = new RegExp('-', 'g');
   return parseInt(date.replace(re, ''));
 };
 
 export const sortDate = (dateA: string, dateB: string) => {
-  return parseDate(dateA) - parseDate(dateB);
+  return dateToNumber(dateA) - dateToNumber(dateB);
 };
 
 export const windowMatchMedia = () => {
