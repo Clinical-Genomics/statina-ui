@@ -2,14 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { Input, Table } from 'antd';
 import { sortDate } from '../../services/helpers/helpers';
 import { Batch } from '../../services/interfaces';
+import { Link } from 'react-router-dom';
 
-type Props = {
+type BatchesProps = {
   batches: Batch[];
 };
 
 const { Search } = Input;
 
-export const BatchesTable = ({ batches }: Props) => {
+export const BatchesTable = ({ batches }: BatchesProps) => {
   const [filteredBatches, setFilteredBatches] = useState<Batch[]>(batches);
 
   useEffect(() => {
@@ -30,6 +31,9 @@ export const BatchesTable = ({ batches }: Props) => {
       title: 'Batch ID',
       dataIndex: 'SampleProject',
       key: 'SampleProject',
+      render: (SampleProject: any) => (
+        <Link to={`/batches/${SampleProject}`}>{SampleProject}</Link>
+      ),
     },
     {
       title: 'Sequencing Date',
