@@ -1,12 +1,30 @@
-import React from 'react';
-import { Table } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Input, Table } from 'antd';
 import { sortDate } from '../../services/helpers/helpers';
+import { Batch } from '../../services/interfaces';
 
 type Props = {
-  batches: any[];
+  batches: Batch[];
 };
 
+const { Search } = Input;
+
 export const BatchesTable = ({ batches }: Props) => {
+  const [filteredBatches, setFilteredBatches] = useState<Batch[]>(batches);
+
+  useEffect(() => {
+    setFilteredBatches(batches);
+  }, [batches]);
+
+  const onSearch = (searchInput) => {
+    const filteredData = batches.filter(
+      (entry) =>
+        entry.SampleProject.includes(searchInput) ||
+        entry.Flowcell.includes(searchInput)
+    );
+    setFilteredBatches(filteredData);
+  };
+
   const columns: any = [
     {
       title: 'Batch ID',
@@ -27,8 +45,17 @@ export const BatchesTable = ({ batches }: Props) => {
   ];
 
   return (
-    <div>
-      <Table columns={columns} dataSource={batches} rowKey="SampleProject" />
-    </div>
+    <>
+      <Search
+        placeholder="Search by Batch or Flowcell ID"
+        onSearch={onSearch}
+        style={{ paddingBottom: 20 }}
+      />
+      <Table
+        columns={columns}
+        dataSource={filteredBatches}
+        rowKey="SampleProject"
+      />
+    </>
   );
 };
