@@ -1,6 +1,5 @@
 import { ErrorNotification } from '../interfaces';
 import { notification } from 'antd';
-import moment from 'moment';
 import { AxiosError } from 'axios';
 
 export const OpenNotification = ({
@@ -48,28 +47,13 @@ export const createErrorMessage = (error: AxiosError) => {
   }
 };
 
-export const formatDate = (date: string) =>
-  date ? moment(date).format('YYYY-MM-DD') : null;
+export const parseDate = (date: string) => {
+  const re = new RegExp('-', 'g');
+  return parseInt(date.replace(re, ''));
+};
 
 export const sortDate = (dateA: string, dateB: string) => {
-  return new Date(dateA).getTime() - new Date(dateB).getTime();
-};
-
-export const formatReads = (reads: string, targetReads: string) => {
-  return Math.floor((parseInt(reads, 10) * 100) / parseInt(targetReads, 10));
-};
-
-export const sortIssuesByLevel = (issueA, issueB): number => {
-  let labelA = '';
-  let labelB = '';
-
-  issueA.labels.forEach((label) => {
-    if (label.name.length === 1) labelA = label.name;
-  });
-  issueB.labels.forEach((label) => {
-    if (label.name.length === 1) labelB = label.name;
-  });
-  return labelA.localeCompare(labelB);
+  return parseDate(dateA) - parseDate(dateB);
 };
 
 export const windowMatchMedia = () => {

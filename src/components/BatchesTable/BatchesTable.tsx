@@ -1,5 +1,6 @@
 import React from 'react';
 import { Table } from 'antd';
+import { sortDate } from '../../services/helpers/helpers';
 
 type Props = {
   batches: any[];
@@ -16,6 +17,7 @@ export const BatchesTable = ({ batches }: Props) => {
       title: 'Sequencing Date',
       dataIndex: 'SequencingDate',
       key: 'SequencingDate',
+      sorter: (a, b) => sortDate(a.SequencingDate, b.SequencingDate),
     },
     {
       title: 'Flowcell ID',
@@ -26,12 +28,7 @@ export const BatchesTable = ({ batches }: Props) => {
 
   return (
     <div>
-      <Table
-        columns={columns}
-        dataSource={batches}
-        pagination={false}
-        rowKey="name"
-      />
+      <Table columns={columns} dataSource={batches} rowKey="SampleProject" />
     </div>
   );
 };
