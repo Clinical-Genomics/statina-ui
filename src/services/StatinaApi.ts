@@ -22,3 +22,8 @@ export const getBatches = async (): Promise<any> => {
   const endPoint = `${REACT_APP_BACKEND_URL}/batches`;
   return axiosGET(endPoint, null);
 };
+
+export const getBatch = async (batchId: string): Promise<any> => {
+  const endPoint = `${REACT_APP_BACKEND_URL}/batches/${batchId}`;
+  return axiosGET(endPoint, null);
+};
