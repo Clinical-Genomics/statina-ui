@@ -6,7 +6,8 @@ const axios = require('axios').default;
 const axiosGET = (endPoint, token) => {
   return new Promise((resolve, reject) => {
     axios
-      .get(endPoint, { headers: { Authorization: `Bearer ${token}` } })
+      // .get(endPoint, { headers: { Authorization: `Bearer ${token}` } })
+      .get(endPoint)
       .then(function (response) {
         resolve(response.data);
       })

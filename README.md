@@ -32,25 +32,6 @@ You will also see any lint errors in the console.
 Launches the test runner in the interactive watch mode.<br />
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `yarn test -u`
-
-Updates snapshots for tests or update a snapshot by deleting it:
-
-```rm <path to page>/__snapshots__/<page>.test.tsx.snap```
-
-
-and then running the test:
-
-```npm test <path to page>/<page>.test.tsx```
-
-
-That will recreate the snapshot acording to your changes.
-
-Read more about [snapshot tests](https://jestjs.io/blog/2016/07/27/jest-14.html).
-
-For consistency and code quality [Eslint](https://eslint.org/) is used.
-Running:
-
 ### `yarn lint`
 will display linting issues.
 
