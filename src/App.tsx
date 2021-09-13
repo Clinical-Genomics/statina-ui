@@ -31,6 +31,11 @@ export const App = () => {
                 <span>Batches</span>
               </Link>
             </Menu.Item>
+            <Menu.Item key="/samples">
+              <Link to="/samples">
+                <span>Samples</span>
+              </Link>
+            </Menu.Item>
             <Menu.Item key="/latest">
               <Link to="/latest">
                 <span>Latest updates</span>
