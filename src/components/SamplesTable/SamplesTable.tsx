@@ -124,7 +124,6 @@ export const SamplesTable = ({ samples }: SamplesProps) => {
       title: 'Last changed',
       dataIndex: 'change_include_date',
       key: 'change_include_date',
-      fixed: 'right',
     },
   ];
 
@@ -139,7 +138,7 @@ export const SamplesTable = ({ samples }: SamplesProps) => {
         columns={columns}
         dataSource={filteredSamples}
         rowKey="SampleProject"
-        scroll={{ x: 1500 }}
+        scroll={{ x: 2500 }}
       />
     </>
   );
