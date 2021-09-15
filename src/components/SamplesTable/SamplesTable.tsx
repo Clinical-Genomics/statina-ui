@@ -1,26 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import { Input, Table } from 'antd';
-import { Batch } from '../../services/interfaces';
 import { Link } from 'react-router-dom';
 
 type SamplesProps = {
-  samples: Batch[];
+  samples: any[];
 };
 
 const { Search } = Input;
 
 export const SamplesTable = ({ samples }: SamplesProps) => {
-  const [filteredSamples, setFilteredSamples] = useState<Batch[]>(samples);
+  const [filteredSamples, setFilteredSamples] = useState<any[]>(samples);
 
   useEffect(() => {
     setFilteredSamples(samples);
   }, [samples]);
 
   const onSearch = (searchInput) => {
+    const lowerCaseInput = searchInput.toLowerCase();
     const filteredData = samples.filter(
       (entry) =>
-        entry.SampleProject.includes(searchInput) ||
-        entry.Flowcell.includes(searchInput)
+        entry.SampleProject.toLowerCase().includes(lowerCaseInput) ||
+        entry.SampleID.toLowerCase().includes(lowerCaseInput) ||
+        entry.comment.toLowerCase().includes(lowerCaseInput)
     );
     setFilteredSamples(filteredData);
   };
@@ -130,14 +131,14 @@ export const SamplesTable = ({ samples }: SamplesProps) => {
   return (
     <>
       <Search
-        placeholder="Search by Batch or Flowcell ID"
+        placeholder="Search by Sample, Batch or Comment"
         onSearch={onSearch}
         style={{ paddingBottom: 20 }}
       />
       <Table
         columns={columns}
         dataSource={filteredSamples}
-        rowKey="SampleProject"
+        rowKey="SampleID"
         scroll={{ x: 2500 }}
       />
     </>
