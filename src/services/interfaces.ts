@@ -23,3 +23,11 @@ export interface Batch {
   Stdev_Y: number;
   comment: string;
 }
+
+export interface TracePlot {
+  y: any[];
+  name: string;
+  nmarker: any;
+  type: string;
+  boxpoints: string;
+}

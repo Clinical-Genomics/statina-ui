@@ -36,6 +36,11 @@ export const App = () => {
                 <span>Latest updates</span>
               </Link>
             </Menu.Item>
+            <Menu.Item key="/statistics">
+              <Link to="/statistics">
+                <span>Statistics</span>
+              </Link>
+            </Menu.Item>
           </Menu>
           <div></div>
           <div className={styles.googleButton}>

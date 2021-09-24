@@ -1983,6 +1983,11 @@
   dependencies:
     "@babel/types" "^7.3.0"
 
+"@types/d3@^3":
+  version "3.5.45"
+  resolved "https://registry.yarnpkg.com/@types/d3/-/d3-3.5.45.tgz#cceb1cd8f468b0ed1c96546ddefff3408d7463a7"
+  integrity sha512-wLICfMtjDEoAJie1MF6OuksAzOapRXgJy+l5HQVpyC1yMAlvHz2QKrrasUHru8xD6cbgQNGeO+CeyjOlKtly2A==
+
 "@types/duplexify@^3.6.0":
   version "3.6.0"
   resolved "https://registry.yarnpkg.com/@types/duplexify/-/duplexify-3.6.0.tgz#dfc82b64bd3a2168f5bd26444af165bf0237dcd8"
@@ -2140,6 +2145,20 @@
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/@types/parse-json/-/parse-json-4.0.0.tgz#2f8bb441434d163b35fb8ffdccd7138927ffb8c0"
   integrity sha512-//oorEZjL6sbPcKUaCdIGlIUeH26mgzimjBB77G6XRgnDl/L5wOnpyBGRe/Mmf5CVW3PwEBE1NjiMZ/ssFh4wA==
+
+"@types/plotly.js-basic-dist@^1.54.0":
+  version "1.54.0"
+  resolved "https://registry.yarnpkg.com/@types/plotly.js-basic-dist/-/plotly.js-basic-dist-1.54.0.tgz#02d74eb54a658c903984481da847b3d8b3aa0647"
+  integrity sha512-sccKjidjBltVJlfVE0bthWG1j/dwBYvZDbKIreToDXqaGaPg5nRU+5NRoP2AbnMa96lu0eVFu8zYwRPA4sS7kQ==
+  dependencies:
+    "@types/plotly.js" "*"
+
+"@types/plotly.js@*":
+  version "1.54.16"
+  resolved "https://registry.yarnpkg.com/@types/plotly.js/-/plotly.js-1.54.16.tgz#7e76e2828ff06f46f8ff9ffd4eb56bf0c4703931"
+  integrity sha512-Kli9UqZwO12cvJ4dT2kGaBtpgq96y8TPsvsB87XTCO+jEMMVy0OZ4WMW+8plS/lBKCtMNtwRNYNlD3+8Stgn2Q==
+  dependencies:
+    "@types/d3" "^3"
 
 "@types/prettier@^2.0.0":
   version "2.3.2"
@@ -12226,6 +12245,13 @@ react-markdown@^6.0.2:
     unified "^9.0.0"
     unist-util-visit "^2.0.0"
     vfile "^4.0.0"
+
+react-plotly.js@^2.5.1:
+  version "2.5.1"
+  resolved "https://registry.yarnpkg.com/react-plotly.js/-/react-plotly.js-2.5.1.tgz#11182bf599ef11a0dbfcd171c6f5645535a2b486"
+  integrity sha512-Oya14whSHvPsYXdI0nHOGs1pZhMzV2edV7HAW1xFHD58Y73m/LbG2Encvyz1tztL0vfjph0JNhiwO8cGBJnlhg==
+  dependencies:
+    prop-types "^15.7.2"
 
 react-redux@^7.2.2:
   version "7.2.5"
