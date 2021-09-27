@@ -1,14 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { Input, Table } from 'antd';
+import { Input, Table, Tag } from 'antd';
 import { Link } from 'react-router-dom';
+import { CloudDownloadOutlined } from '@ant-design/icons';
+import { red } from '@ant-design/colors';
 
 type SamplesProps = {
   samples: any[];
+  showBatchInfo: boolean;
 };
 
 const { Search } = Input;
 
-export const SamplesTable = ({ samples }: SamplesProps) => {
+export const SamplesTable = ({
+  samples,
+  showBatchInfo = true,
+}: SamplesProps) => {
   const [filteredSamples, setFilteredSamples] = useState<any[]>(samples);
 
   useEffect(() => {
@@ -41,6 +47,7 @@ export const SamplesTable = ({ samples }: SamplesProps) => {
       dataIndex: 'SampleProject',
       key: 'SampleProject',
       fixed: 'left',
+      visible: showBatchInfo,
       render: (SampleProject: any) => (
         <Link to={`/batches/${SampleProject}`}>{SampleProject}</Link>
       ),
@@ -49,41 +56,97 @@ export const SamplesTable = ({ samples }: SamplesProps) => {
       title: 'Zscore 13',
       dataIndex: 'Zscore_13',
       key: 'Zscore_13',
+      width: 100,
+      render(score, sample) {
+        return {
+          props: {
+            style: {
+              background: sample.text_warning.includes('Zscore_13')
+                ? red[1]
+                : null,
+            },
+          },
+          children: <div>{score}</div>,
+        };
+      },
     },
     {
       title: 'Zscore 18',
       dataIndex: 'Zscore_18',
       key: 'Zscore_18',
+      width: 100,
+      render(score, sample) {
+        return {
+          props: {
+            style: {
+              background: sample.text_warning.includes('Zscore_18')
+                ? red[1]
+                : null,
+            },
+          },
+          children: <div>{score}</div>,
+        };
+      },
     },
     {
       title: 'Zscore 21',
       dataIndex: 'Zscore_21',
       key: 'Zscore_21',
+      width: 100,
+      render(score, sample) {
+        return {
+          props: {
+            style: {
+              background: sample.text_warning.includes('Zscore_21')
+                ? red[1]
+                : null,
+            },
+          },
+          children: <div>{score}</div>,
+        };
+      },
     },
     {
       title: 'Zscore X',
       dataIndex: 'Zscore_X',
       key: 'Zscore_X',
+      width: 100,
+      render(score, sample) {
+        return {
+          props: {
+            style: {
+              background: sample.text_warning.includes('Zscore_X')
+                ? red[1]
+                : null,
+            },
+          },
+          children: <div>{score}</div>,
+        };
+      },
     },
     {
       title: 'FF-PF (%)',
       dataIndex: 'FetalFractionPreface',
       key: 'FetalFractionPreface',
+      width: 100,
     },
     {
       title: 'FF-X (%)',
       dataIndex: 'FFX',
       key: 'FFX',
+      width: 100,
     },
     {
       title: 'FF-Y (%)',
       dataIndex: 'FFY',
       key: 'FFY',
+      width: 100,
     },
     {
       title: 'Sex',
       dataIndex: 'sex',
       key: 'sex',
+      width: 70,
     },
     {
       title: 'CNV Segment',
@@ -99,7 +162,7 @@ export const SamplesTable = ({ samples }: SamplesProps) => {
       title: 'QC Flag',
       dataIndex: 'QCFlag',
       key: 'QCFlag',
-      width: 150,
+      width: 200,
     },
     {
       title: 'Status',
@@ -107,9 +170,23 @@ export const SamplesTable = ({ samples }: SamplesProps) => {
       key: 'status',
     },
     {
-      title: 'Download',
+      title: 'Segmental calls',
       dataIndex: '',
       key: 'segmental_calls',
+      render: (sample: any) => (
+        <a
+          href={`/sample_download/${sample.SampleID}/segmental_calls`}
+          download
+        >
+          {/* ignores needed for antd bug */}
+          {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+          {/*
+// @ts-ignore */}
+          <CloudDownloadOutlined
+            style={{ fontSize: '30px', marginLeft: '30%' }}
+          />
+        </a>
+      ),
     },
     {
       title: 'Include',
@@ -120,6 +197,7 @@ export const SamplesTable = ({ samples }: SamplesProps) => {
       title: 'Comment',
       dataIndex: 'comment',
       key: 'comment',
+      width: 200,
     },
     {
       title: 'Last changed',
@@ -131,12 +209,16 @@ export const SamplesTable = ({ samples }: SamplesProps) => {
   return (
     <>
       <Search
-        placeholder="Search by Sample, Batch or Comment"
+        placeholder={`Search by Sample${
+          showBatchInfo ? ', Batch' : ''
+        } or Comment`}
         onSearch={onSearch}
         style={{ paddingBottom: 20 }}
       />
       <Table
-        columns={columns}
+        columns={columns.filter((column) =>
+          showBatchInfo ? column : column.key !== 'SampleProject'
+        )}
         dataSource={filteredSamples}
         rowKey="SampleID"
         scroll={{ x: 2500 }}
