@@ -6,6 +6,7 @@ import { BatchesPage } from '../pages/Batches/BatchesPage';
 import { LatestPage } from '../pages/Latest/LatestPage';
 import { BatchPage } from '../pages/Batch/BatchPage';
 import { StatisticsPage } from '../pages/Statistics/StatisticsPage';
+import { SamplePage } from '../pages/Sample/SamplePage';
 
 interface RoutesProps {
   isLoggedIn: boolean;
@@ -44,6 +45,17 @@ export const Routes = (props: RoutesProps) => {
         render={() =>
           isLoggedIn === true ? (
             <StatisticsPage />
+          ) : (
+            <Redirect to={{ pathname: '/unauthorized' }} />
+          )
+        }
+      />
+      <Route
+        path="/samples"
+        exact
+        render={() =>
+          isLoggedIn === true ? (
+            <SamplePage />
           ) : (
             <Redirect to={{ pathname: '/unauthorized' }} />
           )
