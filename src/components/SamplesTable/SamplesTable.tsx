@@ -245,7 +245,9 @@ export const SamplesTable = ({
         onSearch={onSearch}
         style={{ paddingBottom: 20 }}
       />
-      {'Select a sample with the checkbox to include it in the comparison set'}
+      <i>
+        Select a sample with the checkbox to include it in the comparison set
+      </i>
       <Table
         pagination={showBatchInfo ? undefined : false}
         columns={columns.filter((column) =>
