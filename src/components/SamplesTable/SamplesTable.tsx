@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Input, Table, Tooltip } from 'antd';
 import { Link } from 'react-router-dom';
-import { CloudDownloadOutlined } from '@ant-design/icons';
+import {
+  CloudDownloadOutlined,
+  QuestionCircleOutlined,
+} from '@ant-design/icons';
 import { red } from '@ant-design/colors';
 
 type SamplesProps = {
@@ -164,7 +167,11 @@ export const SamplesTable = ({
     {
       title: (
         <Tooltip title="Warning for chomosome abnormality. Automatically generated. Based on pre defined Zscore and Fetal Fraction trsholds">
-          Warning
+          Warning {/* ignores needed for antd bug */}
+          {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+          {/*
+// @ts-ignore */}
+          <QuestionCircleOutlined />
         </Tooltip>
       ),
       dataIndex: 'text_warning',
@@ -179,7 +186,11 @@ export const SamplesTable = ({
     {
       title: (
         <Tooltip title="Chomosome abnormalies. Manually classified by user through the sample page">
-          Status
+          Status {/* ignores needed for antd bug */}
+          {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+          {/*
+// @ts-ignore */}
+          <QuestionCircleOutlined />
         </Tooltip>
       ),
       dataIndex: 'status',
