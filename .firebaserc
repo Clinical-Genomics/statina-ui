@@ -1,0 +1,7 @@
+{
+  "projects": {
+    "default": "statina-stage",
+    "stage": "statina-stage",
+    "production": "statina-83aa9"
+  }
+}
