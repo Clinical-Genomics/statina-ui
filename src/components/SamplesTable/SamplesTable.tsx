@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Input, Table } from 'antd';
+import { Input, Table, Tooltip } from 'antd';
 import { Link } from 'react-router-dom';
 import { CloudDownloadOutlined } from '@ant-design/icons';
 import { red } from '@ant-design/colors';
@@ -163,7 +163,11 @@ export const SamplesTable = ({
       key: 'CNVSegment',
     },
     {
-      title: 'Warning',
+      title: (
+        <Tooltip title="Warning for chomosome abnormality. Automatically generated. Based on pre defined Zscore and Fetal Fraction trsholds">
+          Warning
+        </Tooltip>
+      ),
       dataIndex: 'text_warning',
       key: 'text_warning',
     },
@@ -174,7 +178,11 @@ export const SamplesTable = ({
       width: 200,
     },
     {
-      title: 'Status',
+      title: (
+        <Tooltip title="Chomosome abnormalies. Manually classified by user through the sample page">
+          Status
+        </Tooltip>
+      ),
       dataIndex: 'status',
       key: 'status',
     },
@@ -228,7 +236,9 @@ export const SamplesTable = ({
         onSearch={onSearch}
         style={{ paddingBottom: 20 }}
       />
+      {'Select a sample with the checkbox to include it in the comparison set'}
       <Table
+        pagination={showBatchInfo ? undefined : false}
         columns={columns.filter((column) =>
           showBatchInfo ? column : column.key !== 'SampleProject'
         )}
