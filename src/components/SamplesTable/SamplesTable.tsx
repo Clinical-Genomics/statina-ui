@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Input, Table, Tag } from 'antd';
+import { Input, Table } from 'antd';
 import { Link } from 'react-router-dom';
 import { CloudDownloadOutlined } from '@ant-design/icons';
 import { red } from '@ant-design/colors';
@@ -16,9 +16,18 @@ export const SamplesTable = ({
   showBatchInfo = true,
 }: SamplesProps) => {
   const [filteredSamples, setFilteredSamples] = useState<any[]>(samples);
+  const [selectedRowKeys, setSelectedRowKeys] = useState<any[]>([]);
 
   useEffect(() => {
     setFilteredSamples(samples);
+    if (samples?.length > 0) {
+      const selectedKey: string[] = [];
+      samples.forEach((sample) => {
+        if (sample.include) selectedKey.push(sample?.SampleID);
+      });
+      setSelectedRowKeys(selectedKey);
+      console.log(selectedRowKeys);
+    }
   }, [samples]);
 
   const onSearch = (searchInput) => {
@@ -173,6 +182,7 @@ export const SamplesTable = ({
       title: 'Segmental calls',
       dataIndex: '',
       key: 'segmental_calls',
+      width: 120,
       render: (sample: any) => (
         <a
           href={`/sample_download/${sample.SampleID}/segmental_calls`}
@@ -189,11 +199,6 @@ export const SamplesTable = ({
       ),
     },
     {
-      title: 'Include',
-      dataIndex: 'include',
-      key: 'include',
-    },
-    {
       title: 'Comment',
       dataIndex: 'comment',
       key: 'comment',
@@ -205,6 +210,14 @@ export const SamplesTable = ({
       key: 'change_include_date',
     },
   ];
+
+  const rowSelection = {
+    onChange: (selectedRowKeys) => {
+      console.log(selectedRowKeys);
+      setSelectedRowKeys(selectedRowKeys);
+    },
+    selectedRowKeys,
+  };
 
   return (
     <>
@@ -221,7 +234,10 @@ export const SamplesTable = ({
         )}
         dataSource={filteredSamples}
         rowKey="SampleID"
-        scroll={{ x: 2500 }}
+        scroll={{ x: 2300 }}
+        rowSelection={{
+          ...rowSelection,
+        }}
       />
     </>
   );
