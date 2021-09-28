@@ -1,11 +1,12 @@
 import React from 'react';
-import { Switch, Redirect, Route, RouteComponentProps } from 'react-router-dom';
+import { Switch, Redirect, Route } from 'react-router-dom';
 import { HomePage } from '../pages/Home/HomePage';
 import { UnauthorizedPage } from '../pages/UnauthorizedPage';
 import { BatchesPage } from '../pages/Batches/BatchesPage';
 import { LatestPage } from '../pages/Latest/LatestPage';
 import { BatchPage } from '../pages/Batch/BatchPage';
 import { SamplesPage } from '../pages/Samples/SamplesPage';
+import { StatisticsPage } from '../pages/Statistics/StatisticsPage';
 
 interface RoutesProps {
   isLoggedIn: boolean;
@@ -44,6 +45,17 @@ export const Routes = (props: RoutesProps) => {
         render={() =>
           isLoggedIn === true ? (
             <SamplesPage />
+          ) : (
+            <Redirect to={{ pathname: '/unauthorized' }} />
+          )
+        }
+      />
+      <Route
+        path="/statistics"
+        exact
+        render={() =>
+          isLoggedIn === true ? (
+            <StatisticsPage />
           ) : (
             <Redirect to={{ pathname: '/unauthorized' }} />
           )
