@@ -12,8 +12,8 @@ export const App = () => {
 
   return (
     <div className="app">
-      <Layout className={styles.layout}>
-        <Header style={{ position: 'fixed', zIndex: 1, width: '100%' }}>
+      <Layout>
+        <Header className={styles.header}>
           <img className={styles.logo} src={Logo} alt={'Small CG logo'} />
           <Menu
             theme="dark"
@@ -29,6 +29,11 @@ export const App = () => {
             <Menu.Item key="/batches">
               <Link to="/batches">
                 <span>Batches</span>
+              </Link>
+            </Menu.Item>
+            <Menu.Item key="/samples">
+              <Link to="/samples">
+                <span>Samples</span>
               </Link>
             </Menu.Item>
             <Menu.Item key="/latest">
@@ -54,7 +59,11 @@ export const App = () => {
         </Header>
         <Content
           className={styles.siteLayout}
-          style={{ padding: '0 50px', marginTop: 64 }}
+          style={{
+            padding: '0 50px',
+            marginTop: 64,
+            minHeight: 'calc(100vh - 155px)',
+          }}
         >
           <div
             className={styles.siteLayoutBackground}

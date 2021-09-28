@@ -18,10 +18,11 @@ export const BatchesTable = ({ batches }: BatchesProps) => {
   }, [batches]);
 
   const onSearch = (searchInput) => {
+    const lowerCaseInput = searchInput.toLowerCase();
     const filteredData = batches.filter(
       (entry) =>
-        entry.SampleProject.includes(searchInput) ||
-        entry.Flowcell.includes(searchInput)
+        entry.SampleProject.toLowerCase().includes(lowerCaseInput) ||
+        entry.Flowcell.toLowerCase().includes(lowerCaseInput)
     );
     setFilteredBatches(filteredData);
   };
