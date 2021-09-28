@@ -26,7 +26,6 @@ export const SamplesTable = ({
         if (sample.include) selectedKey.push(sample?.SampleID);
       });
       setSelectedRowKeys(selectedKey);
-      console.log(selectedRowKeys);
     }
   }, [samples]);
 
@@ -221,7 +220,6 @@ export const SamplesTable = ({
 
   const rowSelection = {
     onChange: (selectedRowKeys) => {
-      console.log(selectedRowKeys);
       setSelectedRowKeys(selectedRowKeys);
     },
     selectedRowKeys,
