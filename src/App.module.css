@@ -28,6 +28,10 @@
     padding: 0 15px 2px 0;
 }
 
+.siteLayoutBackground {
+    background: #fff;
+}
+
 [data-theme="dark"] .siteLayoutBackground {
   background: #141414;
 }
