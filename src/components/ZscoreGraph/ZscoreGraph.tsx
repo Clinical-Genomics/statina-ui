@@ -13,7 +13,6 @@ export const ZscoreGraph = ({ samples, score }: ZscoreGraphProps) => {
       name: `Current batch ${samples.length}`,
       y: samples.map((sample) => sample?.Zscore_13),
       x: samples.map((sample) => sample?.SampleID),
-      text: 'name',
       mode: 'markers',
       type: 'scatter',
     },
@@ -39,7 +38,7 @@ export const ZscoreGraph = ({ samples, score }: ZscoreGraphProps) => {
     },
 
     yaxis: {
-      range: [-10],
+      range: [-10, 10],
       zeroline: false,
       showline: true,
       showgrid: false,
