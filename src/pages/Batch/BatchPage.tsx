@@ -26,10 +26,10 @@ export const BatchPage = (props: BatchProps) => {
         <ZscoreGraph samples={batch?.sample_info} score={'Zscore_13'} />
       </TabPane>
       <TabPane tab="Zscore 18" key="Zscore_18">
-        Content of Tab Pane 3
+        <ZscoreGraph samples={batch?.sample_info} score={'Zscore_18'} />
       </TabPane>
       <TabPane tab="Zscore 21" key="Zscore_21">
-        Content of Tab Pane 3
+        <ZscoreGraph samples={batch?.sample_info} score={'Zscore_21'} />
       </TabPane>
     </Tabs>
   );
