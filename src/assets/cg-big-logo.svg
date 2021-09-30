@@ -30,12 +30,12 @@
                     </g>
                 </g>
                 <g id="words" transform="translate(95.000000, 220.000000)">
-                    <g id="rare-disease" transform="translate(0.000000, 14.000000)">
+                    <g id="prenatal" transform="translate(0.000000, 14.000000)">
                         <polyline id="Path-1" stroke="#FFBA6F" stroke-width="2" points="35.659812 18.1091309 35.659812 56.2534917 77.369277 56.2534934"></polyline>
                         <circle id="Oval-2" stroke="#FFB96F" stroke-width="2" cx="81.5" cy="56.5" r="4.5"></circle>
-                        <rect id="Rectangle-18" fill="#001529" x="0" y="0" width="73" height="19" rx="9.5"></rect>
-                        <text id="Rare-disease" font-family="Roboto-Medium, Roboto" font-size="11" font-weight="400" fill="#FFFFFF">
-                            <tspan x="5" y="13">Rare disease</tspan>
+                        <rect id="Rectangle-18" fill="#001529" x="0" y="0" width="78" height="19" rx="9.5"></rect>
+                        <text id="prenatal" font-family="Roboto-Medium, Roboto" font-size="11" font-weight="400" fill="#FFFFFF">
+                            <tspan x="5" y="13">Prenatal testing</tspan>
                         </text>
                     </g>
                     <g id="open-source" transform="translate(400.000000, 122.000000)">
@@ -90,9 +90,9 @@
                         <polyline id="Path-1" stroke="#FFBA6F" stroke-width="2" points="4.65981202 49.5386722 4.65981202 9.91469883 70.7074805 9.91469883"></polyline>
                         <circle id="Oval-2" stroke="#FFB96F" stroke-width="2" cx="4.5" cy="53.5" r="4.5"></circle>
                         <g id="text" transform="translate(69.000000, 0.000000)">
-                            <rect id="Rectangle-18" fill="#001529" x="0" y="0" width="49" height="19" rx="9.5"></rect>
+                            <rect id="Rectangle-18" fill="#001529" x="0" y="0" width="60" height="19" rx="9.5"></rect>
                             <text id="Cancer" font-family="Roboto-Medium, Roboto" font-size="11" font-weight="400" fill="#FFFFFF">
-                                <tspan x="7" y="13">Cancer</tspan>
+                                <tspan x="7" y="13">Diagnostic</tspan>
                             </text>
                         </g>
                     </g>
