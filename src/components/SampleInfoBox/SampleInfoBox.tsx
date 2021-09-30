@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Descriptions, Card } from 'antd';
+import { Descriptions, Card, Tag } from 'antd';
 import { Link } from 'react-router-dom';
 import { Sample } from '../../services/interfaces';
+import { sexTags } from '../../services/helpers/constants';
 
 type SampleProps = {
   infoBox: Sample[];
@@ -37,7 +38,7 @@ export function SampleInfoBox(infoBox: any) {
             {sample.QCFlag}
           </Descriptions.Item>
           <Descriptions.Item label="Sex (Auto Classified):">
-            {sample.sex}
+            {sample.sex && <Tag color={sexTags[sample.sex]}>{sample.sex}</Tag>}
           </Descriptions.Item>
           <Descriptions.Item label="Abnormality (Auto Classified):">
             {sample.text_warning}

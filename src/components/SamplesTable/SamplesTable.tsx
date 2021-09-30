@@ -6,6 +6,7 @@ import {
   QuestionCircleOutlined,
 } from '@ant-design/icons';
 import { red } from '@ant-design/colors';
+import { sampleStatusTags, sexTags } from '../../services/helpers/constants';
 
 type SamplesProps = {
   samples: any[];
@@ -158,13 +159,7 @@ export const SamplesTable = ({
       dataIndex: 'sex',
       key: 'sex',
       width: 70,
-      render: (sex: any) => (
-        <Tag
-          color={sex === 'XX' ? 'purple' : sex === 'XY' ? 'green' : 'magenta'}
-        >
-          {sex}
-        </Tag>
-      ),
+      render: (sex: any) => <Tag color={sexTags[sex]}>{sex}</Tag>,
     },
     {
       title: 'CNV Segment',
@@ -212,6 +207,15 @@ export const SamplesTable = ({
       ),
       dataIndex: 'status',
       key: 'status',
+      render: (status) => {
+        return (
+          status && (
+            <Tag color={sampleStatusTags[status]?.color}>
+              {sampleStatusTags[status]?.label}
+            </Tag>
+          )
+        );
+      },
     },
     {
       title: 'Segmental calls',

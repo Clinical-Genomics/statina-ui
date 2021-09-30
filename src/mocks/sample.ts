@@ -105,7 +105,7 @@ export const mockSample = [
         XYY: 'default',
       },
       text_warning: 'Zscore_18',
-      status: '',
+      status: 'falseNegative',
       sex: 'XX',
     },
     status_classes: {

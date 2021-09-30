@@ -618,7 +618,7 @@ export const mockBatch = {
         XYY: 'default',
       },
       text_warning: 'Zscore_21, Zscore_13',
-      status: '',
+      status: 'normal',
       sex: 'XYY',
     },
     {
@@ -725,7 +725,7 @@ export const mockBatch = {
         XYY: 'default',
       },
       text_warning: 'Zscore_18',
-      status: '',
+      status: 'falseNegative',
       sex: 'XX',
     },
     {
@@ -832,7 +832,7 @@ export const mockBatch = {
         XYY: 'default',
       },
       text_warning: '',
-      status: '',
+      status: 'other',
       sex: 'XY',
     },
     {
@@ -939,7 +939,7 @@ export const mockBatch = {
         XYY: 'default',
       },
       text_warning: '',
-      status: '',
+      status: 'suspected',
       sex: 'XY',
     },
     {
@@ -1046,7 +1046,7 @@ export const mockBatch = {
         XYY: 'default',
       },
       text_warning: '',
-      status: '',
+      status: 'verified',
       sex: 'XX',
     },
     {
