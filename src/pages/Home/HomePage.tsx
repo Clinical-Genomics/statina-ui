@@ -1,6 +1,6 @@
 import * as React from 'react';
 import styles from './HomePage.module.css';
-import HomePicture from '../../assets/home-picture.jpeg';
+import MainLogo from '../../assets/cg-big-logo.svg';
 
 export const HomePage = () => (
   <div className={styles.homeContainer}>
@@ -17,6 +17,6 @@ export const HomePage = () => (
       account application for you.
     </h3>
     <br />
-    <img className={styles.homePicture} src={HomePicture} alt={'CG Logo'}></img>
+    <img className={styles.homePicture} src={MainLogo} alt={'CG Logo'}></img>
   </div>
 );

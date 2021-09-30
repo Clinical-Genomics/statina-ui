@@ -1,5 +1,6 @@
 import { Button, Select, Space, Table } from 'antd';
 import React, { useEffect, useState } from 'react';
+import { sampleStatusTags } from '../../services/helpers/constants';
 
 const { Option } = Select;
 
@@ -21,20 +22,17 @@ const columns = [
     title: 'Status',
     dataIndex: 'Status',
     key: 'Status',
-    render: (chrom_abnorm: any) => (
+    render: (chrom: any, sample) => (
       <Select
-        defaultValue="Normal"
+        defaultValue={sample.status || sampleStatusTags.normal.label}
         style={{ width: 120 }}
         onChange={handleChange}
       >
-        <Option value="Normal">Normal</Option>
-        <Option value="Suspected">Suspected</Option>
-        <Option value="Probable">Probable</Option>
-        <Option value="Verified">Verified</Option>
-        <Option value="False Positive">False Positive</Option>
-        <Option value="False Negative">False Negative</Option>
-        <Option value="Other">Other</Option>
-        <Option value="Failed">Failed</Option>
+        {Object.keys(sampleStatusTags).map((status) => (
+          <Option value={status} key={status}>
+            {sampleStatusTags[status].label}
+          </Option>
+        ))}
       </Select>
     ),
   },

@@ -6,5 +6,7 @@ test('Footer text render correctly', () => {
   const { getByTestId } = render(<Footer />);
   const footer = getByTestId('footer');
   const currentYear: number = new Date().getFullYear();
-  expect(footer.textContent).toBe(`Statina © ${currentYear}`);
+  expect(footer.textContent).toBe(
+    `Statina ©  Clinical Genomics ${currentYear}`
+  );
 });

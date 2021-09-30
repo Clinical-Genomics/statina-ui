@@ -5,6 +5,7 @@ import { Layout, Menu, Button } from 'antd';
 import { Link, useLocation } from 'react-router-dom';
 import { Routes } from './components/Routes';
 import Logo from './assets/logo.png';
+import './App.less';
 import Footer from './components/Footer/Footer';
 
 const { Header, Content } = Layout;
@@ -37,14 +38,14 @@ export const App = () => {
                 <span>Samples</span>
               </Link>
             </Menu.Item>
-            <Menu.Item key="/latest">
-              <Link to="/latest">
-                <span>Latest updates</span>
-              </Link>
-            </Menu.Item>
             <Menu.Item key="/statistics">
               <Link to="/statistics">
                 <span>Statistics</span>
+              </Link>
+            </Menu.Item>
+            <Menu.Item key="/latest">
+              <Link to="/latest">
+                <span>Latest updates</span>
               </Link>
             </Menu.Item>
           </Menu>

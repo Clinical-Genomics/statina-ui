@@ -1,15 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { Input, Table, Tooltip } from 'antd';
+import { Input, Table, Tag, Tooltip } from 'antd';
 import { Link } from 'react-router-dom';
 import {
   CloudDownloadOutlined,
   QuestionCircleOutlined,
 } from '@ant-design/icons';
 import { red } from '@ant-design/colors';
+import {
+  sampleStatusTags,
+  sexTags,
+  tagColors,
+} from '../../services/helpers/constants';
 
 type SamplesProps = {
   samples: any[];
-  showBatchInfo: boolean;
+  showBatchInfo?: boolean;
 };
 
 const { Search } = Input;
@@ -158,11 +163,14 @@ export const SamplesTable = ({
       dataIndex: 'sex',
       key: 'sex',
       width: 70,
+      render: (sex: any) => <Tag color={sexTags[sex]}>{sex}</Tag>,
     },
     {
       title: 'CNV Segment',
       dataIndex: 'CNVSegment',
       key: 'CNVSegment',
+      render: (sex: any) =>
+        sex ? <Tag color={tagColors.CNVSegment}>{sex}</Tag> : null,
     },
     {
       title: (
@@ -176,6 +184,15 @@ export const SamplesTable = ({
       ),
       dataIndex: 'text_warning',
       key: 'text_warning',
+      render: (warnings: any) => {
+        return warnings.length > 0
+          ? warnings.split(', ').map((warning) => (
+              <Tag color={tagColors.warning} key={warning}>
+                {warning}
+              </Tag>
+            ))
+          : null;
+      },
     },
     {
       title: 'QC Flag',
@@ -195,6 +212,15 @@ export const SamplesTable = ({
       ),
       dataIndex: 'status',
       key: 'status',
+      render: (status) => {
+        return (
+          status.lenght > 0 && (
+            <Tag color={sampleStatusTags[status]?.color}>
+              {sampleStatusTags[status]?.label}
+            </Tag>
+          )
+        );
+      },
     },
     {
       title: 'Segmental calls',
@@ -239,8 +265,8 @@ export const SamplesTable = ({
   return (
     <>
       <Search
-        placeholder={`Search by Sample${
-          showBatchInfo ? ', Batch' : ''
+        placeholder={`Search by Sample name${
+          showBatchInfo ? ', Batch name' : ''
         } or Comment`}
         onSearch={onSearch}
         style={{ paddingBottom: 20 }}

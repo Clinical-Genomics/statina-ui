@@ -11,10 +11,13 @@ const Footer: React.FC = () => {
   const currentYear: number = new Date().getFullYear();
 
   return (
-    <footer
-      data-testid="footer"
-      className={styles.footer}
-    >{`${appName}© ${currentYear}`}</footer>
+    <footer data-testid="footer" className={styles.footer}>
+      {`${appName}© `}{' '}
+      <a href={'https://www.scilifelab.se/units/clinical-genomics-stockholm/'}>
+        Clinical Genomics
+      </a>
+      {` ${currentYear}`}
+    </footer>
   );
 };
 

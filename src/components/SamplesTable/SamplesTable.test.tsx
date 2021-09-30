@@ -30,7 +30,7 @@ describe('Samples Table', () => {
     expect(queryByText(mockSamples[1].SampleID)).toBeVisible();
 
     userEvent.type(
-      getByPlaceholderText('Search by Sample, Batch or Comment'),
+      getByPlaceholderText('Search by Sample name, Batch name or Comment'),
       mockSamples[0].comment
     );
     userEvent.click(getByLabelText('search'));

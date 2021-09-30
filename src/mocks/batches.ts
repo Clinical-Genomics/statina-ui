@@ -617,9 +617,9 @@ export const mockBatch = {
         XXY: 'default',
         XYY: 'default',
       },
-      text_warning: 'Zscore_21',
-      status: '',
-      sex: 'XY',
+      text_warning: 'Zscore_21, Zscore_13',
+      status: 'normal',
+      sex: 'XYY',
     },
     {
       SampleID: '2021-21167-07',
@@ -725,7 +725,7 @@ export const mockBatch = {
         XYY: 'default',
       },
       text_warning: 'Zscore_18',
-      status: '',
+      status: 'falseNegative',
       sex: 'XX',
     },
     {
@@ -832,7 +832,7 @@ export const mockBatch = {
         XYY: 'default',
       },
       text_warning: '',
-      status: '',
+      status: 'other',
       sex: 'XY',
     },
     {
@@ -939,7 +939,7 @@ export const mockBatch = {
         XYY: 'default',
       },
       text_warning: '',
-      status: '',
+      status: 'suspected',
       sex: 'XY',
     },
     {
@@ -1046,7 +1046,7 @@ export const mockBatch = {
         XYY: 'default',
       },
       text_warning: '',
-      status: '',
+      status: 'verified',
       sex: 'XX',
     },
     {
