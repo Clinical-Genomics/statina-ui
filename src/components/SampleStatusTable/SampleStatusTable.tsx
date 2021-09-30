@@ -1,25 +1,27 @@
-import { Select, Table } from 'antd';
-import React from 'react';
+import { Button, Select, Space, Table } from 'antd';
+import React, { useEffect, useState } from 'react';
 
 const { Option } = Select;
-
-const test: any = ['one', 'two', 'three', 'four'];
 
 function handleChange(value) {
   console.log(`selected ${value}`);
 }
 
+function handleSave(value) {
+  console.log(value);
+}
+
 const columns = [
   {
     title: 'Chromosome abnormality',
-    dataIndex: 'ChromosomeAbn',
-    key: 'test',
+    dataIndex: 'chrom_abnorm',
+    key: 'chrom_abnorm',
   },
   {
     title: 'Status',
-    dataIndex: 'test',
-    key: 'test',
-    render: (SampleProject: any) => (
+    dataIndex: 'Status',
+    key: 'Status',
+    render: (chrom_abnorm: any) => (
       <Select
         defaultValue="Normal"
         style={{ width: 120 }}
@@ -38,19 +40,34 @@ const columns = [
   },
   {
     title: 'Latest change',
-    dataIndex: 'test',
-    key: 'test',
+    dataIndex: 'latest_change',
+    key: 'latest_change',
   },
 ];
 
 export default function SampleStatusTable(ChromosomeAbn) {
+  const [chromosomeAbn, setChromosomeAbn] = useState(
+    ChromosomeAbn.ChromosomeAbn[0]
+  );
+  const [abn, setAbn] = useState();
+
+  useEffect(() => {
+    setAbn(chromosomeAbn.chrom_abnorm.map((abn) => ({ chrom_abnorm: abn })));
+  }, []);
   return (
-    <Table
-      columns={columns}
-      dataSource={test}
-      rowKey="SampleProject"
-      pagination={false}
-      bordered={true}
-    />
+    <>
+      <Space size={'large'} direction="vertical" style={{ width: '100%' }}>
+        <Table
+          columns={columns}
+          dataSource={abn}
+          rowKey="chrom_abnorm"
+          pagination={false}
+          bordered={true}
+        />
+        <Button type="primary" size={'large'} onClick={handleSave}>
+          Save
+        </Button>
+      </Space>
+    </>
   );
 }
