@@ -5,14 +5,15 @@ import { Layout, Menu, Button } from 'antd';
 import { Link, useLocation } from 'react-router-dom';
 import { Routes } from './components/Routes';
 import Logo from './assets/logo.png';
+import Footer from './components/Footer/Footer';
 
-const { Header, Content, Footer } = Layout;
+const { Header, Content } = Layout;
 export const App = () => {
   const [isLoaded, setIsLoaded] = React.useState<boolean>(false);
 
   return (
     <div className="app">
-      <Layout>
+      <Layout style={{ minHeight: '100vh' }}>
         <Header className={styles.header}>
           <img className={styles.logo} src={Logo} alt={'Small CG logo'} />
           <Menu
@@ -72,7 +73,7 @@ export const App = () => {
             <Routes isLoggedIn={true} />
           </div>
         </Content>
-        {/* <Footer style={{ textAlign: 'center' }}>Clinical Genomics ©2020</Footer> */}
+        <Footer />
       </Layout>
     </div>
   );
