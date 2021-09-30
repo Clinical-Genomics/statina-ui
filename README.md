@@ -1,4 +1,6 @@
 # Statina ui - Frontend for https://statina.scilifelab.se/
+### Prod frontend app: https://statina-83aa9.web.app/
+### Staging frontend app: https://statina-stage.web.app/
 
 ## About
 
@@ -46,3 +48,5 @@ Builds the app for production to the `build` folder.<br />
 It correctly bundles React in production mode and optimizes the build for the best performance.
 
 The build is minified and the filenames include the hashes.<br />
+
+The app is deployed to a preview channel at every pull request and at every merge to master to staging and production
