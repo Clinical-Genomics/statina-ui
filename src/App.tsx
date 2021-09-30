@@ -5,6 +5,7 @@ import { Layout, Menu, Button } from 'antd';
 import { Link, useLocation } from 'react-router-dom';
 import { Routes } from './components/Routes';
 import Logo from './assets/logo.png';
+import './App.less';
 
 const { Header, Content, Footer } = Layout;
 export const App = () => {
