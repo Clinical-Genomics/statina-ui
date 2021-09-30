@@ -7,6 +7,7 @@ import { LatestPage } from '../pages/Latest/LatestPage';
 import { BatchPage } from '../pages/Batch/BatchPage';
 import { SamplesPage } from '../pages/Samples/SamplesPage';
 import { StatisticsPage } from '../pages/Statistics/StatisticsPage';
+import { SamplePage } from '../pages/Sample/SamplePage';
 
 interface RoutesProps {
   isLoggedIn: boolean;
@@ -50,6 +51,7 @@ export const Routes = (props: RoutesProps) => {
           )
         }
       />
+      <Route path="/samples/:sampleId" component={SamplePage} />
       <Route
         path="/statistics"
         exact

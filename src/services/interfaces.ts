@@ -24,6 +24,20 @@ export interface Batch {
   comment: string;
 }
 
+export interface Sample {
+  SampleID: string;
+  ChromosomeAbn: string;
+  SampleProject: string;
+  SampleType: string;
+  Description: null;
+  Flowcell: string;
+  Index1: string;
+  Index2: string;
+  Library_nM: number;
+  QCFlag: string;
+  sex: string;
+}
+
 export interface TracePlot {
   y: any[];
   name: string;
