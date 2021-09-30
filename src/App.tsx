@@ -37,14 +37,14 @@ export const App = () => {
                 <span>Samples</span>
               </Link>
             </Menu.Item>
-            <Menu.Item key="/latest">
-              <Link to="/latest">
-                <span>Latest updates</span>
-              </Link>
-            </Menu.Item>
             <Menu.Item key="/statistics">
               <Link to="/statistics">
                 <span>Statistics</span>
+              </Link>
+            </Menu.Item>
+            <Menu.Item key="/latest">
+              <Link to="/latest">
+                <span>Latest updates</span>
               </Link>
             </Menu.Item>
           </Menu>

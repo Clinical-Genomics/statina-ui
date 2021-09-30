@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Input, Table, Tooltip } from 'antd';
+import { Input, Table, Tag, Tooltip } from 'antd';
 import { Link } from 'react-router-dom';
 import {
   CloudDownloadOutlined,
@@ -158,11 +158,19 @@ export const SamplesTable = ({
       dataIndex: 'sex',
       key: 'sex',
       width: 70,
+      render: (sex: any) => (
+        <Tag
+          color={sex === 'XX' ? 'purple' : sex === 'XY' ? 'green' : 'magenta'}
+        >
+          {sex}
+        </Tag>
+      ),
     },
     {
       title: 'CNV Segment',
       dataIndex: 'CNVSegment',
       key: 'CNVSegment',
+      render: (sex: any) => (sex ? <Tag color="blue">{sex}</Tag> : null),
     },
     {
       title: (
@@ -176,6 +184,15 @@ export const SamplesTable = ({
       ),
       dataIndex: 'text_warning',
       key: 'text_warning',
+      render: (warnings: any) => {
+        return warnings.length > 0
+          ? warnings.split(', ').map((warning) => (
+              <Tag color="volcano" key={warning}>
+                {warning}
+              </Tag>
+            ))
+          : null;
+      },
     },
     {
       title: 'QC Flag',

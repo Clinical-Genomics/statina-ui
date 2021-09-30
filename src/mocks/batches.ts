@@ -617,9 +617,9 @@ export const mockBatch = {
         XXY: 'default',
         XYY: 'default',
       },
-      text_warning: 'Zscore_21',
+      text_warning: 'Zscore_21, Zscore_13',
       status: '',
-      sex: 'XY',
+      sex: 'XYY',
     },
     {
       SampleID: '2021-21167-07',
