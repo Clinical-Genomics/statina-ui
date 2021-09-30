@@ -4,12 +4,10 @@ import { Link } from 'react-router-dom';
 import { Sample } from '../../services/interfaces';
 
 type SampleProps = {
-  sample: Sample[];
-  infoBox: string;
-  batch: any;
+  infoBox: Sample[];
 };
 
-export function SampleInfoBox(infoBox) {
+export function SampleInfoBox(infoBox: any) {
   const [sample, setSample] = useState<any>(infoBox.infoBox[0].sample);
   const [batch, setBatch] = useState<any>(infoBox.infoBox[0].batch);
   return (
@@ -45,7 +43,7 @@ export function SampleInfoBox(infoBox) {
             {sample.text_warning}
           </Descriptions.Item>
           <Descriptions.Item label="Included in Clinical Data Set:">
-            {sample.include ? 'True' : 'False'}
+            {sample.include.toString().toUpperCase()}
           </Descriptions.Item>
         </Descriptions>
       </Card>

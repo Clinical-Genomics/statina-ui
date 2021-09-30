@@ -8,9 +8,6 @@ const { Title } = Typography;
 const { TabPane } = Tabs;
 const { TextArea } = Input;
 
-function callback(key) {
-  console.log(key);
-}
 export function SamplePage() {
   const [sample, setSample] = useState<any[]>([mockSample[0]]);
   const [comment, setComment] = useState<any[]>([mockSample[0].sample.comment]);
@@ -29,7 +26,7 @@ export function SamplePage() {
           <TextArea rows={4} onChange={onChange} defaultValue={comment} />
         </Card>
         <Card>
-          <Tabs defaultActiveKey="1" onChange={callback} type="card">
+          <Tabs defaultActiveKey="1" type="card">
             <TabPane tab="Status Table" key="1">
               <SampleStatusTable ChromosomeAbn={sample} />
             </TabPane>
