@@ -73,7 +73,7 @@ export const App = () => {
             <Routes isLoggedIn={true} />
           </div>
         </Content>
-        <Footer style={{ textAlign: 'center' }}>Clinical Genomics ©2020</Footer>
+        {/* <Footer style={{ textAlign: 'center' }}>Clinical Genomics ©2020</Footer> */}
       </Layout>
     </div>
   );
