@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Tabs } from 'antd';
+import { Card, Tabs } from 'antd';
 import { RouteComponentProps } from 'react-router-dom';
 import { SamplesTable } from '../../components/SamplesTable/SamplesTable';
 import { mockBatch } from '../../mocks/batches';
@@ -18,19 +18,21 @@ export const BatchPage = (props: BatchProps) => {
     setBatch(mockBatch);
   }, []);
   return (
-    <Tabs type="card">
-      <TabPane tab="Summary Table" key="1">
-        <SamplesTable samples={batch?.sample_info} showBatchInfo={false} />
-      </TabPane>
-      <TabPane tab="Zscore 13" key="Zscore_13">
-        <ZscoreGraph samples={batch?.sample_info} score={'Zscore_13'} />
-      </TabPane>
-      <TabPane tab="Zscore 18" key="Zscore_18">
-        <ZscoreGraph samples={batch?.sample_info} score={'Zscore_18'} />
-      </TabPane>
-      <TabPane tab="Zscore 21" key="Zscore_21">
-        <ZscoreGraph samples={batch?.sample_info} score={'Zscore_21'} />
-      </TabPane>
-    </Tabs>
+    <Card>
+      <Tabs type="card">
+        <TabPane tab="Summary Table" key="1">
+          <SamplesTable samples={batch?.sample_info} showBatchInfo={false} />
+        </TabPane>
+        <TabPane tab="Zscore 13" key="Zscore_13">
+          <ZscoreGraph samples={batch?.sample_info} score={'Zscore_13'} />
+        </TabPane>
+        <TabPane tab="Zscore 18" key="Zscore_18">
+          <ZscoreGraph samples={batch?.sample_info} score={'Zscore_18'} />
+        </TabPane>
+        <TabPane tab="Zscore 21" key="Zscore_21">
+          <ZscoreGraph samples={batch?.sample_info} score={'Zscore_21'} />
+        </TabPane>
+      </Tabs>
+    </Card>
   );
 };
