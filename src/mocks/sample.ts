@@ -75,7 +75,7 @@ export const mockSample = [
       CNVSegment: 'Found',
       segmental_calls:
         '/home/proj/production/housekeeper-bundles/setpika/2021-08-10/2021-21167-07.WCXpredict_aberrations.filt.bed',
-      include: false,
+      include: true,
       change_include_date: 'Lab Tech 2021/08/10 08:45:21',
       comment: 'Plasma rerun of suspected T18 matching FF.',
       status_13: 'Normal',

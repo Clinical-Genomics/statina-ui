@@ -6,11 +6,15 @@ import {
   QuestionCircleOutlined,
 } from '@ant-design/icons';
 import { red } from '@ant-design/colors';
-import { sampleStatusTags, sexTags } from '../../services/helpers/constants';
+import {
+  sampleStatusTags,
+  sexTags,
+  tagColors,
+} from '../../services/helpers/constants';
 
 type SamplesProps = {
   samples: any[];
-  showBatchInfo: boolean;
+  showBatchInfo?: boolean;
 };
 
 const { Search } = Input;
@@ -165,7 +169,8 @@ export const SamplesTable = ({
       title: 'CNV Segment',
       dataIndex: 'CNVSegment',
       key: 'CNVSegment',
-      render: (sex: any) => (sex ? <Tag color="blue">{sex}</Tag> : null),
+      render: (sex: any) =>
+        sex ? <Tag color={tagColors.CNVSegment}>{sex}</Tag> : null,
     },
     {
       title: (
@@ -182,7 +187,7 @@ export const SamplesTable = ({
       render: (warnings: any) => {
         return warnings.length > 0
           ? warnings.split(', ').map((warning) => (
-              <Tag color="volcano" key={warning}>
+              <Tag color={tagColors.warning} key={warning}>
                 {warning}
               </Tag>
             ))
@@ -209,7 +214,7 @@ export const SamplesTable = ({
       key: 'status',
       render: (status) => {
         return (
-          status && (
+          status.lenght > 0 && (
             <Tag color={sampleStatusTags[status]?.color}>
               {sampleStatusTags[status]?.label}
             </Tag>
@@ -260,8 +265,8 @@ export const SamplesTable = ({
   return (
     <>
       <Search
-        placeholder={`Search by Sample${
-          showBatchInfo ? ', Batch' : ''
+        placeholder={`Search by Sample name${
+          showBatchInfo ? ', Batch name' : ''
         } or Comment`}
         onSearch={onSearch}
         style={{ paddingBottom: 20 }}

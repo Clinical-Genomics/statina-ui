@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Descriptions, Card, Tag } from 'antd';
 import { Link } from 'react-router-dom';
 import { Sample } from '../../services/interfaces';
-import { sexTags } from '../../services/helpers/constants';
+import { sexTags, tagColors } from '../../services/helpers/constants';
 
 type SampleProps = {
   infoBox: Sample[];
@@ -41,10 +41,17 @@ export function SampleInfoBox(infoBox: any) {
             {sample.sex && <Tag color={sexTags[sample.sex]}>{sample.sex}</Tag>}
           </Descriptions.Item>
           <Descriptions.Item label="Abnormality (Auto Classified):">
-            {sample.text_warning}
+            {sample.text_warning.length > 0 &&
+              sample.text_warning.split(', ').map((warning) => (
+                <Tag color={tagColors.warning} key={warning}>
+                  {warning}
+                </Tag>
+              ))}
           </Descriptions.Item>
           <Descriptions.Item label="Included in Clinical Data Set:">
-            {sample.include.toString().toUpperCase()}
+            <Tag color={tagColors.include[sample.include]}>
+              {sample.include.toString().toUpperCase()}
+            </Tag>
           </Descriptions.Item>
         </Descriptions>
       </Card>

@@ -3,6 +3,11 @@ export const sexTags = {
   XX: 'magenta',
 };
 
+export const includeTags = {
+  false: 'gray',
+  true: 'green',
+};
+
 export const sampleStatusTags = {
   normal: { label: 'Normal', color: 'green' },
   suspected: { label: 'Suspected', color: 'gold' },
@@ -12,4 +17,12 @@ export const sampleStatusTags = {
   falseNegative: { label: 'False Negative', color: 'purple' },
   other: { label: 'Other', color: 'geekblue' },
   failed: { label: 'Failed', color: 'magenta' },
+};
+
+export const tagColors = {
+  sampleStatus: sampleStatusTags,
+  sex: sexTags,
+  warning: 'volcano',
+  CNVSegment: 'blue',
+  include: includeTags,
 };
