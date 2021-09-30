@@ -45,14 +45,14 @@ const columns = [
   },
 ];
 
-export default function SampleStatusTable(ChromosomeAbn) {
-  const [chromosomeAbn, setChromosomeAbn] = useState(
-    ChromosomeAbn.ChromosomeAbn[0]
+export function SampleStatusTable(chromosomeAbn) {
+  const [chrom_abnorm, setChromosomeAbn] = useState(
+    chromosomeAbn.ChromosomeAbn[0]
   );
   const [abn, setAbn] = useState();
 
   useEffect(() => {
-    setAbn(chromosomeAbn.chrom_abnorm.map((abn) => ({ chrom_abnorm: abn })));
+    setAbn(chrom_abnorm.chrom_abnorm.map((abn) => ({ chrom_abnorm: abn })));
   }, []);
   return (
     <>

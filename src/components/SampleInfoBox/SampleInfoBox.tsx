@@ -9,7 +9,7 @@ type SampleProps = {
   batch: any;
 };
 
-export default function InfoBox(infoBox) {
+export function SampleInfoBox(infoBox) {
   const [sample, setSample] = useState<any>(infoBox.infoBox[0].sample);
   const [batch, setBatch] = useState<any>(infoBox.infoBox[0].batch);
   return (
