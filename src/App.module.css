@@ -4,6 +4,11 @@
     right: 75px;
 
 }
+.header {
+    position: fixed;
+    z-index: 10;
+    width: 100%;
+}
 
 .greeting {
     position: absolute;
@@ -23,10 +28,10 @@
     padding: 0 15px 2px 0;
 }
 
-.layout {
-    height: 100vh;
+.siteLayoutBackground {
+    background: #fff;
 }
 
-[data-theme="dark"] .siteLayout .siteLayoutBackground {
+[data-theme="dark"] .siteLayoutBackground {
   background: #141414;
 }
