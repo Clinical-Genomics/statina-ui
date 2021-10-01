@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Input, Table } from 'antd';
+import { Input, Space, Table } from 'antd';
 import { sortDate } from '../../services/helpers/helpers';
 import { Batch } from '../../services/interfaces';
 import { Link } from 'react-router-dom';
+import { ExportCSV } from '../../components/ExportCSV/ExportCSV';
+import { ExportPDF } from '../../components/ExportPDF/ExportPDF';
 
 type BatchesProps = {
   batches: Batch[];
@@ -56,6 +58,11 @@ export const BatchesTable = ({ batches }: BatchesProps) => {
         onSearch={onSearch}
         style={{ paddingBottom: 20 }}
       />
+
+      <Space size="small">
+        <ExportCSV csvData={batches} fileName={'Statina'} />
+        <ExportPDF pdfData={batches} />
+      </Space>
       <Table
         columns={columns}
         dataSource={filteredBatches}

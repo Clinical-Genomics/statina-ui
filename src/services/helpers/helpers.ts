@@ -1,12 +1,12 @@
-import { ErrorNotification } from '../interfaces';
+import { Notification } from '../interfaces';
 import { notification } from 'antd';
 import { AxiosError } from 'axios';
 
-export const OpenNotification = ({
+export const ErrorNotification = ({
   type,
   message,
   description,
-}: ErrorNotification) => {
+}: Notification) => {
   const key = `open${Date.now()}`;
   notification[type]({
     message,
@@ -18,9 +18,25 @@ export const OpenNotification = ({
   });
 };
 
+export const SuccessNotification = ({
+  type,
+  message,
+  description,
+}: Notification) => {
+  const key = `open${Date.now()}`;
+  notification[type]({
+    message,
+    description,
+    btn: null,
+    key,
+    closeIcon: null,
+    duration: 2,
+  });
+};
+
 export const createErrorNotification = (error: AxiosError) => {
   const { errorMessage, errorDescription } = createErrorMessage(error);
-  OpenNotification({
+  ErrorNotification({
     type: 'error',
     message: errorMessage,
     description: errorDescription,

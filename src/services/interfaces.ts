@@ -1,7 +1,7 @@
-export interface ErrorNotification {
-  type: 'error';
+export interface Notification {
+  type: 'error' | 'success' | 'info' | 'warning';
   message: string;
-  description: string;
+  description?: string;
 }
 
 export interface Batch {
