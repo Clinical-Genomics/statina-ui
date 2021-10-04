@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Input, Space, Table } from 'antd';
+import { Col, Dropdown, Input, Menu, Row, Table } from 'antd';
 import { sortDate } from '../../services/helpers/helpers';
 import { Batch } from '../../services/interfaces';
 import { Link } from 'react-router-dom';
@@ -51,18 +51,32 @@ export const BatchesTable = ({ batches }: BatchesProps) => {
     },
   ];
 
+  const downloadMenu = (
+    <Menu style={{ width: 100, textAlign: 'center' }}>
+      <Menu.Item key="excel">
+        <ExportCSV csvData={batches} fileName={'Statina'} />
+      </Menu.Item>
+      <Menu.Item key="pdf">
+        <ExportPDF pdfData={batches} />
+      </Menu.Item>
+    </Menu>
+  );
+
   return (
     <>
-      <Search
-        placeholder="Search by Batch or Flowcell ID"
-        onSearch={onSearch}
-        style={{ paddingBottom: 20 }}
-      />
-
-      <Space size="small">
-        <ExportCSV csvData={batches} fileName={'Statina'} />
-        <ExportPDF pdfData={batches} />
-      </Space>
+      <Row justify="space-between" style={{ paddingBottom: 20 }}>
+        <Col span={2}>
+          <Dropdown.Button overlay={downloadMenu} type="primary">
+            Download all batches
+          </Dropdown.Button>
+        </Col>
+        <Col span={8}>
+          <Search
+            placeholder="Search by Batch or Flowcell ID"
+            onSearch={onSearch}
+          />
+        </Col>
+      </Row>
       <Table
         columns={columns}
         dataSource={filteredBatches}

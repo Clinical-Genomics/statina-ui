@@ -1,6 +1,5 @@
 import React from 'react';
-import { Button, Tooltip } from 'antd';
-import { FileExcelOutlined } from '@ant-design/icons';
+import { Tooltip } from 'antd';
 import * as FileSaver from 'file-saver';
 import * as XLSX from 'xlsx';
 import {
@@ -45,13 +44,7 @@ export const ExportCSV = ({
   };
   return (
     <Tooltip title="Export to Excel">
-      <Button
-        type="default"
-        icon={<FileExcelOutlined />}
-        onClick={(e) => exportToCSV(csvData, fileName)}
-      >
-        Excel
-      </Button>
+      <span onClick={(e) => exportToCSV(csvData, fileName)}>Excel</span>
     </Tooltip>
   );
 };

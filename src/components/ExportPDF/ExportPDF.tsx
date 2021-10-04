@@ -1,8 +1,7 @@
 import React from 'react';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
-import { Button, Tooltip } from 'antd';
-import { FilePdfOutlined } from '@ant-design/icons';
+import { Tooltip } from 'antd';
 import {
   ErrorNotification,
   SuccessNotification,
@@ -53,13 +52,7 @@ export function ExportPDF(pdfData) {
   };
   return (
     <Tooltip title="Export to PDF">
-      <Button
-        type="default"
-        icon={<FilePdfOutlined />}
-        onClick={(e) => exportPDF()}
-      >
-        PDF
-      </Button>
+      <span onClick={(e) => exportPDF()}>PDF</span>
     </Tooltip>
   );
 }
