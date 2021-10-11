@@ -9,5 +9,9 @@ export const BatchesPage = () => {
     //    getBatches().then((response) => setBatches(response.batches));
     setBatches(mockBatches);
   }, []);
-  return <BatchesTable batches={batches}></BatchesTable>;
+  return (
+    <>
+      <BatchesTable batches={batches}></BatchesTable>
+    </>
+  );
 };
