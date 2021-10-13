@@ -1,6 +1,6 @@
 import * as React from 'react';
 import styles from './HomePage.module.css';
-import MainLogo from '../../assets/cg-big-logo.svg';
+import MainLogo from 'assets/cg-big-logo.svg';
 
 export const HomePage = () => (
   <div className={styles.homeContainer}>

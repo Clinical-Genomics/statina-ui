@@ -1,8 +1,8 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { windowMatchMedia } from '../../services/helpers/helpers';
+import { windowMatchMedia } from 'services/helpers/helpers';
 import { SampleInfoBox } from './SampleInfoBox';
-import { mockSample } from '../../mocks/sample';
+import { mockSample } from 'mocks/sample';
 import { MemoryRouter } from 'react-router-dom';
 
 describe('Sample info box', () => {

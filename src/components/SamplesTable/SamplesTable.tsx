@@ -10,7 +10,7 @@ import {
   sampleStatusTags,
   sexTags,
   tagColors,
-} from '../../services/helpers/constants';
+} from 'services/helpers/constants';
 
 type SamplesProps = {
   samples: any[];

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Descriptions, Card, Tag } from 'antd';
 import { Link } from 'react-router-dom';
-import { Sample } from '../../services/interfaces';
-import { sexTags, tagColors } from '../../services/helpers/constants';
+import { Sample } from 'services/interfaces';
+import { sexTags, tagColors } from 'services/helpers/constants';
 
 type SampleProps = {
   infoBox: Sample[];

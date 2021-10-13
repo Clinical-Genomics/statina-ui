@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Col, Dropdown, Input, Menu, Row, Table } from 'antd';
-import { sortDate } from '../../services/helpers/helpers';
-import { Batch } from '../../services/interfaces';
+import { sortDate } from 'services/helpers/helpers';
+import { Batch } from 'services/interfaces';
 import { Link } from 'react-router-dom';
-import { ExportCSV } from '../../components/ExportCSV/ExportCSV';
-import { ExportPDF } from '../../components/ExportPDF/ExportPDF';
+import { ExportCSV } from 'components/ExportCSV/ExportCSV';
+import { ExportPDF } from 'components/ExportPDF/ExportPDF';
 
 type BatchesProps = {
   batches: Batch[];

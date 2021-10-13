@@ -1,6 +1,6 @@
 import { Button, Select, Space, Table } from 'antd';
 import React, { useEffect, useState } from 'react';
-import { sampleStatusTags } from '../../services/helpers/constants';
+import { sampleStatusTags } from 'services/helpers/constants';
 
 const { Option } = Select;
 

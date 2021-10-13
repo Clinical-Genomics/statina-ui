@@ -5,7 +5,7 @@ import { Tooltip } from 'antd';
 import {
   ErrorNotification,
   SuccessNotification,
-} from '../../services/helpers/helpers';
+} from 'services/helpers/helpers';
 
 export function ExportPDF(pdfData) {
   const exportPDF = () => {

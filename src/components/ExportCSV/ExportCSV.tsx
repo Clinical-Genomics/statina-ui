@@ -5,7 +5,7 @@ import * as XLSX from 'xlsx';
 import {
   ErrorNotification,
   SuccessNotification,
-} from '../../services/helpers/helpers';
+} from 'services/helpers/helpers';
 
 export const ExportCSV = ({
   csvData,

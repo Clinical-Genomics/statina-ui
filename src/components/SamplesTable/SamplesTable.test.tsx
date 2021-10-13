@@ -1,8 +1,8 @@
 import React from 'react';
 import { render, getByText } from '@testing-library/react';
-import { windowMatchMedia } from '../../services/helpers/helpers';
+import { windowMatchMedia } from 'services/helpers/helpers';
 import { SamplesTable } from './SamplesTable';
-import { mockSamples } from '../../mocks/samples';
+import { mockSamples } from 'mocks/samples';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
 

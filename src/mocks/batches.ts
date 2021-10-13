@@ -1,4 +1,4 @@
-import { Batch } from '../services/interfaces';
+import { Batch } from 'services/interfaces';
 
 export const mockBatches: Batch[] = [
   {

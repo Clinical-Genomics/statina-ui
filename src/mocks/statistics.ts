@@ -1,4 +1,4 @@
-import { TracePlot } from '../services/interfaces';
+import { TracePlot } from 'services/interfaces';
 
 export const plotTab = [
   'Chr13_Ratio',

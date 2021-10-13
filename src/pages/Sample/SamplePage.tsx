@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Card, Space, Typography, Tabs, Input } from 'antd';
-import { SampleInfoBox } from '../../components/SampleInfoBox/SampleInfoBox';
-import { SampleStatusTable } from '../../components/SampleStatusTable/SampleStatusTable';
-import { mockSample } from '../../mocks/sample';
+import { SampleInfoBox } from 'components/SampleInfoBox/SampleInfoBox';
+import { SampleStatusTable } from 'components/SampleStatusTable/SampleStatusTable';
+import { mockSample } from 'mocks/sample';
 
 const { Title } = Typography;
 const { TabPane } = Tabs;

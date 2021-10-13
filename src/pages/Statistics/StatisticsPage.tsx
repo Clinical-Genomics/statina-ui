@@ -1,7 +1,7 @@
 import React from 'react';
 import { Tabs } from 'antd';
-import { plotTab, trace } from '../../mocks/statistics';
-import { BoxPlot } from '../../components/BoxPlots/BoxPlot';
+import { plotTab, trace } from 'mocks/statistics';
+import { BoxPlot } from 'components/BoxPlots/BoxPlot';
 
 export function StatisticsPage() {
   function callback(key) {

@@ -1,8 +1,8 @@
 import React from 'react';
 import { render, getByText } from '@testing-library/react';
-import { windowMatchMedia } from '../../services/helpers/helpers';
+import { windowMatchMedia } from 'services/helpers/helpers';
 import { BatchesTable } from './BatchesTable';
-import { mockBatches } from '../../mocks/batches';
+import { mockBatches } from 'mocks/batches';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
 

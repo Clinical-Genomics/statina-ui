@@ -1,13 +1,13 @@
 import React from 'react';
 import { Switch, Redirect, Route } from 'react-router-dom';
-import { HomePage } from '../pages/Home/HomePage';
-import { UnauthorizedPage } from '../pages/UnauthorizedPage';
-import { BatchesPage } from '../pages/Batches/BatchesPage';
-import { LatestPage } from '../pages/Latest/LatestPage';
-import { BatchPage } from '../pages/Batch/BatchPage';
-import { SamplesPage } from '../pages/Samples/SamplesPage';
-import { StatisticsPage } from '../pages/Statistics/StatisticsPage';
-import { SamplePage } from '../pages/Sample/SamplePage';
+import { HomePage } from 'pages/Home/HomePage';
+import { UnauthorizedPage } from 'pages/UnauthorizedPage';
+import { BatchesPage } from 'pages/Batches/BatchesPage';
+import { LatestPage } from 'pages/Latest/LatestPage';
+import { BatchPage } from 'pages/Batch/BatchPage';
+import { SamplesPage } from 'pages/Samples/SamplesPage';
+import { StatisticsPage } from 'pages/Statistics/StatisticsPage';
+import { SamplePage } from 'pages/Sample/SamplePage';
 
 interface RoutesProps {
   isLoggedIn: boolean;

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Card, Tabs } from 'antd';
 import { RouteComponentProps } from 'react-router-dom';
-import { SamplesTable } from '../../components/SamplesTable/SamplesTable';
-import { mockBatch } from '../../mocks/batches';
-import { ZscoreGraph } from '../../components/ZscoreGraph/ZscoreGraph';
+import { SamplesTable } from 'components/SamplesTable/SamplesTable';
+import { mockBatch } from 'mocks/batches';
+import { ZscoreGraph } from 'components/ZscoreGraph/ZscoreGraph';
 
 type BatchProps = RouteComponentProps & {
   batchId: string;

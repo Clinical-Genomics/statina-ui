@@ -1,6 +1,6 @@
 import React from 'react';
 import Plot from 'react-plotly.js';
-import { TracePlot } from '../../services/interfaces';
+import { TracePlot } from 'services/interfaces';
 
 type PlotProps = {
   trace: TracePlot;
