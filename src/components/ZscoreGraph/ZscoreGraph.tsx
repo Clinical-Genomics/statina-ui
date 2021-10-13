@@ -1,6 +1,5 @@
 import React from 'react';
 import Plot from 'react-plotly.js';
-import Plotly from 'plotly.js';
 
 type ZscoreGraphProps = {
   samples: any[];
@@ -33,19 +32,6 @@ export const ZscoreGraph = ({ samples, score }: ZscoreGraphProps) => {
     width: 1200,
     height: 600,
   };
-
-  /* Plotly.plot('graph', [
-    {
-      y: [2, 1, 2],
-      line: { shape: 'spline' },
-    },
-  ])
-    .then((gd) => {
-      return Plotly.toImage(gd);
-    })
-    .then((dataURI) => {
-      console.log(dataURI);
-    }); */
 
   return <Plot data={data} layout={layout} />;
 };

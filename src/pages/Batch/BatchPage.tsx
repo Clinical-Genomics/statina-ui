@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Card, Tabs } from 'antd';
+import { Card, Tabs, Row, Menu, Col, Dropdown } from 'antd';
 import { RouteComponentProps } from 'react-router-dom';
 import { SamplesTable } from '../../components/SamplesTable/SamplesTable';
 import { mockBatch } from '../../mocks/batches';
@@ -18,9 +18,28 @@ export const BatchPage = (props: BatchProps) => {
   useEffect(() => {
     setBatch(mockBatch);
   }, []);
+
+  const downloadMenu = (
+    <Menu style={{ width: 100, textAlign: 'center' }}>
+      <Menu.Item key="pdf">
+        <BatchTablePDF pdfData={batch?.sample_info} score={'Zscore_13'} />
+      </Menu.Item>
+    </Menu>
+  );
+
   return (
     <Card>
-      <BatchTablePDF pdfData={batch?.sample_info} />
+      <Row justify={'end'}>
+        <Col>
+          <Dropdown.Button
+            overlay={downloadMenu}
+            type="primary"
+            style={{ paddingBottom: 20 }}
+          >
+            Download all batches
+          </Dropdown.Button>
+        </Col>
+      </Row>
       <Tabs type="card">
         <TabPane tab="Summary Table" key="1">
           <SamplesTable samples={batch?.sample_info} showBatchInfo={false} />

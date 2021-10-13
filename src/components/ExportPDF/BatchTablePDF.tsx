@@ -6,8 +6,10 @@ import {
   ErrorNotification,
   SuccessNotification,
 } from '../../services/helpers/helpers';
+import Plot from 'react-plotly.js';
+import Plotly from 'plotly.js';
 
-export function BatchTablePDF(pdfData) {
+export function BatchTablePDF(pdfData, score) {
   const exportPDF = () => {
     if (pdfData === undefined || pdfData.length == 0) {
       ErrorNotification({
@@ -60,6 +62,8 @@ export function BatchTablePDF(pdfData) {
         head: headers,
         body: data,
         theme: 'grid',
+
+        // Change the background color at a specific value
         /* didParseCell: function (data) {
           if (data.row.raw[1] === -0.55) {
             data.cell.styles.fillColor = [239, 154, 154];
@@ -67,7 +71,47 @@ export function BatchTablePDF(pdfData) {
         }, */
       };
 
-      const imgData = 'here the jpeg image string on base64';
+      // Fetal Fraction X/Y plot needs to be after the summary table
+      /* const data2: any[] = [
+        {
+          name: `Current batch ${pdfData.length}`,
+          y: pdfData.pdfData.map((sample) => sample[score]),
+          x: pdfData.pdfData.map((sample) => sample?.SampleID),
+          mode: 'markers',
+          type: 'scatter',
+        },
+      ];
+      const layout = {
+        //legend: { hovermode: 'closest' },
+        //hovermode: 'closest',
+        annotations: [],
+        xaxis: {
+          showline: true,
+          showgrid: true,
+        },
+        yaxis: {
+          range: [-10, 10],
+          title: score,
+        },
+        width: 1200,
+        height: 600,
+      };
+
+      Plotly.newPlot('graph', data2, layout)
+        .then((gd) => {
+          return Plotly.toImage(gd, {
+            format: 'png',
+            height: 300,
+            width: 400,
+          });
+        })
+        .then((dataURI) => {
+          console.log(dataURI);
+          console.log('test');
+        }); */
+
+      // insert the plot as jpeg image string on base64
+      //const imgData = 'here the jpeg image string on base64';
       doc.setFontSize(20);
       doc.text(title, marginLeft, 20);
       doc.setTextColor(105, 105, 105);
@@ -75,7 +119,7 @@ export function BatchTablePDF(pdfData) {
       doc.text(batchNum, marginLeft, 40);
       doc.setTextColor(0, 0, 0);
       doc.autoTable(content);
-      doc.addImage(imgData, 'JPEG', 15, 40, 180, 160);
+      //doc.addImage(imgData, 'JPEG', 15, 40, 180, 160);
       const pageCount = doc.internal.getNumberOfPages();
       for (let i = 1; i <= pageCount; i++) {
         // Go to page i
