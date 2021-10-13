@@ -34,11 +34,18 @@ export const ZscoreGraph = ({ samples, score }: ZscoreGraphProps) => {
     height: 600,
   };
 
-  Plotly.toImage('graph', { format: 'png', width: 800, height: 600 }).then(
-    function (dataURL) {
-      console.log(dataURL);
-    }
-  );
+  /* Plotly.plot('graph', [
+    {
+      y: [2, 1, 2],
+      line: { shape: 'spline' },
+    },
+  ])
+    .then((gd) => {
+      return Plotly.toImage(gd);
+    })
+    .then((dataURI) => {
+      console.log(dataURI);
+    }); */
 
   return <Plot data={data} layout={layout} />;
 };
