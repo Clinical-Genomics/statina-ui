@@ -25,6 +25,9 @@
     "downlevelIteration": true,
   },
   "include": [
-    [ "index.d.ts", "**/*.ts", "**/*.tsx", "src/"]
+    "index.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "src/"
   ]
 }
