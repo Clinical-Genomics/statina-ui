@@ -119,12 +119,10 @@ export const mockSample = [
     },
     batch: {
       SampleProject: '2113162_NIPT',
-      result_file:
-        '/home/proj/production/housekeeper-bundles/setpika/2021-08-10/2113162_NIPT.csv',
+      result_file: '/home/proj/production/housekeeper-bundles/setpika/2021-08-10/2113162_NIPT.csv',
       multiqc_report:
         '/home/proj/production/housekeeper-bundles/setpika/2021-08-10/multiqc_report.html',
-      segmental_calls:
-        '/home/proj/production/housekeeper-bundles/setpika/2021-08-10',
+      segmental_calls: '/home/proj/production/housekeeper-bundles/setpika/2021-08-10',
       Flowcell: 'HHGNJDRXY',
       SequencingDate: '2021-08-10',
       Median_13: 0.9997439639817628,
@@ -141,4 +139,4 @@ export const mockSample = [
     },
     page_id: 'sample',
   },
-];
+]

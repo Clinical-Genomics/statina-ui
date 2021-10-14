@@ -1,16 +1,16 @@
-import React from 'react';
-import styles from './App.module.css';
-import './index.css';
-import { Layout, Menu, Button } from 'antd';
-import { Link, useLocation } from 'react-router-dom';
-import { Routes } from './components/Routes';
-import Logo from './assets/logo.png';
-import './App.less';
-import Footer from './components/Footer/Footer';
+import React from 'react'
+import styles from './App.module.css'
+import './index.css'
+import { Layout, Menu, Button } from 'antd'
+import { Link, useLocation } from 'react-router-dom'
+import { Routes } from './components/Routes'
+import Logo from './assets/logo.png'
+import './App.less'
+import Footer from './components/Footer/Footer'
 
-const { Header, Content } = Layout;
+const { Header, Content } = Layout
 export const App = () => {
-  const [isLoaded, setIsLoaded] = React.useState<boolean>(false);
+  const [isLoaded, setIsLoaded] = React.useState<boolean>(false)
 
   return (
     <div className="app">
@@ -51,10 +51,7 @@ export const App = () => {
           </Menu>
           <div></div>
           <div className={styles.googleButton}>
-            <Button
-              type="primary"
-              onClick={() => window.alert('Login not avaiable yet')}
-            >
+            <Button type="primary" onClick={() => window.alert('Login not avaiable yet')}>
               Login
             </Button>
           </div>
@@ -67,15 +64,12 @@ export const App = () => {
             minHeight: 'calc(100vh - 155px)',
           }}
         >
-          <div
-            className={styles.siteLayoutBackground}
-            style={{ padding: 24, minHeight: 380 }}
-          >
+          <div className={styles.siteLayoutBackground} style={{ padding: 24, minHeight: 380 }}>
             <Routes isLoggedIn={true} />
           </div>
         </Content>
         <Footer />
       </Layout>
     </div>
-  );
-};
+  )
+}

@@ -1,64 +1,64 @@
 export const getStatusTagColor = (tag: string) => {
   switch (tag) {
     case 'failed':
-      return 'volcano';
+      return 'volcano'
     case 'pending':
-      return 'gold';
+      return 'gold'
     case 'completed':
-      return 'green';
+      return 'green'
     default:
-      return 'geekblue';
+      return 'geekblue'
   }
-};
+}
 
 export const getTypeTagColor = (tag: string) => {
   switch (tag) {
     case 'wgs':
-      return 'magenta';
+      return 'magenta'
     case 'wes':
-      return 'purple';
+      return 'purple'
     case 'tgs':
-      return 'green';
+      return 'green'
     default:
-      return 'cyan';
+      return 'cyan'
   }
-};
+}
 
 export const getPipelineTagColor = (tag: string) => {
   switch (tag.toLowerCase()) {
     case 'balsamic':
-      return '#16a596';
+      return '#16a596'
     case 'mip-dna':
-      return '#bc6ff1';
+      return '#bc6ff1'
     case 'mip-rna':
-      return '#800000';
+      return '#800000'
     case 'fluffy':
-      return '#e6739f';
+      return '#e6739f'
     case 'microsalt':
-      return '#eb7047';
+      return '#eb7047'
     case 'sars-cov-2':
-      return '#44aeeb';
+      return '#44aeeb'
     case 'demultiplex':
-      return '#096194';
+      return '#096194'
     case 'spring':
-      return '#5d198a';
+      return '#5d198a'
     case 'rsync':
-      return '#56c46c';
+      return '#56c46c'
     default:
-      return '#737373';
+      return '#737373'
   }
-};
+}
 
 export const getPriorityTagColor = (tag: string) => {
   switch (tag) {
     case 'high':
-      return 'gold';
+      return 'gold'
     case 'normal':
-      return 'cyan';
+      return 'cyan'
     default:
-      return 'blue';
+      return 'blue'
   }
-};
+}
 
 export const antdPresets: string[] = [
   'magenta',
@@ -71,10 +71,10 @@ export const antdPresets: string[] = [
   'cyan',
   'bluegeek',
   'bluepurple',
-];
+]
 
 // Returns an Antd preset color given any string
 export const colorFromString = (str: string, colorList = antdPresets) => {
-  const numberFromString = parseInt(String(str.length).charAt(0));
-  return colorList[numberFromString];
-};
+  const numberFromString = parseInt(String(str.length).charAt(0))
+  return colorList[numberFromString]
+}

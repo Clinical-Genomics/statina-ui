@@ -1,10 +1,10 @@
-import React from 'react';
-import Plot from 'react-plotly.js';
+import React from 'react'
+import Plot from 'react-plotly.js'
 
 type ZscoreGraphProps = {
-  samples: any[];
-  score: string;
-};
+  samples: any[]
+  score: string
+}
 
 export const ZscoreGraph = ({ samples, score }: ZscoreGraphProps) => {
   const data: any[] = [
@@ -15,7 +15,7 @@ export const ZscoreGraph = ({ samples, score }: ZscoreGraphProps) => {
       mode: 'markers',
       type: 'scatter',
     },
-  ];
+  ]
 
   const layout = {
     legend: { hovermode: 'closest' },
@@ -31,7 +31,7 @@ export const ZscoreGraph = ({ samples, score }: ZscoreGraphProps) => {
     },
     width: 1200,
     height: 600,
-  };
+  }
 
-  return <Plot data={data} layout={layout} />;
-};
+  return <Plot data={data} layout={layout} />
+}

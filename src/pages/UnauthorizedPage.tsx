@@ -1,18 +1,18 @@
-import React, { useEffect } from 'react';
-import { Result } from 'antd';
-import { useHistory } from 'react-router-dom';
+import React, { useEffect } from 'react'
+import { Result } from 'antd'
+import { useHistory } from 'react-router-dom'
 
 interface UnauthorizedPageProps {
-  isLoggedIn: boolean;
+  isLoggedIn: boolean
 }
 
 export const UnauthorizedPage = (props: UnauthorizedPageProps) => {
-  const { isLoggedIn } = props;
-  const history = useHistory();
+  const { isLoggedIn } = props
+  const history = useHistory()
 
   useEffect(() => {
-    if (isLoggedIn) history.push('/');
-  }, [history, isLoggedIn]);
+    if (isLoggedIn) history.push('/')
+  }, [history, isLoggedIn])
 
   return (
     <Result
@@ -20,5 +20,5 @@ export const UnauthorizedPage = (props: UnauthorizedPageProps) => {
       title="403"
       subTitle="Sorry, you are not authorized to access this page. Login with your Google account"
     />
-  );
-};
+  )
+}

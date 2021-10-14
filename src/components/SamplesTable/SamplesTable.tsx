@@ -1,52 +1,42 @@
-import React, { useEffect, useState } from 'react';
-import { Input, Table, Tag, Tooltip } from 'antd';
-import { Link } from 'react-router-dom';
-import {
-  CloudDownloadOutlined,
-  QuestionCircleOutlined,
-} from '@ant-design/icons';
-import { red } from '@ant-design/colors';
-import {
-  sampleStatusTags,
-  sexTags,
-  tagColors,
-} from '../../services/helpers/constants';
+import React, { useEffect, useState } from 'react'
+import { Input, Table, Tag, Tooltip } from 'antd'
+import { Link } from 'react-router-dom'
+import { CloudDownloadOutlined, QuestionCircleOutlined } from '@ant-design/icons'
+import { red } from '@ant-design/colors'
+import { sampleStatusTags, sexTags, tagColors } from 'services/helpers/constants'
 
 type SamplesProps = {
-  samples: any[];
-  showBatchInfo?: boolean;
-};
+  samples: any[]
+  showBatchInfo?: boolean
+}
 
-const { Search } = Input;
+const { Search } = Input
 
-export const SamplesTable = ({
-  samples,
-  showBatchInfo = true,
-}: SamplesProps) => {
-  const [filteredSamples, setFilteredSamples] = useState<any[]>(samples);
-  const [selectedRowKeys, setSelectedRowKeys] = useState<any[]>([]);
+export const SamplesTable = ({ samples, showBatchInfo = true }: SamplesProps) => {
+  const [filteredSamples, setFilteredSamples] = useState<any[]>(samples)
+  const [selectedRowKeys, setSelectedRowKeys] = useState<any[]>([])
 
   useEffect(() => {
-    setFilteredSamples(samples);
+    setFilteredSamples(samples)
     if (samples?.length > 0) {
-      const selectedKey: string[] = [];
+      const selectedKey: string[] = []
       samples.forEach((sample) => {
-        if (sample.include) selectedKey.push(sample?.SampleID);
-      });
-      setSelectedRowKeys(selectedKey);
+        if (sample.include) selectedKey.push(sample?.SampleID)
+      })
+      setSelectedRowKeys(selectedKey)
     }
-  }, [samples]);
+  }, [samples])
 
   const onSearch = (searchInput) => {
-    const lowerCaseInput = searchInput.toLowerCase();
+    const lowerCaseInput = searchInput.toLowerCase()
     const filteredData = samples.filter(
       (entry) =>
         entry.SampleProject.toLowerCase().includes(lowerCaseInput) ||
         entry.SampleID.toLowerCase().includes(lowerCaseInput) ||
         entry.comment.toLowerCase().includes(lowerCaseInput)
-    );
-    setFilteredSamples(filteredData);
-  };
+    )
+    setFilteredSamples(filteredData)
+  }
 
   const columns: any = [
     {
@@ -54,9 +44,7 @@ export const SamplesTable = ({
       dataIndex: 'SampleID',
       key: 'SampleID',
       fixed: 'left',
-      render: (SampleID: any) => (
-        <Link to={`/samples/${SampleID}`}>{SampleID}</Link>
-      ),
+      render: (SampleID: any) => <Link to={`/samples/${SampleID}`}>{SampleID}</Link>,
     },
     {
       title: 'Batch ID',
@@ -64,9 +52,7 @@ export const SamplesTable = ({
       key: 'SampleProject',
       fixed: 'left',
       visible: showBatchInfo,
-      render: (SampleProject: any) => (
-        <Link to={`/batches/${SampleProject}`}>{SampleProject}</Link>
-      ),
+      render: (SampleProject: any) => <Link to={`/batches/${SampleProject}`}>{SampleProject}</Link>,
     },
     {
       title: 'Zscore 13',
@@ -77,13 +63,11 @@ export const SamplesTable = ({
         return {
           props: {
             style: {
-              background: sample.text_warning.includes('Zscore_13')
-                ? red[1]
-                : null,
+              background: sample.text_warning.includes('Zscore_13') ? red[1] : null,
             },
           },
           children: <div>{score}</div>,
-        };
+        }
       },
     },
     {
@@ -95,13 +79,11 @@ export const SamplesTable = ({
         return {
           props: {
             style: {
-              background: sample.text_warning.includes('Zscore_18')
-                ? red[1]
-                : null,
+              background: sample.text_warning.includes('Zscore_18') ? red[1] : null,
             },
           },
           children: <div>{score}</div>,
-        };
+        }
       },
     },
     {
@@ -113,13 +95,11 @@ export const SamplesTable = ({
         return {
           props: {
             style: {
-              background: sample.text_warning.includes('Zscore_21')
-                ? red[1]
-                : null,
+              background: sample.text_warning.includes('Zscore_21') ? red[1] : null,
             },
           },
           children: <div>{score}</div>,
-        };
+        }
       },
     },
     {
@@ -131,13 +111,11 @@ export const SamplesTable = ({
         return {
           props: {
             style: {
-              background: sample.text_warning.includes('Zscore_X')
-                ? red[1]
-                : null,
+              background: sample.text_warning.includes('Zscore_X') ? red[1] : null,
             },
           },
           children: <div>{score}</div>,
-        };
+        }
       },
     },
     {
@@ -169,8 +147,7 @@ export const SamplesTable = ({
       title: 'CNV Segment',
       dataIndex: 'CNVSegment',
       key: 'CNVSegment',
-      render: (sex: any) =>
-        sex ? <Tag color={tagColors.CNVSegment}>{sex}</Tag> : null,
+      render: (sex: any) => (sex ? <Tag color={tagColors.CNVSegment}>{sex}</Tag> : null),
     },
     {
       title: (
@@ -191,7 +168,7 @@ export const SamplesTable = ({
                 {warning}
               </Tag>
             ))
-          : null;
+          : null
       },
     },
     {
@@ -215,11 +192,9 @@ export const SamplesTable = ({
       render: (status) => {
         return (
           status.lenght > 0 && (
-            <Tag color={sampleStatusTags[status]?.color}>
-              {sampleStatusTags[status]?.label}
-            </Tag>
+            <Tag color={sampleStatusTags[status]?.color}>{sampleStatusTags[status]?.label}</Tag>
           )
-        );
+        )
       },
     },
     {
@@ -228,17 +203,12 @@ export const SamplesTable = ({
       key: 'segmental_calls',
       width: 120,
       render: (sample: any) => (
-        <a
-          href={`/sample_download/${sample.SampleID}/segmental_calls`}
-          download
-        >
+        <a href={`/sample_download/${sample.SampleID}/segmental_calls`} download>
           {/* ignores needed for antd bug */}
           {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
           {/*
 // @ts-ignore */}
-          <CloudDownloadOutlined
-            style={{ fontSize: '30px', marginLeft: '30%' }}
-          />
+          <CloudDownloadOutlined style={{ fontSize: '30px', marginLeft: '30%' }} />
         </a>
       ),
     },
@@ -253,27 +223,23 @@ export const SamplesTable = ({
       dataIndex: 'change_include_date',
       key: 'change_include_date',
     },
-  ];
+  ]
 
   const rowSelection = {
     onChange: (selectedRowKeys) => {
-      setSelectedRowKeys(selectedRowKeys);
+      setSelectedRowKeys(selectedRowKeys)
     },
     selectedRowKeys,
-  };
+  }
 
   return (
     <>
       <Search
-        placeholder={`Search by Sample name${
-          showBatchInfo ? ', Batch name' : ''
-        } or Comment`}
+        placeholder={`Search by Sample name${showBatchInfo ? ', Batch name' : ''} or Comment`}
         onSearch={onSearch}
         style={{ paddingBottom: 20 }}
       />
-      <i>
-        Select a sample with the checkbox to include it in the comparison set
-      </i>
+      <i>Select a sample with the checkbox to include it in the comparison set</i>
       <Table
         pagination={showBatchInfo ? undefined : false}
         columns={columns.filter((column) =>
@@ -287,5 +253,5 @@ export const SamplesTable = ({
         }}
       />
     </>
-  );
-};
+  )
+}

@@ -1,5 +1,5 @@
-import React from 'react';
-import { Spin } from 'antd';
+import React from 'react'
+import { Spin } from 'antd'
 
 export const Loading = () => {
   return (
@@ -12,5 +12,5 @@ export const Loading = () => {
         left: '50%',
       }}
     />
-  );
-};
+  )
+}
