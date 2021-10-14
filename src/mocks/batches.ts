@@ -1,14 +1,12 @@
-import { Batch } from '../services/interfaces';
+import { Batch } from 'services/interfaces'
 
 export const mockBatches: Batch[] = [
   {
     SampleProject: '2106151',
-    result_file:
-      '/home/proj/production/housekeeper-bundles/happygoat/2021-06-18/2106151.csv',
+    result_file: '/home/proj/production/housekeeper-bundles/happygoat/2021-06-18/2106151.csv',
     multiqc_report:
       '/home/proj/production/housekeeper-bundles/happygoat/2021-06-18/multiqc_report.html',
-    segmental_calls:
-      '/home/proj/production/housekeeper-bundles/happygoat/2021-06-18',
+    segmental_calls: '/home/proj/production/housekeeper-bundles/happygoat/2021-06-18',
     Flowcell: 'HFM7VDRXY',
     SequencingDate: '2021-06-18',
     Median_13: 0.9998455148488509,
@@ -25,12 +23,10 @@ export const mockBatches: Batch[] = [
   },
   {
     SampleProject: '2110622',
-    result_file:
-      '/home/proj/production/housekeeper-bundles/simpleox/2021-06-23/2110622.csv',
+    result_file: '/home/proj/production/housekeeper-bundles/simpleox/2021-06-23/2110622.csv',
     multiqc_report:
       '/home/proj/production/housekeeper-bundles/simpleox/2021-06-23/multiqc_report.html',
-    segmental_calls:
-      '/home/proj/production/housekeeper-bundles/simpleox/2021-06-23',
+    segmental_calls: '/home/proj/production/housekeeper-bundles/simpleox/2021-06-23',
     Flowcell: 'HFN53DRXY',
     SequencingDate: '2021-06-23',
     Median_13: 1.0002320625615218,
@@ -47,12 +43,10 @@ export const mockBatches: Batch[] = [
   },
   {
     SampleProject: '2110897',
-    result_file:
-      '/home/proj/production/housekeeper-bundles/goldenlocust/2021-06-29/2110897.csv',
+    result_file: '/home/proj/production/housekeeper-bundles/goldenlocust/2021-06-29/2110897.csv',
     multiqc_report:
       '/home/proj/production/housekeeper-bundles/goldenlocust/2021-06-29/multiqc_report.html',
-    segmental_calls:
-      '/home/proj/production/housekeeper-bundles/goldenlocust/2021-06-29',
+    segmental_calls: '/home/proj/production/housekeeper-bundles/goldenlocust/2021-06-29',
     Flowcell: 'HFMJFDRXY',
     SequencingDate: '2021-06-29',
     Median_13: 0.9994834765242501,
@@ -69,12 +63,10 @@ export const mockBatches: Batch[] = [
   },
   {
     SampleProject: '2111249_NIPT',
-    result_file:
-      '/home/proj/production/housekeeper-bundles/moreakita/2021-07-02/2111249_NIPT.csv',
+    result_file: '/home/proj/production/housekeeper-bundles/moreakita/2021-07-02/2111249_NIPT.csv',
     multiqc_report:
       '/home/proj/production/housekeeper-bundles/moreakita/2021-07-02/multiqc_report.html',
-    segmental_calls:
-      '/home/proj/production/housekeeper-bundles/moreakita/2021-07-02',
+    segmental_calls: '/home/proj/production/housekeeper-bundles/moreakita/2021-07-02',
     Flowcell: 'HFM32DRXY',
     SequencingDate: '2021-07-01',
     Median_13: 0.9999069688603414,
@@ -91,12 +83,10 @@ export const mockBatches: Batch[] = [
   },
   {
     SampleProject: '2111077_NIPT',
-    result_file:
-      '/home/proj/production/housekeeper-bundles/hipewe/2021-07-01/2111077_NIPT.csv',
+    result_file: '/home/proj/production/housekeeper-bundles/hipewe/2021-07-01/2111077_NIPT.csv',
     multiqc_report:
       '/home/proj/production/housekeeper-bundles/hipewe/2021-07-01/multiqc_report.html',
-    segmental_calls:
-      '/home/proj/production/housekeeper-bundles/hipewe/2021-07-01',
+    segmental_calls: '/home/proj/production/housekeeper-bundles/hipewe/2021-07-01',
     Flowcell: 'HFNGFDRXY',
     SequencingDate: '2021-07-01',
     Median_13: 0.9993342745312468,
@@ -109,8 +99,7 @@ export const mockBatches: Batch[] = [
     Stdev_21: 0.019557351511016615,
     Stdev_X: 0.041720980903693035,
     Stdev_Y: 0.00012060803666310142,
-    comment:
-      'Sequencing rerun of partially failed batch. Z-scores indicate high SD21',
+    comment: 'Sequencing rerun of partially failed batch. Z-scores indicate high SD21',
   },
   {
     SampleProject: '2107012_NIPT',
@@ -118,8 +107,7 @@ export const mockBatches: Batch[] = [
       '/home/proj/production/housekeeper-bundles/poeticdragon/2021-07-03/2107012_NIPT.csv',
     multiqc_report:
       '/home/proj/production/housekeeper-bundles/poeticdragon/2021-07-03/multiqc_report.html',
-    segmental_calls:
-      '/home/proj/production/housekeeper-bundles/poeticdragon/2021-07-03',
+    segmental_calls: '/home/proj/production/housekeeper-bundles/poeticdragon/2021-07-03',
     Flowcell: 'HFNGHDRXY',
     SequencingDate: '2021-07-03',
     Median_13: 0.9998587245703932,
@@ -136,12 +124,10 @@ export const mockBatches: Batch[] = [
   },
   {
     SampleProject: '2111385_NIPT',
-    result_file:
-      '/home/proj/production/housekeeper-bundles/hugegar/2021-07-06/2111385_NIPT.csv',
+    result_file: '/home/proj/production/housekeeper-bundles/hugegar/2021-07-06/2111385_NIPT.csv',
     multiqc_report:
       '/home/proj/production/housekeeper-bundles/hugegar/2021-07-06/multiqc_report.html',
-    segmental_calls:
-      '/home/proj/production/housekeeper-bundles/hugegar/2021-07-06',
+    segmental_calls: '/home/proj/production/housekeeper-bundles/hugegar/2021-07-06',
     Flowcell: 'HG2K2DRXY',
     SequencingDate: '2021-07-06',
     Median_13: 1.0001024322743282,
@@ -158,12 +144,10 @@ export const mockBatches: Batch[] = [
   },
   {
     SampleProject: '2111486_NIPT',
-    result_file:
-      '/home/proj/production/housekeeper-bundles/bigchow/2021-07-07/2111486_NIPT.csv',
+    result_file: '/home/proj/production/housekeeper-bundles/bigchow/2021-07-07/2111486_NIPT.csv',
     multiqc_report:
       '/home/proj/production/housekeeper-bundles/bigchow/2021-07-07/multiqc_report.html',
-    segmental_calls:
-      '/home/proj/production/housekeeper-bundles/bigchow/2021-07-07',
+    segmental_calls: '/home/proj/production/housekeeper-bundles/bigchow/2021-07-07',
     Flowcell: 'HFTHFDRXY',
     SequencingDate: '2021-07-07',
     Median_13: 0.9995084364950433,
@@ -180,12 +164,10 @@ export const mockBatches: Batch[] = [
   },
   {
     SampleProject: '2111549_NIPT',
-    result_file:
-      '/home/proj/production/housekeeper-bundles/acefeline/2021-07-08/2111549_NIPT.csv',
+    result_file: '/home/proj/production/housekeeper-bundles/acefeline/2021-07-08/2111549_NIPT.csv',
     multiqc_report:
       '/home/proj/production/housekeeper-bundles/acefeline/2021-07-08/multiqc_report.html',
-    segmental_calls:
-      '/home/proj/production/housekeeper-bundles/acefeline/2021-07-08',
+    segmental_calls: '/home/proj/production/housekeeper-bundles/acefeline/2021-07-08',
     Flowcell: 'HG53WDRXY',
     SequencingDate: '2021-07-08',
     Median_13: 0.9999526840692168,
@@ -206,8 +188,7 @@ export const mockBatches: Batch[] = [
       '/home/proj/production/housekeeper-bundles/idealoyster/2021-07-09/2111648_NIPT.csv',
     multiqc_report:
       '/home/proj/production/housekeeper-bundles/idealoyster/2021-07-09/multiqc_report.html',
-    segmental_calls:
-      '/home/proj/production/housekeeper-bundles/idealoyster/2021-07-09',
+    segmental_calls: '/home/proj/production/housekeeper-bundles/idealoyster/2021-07-09',
     Flowcell: 'HFM2FDRXY',
     SequencingDate: '2021-07-09',
     Median_13: 0.9998019022836198,
@@ -225,12 +206,10 @@ export const mockBatches: Batch[] = [
   },
   {
     SampleProject: '2111805_NIPT',
-    result_file:
-      '/home/proj/production/housekeeper-bundles/vocalbull/2021-07-13/2111805_NIPT.csv',
+    result_file: '/home/proj/production/housekeeper-bundles/vocalbull/2021-07-13/2111805_NIPT.csv',
     multiqc_report:
       '/home/proj/production/housekeeper-bundles/vocalbull/2021-07-13/multiqc_report.html',
-    segmental_calls:
-      '/home/proj/production/housekeeper-bundles/vocalbull/2021-07-13',
+    segmental_calls: '/home/proj/production/housekeeper-bundles/vocalbull/2021-07-13',
     Flowcell: 'HG7GWDRXY',
     SequencingDate: '2021-07-13',
     Median_13: 0.9997575556514688,
@@ -251,8 +230,7 @@ export const mockBatches: Batch[] = [
       '/home/proj/production/housekeeper-bundles/givingcoral/2021-07-15/2111948_NIPT.csv',
     multiqc_report:
       '/home/proj/production/housekeeper-bundles/givingcoral/2021-07-15/multiqc_report.html',
-    segmental_calls:
-      '/home/proj/production/housekeeper-bundles/givingcoral/2021-07-15',
+    segmental_calls: '/home/proj/production/housekeeper-bundles/givingcoral/2021-07-15',
     Flowcell: 'HFMM2DRXY',
     SequencingDate: '2021-07-14',
     Median_13: 0.9998064235275046,
@@ -270,12 +248,10 @@ export const mockBatches: Batch[] = [
   },
   {
     SampleProject: '2112015_NIPT',
-    result_file:
-      '/home/proj/production/housekeeper-bundles/smartfrog/2021-07-17/2112015_NIPT.csv',
+    result_file: '/home/proj/production/housekeeper-bundles/smartfrog/2021-07-17/2112015_NIPT.csv',
     multiqc_report:
       '/home/proj/production/housekeeper-bundles/smartfrog/2021-07-17/multiqc_report.html',
-    segmental_calls:
-      '/home/proj/production/housekeeper-bundles/smartfrog/2021-07-17',
+    segmental_calls: '/home/proj/production/housekeeper-bundles/smartfrog/2021-07-17',
     Flowcell: 'HFNYNDRXY',
     SequencingDate: '2021-07-17',
     Median_13: 0.9993696958230243,
@@ -296,8 +272,7 @@ export const mockBatches: Batch[] = [
       '/home/proj/production/housekeeper-bundles/readysalmon/2021-07-19/2112133_NIPT.csv',
     multiqc_report:
       '/home/proj/production/housekeeper-bundles/readysalmon/2021-07-19/multiqc_report.html',
-    segmental_calls:
-      '/home/proj/production/housekeeper-bundles/readysalmon/2021-07-19',
+    segmental_calls: '/home/proj/production/housekeeper-bundles/readysalmon/2021-07-19',
     Flowcell: 'HG55TDRXY',
     SequencingDate: '2021-07-19',
     Median_13: 0.9997535418821638,
@@ -318,8 +293,7 @@ export const mockBatches: Batch[] = [
       '/home/proj/production/housekeeper-bundles/amazedbison/2021-07-24/2112453_NIPT.csv',
     multiqc_report:
       '/home/proj/production/housekeeper-bundles/amazedbison/2021-07-24/multiqc_report.html',
-    segmental_calls:
-      '/home/proj/production/housekeeper-bundles/amazedbison/2021-07-24',
+    segmental_calls: '/home/proj/production/housekeeper-bundles/amazedbison/2021-07-24',
     Flowcell: 'HG522DRXY',
     SequencingDate: '2021-07-24',
     Median_13: 0.9996999177570762,
@@ -336,12 +310,10 @@ export const mockBatches: Batch[] = [
   },
   {
     SampleProject: '2112506_NIPT',
-    result_file:
-      '/home/proj/production/housekeeper-bundles/fluentfawn/2021-07-27/2112506_NIPT.csv',
+    result_file: '/home/proj/production/housekeeper-bundles/fluentfawn/2021-07-27/2112506_NIPT.csv',
     multiqc_report:
       '/home/proj/production/housekeeper-bundles/fluentfawn/2021-07-27/multiqc_report.html',
-    segmental_calls:
-      '/home/proj/production/housekeeper-bundles/fluentfawn/2021-07-27',
+    segmental_calls: '/home/proj/production/housekeeper-bundles/fluentfawn/2021-07-27',
     Flowcell: 'HHJG2DRXY',
     SequencingDate: '2021-07-26',
     Median_13: 0.9998009215319781,
@@ -362,8 +334,7 @@ export const mockBatches: Batch[] = [
       '/home/proj/production/housekeeper-bundles/directpigeon/2021-07-29/2112546_NIPT.csv',
     multiqc_report:
       '/home/proj/production/housekeeper-bundles/directpigeon/2021-07-29/multiqc_report.html',
-    segmental_calls:
-      '/home/proj/production/housekeeper-bundles/directpigeon/2021-07-29',
+    segmental_calls: '/home/proj/production/housekeeper-bundles/directpigeon/2021-07-29',
     Flowcell: 'HHKGNDRXY',
     SequencingDate: '2021-07-29',
     Median_13: 0.999810262177843,
@@ -380,12 +351,10 @@ export const mockBatches: Batch[] = [
   },
   {
     SampleProject: '2112599_NIPT',
-    result_file:
-      '/home/proj/production/housekeeper-bundles/boldrat/2021-07-29/2112599_NIPT.csv',
+    result_file: '/home/proj/production/housekeeper-bundles/boldrat/2021-07-29/2112599_NIPT.csv',
     multiqc_report:
       '/home/proj/production/housekeeper-bundles/boldrat/2021-07-29/multiqc_report.html',
-    segmental_calls:
-      '/home/proj/production/housekeeper-bundles/boldrat/2021-07-29',
+    segmental_calls: '/home/proj/production/housekeeper-bundles/boldrat/2021-07-29',
     Flowcell: 'HHGY3DRXY',
     SequencingDate: '2021-07-29',
     Median_13: 1.0000360841287255,
@@ -406,8 +375,7 @@ export const mockBatches: Batch[] = [
       '/home/proj/production/housekeeper-bundles/likedtoucan/2021-07-31/2112724_NIPT.csv',
     multiqc_report:
       '/home/proj/production/housekeeper-bundles/likedtoucan/2021-07-31/multiqc_report.html',
-    segmental_calls:
-      '/home/proj/production/housekeeper-bundles/likedtoucan/2021-07-31',
+    segmental_calls: '/home/proj/production/housekeeper-bundles/likedtoucan/2021-07-31',
     Flowcell: 'HHLHKDRXY',
     SequencingDate: '2021-07-31',
     Median_13: 0.9998197036051581,
@@ -428,8 +396,7 @@ export const mockBatches: Batch[] = [
       '/home/proj/production/housekeeper-bundles/directhorse/2021-08-03/2107301_NIPT.csv',
     multiqc_report:
       '/home/proj/production/housekeeper-bundles/directhorse/2021-08-03/multiqc_report.html',
-    segmental_calls:
-      '/home/proj/production/housekeeper-bundles/directhorse/2021-08-03',
+    segmental_calls: '/home/proj/production/housekeeper-bundles/directhorse/2021-08-03',
     Flowcell: 'HHGKHDRXY',
     SequencingDate: '2021-08-02',
     Median_13: 0.9990675139736862,
@@ -450,8 +417,7 @@ export const mockBatches: Batch[] = [
       '/home/proj/production/housekeeper-bundles/unitedmantis/2021-08-05/2112920_NIPT.csv',
     multiqc_report:
       '/home/proj/production/housekeeper-bundles/unitedmantis/2021-08-05/multiqc_report.html',
-    segmental_calls:
-      '/home/proj/production/housekeeper-bundles/unitedmantis/2021-08-05',
+    segmental_calls: '/home/proj/production/housekeeper-bundles/unitedmantis/2021-08-05',
     Flowcell: 'HHGWHDRXY',
     SequencingDate: '2021-08-05',
     Median_13: 0.9997559154128354,
@@ -468,12 +434,10 @@ export const mockBatches: Batch[] = [
   },
   {
     SampleProject: '2113162_NIPT',
-    result_file:
-      '/home/proj/production/housekeeper-bundles/setpika/2021-08-10/2113162_NIPT.csv',
+    result_file: '/home/proj/production/housekeeper-bundles/setpika/2021-08-10/2113162_NIPT.csv',
     multiqc_report:
       '/home/proj/production/housekeeper-bundles/setpika/2021-08-10/multiqc_report.html',
-    segmental_calls:
-      '/home/proj/production/housekeeper-bundles/setpika/2021-08-10',
+    segmental_calls: '/home/proj/production/housekeeper-bundles/setpika/2021-08-10',
     Flowcell: 'HHGNJDRXY',
     SequencingDate: '2021-08-10',
     Median_13: 0.9997439639817628,
@@ -488,17 +452,15 @@ export const mockBatches: Batch[] = [
     Stdev_Y: 9.489637285579582e-5,
     comment: '',
   },
-];
+]
 
 export const mockBatch = {
   batch: {
     SampleProject: '2113162_NIPT',
-    result_file:
-      '/home/proj/production/housekeeper-bundles/setpika/2021-08-10/2113162_NIPT.csv',
+    result_file: '/home/proj/production/housekeeper-bundles/setpika/2021-08-10/2113162_NIPT.csv',
     multiqc_report:
       '/home/proj/production/housekeeper-bundles/setpika/2021-08-10/multiqc_report.html',
-    segmental_calls:
-      '/home/proj/production/housekeeper-bundles/setpika/2021-08-10',
+    segmental_calls: '/home/proj/production/housekeeper-bundles/setpika/2021-08-10',
     Flowcell: 'HHGNJDRXY',
     SequencingDate: '2021-08-10',
     Median_13: 0.9997439639817628,
@@ -5439,4 +5401,4 @@ export const mockBatch = {
   ],
   page_id: 'batches',
   current_user: {},
-};
+}
