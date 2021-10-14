@@ -1,22 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import { Card, Tabs } from 'antd';
-import { RouteComponentProps } from 'react-router-dom';
-import { SamplesTable } from 'components/SamplesTable/SamplesTable';
-import { mockBatch } from 'mocks/batches';
-import { ZscoreGraph } from 'components/ZscoreGraph/ZscoreGraph';
+import React, { useEffect, useState } from 'react'
+import { Card, Tabs } from 'antd'
+import { RouteComponentProps } from 'react-router-dom'
+import { SamplesTable } from 'components/SamplesTable/SamplesTable'
+import { mockBatch } from 'mocks/batches'
+import { ZscoreGraph } from 'components/ZscoreGraph/ZscoreGraph'
 
 type BatchProps = RouteComponentProps & {
-  batchId: string;
-};
+  batchId: string
+}
 
-const { TabPane } = Tabs;
+const { TabPane } = Tabs
 
 export const BatchPage = (props: BatchProps) => {
-  const [batch, setBatch] = useState<any>([]);
-  const [batchId] = useState<string>(props?.match?.params['batchId']);
+  const [batch, setBatch] = useState<any>([])
+  const [batchId] = useState<string>(props?.match?.params['batchId'])
   useEffect(() => {
-    setBatch(mockBatch);
-  }, []);
+    setBatch(mockBatch)
+  }, [])
   return (
     <Card>
       <Tabs type="card">
@@ -34,5 +34,5 @@ export const BatchPage = (props: BatchProps) => {
         </TabPane>
       </Tabs>
     </Card>
-  );
-};
+  )
+}

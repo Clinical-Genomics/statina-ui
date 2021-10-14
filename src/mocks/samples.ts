@@ -213,4 +213,4 @@ export const mockSamples = [
     status: '',
     sex: 'XY',
   },
-];
+]

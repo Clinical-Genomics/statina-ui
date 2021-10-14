@@ -1,15 +1,15 @@
-import { Button, Select, Space, Table } from 'antd';
-import React, { useEffect, useState } from 'react';
-import { sampleStatusTags } from 'services/helpers/constants';
+import { Button, Select, Space, Table } from 'antd'
+import React, { useEffect, useState } from 'react'
+import { sampleStatusTags } from 'services/helpers/constants'
 
-const { Option } = Select;
+const { Option } = Select
 
 function handleChange(value) {
-  console.log(`selected ${value}`);
+  console.log(`selected ${value}`)
 }
 
 function handleSave(value) {
-  console.log(value);
+  console.log(value)
 }
 
 const columns = [
@@ -41,17 +41,15 @@ const columns = [
     dataIndex: 'latest_change',
     key: 'latest_change',
   },
-];
+]
 
 export function SampleStatusTable(chromosomeAbn) {
-  const [chrom_abnorm, setChromosomeAbn] = useState(
-    chromosomeAbn.ChromosomeAbn[0]
-  );
-  const [abn, setAbn] = useState();
+  const [chrom_abnorm, setChromosomeAbn] = useState(chromosomeAbn.ChromosomeAbn[0])
+  const [abn, setAbn] = useState()
 
   useEffect(() => {
-    setAbn(chrom_abnorm.chrom_abnorm.map((abn) => ({ chrom_abnorm: abn })));
-  }, []);
+    setAbn(chrom_abnorm.chrom_abnorm.map((abn) => ({ chrom_abnorm: abn })))
+  }, [])
   return (
     <>
       <Space size={'large'} direction="vertical" style={{ width: '100%' }}>
@@ -67,5 +65,5 @@ export function SampleStatusTable(chromosomeAbn) {
         </Button>
       </Space>
     </>
-  );
+  )
 }

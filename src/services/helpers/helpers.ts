@@ -1,13 +1,9 @@
-import { Notification } from '../interfaces';
-import { notification } from 'antd';
-import { AxiosError } from 'axios';
+import { Notification } from '../interfaces'
+import { notification } from 'antd'
+import { AxiosError } from 'axios'
 
-export const ErrorNotification = ({
-  type,
-  message,
-  description,
-}: Notification) => {
-  const key = `open${Date.now()}`;
+export const ErrorNotification = ({ type, message, description }: Notification) => {
+  const key = `open${Date.now()}`
   notification[type]({
     message,
     description,
@@ -15,15 +11,11 @@ export const ErrorNotification = ({
     key,
     closeIcon: null,
     duration: 0,
-  });
-};
+  })
+}
 
-export const SuccessNotification = ({
-  type,
-  message,
-  description,
-}: Notification) => {
-  const key = `open${Date.now()}`;
+export const SuccessNotification = ({ type, message, description }: Notification) => {
+  const key = `open${Date.now()}`
   notification[type]({
     message,
     description,
@@ -31,17 +23,17 @@ export const SuccessNotification = ({
     key,
     closeIcon: null,
     duration: 2,
-  });
-};
+  })
+}
 
 export const createErrorNotification = (error: AxiosError) => {
-  const { errorMessage, errorDescription } = createErrorMessage(error);
+  const { errorMessage, errorDescription } = createErrorMessage(error)
   ErrorNotification({
     type: 'error',
     message: errorMessage,
     description: errorDescription,
-  });
-};
+  })
+}
 
 export const createErrorMessage = (error: AxiosError) => {
   switch (error?.response?.status) {
@@ -49,28 +41,28 @@ export const createErrorMessage = (error: AxiosError) => {
       return {
         errorMessage: `${error?.message}`,
         errorDescription: `You don't have permissions to access the data from ${error?.config?.url}`,
-      };
+      }
     case 500:
       return {
         errorMessage: 'Something went wrong in the backend',
         errorDescription: `${error?.message} ${error?.config?.url}`,
-      };
+      }
     default:
       return {
         errorMessage: `Could not fetch data from backend, make sure you are connected to the VPN`,
         errorDescription: `${error?.message} ${error?.config?.url}`,
-      };
+      }
   }
-};
+}
 
 export const dateToNumber = (date: string) => {
-  const re = new RegExp('-', 'g');
-  return parseInt(date.replace(re, ''));
-};
+  const re = new RegExp('-', 'g')
+  return parseInt(date.replace(re, ''))
+}
 
 export const sortDate = (dateA: string, dateB: string) => {
-  return dateToNumber(dateA) - dateToNumber(dateB);
-};
+  return dateToNumber(dateA) - dateToNumber(dateB)
+}
 
 export const windowMatchMedia = () => {
   return (
@@ -80,7 +72,7 @@ export const windowMatchMedia = () => {
         matches: false,
         addListener: () => null,
         removeListener: () => null,
-      };
+      }
     }
-  );
-};
+  )
+}

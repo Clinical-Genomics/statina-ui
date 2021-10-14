@@ -1,10 +1,10 @@
-import React from 'react';
-import Plot from 'react-plotly.js';
-import { TracePlot } from 'services/interfaces';
+import React from 'react'
+import Plot from 'react-plotly.js'
+import { TracePlot } from 'services/interfaces'
 
 type PlotProps = {
-  trace: TracePlot;
-};
+  trace: TracePlot
+}
 
 export function BoxPlot(trace: PlotProps) {
   return (
@@ -21,5 +21,5 @@ export function BoxPlot(trace: PlotProps) {
       />
       ;
     </div>
-  );
+  )
 }
