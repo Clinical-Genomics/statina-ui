@@ -1,150 +1,178 @@
-import React from 'react';
-import jsPDF from 'jspdf';
-import 'jspdf-autotable';
-import { Tooltip } from 'antd';
-import {
-  ErrorNotification,
-  SuccessNotification,
-} from '../../services/helpers/helpers';
-import Plot from 'react-plotly.js';
-import Plotly from 'plotly.js';
+import React, { useEffect, useState } from 'react'
+import { Table, Tag, Tooltip } from 'antd'
+import { QuestionCircleOutlined } from '@ant-design/icons'
+import { red } from '@ant-design/colors'
+import { sexTags, tagColors } from 'services/helpers/constants'
+import { ZscoreGraph } from 'components/ZscoreGraph/ZscoreGraph'
+import ReactPDF, { Page, Text, View, Document, StyleSheet, Font } from '@react-pdf/renderer'
 
-export function BatchTablePDF(pdfData, score) {
-  const exportPDF = () => {
-    if (pdfData === undefined || pdfData.length == 0) {
-      ErrorNotification({
-        type: 'error',
-        message: 'Download failed!',
-        description: 'There is no data to download!',
-      });
-    } else {
-      const unit = 'pt';
-      const size = 'A4';
-      const orientation = 'landscape';
+type SamplesProps = {
+  samples: any[]
+}
 
-      const marginLeft = 40;
-      const doc = new jsPDF(orientation, unit, size) as any;
+export const BatchTablePDF = ({ samples }: SamplesProps) => {
+  const [report, setReport] = useState<any>()
+  const [filteredSamples, setFilteredSamples] = useState<any[]>(samples)
 
-      doc.setFontSize(15);
-
-      const title = 'NIPT Results';
-      const batchNum = `Batch: ${pdfData.pdfData[0].SampleProject}`;
-      const headers = [
-        [
-          'Sample',
-          'Zscore13',
-          'Zscore18',
-          'Zscore21',
-          'FFPF(%)',
-          'FFX(%)',
-          'FFY(%)',
-          'Sex',
-          'Warning',
-          'Comment',
-        ],
-      ];
-
-      const data = pdfData.pdfData.map((item) => [
-        item.SampleID,
-        item.Zscore_13,
-        item.Zscore_18,
-        item.Zscore_21,
-        item.FetalFractionPreface,
-        item.FFX,
-        item.FFY,
-        item.sex,
-        item.text_warning,
-        item.comment,
-      ]);
-
-      const content = {
-        startY: 50,
-        head: headers,
-        body: data,
-        theme: 'grid',
-
-        // Change the background color at a specific value
-        /* didParseCell: function (data) {
-          if (data.row.raw[1] === -0.55) {
-            data.cell.styles.fillColor = [239, 154, 154];
-          }
-        }, */
-      };
-
-      // Fetal Fraction X/Y plot needs to be after the summary table
-      /* const data2: any[] = [
-        {
-          name: `Current batch ${pdfData.length}`,
-          y: pdfData.pdfData.map((sample) => sample[score]),
-          x: pdfData.pdfData.map((sample) => sample?.SampleID),
-          mode: 'markers',
-          type: 'scatter',
-        },
-      ];
-      const layout = {
-        //legend: { hovermode: 'closest' },
-        //hovermode: 'closest',
-        annotations: [],
-        xaxis: {
-          showline: true,
-          showgrid: true,
-        },
-        yaxis: {
-          range: [-10, 10],
-          title: score,
-        },
-        width: 1200,
-        height: 600,
-      };
-
-      Plotly.newPlot('graph', data2, layout)
-        .then((gd) => {
-          return Plotly.toImage(gd, {
-            format: 'png',
-            height: 300,
-            width: 400,
-          });
-        })
-        .then((dataURI) => {
-          console.log(dataURI);
-          console.log('test');
-        }); */
-
-      // insert the plot as jpeg image string on base64
-      //const imgData = 'here the jpeg image string on base64';
-      doc.setFontSize(20);
-      doc.text(title, marginLeft, 20);
-      doc.setTextColor(105, 105, 105);
-      doc.setFontSize(12);
-      doc.text(batchNum, marginLeft, 40);
-      doc.setTextColor(0, 0, 0);
-      doc.autoTable(content);
-      //doc.addImage(imgData, 'JPEG', 15, 40, 180, 160);
-      const pageCount = doc.internal.getNumberOfPages();
-      for (let i = 1; i <= pageCount; i++) {
-        // Go to page i
-        doc.setPage(i);
-        //Print Page 1 of 4 for example
-        doc.setFontSize(8);
-        doc.text(
-          'Page ' + String(i) + ' of ' + String(pageCount),
-          820 - 20,
-          605 - 30,
-          null,
-          null,
-          'right'
-        );
-      }
-      doc.save('Statina.pdf');
-      SuccessNotification({
-        type: 'success',
-        message: 'Download successfully!',
-      });
+  useEffect(() => {
+    setFilteredSamples(samples)
+    if (samples?.length > 0) {
+      const selectedKey: string[] = []
+      samples.forEach((sample) => {
+        if (sample.include) selectedKey.push(sample?.SampleID)
+      })
     }
-  };
-  return (
-    <Tooltip title="Export to PDF">
-      <span onClick={(e) => exportPDF()}>PDF</span>
-    </Tooltip>
-  );
+    setReport(samples)
+  }, [samples])
+
+  const columns: any = [
+    {
+      title: 'Sample',
+      dataIndex: 'SampleID',
+      key: 'SampleID',
+      fixed: 'left',
+    },
+    {
+      title: 'Zscore 13',
+      dataIndex: 'Zscore_13',
+      key: 'Zscore_13',
+      width: 100,
+      render(score, sample) {
+        return {
+          props: {
+            style: {
+              background: sample.text_warning.includes('Zscore_13') ? red[1] : null,
+            },
+          },
+          children: <div>{score}</div>,
+        }
+      },
+    },
+    {
+      title: 'Zscore 18',
+      dataIndex: 'Zscore_18',
+      key: 'Zscore_18',
+      width: 100,
+      render(score, sample) {
+        return {
+          props: {
+            style: {
+              background: sample.text_warning.includes('Zscore_18') ? red[1] : null,
+            },
+          },
+          children: <div>{score}</div>,
+        }
+      },
+    },
+    {
+      title: 'Zscore 21',
+      dataIndex: 'Zscore_21',
+      key: 'Zscore_21',
+      width: 100,
+      render(score, sample) {
+        return {
+          props: {
+            style: {
+              background: sample.text_warning.includes('Zscore_21') ? red[1] : null,
+            },
+          },
+          children: <div>{score}</div>,
+        }
+      },
+    },
+    {
+      title: 'FFPF (%)',
+      dataIndex: 'FetalFractionPreface',
+      key: 'FetalFractionPreface',
+      width: 100,
+    },
+    {
+      title: 'FFX (%)',
+      dataIndex: 'FFX',
+      key: 'FFX',
+      width: 100,
+    },
+    {
+      title: 'FFY (%)',
+      dataIndex: 'FFY',
+      key: 'FFY',
+      width: 100,
+    },
+    {
+      title: 'Sex',
+      dataIndex: 'sex',
+      key: 'sex',
+      width: 70,
+      render: (sex: any) => <Tag color={sexTags[sex]}>{sex}</Tag>,
+    },
+    {
+      title: (
+        <Tooltip title="Warning for chomosome abnormality. Automatically generated. Based on pre defined Zscore and Fetal Fraction trsholds">
+          Warning {/* ignores needed for antd bug */}
+          {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+          {/*
+// @ts-ignore */}
+          <QuestionCircleOutlined />
+        </Tooltip>
+      ),
+      dataIndex: 'text_warning',
+      key: 'text_warning',
+      render: (warnings: any) => {
+        return warnings.length > 0
+          ? warnings.split(', ').map((warning) => (
+              <Tag color={tagColors.warning} key={warning}>
+                {warning}
+              </Tag>
+            ))
+          : null
+      },
+    },
+    {
+      title: 'Comment',
+      dataIndex: 'comment',
+      key: 'comment',
+      width: 200,
+    },
+  ]
+  const styles = StyleSheet.create({
+    body: {
+      paddingTop: 35,
+      paddingBottom: 65,
+      paddingHorizontal: 35,
+    },
+    title: {
+      fontSize: 24,
+      textAlign: 'center',
+      fontFamily: 'Oswald',
+    },
+    section: {
+      margin: 10,
+      padding: 10,
+      flexGrow: 1,
+    },
+  })
+  return report ? (
+    <Document>
+      <Page size="A4" style={styles.body}>
+        <View style={styles.section}>
+          <Text style={styles.header}>NIPT Results</Text>
+        </View>
+
+        {/* <Text>Batch: </Text>
+        <Table
+          pagination={false}
+          columns={columns}
+          dataSource={filteredSamples}
+          rowKey="SampleID"
+        />
+        {samples && <ZscoreGraph samples={samples} score={'Zscore_21'} />} */}
+      </Page>
+    </Document>
+  ) : (
+    <Document>
+      <Page size="A4" style={styles.body}>
+        <Text style={styles.subtitle}>NO REPORT FOUND</Text>
+      </Page>
+    </Document>
+  )
 }
