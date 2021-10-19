@@ -16,6 +16,7 @@ export const ZscoreGraph = ({ samples, score }: ZscoreGraphProps) => {
       type: 'scatter',
     },
   ]
+
   const layout = {
     legend: { hovermode: 'closest' },
     hovermode: 'closest',
