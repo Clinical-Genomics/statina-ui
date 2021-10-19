@@ -33,7 +33,7 @@ export const BatchPage = (props: BatchProps) => {
       <Row justify={'end'}>
         <Col>
           <Dropdown.Button overlay={downloadMenu} type="primary" style={{ paddingBottom: 20 }}>
-            Download batche
+            Batch Downloads
           </Dropdown.Button>
         </Col>
       </Row>
