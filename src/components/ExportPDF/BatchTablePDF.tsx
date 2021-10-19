@@ -108,7 +108,7 @@ export function BatchTablePDF({ pdfData, score }: BatchTablePDFProps) {
             data.section === 'body' &&
             data.cell.raw.includes('Zscore_13')
           ) {
-            data.cell.styles.fillColor = 'rgb(255, 204, 199)'
+            /* data.cell.styles.fillColor = 'rgb(255, 204, 199)' */
             /* console.log(data.row.raw[1]) */
           }
           if (
@@ -117,7 +117,7 @@ export function BatchTablePDF({ pdfData, score }: BatchTablePDFProps) {
             data.cell.raw.includes('Zscore_18')
           ) {
             /* console.log(data.row.raw[2]) */
-            data.cell.styles.fillColor = 'rgb(255, 204, 199)'
+            /* data.cell.styles.fillColor = 'rgb(255, 204, 199)' */
           }
           if (
             typeof data.cell.raw == 'string' &&
@@ -125,7 +125,7 @@ export function BatchTablePDF({ pdfData, score }: BatchTablePDFProps) {
             data.cell.raw.includes('Zscore_21')
           ) {
             /* console.log(data.row.raw[3]) */
-            data.cell.styles.fillColor = 'rgb(255, 204, 199)'
+            /* data.cell.styles.fillColor = 'rgb(255, 204, 199)' */
           }
           if (data.section === 'head') {
             data.cell.styles.fillColor = '#43C59E'
