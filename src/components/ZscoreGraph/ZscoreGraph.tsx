@@ -7,6 +7,7 @@ type ZscoreGraphProps = {
 }
 
 export const ZscoreGraph = ({ samples, score }: ZscoreGraphProps) => {
+  console.log(samples)
   const data: any[] = [
     {
       name: `Current batch ${samples.length}`,
@@ -16,7 +17,7 @@ export const ZscoreGraph = ({ samples, score }: ZscoreGraphProps) => {
       type: 'scatter',
     },
   ]
-
+  console.log(data)
   const layout = {
     legend: { hovermode: 'closest' },
     hovermode: 'closest',

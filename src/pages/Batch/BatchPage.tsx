@@ -4,7 +4,7 @@ import { RouteComponentProps } from 'react-router-dom'
 import { SamplesTable } from '../../components/SamplesTable/SamplesTable'
 import { mockBatch } from '../../mocks/batches'
 import { ZscoreGraph } from '../../components/ZscoreGraph/ZscoreGraph'
-import { CaseReportDownload } from 'components/ExportPDF/BatchTableDownload'
+import { BatchTablePDF } from '../../components/ExportPDF/BatchTablePDF'
 
 type BatchProps = RouteComponentProps & {
   batchId: string
@@ -19,16 +19,24 @@ export const BatchPage = (props: BatchProps) => {
     setBatch(mockBatch)
   }, [])
 
-  /* const downloadMenu = (
+  const downloadMenu = (
     <Menu style={{ width: 100, textAlign: 'center' }}>
       <Menu.Item key="pdf">
-        <CaseReportDownload samples={batch?.sample_info} />
+        <BatchTablePDF pdfData={batch?.sample_info} score={'Zscore_13'} />
       </Menu.Item>
     </Menu>
-  ) */
+  )
+
   return (
     <Card>
-      <CaseReportDownload samples={batch?.sample_info} />
+      <div id="hiddenDiv" style={{ display: 'none' }}></div>
+      <Row justify={'end'}>
+        <Col>
+          <Dropdown.Button overlay={downloadMenu} type="primary" style={{ paddingBottom: 20 }}>
+            Download batche
+          </Dropdown.Button>
+        </Col>
+      </Row>
       <Tabs type="card">
         <TabPane tab="Summary Table" key="1">
           <SamplesTable samples={batch?.sample_info} showBatchInfo={false} />

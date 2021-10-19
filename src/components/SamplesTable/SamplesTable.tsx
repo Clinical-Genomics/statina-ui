@@ -37,7 +37,6 @@ export const SamplesTable = ({ samples, showBatchInfo = true }: SamplesProps) =>
     )
     setFilteredSamples(filteredData)
   }
-
   const columns: any = [
     {
       title: 'Sample name',

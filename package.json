@@ -4,7 +4,6 @@
   "private": true,
   "dependencies": {
     "@craco/craco": "^6.3.0",
-    "@react-pdf/renderer": "^1.6.17",
     "@reduxjs/toolkit": "^1.5.0",
     "@types/jspdf": "^2.0.0",
     "@types/plotly.js": "^1.54.16",
@@ -58,10 +57,11 @@
     "@typescript-eslint/eslint-plugin": "^4.8.2",
     "@typescript-eslint/parser": "^4.8.2",
     "eslint": "^7.2.0",
+    "prettier": "^2.1.1",
     "eslint-config-airbnb": "18.2.1",
     "eslint-config-prettier": "^6.11.0",
-    "eslint-config-react-app": "^5.2.1",
     "eslint-import-resolver-typescript": "^2.5.0",
+    "eslint-config-react-app": "^5.2.1",
     "eslint-plugin-flowtype": "^4.7.0",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-jsx-a11y": "^6.4.1",
@@ -69,7 +69,6 @@
     "eslint-plugin-react": "^7.21.5",
     "eslint-plugin-react-hooks": "^1.7.0",
     "firebase-tools": "^8.10.0",
-    "prettier": "^2.1.1",
     "raw.macro": "^0.4.2",
     "react-markdown": "^6.0.2"
   }
