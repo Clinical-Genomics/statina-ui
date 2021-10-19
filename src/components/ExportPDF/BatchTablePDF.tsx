@@ -101,16 +101,15 @@ export function BatchTablePDF({ pdfData, score }: BatchTablePDFProps) {
         body: TableData,
         theme: 'striped', // grid, plain, striped
 
-        // Change the background color at a specific value
+        // Change the background color when there is a text_warning
         didParseCell: function (data) {
           if (
             typeof data.cell.raw == 'string' &&
             data.section === 'body' &&
             data.cell.raw.includes('Zscore_13')
           ) {
-            /* data.row.raw[2].cell.styles.fillColor = 'rgb(255, 204, 199)' */
-            /* data.row.raw[2].styles.fillColor = 'rgb(255, 204, 199)' */
-            /* data.cell.styles.fillColor = 'rgb(255, 204, 199)' */
+            data.cell.styles.fillColor = 'rgb(255, 204, 199)'
+            /* console.log(data.row.raw[1]) */
           }
           if (
             typeof data.cell.raw == 'string' &&
@@ -118,6 +117,7 @@ export function BatchTablePDF({ pdfData, score }: BatchTablePDFProps) {
             data.cell.raw.includes('Zscore_18')
           ) {
             /* console.log(data.row.raw[2]) */
+            data.cell.styles.fillColor = 'rgb(255, 204, 199)'
           }
           if (
             typeof data.cell.raw == 'string' &&
@@ -125,6 +125,7 @@ export function BatchTablePDF({ pdfData, score }: BatchTablePDFProps) {
             data.cell.raw.includes('Zscore_21')
           ) {
             /* console.log(data.row.raw[3]) */
+            data.cell.styles.fillColor = 'rgb(255, 204, 199)'
           }
           if (data.section === 'head') {
             data.cell.styles.fillColor = '#43C59E'
