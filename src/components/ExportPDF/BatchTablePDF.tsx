@@ -22,8 +22,6 @@ export function BatchTablePDF({ pdfData, score }: BatchTablePDFProps) {
     },
   ]
   const layout = {
-    /* legend: { hovermode: 'closest' },
-    hovermode: 'closest', */
     annotations: [],
     xaxis: {
       showline: true,
@@ -36,7 +34,7 @@ export function BatchTablePDF({ pdfData, score }: BatchTablePDFProps) {
     height: 600,
     width: 1200,
   }
-  // Create the ploty in a hidden div in order to convert it to an image
+
   Plotly.newPlot('hiddenDiv', plotlyData, layout)
     .then((gd) => {
       return Plotly.toImage(gd, {
@@ -58,7 +56,7 @@ export function BatchTablePDF({ pdfData, score }: BatchTablePDFProps) {
     } else {
       const unit = 'pt'
       const size = 'A4'
-      const orientation = 'landscape' // portrait
+      const orientation = 'landscape'
 
       const marginLeft = 40
       const doc = new jsPDF(orientation, unit, size) as any
@@ -99,33 +97,15 @@ export function BatchTablePDF({ pdfData, score }: BatchTablePDFProps) {
         startY: 50,
         head: headers,
         body: TableData,
-        theme: 'striped', // grid, plain, striped
+        theme: 'striped',
 
-        // Change the background color when there is a text_warning
         didParseCell: function (data) {
           if (
-            typeof data.cell.raw == 'string' &&
-            data.section === 'body' &&
-            data.cell.raw.includes('Zscore_13')
+            (data.section === 'body' && data.row.raw[8].includes('Zscore_13')) ||
+            data.row.raw[8].includes('Zscore_18') ||
+            data.row.raw[8].includes('Zscore_21')
           ) {
-            /* data.cell.styles.fillColor = 'rgb(255, 204, 199)' */
-            /* console.log(data.row.raw[1]) */
-          }
-          if (
-            typeof data.cell.raw == 'string' &&
-            data.section === 'body' &&
-            data.cell.raw.includes('Zscore_18')
-          ) {
-            /* console.log(data.row.raw[2]) */
-            /* data.cell.styles.fillColor = 'rgb(255, 204, 199)' */
-          }
-          if (
-            typeof data.cell.raw == 'string' &&
-            data.section === 'body' &&
-            data.cell.raw.includes('Zscore_21')
-          ) {
-            /* console.log(data.row.raw[3]) */
-            /* data.cell.styles.fillColor = 'rgb(255, 204, 199)' */
+            data.cell.styles.fillColor = 'rgb(255, 204, 199)'
           }
           if (data.section === 'head') {
             data.cell.styles.fillColor = '#43C59E'
