@@ -1,31 +1,31 @@
 .googleButton {
-    position: absolute;
-    top: 0px;
-    right: 75px;
-
+  position: absolute;
+  top: 0;
+  right: 75px;
 }
+
 .header {
-    position: fixed;
-    z-index: 10;
-    width: 100%;
+  position: fixed;
+  z-index: 10;
+  width: 100%;
 }
 
 .greeting {
-    position: absolute;
-    top: 0px;
-    right: 220px;
-    color: white;
+  position: absolute;
+  top: 0;
+  right: 220px;
+  color: white;
 }
 
 .logo {
-    width: 50px;
-    float: left;
-    margin: 7px 30px 0px -15px;
+  width: 50px;
+  float: left;
+  margin: 7px 30px 0 -15px;
 }
 
 .googleAvatar {
-    max-width: 45px;
-    padding: 0 15px 2px 0;
+  max-width: 45px;
+  padding: 0 15px 2px 0;
 }
 
 [data-theme="dark"] .siteLayoutBackground {
