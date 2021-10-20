@@ -49,12 +49,6 @@ export const App = () => {
               </Link>
             </Menu.Item>
           </Menu>
-          <div></div>
-          <div className={styles.googleButton}>
-            <Button type="primary" onClick={() => window.alert('Login not avaiable yet')}>
-              Login
-            </Button>
-          </div>
         </Header>
         <Content
           className={styles.siteLayout}
