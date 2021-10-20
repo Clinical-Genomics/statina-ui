@@ -25,3 +25,7 @@
     flex-direction: column;
     justify-content: center;
 }
+
+.form {
+    padding-top: 50px;
+}

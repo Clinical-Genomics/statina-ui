@@ -42,6 +42,11 @@ export const createErrorMessage = (error: AxiosError) => {
         errorMessage: `${error?.message}`,
         errorDescription: `You don't have permissions to access the data from ${error?.config?.url}`,
       }
+    case 401:
+      return {
+        errorMessage: `${error?.response?.data?.detail}`,
+        errorDescription: `Login failed, wrong credentials or no permissions`,
+      }
     case 500:
       return {
         errorMessage: 'Something went wrong in the backend',
