@@ -21,16 +21,16 @@
                     <g id="Shadows" transform="translate(85.435029, 73.013673)">
                         <rect id="Rectangle-12-Copy" fill="none" transform="translate(4.394878, 15.941992) rotate(-270.000000) translate(-4.394878, -15.941992) " x="-11.1051224" y="12.441992" width="31" height="7"></rect>
                         <rect id="Rectangle-12-Copy-2" fill="none" transform="translate(364.312229, 378.687771) rotate(-270.000000) translate(-364.312229, -378.687771) " x="348.812229" y="375.187771" width="31" height="7"></rect>
-                        <rect id="Rectangle-12" fill="#2e9e8b" transform="translate(119.653283, 158.070455) rotate(-270.000000) translate(-119.653283, -158.070455) " x="104.153283" y="154.570455" width="31" height="7"></rect>
-                        <rect id="Rectangle-12" fill="#2e9e8b" transform="translate(184.707107, 196.254221) rotate(-270.000000) translate(-184.707107, -196.254221) " x="169.207107" y="192.754221" width="31" height="7"></rect>
-                        <rect id="Rectangle-12" fill="#2e9e8b" transform="translate(222.890873, 261.479618) rotate(-270.000000) translate(-222.890873, -261.479618) " x="210.390873" y="257.979618" width="25" height="7"></rect>
+                        <rect id="Rectangle-12" fill="#bfbfbf" transform="translate(119.653283, 158.070455) rotate(-270.000000) translate(-119.653283, -158.070455) " x="104.153283" y="154.570455" width="31" height="7"></rect>
+                        <rect id="Rectangle-12" fill="#bfbfbf" transform="translate(184.707107, 196.254221) rotate(-270.000000) translate(-184.707107, -196.254221) " x="169.207107" y="192.754221" width="31" height="7"></rect>
+                        <rect id="Rectangle-12" fill="#bfbfbf" transform="translate(222.890873, 261.479618) rotate(-270.000000) translate(-222.890873, -261.479618) " x="210.390873" y="257.979618" width="25" height="7"></rect>
                     </g>
                 </g>
                 <g id="words" transform="translate(95.000000, 220.000000)">
                     <g id="prenatal" transform="translate(0.000000, 14.000000)">
                         <polyline id="Path-1" stroke="#16a4f2" stroke-width="2" points="35.659812 18.1091309 35.659812 56.2534917 77.369277 56.2534934"></polyline>
                         <circle id="Oval-2" stroke="#16a4f2" stroke-width="2" cx="81.5" cy="56.5" r="4.5"></circle>
-                        <rect id="Rectangle-18" fill="#2e9e8b" x="0" y="0" width="78" height="19" rx="9.5"></rect>
+                        <rect id="Rectangle-18" fill="#bfbfbf" x="0" y="0" width="78" height="19" rx="9.5"></rect>
                         <text id="prenatal" font-family="Roboto-Medium, Roboto" font-size="11" font-weight="400" fill="#FFFFFF">
                             <tspan x="5" y="13">Prenatal testing</tspan>
                         </text>
@@ -38,7 +38,7 @@
                     <g id="open-source" transform="translate(400.000000, 122.000000)">
                         <polyline id="Path-1" stroke="#16a4f2" stroke-width="2" points="35.659812 18.1091309 35.659812 56.2534917 77.369277 56.2534934"></polyline>
                         <circle id="Oval-2" stroke="#16a4f2" stroke-width="2" cx="81.5" cy="56.5" r="4.5"></circle>
-                        <rect id="Rectangle-18" fill="#2e9e8b" x="0" y="0" width="73" height="19" rx="9.5"></rect>
+                        <rect id="Rectangle-18" fill="#bfbfbf" x="0" y="0" width="73" height="19" rx="9.5"></rect>
                         <text id="Open-source" font-family="Roboto-Medium, Roboto" font-size="11" font-weight="400" fill="#FFFFFF">
                             <tspan x="5" y="13">Open source</tspan>
                         </text>
@@ -47,7 +47,7 @@
                         <polyline id="Path-1" stroke="#16a4f2" stroke-width="2" points="55.659812 18.1091309 55.659812 48.7317715 8.7799478 48.7317715"></polyline>
                         <circle id="Oval-2" stroke="#16a4f2" stroke-width="2" cx="4.5" cy="48.5" r="4.5"></circle>
                         <g id="Rectangle-18-+-Python" transform="translate(30.000000, 0.000000)">
-                            <rect id="Rectangle-18" fill="#2e9e8b" x="0" y="0" width="49" height="19" rx="9.5"></rect>
+                            <rect id="Rectangle-18" fill="#bfbfbf" x="0" y="0" width="49" height="19" rx="9.5"></rect>
                             <text id="Python" font-family="Roboto-Medium, Roboto" font-size="11" font-weight="400" fill="#FFFFFF">
                                 <tspan x="7" y="13">Python</tspan>
                             </text>
@@ -57,7 +57,7 @@
                         <polyline id="Path-1" stroke="#16a4f2" stroke-width="2" points="74.5 19 74.4999995 86.441864 45.343815 86.441864"></polyline>
                         <circle id="Oval-2" stroke="#16a4f2" stroke-width="2" cx="40.5" cy="86.5" r="4.5"></circle>
                         <g id="text">
-                            <rect id="Rectangle-18" fill="#2e9e8b" x="0" y="0" width="108" height="19" rx="9.5"></rect>
+                            <rect id="Rectangle-18" fill="#bfbfbf" x="0" y="0" width="108" height="19" rx="9.5"></rect>
                             <text id="Precision-medicine" font-family="Roboto-Medium, Roboto" font-size="11" font-weight="400" fill="#FFFFFF">
                                 <tspan x="8" y="13">Precision medicine</tspan>
                             </text>
@@ -67,7 +67,7 @@
                         <path d="M18.659812,62.9473534 L18.659812,9.24784731" id="Path-1" stroke="#16a4f2" stroke-width="2"></path>
                         <circle id="Oval-2" stroke="#16a4f2" stroke-width="2" cx="18.5" cy="4.5" r="4.5"></circle>
                         <g id="text" transform="translate(0.000000, 61.000000)">
-                            <rect id="Rectangle-18" fill="#2e9e8b" x="0" y="0" width="36" height="19" rx="9.5"></rect>
+                            <rect id="Rectangle-18" fill="#bfbfbf" x="0" y="0" width="36" height="19" rx="9.5"></rect>
                             <text id="DNA" font-family="Roboto-Medium, Roboto" font-size="11" font-weight="400" fill="#FFFFFF">
                                 <tspan x="7" y="13">DNA</tspan>
                             </text>
