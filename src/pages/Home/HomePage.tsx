@@ -2,13 +2,16 @@ import * as React from 'react'
 import styles from './HomePage.module.css'
 import MainLogo from 'assets/cg-big-logo.svg'
 import { Card, Form, Input, Button } from 'antd'
+import { login } from '../../services/StatinaApi'
 
 export const HomePage = () => {
-  const onFinish = (values) => {
-    console.log('Success:', values)
+  const onSubmit = (values) => {
+    login(values)
+      .then((response) => console.log(response))
+      .catch((error) => console.log(error))
   }
 
-  const onFinishFailed = (errorInfo) => {
+  const onSubmitFailed = (errorInfo) => {
     console.log('Failed:', errorInfo)
   }
   return (
@@ -24,8 +27,8 @@ export const HomePage = () => {
           wrapperCol={{
             span: 15,
           }}
-          onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
+          onFinish={onSubmit}
+          onFinishFailed={onSubmitFailed}
           autoComplete="off"
         >
           <Form.Item

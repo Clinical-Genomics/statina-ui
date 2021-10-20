@@ -45,3 +45,8 @@ export interface TracePlot {
   type: string
   boxpoints: string
 }
+
+export interface Login {
+  password: string
+  username: string
+}
