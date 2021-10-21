@@ -41,6 +41,14 @@ will display linting issues.
 
 will fix the errors.
 
+### `npx stylelint "**/*.css"`
+will display style lint issues.
+
+### `npx stylelint "**/*.css" --fix`
+
+will fix the errors.
+
+
 
 ### `REACT_APP_BACKEND_URL="the-backend-url-here" yarn build`
 
