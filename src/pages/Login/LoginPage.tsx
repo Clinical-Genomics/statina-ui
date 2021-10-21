@@ -10,7 +10,7 @@ export const LoginPage = () => {
   const onSubmit = (values) => {
     login(values)
       .then((response) => {
-        initializeUser({ type: response.token_type, token: response.access_token })
+        initializeUser(response.access_token)
       })
       .catch((error) => console.log(error))
   }
