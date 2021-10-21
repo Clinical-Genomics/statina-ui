@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styles from './App.module.css'
 import './index.css'
 import { Layout, Menu, Button } from 'antd'
@@ -17,6 +17,10 @@ export const App = () => {
 
   const initializeUser = (token) => {
     setToken(token)
+  }
+
+  const logout = () => {
+    setToken(null)
   }
 
   return (
@@ -47,6 +51,13 @@ export const App = () => {
                 </Link>
               </Menu.Item>
             </Menu>
+            {!!token && (
+              <div className={styles.logoutButton}>
+                <Button type="primary" onClick={() => logout()}>
+                  Logout
+                </Button>
+              </div>
+            )}
           </Header>
           <Content
             className={styles.siteLayout}

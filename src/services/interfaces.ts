@@ -5,7 +5,7 @@ export interface Notification {
 }
 
 export interface Batch {
-  SampleProject: string
+  batch_id: string
   result_file: string
   multiqc_report: string
   segmental_calls: string
@@ -27,7 +27,7 @@ export interface Batch {
 export interface Sample {
   SampleID: string
   ChromosomeAbn: string
-  SampleProject: string
+  batch_id: string
   SampleType: string
   Description: null
   Flowcell: string

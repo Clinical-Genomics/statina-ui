@@ -1,4 +1,4 @@
-.googleButton {
+.logoutButton {
   position: absolute;
   top: 0;
   right: 75px;
@@ -21,11 +21,6 @@
   width: 50px;
   float: left;
   margin: 7px 30px 0 -15px;
-}
-
-.googleAvatar {
-  max-width: 45px;
-  padding: 0 15px 2px 0;
 }
 
 [data-theme="dark"] .siteLayoutBackground {

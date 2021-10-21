@@ -14,28 +14,11 @@ describe('Batches Table', () => {
         <BatchesTable batches={mockBatches}></BatchesTable>
       </MemoryRouter>
     )
-    const batchID = getByText(mockBatches[0].SampleProject)
+    const batchID = getByText(mockBatches[0].batch_id)
     expect(batchID).toBeVisible()
     const date = getByText(mockBatches[0].SequencingDate)
     expect(date).toBeVisible()
     const flowcell = getByText(mockBatches[0].Flowcell)
     expect(flowcell).toBeVisible()
-  })
-
-  test('Search batches should work', () => {
-    window.matchMedia = windowMatchMedia()
-    const { getByPlaceholderText, queryByText, getByText, getByLabelText } = render(
-      <MemoryRouter>
-        <BatchesTable batches={mockBatches}></BatchesTable>
-      </MemoryRouter>
-    )
-    expect(queryByText(mockBatches[10].SampleProject)).toBeNull()
-
-    userEvent.type(
-      getByPlaceholderText('Search by Batch or Flowcell ID'),
-      mockBatches[10].SampleProject
-    )
-    userEvent.click(getByLabelText('search'))
-    getByText(mockBatches[10].SampleProject)
   })
 })

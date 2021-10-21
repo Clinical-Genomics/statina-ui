@@ -23,7 +23,7 @@ export const BatchesTable = ({ batches }: BatchesProps) => {
     const lowerCaseInput = searchInput.toLowerCase()
     const filteredData = batches.filter(
       (entry) =>
-        entry.SampleProject.toLowerCase().includes(lowerCaseInput) ||
+        entry.batch_id.toLowerCase().includes(lowerCaseInput) ||
         entry.Flowcell.toLowerCase().includes(lowerCaseInput)
     )
     setFilteredBatches(filteredData)
@@ -32,9 +32,9 @@ export const BatchesTable = ({ batches }: BatchesProps) => {
   const columns: any = [
     {
       title: 'Batch ID',
-      dataIndex: 'SampleProject',
-      key: 'SampleProject',
-      render: (SampleProject: any) => <Link to={`/batches/${SampleProject}`}>{SampleProject}</Link>,
+      dataIndex: 'batch_id',
+      key: 'batch_id',
+      render: (batch_id: any) => <Link to={`/batches/${batch_id}`}>{batch_id}</Link>,
     },
     {
       title: 'Sequencing Date',
@@ -72,7 +72,7 @@ export const BatchesTable = ({ batches }: BatchesProps) => {
           <Search placeholder="Search by Batch or Flowcell ID" onSearch={onSearch} />
         </Col>
       </Row>
-      <Table columns={columns} dataSource={filteredBatches} rowKey="SampleProject" />
+      <Table columns={columns} dataSource={filteredBatches} rowKey="batch_id" />
     </>
   )
 }

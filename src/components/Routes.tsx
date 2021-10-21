@@ -3,14 +3,13 @@ import { Switch, Redirect, Route } from 'react-router-dom'
 import { HomePage } from 'pages/Home/HomePage'
 import { UnauthorizedPage } from 'pages/UnauthorizedPage'
 import { BatchesPage } from 'pages/Batches/BatchesPage'
-import { LatestPage } from 'pages/Latest/LatestPage'
 import { BatchPage } from 'pages/Batch/BatchPage'
 import { SamplesPage } from 'pages/Samples/SamplesPage'
 import { StatisticsPage } from 'pages/Statistics/StatisticsPage'
 import { SamplePage } from 'pages/Sample/SamplePage'
 import { LoginPage } from '../pages/Login/LoginPage'
 
-interface RoutesProps {
+type RoutesProps = {
   isLoggedIn: boolean
 }
 
@@ -42,7 +41,13 @@ export const Routes = (props: RoutesProps) => {
           isLoggedIn === true ? <BatchesPage /> : <Redirect to={{ pathname: '/login' }} />
         }
       />
-      <Route path="/batches/:batchId" component={BatchPage} />
+      <Route
+        path="/batches/:batchId"
+        exact
+        render={() =>
+          isLoggedIn === true ? <BatchPage /> : <Redirect to={{ pathname: '/login' }} />
+        }
+      />
       <Route
         path="/samples"
         exact

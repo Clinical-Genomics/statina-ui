@@ -1,9 +1,15 @@
 import * as React from 'react'
 
-export const UserContext = React.createContext({
+export interface UserContext {
+  initializeUser(token: string): any
+  token: string | null
+  user: string | null
+}
+
+export const UserContext = React.createContext<UserContext>({
   initializeUser: (token) => {
-    console.log('add call to get user roles')
+    console.log(token)
   },
   user: null,
-  token: { type: null, token: null },
+  token: null,
 })
