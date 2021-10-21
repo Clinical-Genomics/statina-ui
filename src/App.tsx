@@ -23,6 +23,10 @@ export const App = () => {
     setToken(null)
   }
 
+  useEffect(() => {
+    console.log(token)
+  }, [token])
+
   return (
     <div className="app">
       <UserContext.Provider value={{ user, initializeUser, token: token }}>
@@ -46,7 +50,6 @@ export const App = () => {
                 </Link>
               </Menu.Item>
               <Menu.Item key="/statistics" disabled={!token}>
-                .
                 <Link to="/statistics">
                   <span>Statistics</span>
                 </Link>

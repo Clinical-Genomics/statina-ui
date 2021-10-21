@@ -1,23 +1,25 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import { Card, Tabs, Row, Menu, Col, Dropdown } from 'antd'
-import { RouteComponentProps } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import { SamplesTable } from '../../components/SamplesTable/SamplesTable'
-import { mockBatch } from '../../mocks/batches'
 import { ZscoreGraph } from '../../components/ZscoreGraph/ZscoreGraph'
 import { BatchTablePDF } from '../../components/ExportPDF/BatchTablePDF'
-
-type BatchProps = RouteComponentProps & {
-  batchId: string
-}
+import { getBatch } from '../../services/StatinaApi'
+import { UserContext } from '../../services/userContext'
 
 const { TabPane } = Tabs
 
-export const BatchPage = (props: BatchProps) => {
+export const BatchPage = () => {
   const [batch, setBatch] = useState<any>([])
-  const [batchId] = useState<string>(props?.match?.params['batchId'])
+  const userContext = useContext(UserContext)
+
+  const { pathname } = useLocation()
+  const batchId = pathname.substring(pathname.lastIndexOf('/') + 1, pathname.length)
+
   useEffect(() => {
-    setBatch(mockBatch)
-  }, [])
+    // with the new apis needs to be changed to getSamples
+    if (batchId) getBatch(batchId, userContext).then((batch) => setBatch(batch))
+  }, [batchId])
 
   const downloadMenu = (
     <Menu style={{ width: 100, textAlign: 'center' }}>
