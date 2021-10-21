@@ -1,7 +1,6 @@
 import * as React from 'react'
 import styles from './LoginPage.module.css'
-import MainLogo from 'assets/cg-big-logo.svg'
-import { Card, Form, Input, Button } from 'antd'
+import { Form, Input, Button } from 'antd'
 import { login } from '../../services/StatinaApi'
 import { UserContext } from '../../services/userContext'
 import { useContext } from 'react'
