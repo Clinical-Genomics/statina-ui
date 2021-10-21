@@ -14,7 +14,7 @@ describe('Batches Table', () => {
         <BatchesTable batches={mockBatches}></BatchesTable>
       </MemoryRouter>
     )
-    const batchID = getByText(mockBatches[0].SampleProject)
+    const batchID = getByText(mockBatches[0].batch_id)
     expect(batchID).toBeVisible()
     const date = getByText(mockBatches[0].SequencingDate)
     expect(date).toBeVisible()
@@ -29,13 +29,13 @@ describe('Batches Table', () => {
         <BatchesTable batches={mockBatches}></BatchesTable>
       </MemoryRouter>
     )
-    expect(queryByText(mockBatches[10].SampleProject)).toBeNull()
+    expect(queryByText(mockBatches[10].batch_id)).toBeNull()
 
     userEvent.type(
       getByPlaceholderText('Search by Batch or Flowcell ID'),
-      mockBatches[10].SampleProject
+      mockBatches[10].batch_id
     )
     userEvent.click(getByLabelText('search'))
-    getByText(mockBatches[10].SampleProject)
+    getByText(mockBatches[10].batch_id)
   })
 })
