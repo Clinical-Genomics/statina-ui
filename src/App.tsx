@@ -7,7 +7,7 @@ import { Routes } from './components/Routes'
 import Logo from './assets/logo.png'
 import './App.less'
 import Footer from './components/Footer/Footer'
-import { UserContext } from 'services/user-context'
+import { UserContext } from 'services/userContext'
 
 const { Header, Content } = Layout
 export const App = () => {

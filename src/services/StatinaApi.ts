@@ -4,11 +4,10 @@ const { REACT_APP_BACKEND_URL } = process.env
 
 const axios = require('axios').default
 
-const axiosGET = (endPoint, token) => {
+const axiosGET = (endPoint, { token } = { token: null }) => {
   return new Promise((resolve, reject) => {
     axios
-      // .get(endPoint, { headers: { Authorization: `Bearer ${token}` } })
-      .get(endPoint)
+      .get(endPoint, { headers: { Authorization: `bearer ${token}` } })
       .then(function (response) {
         resolve(response.data)
       })
@@ -22,9 +21,7 @@ const axiosGET = (endPoint, token) => {
 const axiosGetToken = (endPoint, formInput) => {
   return new Promise((resolve, reject) => {
     const params = new URLSearchParams(formInput)
-
     axios
-      // .get(endPoint, { headers: { Authorization: `Bearer ${token}` } })
       .post(endPoint, params, {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
@@ -42,12 +39,12 @@ const axiosGetToken = (endPoint, formInput) => {
 
 export const getBatches = async (): Promise<any> => {
   const endPoint = `${REACT_APP_BACKEND_URL}/batches`
-  return axiosGET(endPoint, null)
+  return axiosGET(endPoint)
 }
 
 export const getBatch = async (batchId: string): Promise<any> => {
   const endPoint = `${REACT_APP_BACKEND_URL}/batches/${batchId}`
-  return axiosGET(endPoint, null)
+  return axiosGET(endPoint)
 }
 
 export const login = async (formInput: Login): Promise<any> => {

@@ -3,7 +3,7 @@ import styles from './LoginPage.module.css'
 import MainLogo from 'assets/cg-big-logo.svg'
 import { Card, Form, Input, Button } from 'antd'
 import { login } from '../../services/StatinaApi'
-import { UserContext } from '../../services/user-context'
+import { UserContext } from '../../services/userContext'
 import { useContext } from 'react'
 
 export const LoginPage = () => {
@@ -11,7 +11,6 @@ export const LoginPage = () => {
   const onSubmit = (values) => {
     login(values)
       .then((response) => {
-        console.log(response)
         initializeUser({ type: response.token_type, token: response.access_token })
       })
       .catch((error) => console.log(error))
