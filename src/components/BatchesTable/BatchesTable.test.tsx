@@ -31,10 +31,7 @@ describe('Batches Table', () => {
     )
     expect(queryByText(mockBatches[10].batch_id)).toBeNull()
 
-    userEvent.type(
-      getByPlaceholderText('Search by Batch or Flowcell ID'),
-      mockBatches[10].batch_id
-    )
+    userEvent.type(getByPlaceholderText('Search by Batch or Flowcell ID'), mockBatches[10].batch_id)
     userEvent.click(getByLabelText('search'))
     getByText(mockBatches[10].batch_id)
   })
