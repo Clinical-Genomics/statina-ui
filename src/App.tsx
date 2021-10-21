@@ -23,10 +23,6 @@ export const App = () => {
     setToken(null)
   }
 
-  useEffect(() => {
-    console.log(token)
-  }, [token])
-
   return (
     <div className="app">
       <UserContext.Provider value={{ user, initializeUser, token: token }}>

@@ -14,7 +14,6 @@ type RoutesProps = {
 }
 
 export const Routes = (props: RoutesProps) => {
-  console.log(props)
   const { isLoggedIn } = props
   return (
     <Switch>
