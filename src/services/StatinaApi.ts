@@ -41,8 +41,8 @@ const axiosGetToken = (endPoint, formInput) => {
   })
 }
 
-export const getBatches = async (context: UserContext): Promise<any> => {
-  const endPoint = `${REACT_APP_BACKEND_URL}/batches`
+export const getBatches = async (context: UserContext, pageSize, currentPage): Promise<any> => {
+  const endPoint = `${REACT_APP_BACKEND_URL}/batches?page_size=${pageSize}&page_num=${currentPage}`
   return axiosGET(endPoint, context)
 }
 

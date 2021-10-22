@@ -72,7 +72,7 @@ export const BatchesTable = ({ batches }: BatchesProps) => {
           <Search placeholder="Search by Batch or Flowcell ID" onSearch={onSearch} />
         </Col>
       </Row>
-      <Table columns={columns} dataSource={filteredBatches} rowKey="batch_id" />
+      <Table columns={columns} dataSource={filteredBatches} rowKey="batch_id" pagination={false} />
     </>
   )
 }
