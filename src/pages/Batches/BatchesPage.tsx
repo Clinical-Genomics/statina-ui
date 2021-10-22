@@ -4,6 +4,7 @@ import { Batch } from 'services/interfaces'
 import { getBatches } from '../../services/StatinaApi'
 import { UserContext } from '../../services/userContext'
 import ReactPaginate from 'react-paginate'
+import { LeftOutlined, RightOutlined } from '@ant-design/icons'
 import styles from './BatchesPage.module.css'
 
 export const BatchesPage = () => {
@@ -24,8 +25,8 @@ export const BatchesPage = () => {
     <>
       <BatchesTable batches={batches}></BatchesTable>
       <ReactPaginate
-        previousLabel={'<'}
-        nextLabel={'>'}
+        previousLabel={<LeftOutlined />}
+        nextLabel={<RightOutlined />}
         onPageChange={handlePageClick}
         pageCount={pageCount}
         containerClassName={styles.pagination}
