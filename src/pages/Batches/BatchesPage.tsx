@@ -8,7 +8,7 @@ export const BatchesPage = () => {
   const [batches, setBatches] = useState<Batch[]>([])
   const userContext = useContext(UserContext)
   useEffect(() => {
-    getBatches(userContext).then((batches) => setBatches(batches))
+    getBatches(userContext).then((batches) => setBatches(batches?.documents))
   }, [])
   return (
     <>
