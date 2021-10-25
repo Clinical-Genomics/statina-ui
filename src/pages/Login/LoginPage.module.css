@@ -19,7 +19,7 @@
   width: 360px;
   height: 360px;
   background-color: #9ce2d7;
-  border-radius: 50%;
+  border-radius: 5%;
   padding: 20px;
   display: flex;
   flex-direction: column;
