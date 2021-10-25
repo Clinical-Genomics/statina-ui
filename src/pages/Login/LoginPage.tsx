@@ -6,11 +6,12 @@ import { UserContext } from '../../services/userContext'
 import { useContext } from 'react'
 
 export const LoginPage = () => {
-  const { initializeUser } = useContext(UserContext)
+  const { initializeUser, initializeToken } = useContext(UserContext)
   const onSubmit = (values) => {
     login(values)
       .then((response) => {
-        initializeUser(response.access_token)
+        initializeToken(response.token)
+        initializeUser(response.user)
       })
       .catch((error) => console.log(error))
   }

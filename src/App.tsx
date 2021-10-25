@@ -1,13 +1,15 @@
 import React, { useEffect } from 'react'
 import styles from './App.module.css'
 import './index.css'
-import { Layout, Menu, Button } from 'antd'
+import { Layout, Menu, Button, Dropdown } from 'antd'
 import { Link, useLocation } from 'react-router-dom'
 import { Routes } from './components/Routes'
 import Logo from './assets/logo.png'
 import './App.less'
 import Footer from './components/Footer/Footer'
 import { UserContext } from 'services/userContext'
+import { DownOutlined } from '@ant-design/icons'
+import { ProfileMenu } from './components/ProfileMenu/ProfileMenu'
 
 const { Header, Content } = Layout
 export const App = () => {
@@ -15,8 +17,12 @@ export const App = () => {
   const [user, setUser] = React.useState<any>()
   const [token, setToken] = React.useState<any>()
 
-  const initializeUser = (token) => {
+  const initializeToken = (token) => {
     setToken(token)
+  }
+
+  const initializeUser = (user) => {
+    setUser(user)
   }
 
   const logout = () => {
@@ -25,7 +31,14 @@ export const App = () => {
 
   return (
     <div className="app">
-      <UserContext.Provider value={{ user, initializeUser, token: token }}>
+      <UserContext.Provider
+        value={{
+          user,
+          initializeUser: initializeUser,
+          initializeToken: initializeToken,
+          token: token,
+        }}
+      >
         <Layout style={{ minHeight: '100vh' }}>
           <Header className={styles.header}>
             <img className={styles.logo} src={Logo} alt={'Small CG logo'} />
@@ -51,11 +64,9 @@ export const App = () => {
                 </Link>
               </Menu.Item>
             </Menu>
-            {!!token && (
+            {!!token && !!user?.username && (
               <div className={styles.logoutButton}>
-                <Button type="primary" onClick={() => logout()}>
-                  Logout
-                </Button>
+                <Dropdown overlay={<ProfileMenu user={user} logout={logout} />} />
               </div>
             )}
           </Header>

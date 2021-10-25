@@ -22,17 +22,23 @@ const axiosGET = (endPoint, { token, initializeUser }) => {
   })
 }
 
-const axiosGetToken = (endPoint, formInput) => {
+const axiosGetToken = (formInput) => {
   return new Promise((resolve, reject) => {
     const params = new URLSearchParams(formInput)
     axios
-      .post(endPoint, params, {
+      .post(`${REACT_APP_BACKEND_URL}/token`, params, {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
         },
       })
-      .then(function (response) {
-        resolve(response.data)
+      .then(function (tokenResponse) {
+        axios
+          .get(`${REACT_APP_BACKEND_URL}/user/me/`, {
+            headers: { Authorization: `Bearer ${tokenResponse.data.access_token}` },
+          })
+          .then((userDataResponse) => {
+            resolve({ user: userDataResponse.data, token: tokenResponse.data.access_token })
+          })
       })
       .catch(function (error) {
         reject(error)
@@ -42,7 +48,7 @@ const axiosGetToken = (endPoint, formInput) => {
 }
 
 export const getBatches = async (context: UserContext): Promise<any> => {
-  const endPoint = `${REACT_APP_BACKEND_URL}/batches`
+  const endPoint = `${REACT_APP_BACKEND_URL}/batches/`
   return axiosGET(endPoint, context)
 }
 
@@ -50,8 +56,11 @@ export const getBatch = async (batchId: string, context: UserContext): Promise<a
   const endPoint = `${REACT_APP_BACKEND_URL}/batch/${batchId}`
   return axiosGET(endPoint, context)
 }
+export const getUserInfo = async (context: UserContext): Promise<any> => {
+  const endPoint = `${REACT_APP_BACKEND_URL}/user/me`
+  return axiosGET(endPoint, context)
+}
 
 export const login = async (formInput: Login): Promise<any> => {
-  const endPoint = `${REACT_APP_BACKEND_URL}/token`
-  return axiosGetToken(endPoint, formInput)
+  return axiosGetToken(formInput)
 }
