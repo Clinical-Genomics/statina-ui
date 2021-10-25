@@ -25,7 +25,6 @@ const axiosGET = (endPoint, { token, initializeUser }) => {
 const axiosGetToken = (endPoint, formInput) => {
   return new Promise((resolve, reject) => {
     const params = new URLSearchParams(formInput)
-    console.log(params)
     axios
       .post(endPoint, params, {
         headers: {
