@@ -50,3 +50,9 @@ export interface Login {
   password: string
   username: string
 }
+
+export interface RegisterUser {
+  password: string
+  username: string
+  email: string
+}
