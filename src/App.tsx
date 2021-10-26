@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styles from './App.module.css'
 import './index.css'
 import { Layout, Menu, Button, Dropdown } from 'antd'
@@ -10,20 +10,36 @@ import Footer from './components/Footer/Footer'
 import { UserContext } from 'services/userContext'
 import { ProfileDropdown } from './components/ProfileDropdown/ProfileDropdown'
 import { DownOutlined } from '@ant-design/icons'
+import { getCookies, removeCookies, setCookies } from './services/helpers/helpers'
+import { Loading } from './components/Loading'
 
 const { Header, Content } = Layout
 export const App = () => {
-  const [isLoaded, setIsLoaded] = React.useState<boolean>(false)
+  const [isLoading, setIsLoading] = React.useState<boolean>(true)
   const [user, setUser] = React.useState<any>()
   const [token, setToken] = React.useState<any>()
 
+  useEffect(() => {
+    getCookies()
+      .then((userCookie) => {
+        setIsLoading(false)
+        initializeUserContext(userCookie)
+      })
+      .catch((error) => {
+        console.log(error)
+        setIsLoading(false)
+      })
+  }, [])
+
   const initializeUserContext = (user) => {
-    setToken(user.access_token)
+    setToken(user?.access_token)
     setUser(user)
+    setCookies(user)
   }
 
   const logout = () => {
     setToken(null)
+    removeCookies()
   }
 
   return (
@@ -31,6 +47,7 @@ export const App = () => {
       <UserContext.Provider
         value={{
           initializeUserContext,
+          logout,
           token: token,
           username: user?.username,
           email: user?.email,
@@ -81,7 +98,8 @@ export const App = () => {
             }}
           >
             <div className={styles.siteLayoutBackground} style={{ padding: 24, minHeight: 380 }}>
-              <Routes isLoggedIn={!!token} />
+              {!isLoading && <Routes isLoggedIn={!!token} />}
+              {isLoading && <Loading />}
             </div>
           </Content>
           <Footer />

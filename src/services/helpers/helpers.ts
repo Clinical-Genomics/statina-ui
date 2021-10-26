@@ -1,6 +1,9 @@
 import { Notification } from '../interfaces'
 import { notification } from 'antd'
 import { AxiosError } from 'axios'
+import Cookies from 'universal-cookie'
+
+const userCookie = 'statinaUser'
 
 export const ErrorNotification = ({ type, message, description }: Notification) => {
   const key = `open${Date.now()}`
@@ -94,4 +97,25 @@ export const getUserRole = (scopes: string[]): string => {
   else if (scopes.includes('inactive')) return 'Inactive user'
   else if (scopes.includes('unconfirmed')) return 'Unconfirmed email'
   return ''
+}
+
+export const setCookies = (user, cookieName = userCookie) => {
+  const cookies = new Cookies()
+  cookies.set(cookieName, JSON.stringify(user), { path: '/', secure: true })
+  console.log(cookies.get(cookieName))
+}
+
+export const getCookies = (cookieName = userCookie) => {
+  const cookies = new Cookies()
+  cookies.get(cookieName)
+  return new Promise((resolve, reject) => {
+    const cookie = cookies.get(cookieName)
+    if (cookie?.access_token) resolve(cookie)
+    else reject('No cookie found')
+  })
+}
+
+export const removeCookies = (cookieName = userCookie) => {
+  const cookies = new Cookies()
+  cookies.remove(cookieName)
 }
