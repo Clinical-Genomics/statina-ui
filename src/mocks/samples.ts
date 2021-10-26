@@ -1,7 +1,7 @@
 export const mockSamples = [
   {
-    SampleID: '2018-21237-04',
-    SampleProject: '2106151',
+    sample_id: '2018-21237-04',
+    batch_id: '2106151',
     SampleType: '',
     Description: null,
     Flowcell: 'HFM7VDRXY',
@@ -107,8 +107,8 @@ export const mockSamples = [
     sex: 'XY',
   },
   {
-    SampleID: '2019-23096-05',
-    SampleProject: '2106151',
+    sample_id: '2019-23096-05',
+    batch_id: '2106151',
     SampleType: '',
     Description: null,
     Flowcell: 'HFM7VDRXY',
