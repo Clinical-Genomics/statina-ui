@@ -1,5 +1,5 @@
 import { createErrorNotification } from './helpers/helpers'
-import { Login } from './interfaces'
+import { Login, RegisterUser } from './interfaces'
 import { UserContext } from './userContext'
 const { REACT_APP_BACKEND_URL } = process.env
 
@@ -53,5 +53,10 @@ export const getBatch = async (batchId: string, context: UserContext): Promise<a
 
 export const login = async (formInput: Login): Promise<any> => {
   const endPoint = `${REACT_APP_BACKEND_URL}/token`
+  return axiosGetToken(endPoint, formInput)
+}
+
+export const registerUser = async (formInput: RegisterUser): Promise<any> => {
+  const endPoint = `${REACT_APP_BACKEND_URL}/user/register`
   return axiosGetToken(endPoint, formInput)
 }

@@ -47,6 +47,11 @@ export const createErrorMessage = (error: AxiosError) => {
         errorMessage: `${error?.response?.data?.detail}`,
         errorDescription: `Login failed, wrong credentials or no permissions. Try to login again`,
       }
+    case 409:
+      return {
+        errorMessage: `${error?.response?.data}`,
+        errorDescription: `Could not submit request`,
+      }
     case 500:
       return {
         errorMessage: 'Something went wrong in the backend',

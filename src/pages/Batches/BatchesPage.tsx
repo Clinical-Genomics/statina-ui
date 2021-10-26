@@ -13,7 +13,7 @@ export const BatchesPage = () => {
 
   useEffect(() => {
     getBatches(userContext, pageSize, pageNum).then((batches) => {
-      setBatches(batches.documents), setBatchesCount(batches.document_count)
+      setBatches(batches.documents), setBatchesCount(batches?.document_count)
     })
   }, [])
   return (
