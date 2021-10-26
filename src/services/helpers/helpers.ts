@@ -86,3 +86,12 @@ export const windowMatchMedia = () => {
     }
   )
 }
+
+export const getUserRole = (scopes: string[]): string => {
+  if (scopes.includes('admin')) return 'Admin role'
+  else if (scopes.includes('RW')) return 'Read/Write role'
+  else if (scopes.includes('R')) return 'Read role'
+  else if (scopes.includes('inactive')) return 'Inactive user'
+  else if (scopes.includes('unconfirmed')) return 'Unconfirmed email'
+  return ''
+}

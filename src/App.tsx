@@ -1,13 +1,15 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import styles from './App.module.css'
 import './index.css'
-import { Layout, Menu, Button } from 'antd'
+import { Layout, Menu, Button, Dropdown } from 'antd'
 import { Link, useLocation } from 'react-router-dom'
 import { Routes } from './components/Routes'
 import Logo from './assets/logo.png'
 import './App.less'
 import Footer from './components/Footer/Footer'
 import { UserContext } from 'services/userContext'
+import { ProfileDropdown } from './components/ProfileDropdown/ProfileDropdown'
+import { DownOutlined } from '@ant-design/icons'
 
 const { Header, Content } = Layout
 export const App = () => {
@@ -15,8 +17,9 @@ export const App = () => {
   const [user, setUser] = React.useState<any>()
   const [token, setToken] = React.useState<any>()
 
-  const initializeUser = (token) => {
-    setToken(token)
+  const initializeUserContext = (user) => {
+    setToken(user.access_token)
+    setUser(user)
   }
 
   const logout = () => {
@@ -25,7 +28,15 @@ export const App = () => {
 
   return (
     <div className="app">
-      <UserContext.Provider value={{ user, initializeUser, token: token }}>
+      <UserContext.Provider
+        value={{
+          initializeUserContext,
+          token: token,
+          username: user?.username,
+          email: user?.email,
+          permissions: user?.scopes,
+        }}
+      >
         <Layout style={{ minHeight: '100vh' }}>
           <Header className={styles.header}>
             <img className={styles.logo} src={Logo} alt={'Small CG logo'} />
@@ -51,11 +62,13 @@ export const App = () => {
                 </Link>
               </Menu.Item>
             </Menu>
-            {!!token && (
+            {!!token && !!user?.username && (
               <div className={styles.logoutButton}>
-                <Button type="primary" onClick={() => logout()}>
-                  Logout
-                </Button>
+                <Dropdown overlay={<ProfileDropdown user={user} logout={logout} />}>
+                  <Button type="primary">
+                    {user?.username} <DownOutlined />
+                  </Button>
+                </Dropdown>
               </div>
             )}
           </Header>

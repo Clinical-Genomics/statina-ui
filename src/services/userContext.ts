@@ -1,15 +1,17 @@
 import * as React from 'react'
 
 export interface UserContext {
-  initializeUser(token: string): any
+  email: string | null
+  initializeUserContext(user: any): any
+  permissions: string[]
   token: string | null
-  user: string | null
+  username: string | null
 }
 
 export const UserContext = React.createContext<UserContext>({
-  initializeUser: (token) => {
-    console.log(token)
-  },
-  user: null,
+  email: null,
+  initializeUserContext: (token) => null,
+  permissions: [],
   token: null,
+  username: null,
 })
