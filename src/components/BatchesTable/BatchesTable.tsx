@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import { UserContext } from '../../services/userContext'
+import { getBatches } from '../../services/StatinaApi'
 import { Col, Dropdown, Input, Menu, Row, Table } from 'antd'
 import { sortDate } from 'services/helpers/helpers'
 import { Batch } from 'services/interfaces'
@@ -14,6 +16,9 @@ const { Search } = Input
 
 export const BatchesTable = ({ batches }: BatchesProps) => {
   const [filteredBatches, setFilteredBatches] = useState<Batch[]>(batches)
+  const [paginatBatches, setPaginatBatches] = useState<Batch[]>(batches)
+  const [totalBatches, setTotalBatches] = useState<number>(58)
+  const userContext = useContext(UserContext)
 
   useEffect(() => {
     setFilteredBatches(batches)
@@ -27,6 +32,12 @@ export const BatchesTable = ({ batches }: BatchesProps) => {
         entry.Flowcell.toLowerCase().includes(lowerCaseInput)
     )
     setFilteredBatches(filteredData)
+  }
+
+  const onChange = (data) => {
+    getBatches(userContext, data.pageSize, data.current).then((batches) =>
+      setPaginatBatches(batches)
+    )
   }
 
   const columns: any = [
@@ -72,7 +83,13 @@ export const BatchesTable = ({ batches }: BatchesProps) => {
           <Search placeholder="Search by Batch or Flowcell ID" onSearch={onSearch} />
         </Col>
       </Row>
-      <Table columns={columns} dataSource={filteredBatches} rowKey="batch_id" pagination={false} />
+      <Table
+        columns={columns}
+        dataSource={filteredBatches}
+        rowKey="batch_id"
+        onChange={onChange}
+        pagination={{ total: totalBatches }}
+      />
     </>
   )
 }
