@@ -152,10 +152,7 @@ export const SamplesTable = ({ samples, showBatchInfo = true }: SamplesProps) =>
     {
       title: (
         <Tooltip title="Warning for chomosome abnormality. Automatically generated. Based on pre defined Zscore and Fetal Fraction trsholds">
-          Warning {/* ignores needed for antd bug */}
-          {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
-          {/*
-// @ts-ignore */}
+          Warning
           <QuestionCircleOutlined />
         </Tooltip>
       ),
@@ -180,10 +177,7 @@ export const SamplesTable = ({ samples, showBatchInfo = true }: SamplesProps) =>
     {
       title: (
         <Tooltip title="Chomosome abnormalies. Manually classified by user through the sample page">
-          Status {/* ignores needed for antd bug */}
-          {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
-          {/*
-// @ts-ignore */}
+          Status
           <QuestionCircleOutlined />
         </Tooltip>
       ),
@@ -204,10 +198,6 @@ export const SamplesTable = ({ samples, showBatchInfo = true }: SamplesProps) =>
       width: 120,
       render: (sample: any) => (
         <a href={`/sample_download/${sample.SampleID}/segmental_calls`} download>
-          {/* ignores needed for antd bug */}
-          {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
-          {/*
-// @ts-ignore */}
           <CloudDownloadOutlined style={{ fontSize: '30px', marginLeft: '30%' }} />
         </a>
       ),
