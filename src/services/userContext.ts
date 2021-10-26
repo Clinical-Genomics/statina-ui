@@ -2,7 +2,7 @@ import * as React from 'react'
 
 export interface UserContext {
   email: string | null
-  initializeUserContext(token: string): any
+  initializeUserContext(user: any): any
   permissions: string[]
   token: string | null
   username: string | null

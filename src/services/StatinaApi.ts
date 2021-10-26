@@ -5,7 +5,7 @@ const { REACT_APP_BACKEND_URL } = process.env
 
 const axios = require('axios').default
 
-const axiosGET = (endPoint, { token, initializeUser }) => {
+const axiosGET = (endPoint, { token, initializeUserContext }: UserContext) => {
   return new Promise((resolve, reject) => {
     axios
       .get(endPoint, { headers: { Authorization: `Bearer ${token}` } })
@@ -14,7 +14,7 @@ const axiosGET = (endPoint, { token, initializeUser }) => {
       })
       .catch(function (error) {
         if (error?.response?.status === 401) {
-          initializeUser(null)
+          initializeUserContext(null)
         }
         reject(error)
         createErrorNotification(error)
