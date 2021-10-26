@@ -1,5 +1,5 @@
 import { createErrorNotification } from './helpers/helpers'
-import { Login } from './interfaces'
+import { Login, RegisterUser } from './interfaces'
 import { UserContext } from './userContext'
 const { REACT_APP_BACKEND_URL } = process.env
 
@@ -63,4 +63,9 @@ export const getUserInfo = async (context: UserContext): Promise<any> => {
 
 export const login = async (formInput: Login): Promise<any> => {
   return axiosGetToken(formInput)
+}
+
+export const registerUser = async (formInput: RegisterUser): Promise<any> => {
+  const endPoint = `${REACT_APP_BACKEND_URL}/user/register`
+  return axiosGetToken(endPoint, formInput)
 }

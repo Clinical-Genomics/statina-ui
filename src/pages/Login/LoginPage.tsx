@@ -4,6 +4,7 @@ import { Form, Input, Button } from 'antd'
 import { login } from '../../services/StatinaApi'
 import { UserContext } from '../../services/userContext'
 import { useContext } from 'react'
+import { RegisterModal } from '../../components/RegisterModal/RegisterModal'
 
 export const LoginPage = () => {
   const { initializeUser, initializeToken } = useContext(UserContext)
@@ -31,20 +32,8 @@ export const LoginPage = () => {
       </h3>
       <div className={styles.loginContainer}>
         <div className={styles.form}>
-          <Form
-            name="basic"
-            labelCol={{
-              span: 7,
-            }}
-            wrapperCol={{
-              span: 15,
-            }}
-            onFinish={onSubmit}
-            onFinishFailed={onSubmitFailed}
-            autoComplete="off"
-          >
+          <Form name="basic" onFinish={onSubmit} onFinishFailed={onSubmitFailed} autoComplete="off">
             <Form.Item
-              label="Username"
               name="username"
               rules={[
                 {
@@ -53,10 +42,9 @@ export const LoginPage = () => {
                 },
               ]}
             >
-              <Input />
+              <Input placeholder="Username" />
             </Form.Item>
             <Form.Item
-              label="Password"
               name="password"
               rules={[
                 {
@@ -65,18 +53,14 @@ export const LoginPage = () => {
                 },
               ]}
             >
-              <Input.Password />
+              <Input.Password placeholder="Password" />
             </Form.Item>
-            <Form.Item
-              wrapperCol={{
-                offset: 8,
-                span: 16,
-              }}
-            >
+            <Form.Item>
               <Button htmlType="submit" type={'primary'}>
                 Sign in
               </Button>
             </Form.Item>
+            <RegisterModal />
           </Form>
         </div>
       </div>
