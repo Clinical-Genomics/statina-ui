@@ -10,20 +10,18 @@ import { ExportPDF } from 'components/ExportPDF/ExportPDF'
 
 type BatchesProps = {
   batches: Batch[]
+  batchesCount: number
 }
 
 const { Search } = Input
 
-export const BatchesTable = ({ batches }: BatchesProps) => {
+export const BatchesTable = ({ batches, batchesCount }: BatchesProps) => {
   const [filteredBatches, setFilteredBatches] = useState<Batch[]>(batches)
-  const [paginatBatches, setPaginatBatches] = useState<Batch[]>(batches)
-  const [totalBatches, setTotalBatches] = useState<number>(58)
   const userContext = useContext(UserContext)
 
   useEffect(() => {
     setFilteredBatches(batches)
   }, [batches])
-
   const onSearch = (searchInput) => {
     const lowerCaseInput = searchInput.toLowerCase()
     const filteredData = batches.filter(
@@ -36,7 +34,7 @@ export const BatchesTable = ({ batches }: BatchesProps) => {
 
   const onChange = (data) => {
     getBatches(userContext, data.pageSize, data.current).then((batches) =>
-      setPaginatBatches(batches)
+      setFilteredBatches(batches.documents)
     )
   }
 
@@ -88,7 +86,7 @@ export const BatchesTable = ({ batches }: BatchesProps) => {
         dataSource={filteredBatches}
         rowKey="batch_id"
         onChange={onChange}
-        pagination={{ total: totalBatches }}
+        pagination={{ total: batchesCount }}
       />
     </>
   )
