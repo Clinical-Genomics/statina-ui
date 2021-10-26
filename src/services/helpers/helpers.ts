@@ -102,7 +102,6 @@ export const getUserRole = (scopes: string[]): string => {
 export const setCookies = (user, cookieName = userCookie) => {
   const cookies = new Cookies()
   cookies.set(cookieName, JSON.stringify(user), { path: '/', secure: true })
-  console.log(cookies.get(cookieName))
 }
 
 export const getCookies = (cookieName = userCookie) => {
