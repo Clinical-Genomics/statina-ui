@@ -7,11 +7,11 @@ import { useContext } from 'react'
 import { RegisterModal } from '../../components/RegisterModal/RegisterModal'
 
 export const LoginPage = () => {
-  const { initializeUser } = useContext(UserContext)
+  const { initializeUserContext } = useContext(UserContext)
   const onSubmit = (values) => {
     login(values)
       .then((response) => {
-        initializeUser(response.access_token)
+        initializeUserContext(response)
       })
       .catch((error) => console.log(error))
   }
