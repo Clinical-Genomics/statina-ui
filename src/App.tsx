@@ -22,11 +22,10 @@ export const App = () => {
   useEffect(() => {
     getCookies()
       .then((userCookie) => {
-        setIsLoading(false)
         initializeUserContext(userCookie)
+        setIsLoading(false)
       })
-      .catch((error) => {
-        console.log(error)
+      .catch(() => {
         setIsLoading(false)
       })
   }, [])
