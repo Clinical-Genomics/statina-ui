@@ -66,6 +66,11 @@ export const getBatch = async (batchId: string, context: UserContext): Promise<a
   return axiosGET(endPoint, context)
 }
 
+export const getSample = async (sampleId: string, context: UserContext): Promise<any> => {
+  const endPoint = `${REACT_APP_BACKEND_URL}/sample/${sampleId}/`
+  return axiosGET(endPoint, context)
+}
+
 export const login = async (formInput: Login): Promise<any> => {
   const endPoint = `${REACT_APP_BACKEND_URL}/token`
   return axiosGetToken(endPoint, formInput)
