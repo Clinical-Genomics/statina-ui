@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import { UserContext } from '../../services/userContext'
+import { getSamples } from '../../services/StatinaApi'
 import { Input, Table, Tag, Tooltip } from 'antd'
 import { Link } from 'react-router-dom'
 import { CloudDownloadOutlined, QuestionCircleOutlined } from '@ant-design/icons'
@@ -7,21 +9,23 @@ import { sampleStatusTags, sexTags, tagColors } from 'services/helpers/constants
 
 type SamplesProps = {
   samples: any[]
+  samplesCount: number
   showBatchInfo?: boolean
 }
 
 const { Search } = Input
 
-export const SamplesTable = ({ samples, showBatchInfo = true }: SamplesProps) => {
+export const SamplesTable = ({ samples, samplesCount, showBatchInfo = true }: SamplesProps) => {
   const [filteredSamples, setFilteredSamples] = useState<any[]>(samples)
   const [selectedRowKeys, setSelectedRowKeys] = useState<any[]>([])
+  const userContext = useContext(UserContext)
 
   useEffect(() => {
     setFilteredSamples(samples)
     if (samples?.length > 0) {
       const selectedKey: string[] = []
       samples.forEach((sample) => {
-        if (sample.include) selectedKey.push(sample?.SampleID)
+        if (sample.include) selectedKey.push(sample?.sample_id)
       })
       setSelectedRowKeys(selectedKey)
     }
@@ -32,27 +36,33 @@ export const SamplesTable = ({ samples, showBatchInfo = true }: SamplesProps) =>
     const filteredData = samples.filter(
       (entry) =>
         entry.SampleProject.toLowerCase().includes(lowerCaseInput) ||
-        entry.SampleID.toLowerCase().includes(lowerCaseInput) ||
+        entry.sample_id.toLowerCase().includes(lowerCaseInput) ||
         entry.comment.toLowerCase().includes(lowerCaseInput)
     )
     setFilteredSamples(filteredData)
   }
 
+  const onChange = (data) => {
+    getSamples(userContext, data.pageSize, data.current).then((samples) =>
+      setFilteredSamples(samples.documents)
+    )
+  }
+
   const columns: any = [
     {
       title: 'Sample name',
-      dataIndex: 'SampleID',
-      key: 'SampleID',
+      dataIndex: 'sample_id',
+      key: 'sample_id',
       fixed: 'left',
-      render: (SampleID: any) => <Link to={`/samples/${SampleID}`}>{SampleID}</Link>,
+      render: (sample_id: any) => <Link to={`/samples/${sample_id}`}>{sample_id}</Link>,
     },
     {
       title: 'Batch ID',
-      dataIndex: 'SampleProject',
-      key: 'SampleProject',
+      dataIndex: 'batch_id',
+      key: 'batch_id',
       fixed: 'left',
       visible: showBatchInfo,
-      render: (SampleProject: any) => <Link to={`/batches/${SampleProject}`}>{SampleProject}</Link>,
+      render: (batch_id: any) => <Link to={`/batches/${batch_id}`}>{batch_id}</Link>,
     },
     {
       title: 'Zscore 13',
@@ -120,8 +130,8 @@ export const SamplesTable = ({ samples, showBatchInfo = true }: SamplesProps) =>
     },
     {
       title: 'FF-PF (%)',
-      dataIndex: 'FetalFractionPreface',
-      key: 'FetalFractionPreface',
+      dataIndex: 'FF_Formatted',
+      key: 'FF_Formatted',
       width: 100,
     },
     {
@@ -147,7 +157,8 @@ export const SamplesTable = ({ samples, showBatchInfo = true }: SamplesProps) =>
       title: 'CNV Segment',
       dataIndex: 'CNVSegment',
       key: 'CNVSegment',
-      render: (sex: any) => (sex ? <Tag color={tagColors.CNVSegment}>{sex}</Tag> : null),
+      render: (CNVSegment: any) =>
+        CNVSegment ? <Tag color={tagColors.CNVSegment}>{CNVSegment}</Tag> : null,
     },
     {
       title: (
@@ -183,12 +194,14 @@ export const SamplesTable = ({ samples, showBatchInfo = true }: SamplesProps) =>
       ),
       dataIndex: 'status',
       key: 'status',
-      render: (status) => {
-        return (
-          status.lenght > 0 && (
-            <Tag color={sampleStatusTags[status]?.color}>{sampleStatusTags[status]?.label}</Tag>
-          )
-        )
+      render: (status: any) => {
+        return status.length > 0
+          ? status.split(', ').map((status) => (
+              <Tag color={sampleStatusTags[status.split(' ')[0].toLowerCase()]?.color} key={status}>
+                {status}
+              </Tag>
+            ))
+          : null
       },
     },
     {
@@ -197,7 +210,7 @@ export const SamplesTable = ({ samples, showBatchInfo = true }: SamplesProps) =>
       key: 'segmental_calls',
       width: 120,
       render: (sample: any) => (
-        <a href={`/sample_download/${sample.SampleID}/segmental_calls`} download>
+        <a href={`/sample_download/${sample.sample_id}/segmental_calls`} download>
           <CloudDownloadOutlined style={{ fontSize: '30px', marginLeft: '30%' }} />
         </a>
       ),
@@ -231,16 +244,17 @@ export const SamplesTable = ({ samples, showBatchInfo = true }: SamplesProps) =>
       />
       <i>Select a sample with the checkbox to include it in the comparison set</i>
       <Table
-        pagination={showBatchInfo ? undefined : false}
         columns={columns.filter((column) =>
           showBatchInfo ? column : column.key !== 'SampleProject'
         )}
         dataSource={filteredSamples}
-        rowKey="SampleID"
+        rowKey="sample_id"
         scroll={{ x: 2300 }}
         rowSelection={{
           ...rowSelection,
         }}
+        onChange={onChange}
+        pagination={{ total: samplesCount }}
       />
     </>
   )

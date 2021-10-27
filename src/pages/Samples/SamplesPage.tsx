@@ -1,12 +1,19 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { SamplesTable } from 'components/SamplesTable/SamplesTable'
-import { mockSamples } from 'mocks/samples'
+import { getSamples } from '../../services/StatinaApi'
+import { UserContext } from '../../services/userContext'
 
 export const SamplesPage = () => {
+  const userContext = useContext(UserContext)
   const [samples, setSamples] = useState<any[]>([])
+  const [samplesCount, setSamplesCount] = useState<number>(0)
+  const pageSize = 10
+  const pageNum = 0
+
   useEffect(() => {
-    //    getBatches().then((response) => setBatches(response.batches));
-    setSamples(mockSamples)
+    getSamples(userContext, pageSize, pageNum).then((samples) => {
+      setSamples(samples.documents), setSamplesCount(samples?.document_count)
+    })
   }, [])
-  return <SamplesTable samples={samples} showBatchInfo></SamplesTable>
+  return <SamplesTable samples={samples} samplesCount={samplesCount} showBatchInfo></SamplesTable>
 }
