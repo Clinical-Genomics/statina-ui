@@ -1,6 +1,5 @@
 import React from 'react'
 import { Switch, Redirect, Route } from 'react-router-dom'
-import { HomePage } from 'pages/Home/HomePage'
 import { UnauthorizedPage } from 'pages/UnauthorizedPage'
 import { BatchesPage } from 'pages/Batches/BatchesPage'
 import { BatchPage } from 'pages/Batch/BatchPage'
@@ -31,7 +30,11 @@ export const Routes = (props: RoutesProps) => {
         path="/"
         exact
         render={() =>
-          isLoggedIn === true ? <HomePage /> : <Redirect to={{ pathname: '/login' }} />
+          isLoggedIn === true ? (
+            <Redirect to={{ pathname: '/batches' }} />
+          ) : (
+            <Redirect to={{ pathname: '/login' }} />
+          )
         }
       />
       <Route
