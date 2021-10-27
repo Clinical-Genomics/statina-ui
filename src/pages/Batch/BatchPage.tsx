@@ -4,21 +4,27 @@ import { useLocation } from 'react-router-dom'
 import { SamplesTable } from '../../components/SamplesTable/SamplesTable'
 import { ZscoreGraph } from '../../components/ZscoreGraph/ZscoreGraph'
 import { BatchTablePDF } from '../../components/ExportPDF/BatchTablePDF'
-import { getBatch } from '../../services/StatinaApi'
+import { getBatchSamples } from '../../services/StatinaApi'
 import { UserContext } from '../../services/userContext'
 
 const { TabPane } = Tabs
 
 export const BatchPage = () => {
   const [batch, setBatch] = useState<any>([])
+  const [samples, setSamples] = useState<any[]>([])
+  const [samplesCount, setSamplesCount] = useState<number>(0)
+  const pageSize = 10
+  const pageNum = 0
   const userContext = useContext(UserContext)
 
   const { pathname } = useLocation()
   const batchId = pathname.substring(pathname.lastIndexOf('/') + 1, pathname.length)
 
   useEffect(() => {
-    // with the new apis needs to be changed to getSamples
-    if (batchId) getBatch(batchId, userContext).then((batch) => setBatch(batch))
+    if (batchId)
+      getBatchSamples(userContext, batchId, pageSize, pageNum).then((samples) => {
+        setSamples(samples.documents), setSamplesCount(samples?.document_count)
+      })
   }, [batchId])
 
   const downloadMenu = (
@@ -41,7 +47,7 @@ export const BatchPage = () => {
       </Row>
       <Tabs type="card">
         <TabPane tab="Summary Table" key="1">
-          <SamplesTable samples={batch?.sample_info} showBatchInfo={false} />
+          <SamplesTable samples={samples} samplesCount={samplesCount} showBatchInfo />
         </TabPane>
         <TabPane tab="Zscore 13" key="Zscore_13">
           <ZscoreGraph samples={batch?.sample_info} score={'Zscore_13'} />

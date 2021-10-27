@@ -51,6 +51,16 @@ export const getSamples = async (context: UserContext, pageSize, currentPage): P
   return axiosGET(endPoint, context)
 }
 
+export const getBatchSamples = async (
+  context: UserContext,
+  batchId: string,
+  pageSize,
+  currentPage
+): Promise<any> => {
+  const endPoint = `${REACT_APP_BACKEND_URL}/batch/${batchId}/samples?page_size=${pageSize}&page_num=${currentPage}`
+  return axiosGET(endPoint, context)
+}
+
 export const getBatch = async (batchId: string, context: UserContext): Promise<any> => {
   const endPoint = `${REACT_APP_BACKEND_URL}/batch/${batchId}`
   return axiosGET(endPoint, context)
