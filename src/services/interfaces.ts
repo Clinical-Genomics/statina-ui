@@ -25,7 +25,9 @@ export interface Batch {
 }
 
 export interface Sample {
-  SampleID: string
+  sample_id: string
+  text_warning: string
+  include: boolean
   ChromosomeAbn: string
   batch_id: string
   SampleType: string
