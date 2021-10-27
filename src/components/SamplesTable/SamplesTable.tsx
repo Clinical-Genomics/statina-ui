@@ -198,7 +198,7 @@ export const SamplesTable = ({ samples, samplesCount, showBatchInfo = true }: Sa
         return status.length > 0
           ? status.split(', ').map((status) => (
               <Tag color={sampleStatusTags[status.split(' ')[0].toLowerCase()]?.color} key={status}>
-                {sampleStatusTags[status.split(' ')[0].toLowerCase()]?.label}
+                {status}
               </Tag>
             ))
           : null
@@ -255,7 +255,6 @@ export const SamplesTable = ({ samples, samplesCount, showBatchInfo = true }: Sa
         }}
         onChange={onChange}
         pagination={{ total: samplesCount }}
-        /* pagination={showBatchInfo ? undefined : false} */
       />
     </>
   )
