@@ -24,22 +24,6 @@ export interface Batch {
   comment: string
 }
 
-export interface Sample {
-  sample_id: string
-  text_warning: string
-  include: boolean
-  ChromosomeAbn: string
-  batch_id: string
-  SampleType: string
-  Description: null
-  Flowcell: string
-  Index1: string
-  Index2: string
-  Library_nM: number
-  QCFlag: string
-  sex: string
-}
-
 export interface TracePlot {
   y: any[]
   name: string
