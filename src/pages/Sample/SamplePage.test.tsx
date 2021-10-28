@@ -1,15 +1,14 @@
 import React from 'react'
-import renderer from 'react-test-renderer'
 import { render, waitFor } from '@testing-library/react'
 import { SamplePage } from '../Sample/SamplePage'
 import { windowMatchMedia } from '../../services/helpers/helpers'
 import axios from 'axios'
 import { mockSample } from '../../mocks/sample'
-import { Router } from 'react-router'
 import { BrowserRouter } from 'react-router-dom'
 import { UserContext } from 'services/userContext'
 
 jest.mock('axios')
+const mockedAxios = axios as jest.Mocked<typeof axios>
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useLocation: () => ({
@@ -17,38 +16,58 @@ jest.mock('react-router-dom', () => ({
   }),
 }))
 
-beforeAll(() => {
-  axios.get.mockImplementation(() => Promise.resolve(mockSample))
-})
-
-afterAll(() => {
-  jest.clearAllMocks()
-})
-
-xdescribe('Sample Page', () => {
+describe('Sample Page', () => {
   test('Sample Page component should display UI correctly', async () => {
+    window.matchMedia = windowMatchMedia()
+    mockedAxios.get.mockReturnValueOnce(Promise.resolve({ data: mockSample }))
     const initializeUserContext = () => null
     const logout = () => null
-    const { getAllByText } = render(
-      <UserContext.Provider
-        value={{
-          initializeUserContext,
-          logout,
-          token: 'token',
-          username: 'elevu',
-          email: 'testemail',
-          permissions: ['R'],
-        }}
-      >
-        <BrowserRouter>
-          <SamplePage />
-        </BrowserRouter>
-      </UserContext.Provider>
+    const { getAllByText } = await waitFor(() =>
+      render(
+        <UserContext.Provider
+          value={{
+            initializeUserContext,
+            logout,
+            token: 'token',
+            username: 'elevu',
+            email: 'testemail',
+            permissions: ['R'],
+          }}
+        >
+          <BrowserRouter>
+            <SamplePage />
+          </BrowserRouter>
+        </UserContext.Provider>
+      )
     )
-
-    await new Promise((r) => setTimeout(r, 2000))
-
-    const sampleId = getAllByText(mockSample.sample_id)
+    const sampleId = await waitFor(() => getAllByText(/2106151/i))
     await waitFor(() => expect(sampleId).toHaveLength(1))
+  })
+
+  test('Error from backend should display error', async () => {
+    window.matchMedia = windowMatchMedia()
+    mockedAxios.get.mockReturnValueOnce(Promise.reject('Something went wrong'))
+    const initializeUserContext = () => null
+    const logout = () => null
+    const { getAllByText } = await waitFor(() =>
+      render(
+        <UserContext.Provider
+          value={{
+            initializeUserContext,
+            logout,
+            token: 'token',
+            username: 'elevu',
+            email: 'testemail',
+            permissions: ['R'],
+          }}
+        >
+          <BrowserRouter>
+            <SamplePage />
+          </BrowserRouter>
+        </UserContext.Provider>
+      )
+    )
+    const errorMessage = await waitFor(() => getAllByText(/Something went wrong/i))
+    await waitFor(() => expect(errorMessage).toHaveLength(1))
   })
 })

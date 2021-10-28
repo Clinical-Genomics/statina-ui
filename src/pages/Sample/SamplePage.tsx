@@ -23,12 +23,11 @@ export function SamplePage() {
   useEffect(() => {
     if (sampleId)
       getSample(sampleId, userContext)
-        .then((sample) => {
-          setSample(sample)
+        .then((sampleResponse) => {
+          setSample(sampleResponse)
           setError(null)
         })
         .catch((error) => {
-          console.log(error)
           setError(error)
         })
   }, [sampleId])
