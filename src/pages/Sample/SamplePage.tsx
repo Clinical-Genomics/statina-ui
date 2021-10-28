@@ -17,8 +17,6 @@ export function SamplePage() {
   const [sample, setSample] = useState<any>()
   const [error, setError] = useState<any>()
   const userContext = useContext(UserContext)
-  console.log(userContext)
-
   const { pathname } = useLocation()
   const sampleId = pathname.substring(pathname.lastIndexOf('/') + 1, pathname.length)
 
@@ -30,6 +28,7 @@ export function SamplePage() {
           setError(null)
         })
         .catch((error) => {
+          console.log(error)
           setError(error)
         })
   }, [sampleId])
@@ -53,7 +52,7 @@ export function SamplePage() {
                 <SampleInfoBox sample={sample} />
                 <Card title="Comment">
                   <Text italic type="secondary">
-                    Press enter to save comment
+                    Press enter to save
                   </Text>
                   <TextArea rows={4} onPressEnter={onChange} defaultValue={sample.comment} />
                 </Card>

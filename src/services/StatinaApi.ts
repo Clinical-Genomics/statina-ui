@@ -89,6 +89,7 @@ export const getBatch = async (batchId: string, context: UserContext): Promise<a
 }
 
 export const getSample = async (sampleId: string, context: UserContext): Promise<any> => {
+  console.log(sampleId)
   const endPoint = `${REACT_APP_BACKEND_URL}/sample/${sampleId}/`
   return axiosGET(endPoint, context)
 }
