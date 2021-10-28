@@ -2,13 +2,14 @@ import React, { useContext, useEffect, useState } from 'react'
 import { Card, Space, Typography, Tabs, Input } from 'antd'
 import { SampleInfoBox } from 'components/SampleInfoBox/SampleInfoBox'
 import { SampleStatusTable } from 'components/SampleStatusTable/SampleStatusTable'
-import { getSample } from '../../services/StatinaApi'
+import { editSample, getSample } from '../../services/StatinaApi'
 import { useLocation } from 'react-router-dom'
 import { UserContext } from '../../services/userContext'
 import { Loading } from '../../components/Loading'
 import { ErrorPage } from '../Error/ErrorPage'
+import { SuccessNotification } from '../../services/helpers/helpers'
 
-const { Title } = Typography
+const { Title, Text } = Typography
 const { TabPane } = Tabs
 const { TextArea } = Input
 
@@ -16,6 +17,7 @@ export function SamplePage() {
   const [sample, setSample] = useState<any>()
   const [error, setError] = useState<any>()
   const userContext = useContext(UserContext)
+  console.log(userContext)
 
   const { pathname } = useLocation()
   const sampleId = pathname.substring(pathname.lastIndexOf('/') + 1, pathname.length)
@@ -33,7 +35,12 @@ export function SamplePage() {
   }, [sampleId])
 
   const onChange = (e) => {
-    console.log(e.target.value)
+    editSample(sampleId, `comment=${e?.target?.value}`, 'comment', userContext).then((response) => {
+      SuccessNotification({
+        type: 'success',
+        message: 'Comment updated',
+      })
+    })
   }
   return (
     <>
@@ -45,11 +52,16 @@ export function SamplePage() {
               <Space size={'large'} direction="vertical" style={{ width: '100%' }}>
                 <SampleInfoBox sample={sample} />
                 <Card title="Comment">
-                  <TextArea rows={4} onChange={onChange} defaultValue={'comment'} />
+                  <Text italic type="secondary">
+                    Press enter to save comment
+                  </Text>
+                  <TextArea rows={4} onPressEnter={onChange} defaultValue={sample.comment} />
                 </Card>
                 <Card>
                   <Tabs defaultActiveKey="1" type="card">
-                    <TabPane tab="Status Table" key="1"></TabPane>
+                    <TabPane tab="Status Table" key="1">
+                      Sample status coming soon
+                    </TabPane>
                     <TabPane tab="Tab 2" key="2">
                       test
                     </TabPane>

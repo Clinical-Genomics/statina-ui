@@ -22,7 +22,29 @@ const axiosGET = (endPoint, { token, logout }: UserContext) => {
   })
 }
 
-const axiosGetToken = (endPoint, formInput) => {
+const axiosPUT = (endPoint, body, { token, logout }: UserContext) => {
+  return new Promise((resolve, reject) => {
+    axios
+      .put(endPoint, body, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          ContentType: 'application/x-www-form-urlencoded',
+        },
+      })
+      .then(function (response) {
+        resolve(response.data)
+      })
+      .catch(function (error) {
+        if (error?.response?.status === 401) {
+          logout()
+        }
+        reject(error)
+        createErrorNotification(error)
+      })
+  })
+}
+
+const axiosPostToken = (endPoint, formInput) => {
   return new Promise((resolve, reject) => {
     const params = new URLSearchParams(formInput)
     axios
@@ -71,12 +93,22 @@ export const getSample = async (sampleId: string, context: UserContext): Promise
   return axiosGET(endPoint, context)
 }
 
+export const editSample = async (
+  sampleId: string,
+  body,
+  request: 'comment' | 'include',
+  context: UserContext
+): Promise<any> => {
+  const endPoint = `${REACT_APP_BACKEND_URL}/sample/${sampleId}/${request}`
+  return axiosPUT(endPoint, body, context)
+}
+
 export const login = async (formInput: Login): Promise<any> => {
   const endPoint = `${REACT_APP_BACKEND_URL}/token`
-  return axiosGetToken(endPoint, formInput)
+  return axiosPostToken(endPoint, formInput)
 }
 
 export const registerUser = async (formInput: RegisterUser): Promise<any> => {
   const endPoint = `${REACT_APP_BACKEND_URL}/user/register`
-  return axiosGetToken(endPoint, formInput)
+  return axiosPostToken(endPoint, formInput)
 }
