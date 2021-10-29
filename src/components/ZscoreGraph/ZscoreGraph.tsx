@@ -38,6 +38,17 @@ export const ZscoreGraph = ({ batchId, chromosome }: ZscoreGraphProps) => {
     },
   ]
 
+  Object.keys(graph.abnormal_data[chromosome]).forEach((status) => {
+    data.push({
+      name: `${status} T${chromosome} ${graph.abnormal_data[chromosome][status].count}`,
+      y: graph.abnormal_data[chromosome][status].ncv_values,
+      x: graph.abnormal_data[chromosome][status].x_axis,
+      text: graph.abnormal_data[chromosome][status].names,
+      mode: 'markers',
+      type: 'scatter',
+    })
+  })
+
   const layout = {
     legend: { hovermode: 'closest' },
     hovermode: 'closest',
