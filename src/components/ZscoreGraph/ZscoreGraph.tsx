@@ -17,7 +17,7 @@ export const ZscoreGraph = ({ batchId, chromosome }: ZscoreGraphProps) => {
       setGraph(response)
       console.log(response)
     })
-  })
+  }, [])
   const data: any[] = [
     {
       name: `Current batch ${graph?.ncv_chrom_data[chromosome].count}`,
@@ -25,6 +25,16 @@ export const ZscoreGraph = ({ batchId, chromosome }: ZscoreGraphProps) => {
       x: graph?.ncv_chrom_data[chromosome].names,
       mode: 'markers',
       type: 'scatter',
+    },
+    {
+      y: graph?.normal_data[chromosome].ncv_values,
+      text: graph?.normal_data[chromosome].names,
+      pointpos: 30,
+      type: 'box',
+      marker: {
+        color: '#ccccb3',
+      },
+      name: `Negative ${graph?.ncv_chrom_data[chromosome].count}`,
     },
   ]
 
