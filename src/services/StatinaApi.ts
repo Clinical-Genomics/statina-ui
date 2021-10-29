@@ -41,6 +41,16 @@ const axiosGetToken = (endPoint, formInput) => {
   })
 }
 
+export const login = async (formInput: Login): Promise<any> => {
+  const endPoint = `${REACT_APP_BACKEND_URL}/token`
+  return axiosGetToken(endPoint, formInput)
+}
+
+export const registerUser = async (formInput: RegisterUser): Promise<any> => {
+  const endPoint = `${REACT_APP_BACKEND_URL}/user/register`
+  return axiosGetToken(endPoint, formInput)
+}
+
 export const getBatches = async (context: UserContext, pageSize, currentPage): Promise<any> => {
   const endPoint = `${REACT_APP_BACKEND_URL}/batches?page_size=${pageSize}&page_num=${currentPage}`
   return axiosGET(endPoint, context)
@@ -66,12 +76,11 @@ export const getBatch = async (batchId: string, context: UserContext): Promise<a
   return axiosGET(endPoint, context)
 }
 
-export const login = async (formInput: Login): Promise<any> => {
-  const endPoint = `${REACT_APP_BACKEND_URL}/token`
-  return axiosGetToken(endPoint, formInput)
-}
-
-export const registerUser = async (formInput: RegisterUser): Promise<any> => {
-  const endPoint = `${REACT_APP_BACKEND_URL}/user/register`
-  return axiosGetToken(endPoint, formInput)
+export const getZScoreGraph = async (
+  batchId: string,
+  chromosome: number,
+  context: UserContext
+): Promise<any> => {
+  const endPoint = `${REACT_APP_BACKEND_URL}/batch/${batchId}/zscore_plot?ncv=${chromosome}`
+  return axiosGET(endPoint, context)
 }

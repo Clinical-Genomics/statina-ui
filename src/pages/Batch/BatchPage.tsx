@@ -50,17 +50,15 @@ export const BatchPage = () => {
           <SamplesTable samples={samples} samplesCount={samplesCount} showBatchInfo />
         </TabPane>
         <TabPane tab="Zscore 13" key="Zscore_13">
-          <ZscoreGraph samples={batch?.sample_info} score={'Zscore_13'} />
+          <ZscoreGraph batchId={batchId} chromosome={13} />
         </TabPane>
         <TabPane tab="Zscore 18" key="Zscore_18">
-          <ZscoreGraph samples={batch?.sample_info} score={'Zscore_18'} />
+          <ZscoreGraph batchId={batchId} chromosome={18} />
         </TabPane>
         <TabPane tab="Zscore 21" key="Zscore_21">
-          <ZscoreGraph samples={batch?.sample_info} score={'Zscore_21'} />
+          <ZscoreGraph batchId={batchId} chromosome={21} />
         </TabPane>
-        <TabPane tab="Fetal Fraction X/Y" key="Fetal_Fraction_X/Y">
-          <ZscoreGraph samples={batch?.sample_info} score={'Zscore_21'} />
-        </TabPane>
+        <TabPane tab="Fetal Fraction X/Y" key="Fetal_Fraction_X/Y"></TabPane>
       </Tabs>
     </Card>
   )

@@ -1,17 +1,28 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Plot from 'react-plotly.js'
+import { getZScoreGraph } from '../../services/StatinaApi'
+import { UserContext } from '../../services/userContext'
 
 type ZscoreGraphProps = {
-  samples: any[]
-  score: string
+  batchId: string
+  chromosome: number
 }
 
-export const ZscoreGraph = ({ samples, score }: ZscoreGraphProps) => {
+export const ZscoreGraph = ({ batchId, chromosome }: ZscoreGraphProps) => {
+  const userContext = useContext(UserContext)
+  const [graph, setGraph] = useState<any>()
+
+  useEffect(() => {
+    getZScoreGraph(batchId, chromosome, userContext).then((response) => {
+      setGraph(response)
+      console.log(response)
+    })
+  })
   const data: any[] = [
     {
-      name: `Current batch ${samples.length}`,
-      y: samples.map((sample) => sample[score]),
-      x: samples.map((sample) => sample?.SampleID),
+      name: `Current batch ${graph?.ncv_chrom_data[chromosome].count}`,
+      y: graph?.ncv_chrom_data[chromosome].ncv_values,
+      x: graph?.ncv_chrom_data[chromosome].names,
       mode: 'markers',
       type: 'scatter',
     },
@@ -27,11 +38,10 @@ export const ZscoreGraph = ({ samples, score }: ZscoreGraphProps) => {
     },
     yaxis: {
       range: [-10, 10],
-      title: score,
+      title: graph?.ncv_chrom_data[chromosome].ncv_values,
     },
     width: 1200,
     height: 600,
   }
-
   return <Plot data={data} layout={layout} />
 }
