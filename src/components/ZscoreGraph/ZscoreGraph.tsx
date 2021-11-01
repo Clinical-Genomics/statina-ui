@@ -2,13 +2,14 @@ import React, { useContext, useEffect, useState } from 'react'
 import Plot from 'react-plotly.js'
 import { getZScoreGraph } from '../../services/StatinaApi'
 import { UserContext } from '../../services/userContext'
+import { Zscore } from '../../services/interfaces'
 
 type ZscoreGraphProps = {
   batchId: string
   chromosome: number
 }
 
-const buildData = (response, chromosome): any[] => {
+const buildData = (response: Zscore, chromosome: number): any[] => {
   const data = [
     {
       name: `Current batch ${response?.ncv_chrom_data[chromosome].count}`,
@@ -65,7 +66,7 @@ const buildData = (response, chromosome): any[] => {
   return data
 }
 
-const buildLayout = (response, chromosome) => {
+const buildLayout = (response: Zscore, chromosome: number) => {
   return {
     legend: { hovermode: 'closest' },
     hovermode: 'closest',
