@@ -8,7 +8,7 @@ type ZscoreGraphProps = {
   chromosome: number
 }
 
-const buildData = (response, chromosome) => {
+const buildData = (response, chromosome): any[] => {
   const data = [
     {
       name: `Current batch ${response?.ncv_chrom_data[chromosome].count}`,
@@ -36,6 +36,30 @@ const buildData = (response, chromosome) => {
       text: response.abnormal_data[chromosome][status]?.names,
       mode: 'markers',
       type: 'scatter',
+    })
+  })
+
+  Object.keys(response.tris_thresholds).forEach((line: any) => {
+    console.log(response.ncv_chrom_data[chromosome].x_axis.length)
+    data.push({
+      x: [
+        response?.ncv_chrom_data[chromosome].names[0],
+        response?.ncv_chrom_data[chromosome].names[
+          response?.ncv_chrom_data[chromosome].names.length - 1
+        ],
+      ],
+      y: [response.tris_thresholds[line].Zscore, response.tris_thresholds[line].Zscore],
+      mode: 'lines',
+      text: response.tris_thresholds[line].text,
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      showlegend: false,
+      line: {
+        dash: 'dot',
+        color: response.tris_thresholds[line].color,
+        width: 1,
+      },
+      name: line,
     })
   })
   return data
