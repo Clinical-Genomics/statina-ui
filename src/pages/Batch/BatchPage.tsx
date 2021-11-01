@@ -19,7 +19,6 @@ export const BatchPage = () => {
 
   const { pathname } = useLocation()
   const batchId = pathname.substring(pathname.lastIndexOf('/') + 1, pathname.length)
-
   useEffect(() => {
     if (batchId)
       getBatchSamples(userContext, batchId, pageSize, pageNum).then((samples) => {
@@ -30,11 +29,10 @@ export const BatchPage = () => {
   const downloadMenu = (
     <Menu style={{ width: 100, textAlign: 'center' }}>
       <Menu.Item key="pdf">
-        <BatchTablePDF pdfData={batch?.sample_info} score={'Zscore_13'} />
+        <BatchTablePDF />
       </Menu.Item>
     </Menu>
   )
-
   return (
     <Card>
       <div id="hiddenDiv" style={{ display: 'none' }}></div>

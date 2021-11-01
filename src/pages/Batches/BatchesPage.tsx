@@ -3,6 +3,9 @@ import { BatchesTable } from 'components/BatchesTable/BatchesTable'
 import { Batch } from 'services/interfaces'
 import { getBatches } from '../../services/StatinaApi'
 import { UserContext } from '../../services/userContext'
+import { Typography } from 'antd'
+
+const { Title, Text } = Typography
 
 export const BatchesPage = () => {
   const userContext = useContext(UserContext)
@@ -13,11 +16,12 @@ export const BatchesPage = () => {
 
   useEffect(() => {
     getBatches(userContext, pageSize, pageNum).then((batches) => {
-      setBatches(batches.documents), setBatchesCount(batches?.document_count)
+      setBatches(batches?.documents), setBatchesCount(batches?.document_count)
     })
   }, [])
   return (
     <>
+      <Title>NIPT Batches</Title>
       <BatchesTable batches={batches} batchesCount={batchesCount}></BatchesTable>
     </>
   )
