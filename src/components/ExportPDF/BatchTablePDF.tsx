@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import jsPDF from 'jspdf'
 import 'jspdf-autotable'
 import { Tooltip } from 'antd'
