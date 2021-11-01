@@ -41,7 +41,6 @@ const buildData = (response: Zscore, chromosome: number): any[] => {
   })
 
   Object.keys(response.tris_thresholds).forEach((line: any) => {
-    console.log(response.ncv_chrom_data[chromosome].x_axis.length)
     data.push({
       x: [
         response?.ncv_chrom_data[chromosome].names[0],
