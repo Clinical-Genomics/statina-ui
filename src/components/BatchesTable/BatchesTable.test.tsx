@@ -5,14 +5,34 @@ import { BatchesTable } from './BatchesTable'
 import { mockBatches } from 'mocks/batches'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router-dom'
+import { UserContext } from 'services/userContext'
 
 describe('Batches Table', () => {
   test('Batches Table should display UI correctly', () => {
     window.matchMedia = windowMatchMedia()
+    const initializeUserContext = () => null
+    const logout = () => null
     const { getByText } = render(
+<<<<<<< HEAD
       <MemoryRouter>
         <BatchesTable batches={mockBatches} batchesCount={20}></BatchesTable>
       </MemoryRouter>
+=======
+      <UserContext.Provider
+        value={{
+          initializeUserContext,
+          logout,
+          token: 'token',
+          username: 'elevu',
+          email: 'testemail',
+          permissions: ['R'],
+        }}
+      >
+        <MemoryRouter>
+          <BatchesTable batches={mockBatches} batchesCount={10}></BatchesTable>
+        </MemoryRouter>
+      </UserContext.Provider>
+>>>>>>> master
     )
     const batchID = getByText(mockBatches[0].batch_id)
     expect(batchID).toBeVisible()
