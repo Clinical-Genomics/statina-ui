@@ -11,7 +11,7 @@ export const ZscoreGraph = ({ samples, score }: ZscoreGraphProps) => {
     {
       name: `Current batch ${samples.length}`,
       y: samples.map((sample) => sample[score]),
-      x: samples.map((sample) => sample?.SampleID),
+      x: samples.map((sample) => sample?.sample_id),
       mode: 'markers',
       type: 'scatter',
     },

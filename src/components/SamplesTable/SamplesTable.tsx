@@ -48,6 +48,10 @@ export const SamplesTable = ({ samples, samplesCount, showBatchInfo = true }: Sa
     )
   }
 
+  const showTotal = (total, range) => {
+    return `${range[0]}-${range[1]} of ${total}`
+  }
+
   const columns: any = [
     {
       title: 'Sample name',
@@ -254,7 +258,7 @@ export const SamplesTable = ({ samples, samplesCount, showBatchInfo = true }: Sa
           ...rowSelection,
         }}
         onChange={onChange}
-        pagination={{ total: samplesCount }}
+        pagination={{ total: samplesCount, showTotal: showTotal }}
       />
     </>
   )

@@ -1,12 +1,22 @@
-import React from 'react'
+import React, { useContext, useState, useEffect } from 'react'
+import { UserContext } from '../../services/userContext'
+import { getBatches } from '../../services/StatinaApi'
+import { Batch } from 'services/interfaces'
 import jsPDF from 'jspdf'
 import 'jspdf-autotable'
 import { Tooltip } from 'antd'
 import { ErrorNotification, SuccessNotification } from 'services/helpers/helpers'
 
-export function ExportPDF(pdfData) {
+export function ExportPDF() {
+  const [batches, setBatches] = useState<Batch[]>([])
+  const userContext = useContext(UserContext)
+
+  useEffect(() => {
+    getBatches(userContext, 0, 0).then((batches) => setBatches(batches.documents))
+  }, [])
+
   const exportPDF = () => {
-    if (pdfData === undefined || pdfData.length == 0) {
+    if (batches.length == 0) {
       ErrorNotification({
         type: 'error',
         message: 'Download failed!',
@@ -25,11 +35,7 @@ export function ExportPDF(pdfData) {
       const title = 'Statina'
       const headers = [['Batch_ID', 'Sequencing_Date', 'Flowcell_ID']]
 
-      const data = pdfData.pdfData.map((item) => [
-        item.SampleProject,
-        item.SequencingDate,
-        item.Flowcell,
-      ])
+      const data = batches.map((item) => [item.batch_id, item.SequencingDate, item.Flowcell])
 
       const content = {
         startY: 50,
