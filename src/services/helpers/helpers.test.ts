@@ -34,10 +34,26 @@ describe('Helpers', () => {
     })
   })
 
-  test('Should create the right error message for default responses', () => {
+  test('Should create the right error message for response 404', () => {
     const error = {
       response: {
         status: 404,
+      },
+      message: 'Something went wrong',
+      config: {
+        url: 'www.endpoint.com/v1',
+      },
+    }
+    expect(createErrorMessage(error as AxiosError)).toStrictEqual({
+      errorDescription: `Not found`,
+      errorMessage: `Something went wrong`,
+    })
+  })
+
+  test('Should create the right error message for default responses', () => {
+    const error = {
+      response: {
+        status: 422,
       },
       message: 'Something went wrong',
       config: {

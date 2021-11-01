@@ -10,10 +10,10 @@ describe('Sample info box', () => {
     window.matchMedia = windowMatchMedia()
     const { getByText } = render(
       <MemoryRouter>
-        <SampleInfoBox infoBox={mockSample}></SampleInfoBox>
+        <SampleInfoBox sample={mockSample}></SampleInfoBox>
       </MemoryRouter>
     )
-    const sampleProject = getByText(mockSample[0].sample.SampleProject)
+    const sampleProject = getByText(/2106151/i)
     expect(sampleProject).toBeVisible()
   })
 })
