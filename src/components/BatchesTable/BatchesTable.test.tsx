@@ -35,4 +35,16 @@ describe('Batches Table', () => {
     const flowcell = getByText(mockBatches[0].Flowcell)
     expect(flowcell).toBeVisible()
   })
+
+  test('Search batches should work', () => {
+    window.matchMedia = windowMatchMedia()
+    const { getByPlaceholderText, queryByText } = render(
+      <MemoryRouter>
+        <BatchesTable batches={mockBatches} batchesCount={20}></BatchesTable>
+      </MemoryRouter>
+    )
+    expect(queryByText(mockBatches[1].batch_id)).toBeVisible()
+
+    userEvent.type(getByPlaceholderText('Search by Batch or Flowcell ID'), mockBatches[0].comment)
+  })
 })

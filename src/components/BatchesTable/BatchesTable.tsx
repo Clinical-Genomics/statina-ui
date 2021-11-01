@@ -38,6 +38,10 @@ export const BatchesTable = ({ batches, batchesCount }: BatchesProps) => {
     )
   }
 
+  const showTotal = (total, range) => {
+    return `${range[0]}-${range[1]} of ${total}`
+  }
+
   const columns: any = [
     {
       title: 'Batch ID',
@@ -61,10 +65,10 @@ export const BatchesTable = ({ batches, batchesCount }: BatchesProps) => {
   const downloadMenu = (
     <Menu style={{ width: 100, textAlign: 'center' }}>
       <Menu.Item key="excel">
-        <ExportCSV csvData={batches} fileName={'Statina'} />
+        <ExportCSV fileName={'Statina'} />
       </Menu.Item>
       <Menu.Item key="pdf">
-        <ExportPDF pdfData={batches} />
+        <ExportPDF />
       </Menu.Item>
     </Menu>
   )
@@ -86,7 +90,7 @@ export const BatchesTable = ({ batches, batchesCount }: BatchesProps) => {
         dataSource={filteredBatches}
         rowKey="batch_id"
         onChange={onChange}
-        pagination={{ total: batchesCount }}
+        pagination={{ total: batchesCount, showTotal: showTotal }}
       />
     </>
   )

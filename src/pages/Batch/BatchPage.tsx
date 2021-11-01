@@ -19,7 +19,6 @@ export const BatchPage = () => {
 
   const { pathname } = useLocation()
   const batchId = pathname.substring(pathname.lastIndexOf('/') + 1, pathname.length)
-
   useEffect(() => {
     if (batchId)
       getBatchSamples(userContext, batchId, pageSize, pageNum).then((samples) => {
@@ -30,11 +29,10 @@ export const BatchPage = () => {
   const downloadMenu = (
     <Menu style={{ width: 100, textAlign: 'center' }}>
       <Menu.Item key="pdf">
-        <BatchTablePDF pdfData={batch?.sample_info} score={'Zscore_13'} />
+        <BatchTablePDF />
       </Menu.Item>
     </Menu>
   )
-
   return (
     <Card>
       <div id="hiddenDiv" style={{ display: 'none' }}></div>
@@ -50,16 +48,13 @@ export const BatchPage = () => {
           <SamplesTable samples={samples} samplesCount={samplesCount} showBatchInfo />
         </TabPane>
         <TabPane tab="Zscore 13" key="Zscore_13">
-          <ZscoreGraph samples={batch?.sample_info} score={'Zscore_13'} />
+          <ZscoreGraph samples={samples} score={'Zscore_13'} />
         </TabPane>
         <TabPane tab="Zscore 18" key="Zscore_18">
-          <ZscoreGraph samples={batch?.sample_info} score={'Zscore_18'} />
+          <ZscoreGraph samples={samples} score={'Zscore_18'} />
         </TabPane>
         <TabPane tab="Zscore 21" key="Zscore_21">
-          <ZscoreGraph samples={batch?.sample_info} score={'Zscore_21'} />
-        </TabPane>
-        <TabPane tab="Fetal Fraction X/Y" key="Fetal_Fraction_X/Y">
-          <ZscoreGraph samples={batch?.sample_info} score={'Zscore_21'} />
+          <ZscoreGraph samples={samples} score={'Zscore_21'} />
         </TabPane>
       </Tabs>
     </Card>

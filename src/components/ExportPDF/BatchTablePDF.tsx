@@ -1,22 +1,33 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import jsPDF from 'jspdf'
 import 'jspdf-autotable'
 import { Tooltip } from 'antd'
 import { ErrorNotification, SuccessNotification } from '../../services/helpers/helpers'
 import Plotly from 'plotly.js'
+import { useLocation } from 'react-router-dom'
+import { getBatchSamples } from '../../services/StatinaApi'
+import { UserContext } from '../../services/userContext'
 
-type BatchTablePDFProps = {
-  pdfData: any[]
-  score: string
-}
-
-export function BatchTablePDF({ pdfData, score }: BatchTablePDFProps) {
+export function BatchTablePDF() {
   const [imgURI, setImgURI] = useState('')
+  const [samples, setSamples] = useState<any[]>([])
+  const [plotlyScore, setPlotlyScore] = useState('Zscore_13') // The plotly should be changed to a Fetal Fraction
+  const pageSize = 0
+  const pageNum = 0
+  const userContext = useContext(UserContext)
+  const { pathname } = useLocation()
+  const batchId = pathname.substring(pathname.lastIndexOf('/') + 1, pathname.length)
+  useEffect(() => {
+    if (batchId)
+      getBatchSamples(userContext, batchId, pageSize, pageNum).then((samples) => {
+        setSamples(samples.documents)
+      })
+  }, [batchId])
   const plotlyData: any[] = [
     {
-      name: `Current batch ${pdfData.length}`,
-      y: pdfData.map((sample) => sample[score]),
-      x: pdfData.map((sample) => sample?.SampleID),
+      name: `Current batch ${samples.length}`,
+      y: samples.map((sample) => sample[plotlyScore]),
+      x: samples.map((sample) => sample?.SampleID),
       mode: 'markers',
       type: 'scatter',
     },
@@ -29,7 +40,7 @@ export function BatchTablePDF({ pdfData, score }: BatchTablePDFProps) {
     },
     yaxis: {
       range: [-10, 10],
-      title: score,
+      title: plotlyScore,
     },
     height: 600,
     width: 1200,
@@ -47,7 +58,7 @@ export function BatchTablePDF({ pdfData, score }: BatchTablePDFProps) {
       setImgURI(dataURI)
     })
   const exportPDF = () => {
-    if (pdfData === undefined || pdfData.length == 0) {
+    if (samples === undefined || samples.length == 0) {
       ErrorNotification({
         type: 'error',
         message: 'Download failed!',
@@ -64,7 +75,7 @@ export function BatchTablePDF({ pdfData, score }: BatchTablePDFProps) {
       doc.setFontSize(15)
 
       const title = 'NIPT Results'
-      const batchNum = `Batch: ${pdfData[0].SampleProject}`
+      const batchNum = `Batch: ${samples[0].batch_id}`
       const headers = [
         [
           'Sample',
@@ -80,12 +91,12 @@ export function BatchTablePDF({ pdfData, score }: BatchTablePDFProps) {
         ],
       ]
 
-      const TableData = pdfData.map((item) => [
-        item.SampleID,
+      const TableData = samples.map((item) => [
+        item.sample_id,
         item.Zscore_13,
         item.Zscore_18,
         item.Zscore_21,
-        item.FetalFractionPreface,
+        item.FF_Formatted,
         item.FFX,
         item.FFY,
         item.sex,
