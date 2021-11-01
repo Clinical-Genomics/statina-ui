@@ -32,7 +32,7 @@ export function ExportPDF() {
 
       doc.setFontSize(15)
 
-      const title = 'Statina'
+      const title = 'Statina - NIPT Batches'
       const headers = [['Batch_ID', 'Sequencing_Date', 'Flowcell_ID']]
 
       const data = batches.map((item) => [item.batch_id, item.SequencingDate, item.Flowcell])
