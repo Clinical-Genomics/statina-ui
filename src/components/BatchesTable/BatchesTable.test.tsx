@@ -13,11 +13,6 @@ describe('Batches Table', () => {
     const initializeUserContext = () => null
     const logout = () => null
     const { getByText } = render(
-<<<<<<< HEAD
-      <MemoryRouter>
-        <BatchesTable batches={mockBatches} batchesCount={20}></BatchesTable>
-      </MemoryRouter>
-=======
       <UserContext.Provider
         value={{
           initializeUserContext,
@@ -32,7 +27,6 @@ describe('Batches Table', () => {
           <BatchesTable batches={mockBatches} batchesCount={10}></BatchesTable>
         </MemoryRouter>
       </UserContext.Provider>
->>>>>>> master
     )
     const batchID = getByText(mockBatches[0].batch_id)
     expect(batchID).toBeVisible()
