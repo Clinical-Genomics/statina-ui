@@ -96,7 +96,7 @@ const buildLayout = (response) => {
   }
 }
 
-export const FetalFractionXY = ({ batchId, chromosome }: FetalFractionXYGraphProps) => {
+export const FetalFractionXY = ({ batchId }: FetalFractionXYGraphProps) => {
   const userContext = useContext(UserContext)
   const [data, setData] = useState<any>()
   const [layout, setLayout] = useState<any>()

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import Plot from 'react-plotly.js'
+import Plot, { ScatterData } from 'react-plotly.js'
 import { getZScoreGraph } from '../../services/StatinaApi'
 import { UserContext } from '../../services/userContext'
 import { Zscore } from '../../services/interfaces'
@@ -10,7 +10,7 @@ type ZscoreGraphProps = {
 }
 
 const buildData = (response: Zscore, chromosome: number): any[] => {
-  const data = [
+  const data: ScatterData[] = [
     {
       name: `Current batch ${response?.ncv_chrom_data[chromosome].count}`,
       y: response?.ncv_chrom_data[chromosome].ncv_values,
