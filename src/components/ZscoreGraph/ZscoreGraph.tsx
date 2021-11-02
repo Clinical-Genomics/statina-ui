@@ -80,6 +80,10 @@ const buildLayout = (response: Zscore, chromosome: number) => {
     },
     width: 1200,
     height: 600,
+    margin: {
+      b: 100,
+      pad: 4,
+    },
   }
 }
 
