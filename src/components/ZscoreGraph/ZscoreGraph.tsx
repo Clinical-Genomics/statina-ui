@@ -51,8 +51,6 @@ const buildData = (response: ZScoreGraph, chromosome: number): any[] => {
       y: [response.tris_thresholds[line].Zscore, response.tris_thresholds[line].Zscore],
       mode: 'lines',
       text: response.tris_thresholds[line].text,
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
       showlegend: false,
       line: {
         dash: 'dot',
