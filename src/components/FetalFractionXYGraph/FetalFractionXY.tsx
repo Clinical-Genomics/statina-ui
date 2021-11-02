@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import Plot from 'react-plotly.js'
+import Plot, { ScatterData } from 'react-plotly.js'
 import { getFetalFractionXYGraph } from '../../services/StatinaApi'
 import { UserContext } from '../../services/userContext'
 
@@ -9,7 +9,7 @@ type FetalFractionXYGraphProps = {
 }
 
 const buildData = (response): any[] => {
-  const data = [
+  const data: ScatterData[] = [
     {
       y: response.control?.FFY,
       x: response.control?.FFX,
@@ -21,18 +21,14 @@ const buildData = (response): any[] => {
     },
   ]
   response.cases?.names?.forEach((name, index) => {
-    data.push(
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      {
-        y: [response.cases?.FFY[index]],
-        x: [response.cases?.FFX[index]],
-        name: name,
-        mode: 'markers',
-        text: name,
-        type: 'scatter',
-      }
-    )
+    data.push({
+      y: [response.cases?.FFY[index]],
+      x: [response.cases?.FFX[index]],
+      name: name,
+      mode: 'markers',
+      text: name,
+      type: 'scatter',
+    })
   })
 
   Object.keys(response.sex_thresholds).forEach((threshold) => {
@@ -40,8 +36,6 @@ const buildData = (response): any[] => {
       x: response.sex_thresholds[threshold].x,
       y: response.sex_thresholds[threshold].y,
       mode: 'lines',
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
       showlegend: false,
       text: response.sex_thresholds[threshold].text,
       line: {
@@ -55,8 +49,6 @@ const buildData = (response): any[] => {
 
   Object.keys(response?.abnormal).forEach((abnormal) => {
     Object.keys(response.abnormal[abnormal]).forEach((status) => {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
       data.push({
         name: `${abnormal} ${status} ${response.abnormal[abnormal][status].count}`,
         y: response.abnormal[abnormal][status]?.FFY,
@@ -64,8 +56,6 @@ const buildData = (response): any[] => {
         text: response.abnormal[abnormal][status]?.names,
         mode: 'markers',
         marker: {
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
           line: { width: 2 },
           size: 7,
           symbol: 'circle-open',
