@@ -72,8 +72,8 @@ const buildLayout = (response: FetalFractionXYGraph): Layout => {
   return {
     annotations: [],
     autosize: false,
-    width: 1500,
-    height: 700,
+    width: 1200,
+    height: 500,
     legend: { hovermode: 'closest', orientation: 'v' },
     hovermode: 'closest',
     xaxis: {
