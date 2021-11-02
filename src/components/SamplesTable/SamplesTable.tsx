@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { UserContext } from '../../services/userContext'
-import { getSamples } from '../../services/StatinaApi'
-import { Input, Table, Tag, Tooltip } from 'antd'
+import { getSamples, getSamplesByText } from '../../services/StatinaApi'
+import { Input, message, Table, Tag, Tooltip, Typography } from 'antd'
 import { Link } from 'react-router-dom'
 import { CloudDownloadOutlined, QuestionCircleOutlined } from '@ant-design/icons'
 import { red } from '@ant-design/colors'
@@ -14,15 +14,22 @@ type SamplesProps = {
 }
 
 const { Search } = Input
+const { Title, Text } = Typography
 
 export const SamplesTable = ({ samples, samplesCount, showBatchInfo = true }: SamplesProps) => {
+  const userContext = useContext(UserContext)
   const [filteredSamples, setFilteredSamples] = useState<any[]>(samples)
   const [selectedRowKeys, setSelectedRowKeys] = useState<any[]>([])
-  const userContext = useContext(UserContext)
+  const [pageCount, setPageCount] = useState(samplesCount)
+  const [searchValue, setSearchValue] = useState('')
+  const [currentPage, setCurrentPage] = useState(1)
 
   useEffect(() => {
-    setFilteredSamples(samples)
+    getSamples(userContext, 10, 0).then((samples) => {
+      setFilteredSamples(samples.documents), setPageCount(samples.document_count)
+    })
     if (samples?.length > 0) {
+      setPageCount(samplesCount)
       const selectedKey: string[] = []
       samples.forEach((sample) => {
         if (sample.include) selectedKey.push(sample?.sample_id)
@@ -32,20 +39,21 @@ export const SamplesTable = ({ samples, samplesCount, showBatchInfo = true }: Sa
   }, [samples])
 
   const onSearch = (searchInput) => {
-    const lowerCaseInput = searchInput.toLowerCase()
-    const filteredData = samples.filter(
-      (entry) =>
-        entry.SampleProject.toLowerCase().includes(lowerCaseInput) ||
-        entry.sample_id.toLowerCase().includes(lowerCaseInput) ||
-        entry.comment.toLowerCase().includes(lowerCaseInput)
-    )
-    setFilteredSamples(filteredData)
+    setSearchValue(searchInput)
+    setCurrentPage(1)
+    if (searchInput.length > 2) {
+      getSamplesByText(userContext, 0, 0, searchInput).then((samples) => {
+        setFilteredSamples(samples.documents), setPageCount(samples.document_count)
+      })
+    } else {
+      message.error('Search terms must contain at least 3 characters.')
+    }
   }
 
   const onChange = (data) => {
-    getSamples(userContext, data.pageSize, data.current).then((samples) =>
-      setFilteredSamples(samples.documents)
-    )
+    getSamplesByText(userContext, data.pageSize, data.current, searchValue).then((samples) => {
+      setFilteredSamples(samples.documents), setPageCount(samples.document_count)
+    })
   }
 
   const showTotal = (total, range) => {
@@ -246,6 +254,13 @@ export const SamplesTable = ({ samples, samplesCount, showBatchInfo = true }: Sa
         onSearch={onSearch}
         style={{ paddingBottom: 20 }}
       />
+      {searchValue.length > 0 && (
+        <Text type="secondary">
+          About {pageCount} result{filteredSamples.length > 1 ? `s` : null}
+        </Text>
+      )}
+
+      <br />
       <i>Select a sample with the checkbox to include it in the comparison set</i>
       <Table
         columns={columns.filter((column) =>
@@ -258,7 +273,7 @@ export const SamplesTable = ({ samples, samplesCount, showBatchInfo = true }: Sa
           ...rowSelection,
         }}
         onChange={onChange}
-        pagination={{ total: samplesCount, showTotal: showTotal }}
+        pagination={{ total: pageCount, showTotal: showTotal, current: currentPage }}
       />
     </>
   )
