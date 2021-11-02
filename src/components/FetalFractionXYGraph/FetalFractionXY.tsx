@@ -8,83 +8,59 @@ type FetalFractionXYGraphProps = {
   chromosome: number
 }
 
-const buildData = (response, chromosome: number): any[] => {
+const buildData = (response): any[] => {
   const data = [
     {
-      name: `Current batch ${response?.ncv_chrom_data[chromosome].count}`,
-      y: response?.ncv_chrom_data[chromosome].ncv_values,
-      x: response?.ncv_chrom_data[chromosome].names,
+      y: response.control?.FF,
+      x: response.control?.FFY,
+      text: response.control?.names,
+      name: `Negative N=${response.control?.count}`,
       mode: 'markers',
       type: 'scatter',
-    },
-    {
-      y: response?.normal_data[chromosome].ncv_values,
-      text: response?.normal_data[chromosome].names,
-      pointpos: 30,
-      type: 'box',
-      marker: {
-        color: '#ccccb3',
-      },
-      name: `Negative ${response?.ncv_chrom_data[chromosome].count}`,
+      marker: { color: '#ccccb3' },
     },
   ]
-  Object.keys(response.abnormal_data[chromosome]).forEach((status) => {
-    data.push({
-      name: `${status} T${chromosome} ${response.abnormal_data[chromosome][status]?.count}`,
-      y: response.abnormal_data[chromosome][status]?.ncv_values,
-      x: response.abnormal_data[chromosome][status]?.x_axis,
-      text: response.abnormal_data[chromosome][status]?.names,
-      mode: 'markers',
-      type: 'scatter',
-    })
-  })
-
-  Object.keys(response.tris_thresholds).forEach((line: any) => {
-    data.push({
-      x: [
-        response?.ncv_chrom_data[chromosome].names[0],
-        response?.ncv_chrom_data[chromosome].names[
-          response?.ncv_chrom_data[chromosome].names.length - 1
-        ],
-      ],
-      y: [
-        response.tris_thresholds[line].FetalFractionXY,
-        response.tris_thresholds[line].FetalFractionXY,
-      ],
-      mode: 'lines',
-      text: response.tris_thresholds[line].text,
+  response.cases?.names?.forEach((name, index) => {
+    data.push(
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      showlegend: false,
-      line: {
-        dash: 'dot',
-        color: response.tris_thresholds[line].color,
-        width: 1,
-      },
-      name: line,
-    })
+      {
+        y: [response.cases?.FF[index]],
+        x: [response.cases?.FFY[index]],
+        name: name,
+        mode: 'markers',
+        text: name,
+        type: 'scatter',
+      }
+    )
   })
   return data
 }
 
-const buildLayout = (response, chromosome: number) => {
+const buildLayout = (response) => {
   return {
-    legend: { hovermode: 'closest' },
-    hovermode: 'closest',
     annotations: [],
+    legend: { hovermode: 'closest', orientation: 'h' },
+    hovermode: 'closest',
+    width: 1500,
+    height: 800,
     xaxis: {
+      range: [response.max_x, response.min_x],
       showline: true,
-      showgrid: true,
+      zeroline: false,
+      linecolor: '#636363',
+      linewidth: 5,
+      showgrid: false,
+      gridcolor: '#bdbdbd',
+      title: 'Fetal Fraction X',
     },
     yaxis: {
-      range: [-10, 10],
-      title: response?.ncv_chrom_data[chromosome].ncv_values,
-    },
-    width: 1200,
-    height: 600,
-    margin: {
-      b: 100,
-      pad: 4,
+      zeroline: false,
+      showline: true,
+      showgrid: false,
+      linecolor: '#636363',
+      linewidth: 5,
+      title: 'Fetal Fraction Y',
     },
   }
 }
@@ -95,9 +71,9 @@ export const FetalFractionXY = ({ batchId, chromosome }: FetalFractionXYGraphPro
   const [layout, setLayout] = useState<any>()
 
   useEffect(() => {
-    getFetalFractionXYGraph(batchId, chromosome, userContext).then((response) => {
-      setData(buildData(response, chromosome))
-      setLayout(buildLayout(response, chromosome))
+    getFetalFractionXYGraph(batchId, userContext).then((response) => {
+      setData(buildData(response))
+      setLayout(buildLayout(response))
     })
   }, [])
 

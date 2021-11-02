@@ -99,10 +99,9 @@ export const getZScoreGraph = async (
 
 export const getFetalFractionXYGraph = async (
   batchId: string,
-  chromosome: number,
   context: UserContext
 ): Promise<any> => {
-  const endPoint = `${REACT_APP_BACKEND_URL}/batch/${batchId}/zscore_plot?ncv=${chromosome}`
+  const endPoint = `${REACT_APP_BACKEND_URL}/batch/${batchId}/fetal_fraction_XY`
   return axiosGET(endPoint, context)
 }
 
