@@ -1,14 +1,15 @@
 import React, { useContext, useEffect, useState } from 'react'
-import Plot, { ScatterData } from 'react-plotly.js'
+import Plot, { ScatterData, Layout } from 'react-plotly.js'
 import { getFetalFractionXYGraph } from '../../services/StatinaApi'
 import { UserContext } from '../../services/userContext'
+import { FetalFractionXYGraph } from '../../services/interfaces'
 
 type FetalFractionXYGraphProps = {
   batchId: string
   chromosome: number
 }
 
-const buildData = (response): any[] => {
+const buildData = (response: FetalFractionXYGraph): ScatterData[] => {
   const data: ScatterData[] = [
     {
       y: response.control?.FFY,
@@ -67,7 +68,7 @@ const buildData = (response): any[] => {
   return data
 }
 
-const buildLayout = (response) => {
+const buildLayout = (response: FetalFractionXYGraph): Layout => {
   return {
     annotations: [],
     autosize: false,
@@ -98,11 +99,11 @@ const buildLayout = (response) => {
 
 export const FetalFractionXY = ({ batchId }: FetalFractionXYGraphProps) => {
   const userContext = useContext(UserContext)
-  const [data, setData] = useState<any>()
-  const [layout, setLayout] = useState<any>()
+  const [data, setData] = useState<ScatterData[]>()
+  const [layout, setLayout] = useState<Layout>()
 
   useEffect(() => {
-    getFetalFractionXYGraph(batchId, userContext).then((response) => {
+    getFetalFractionXYGraph(batchId, userContext).then((response: FetalFractionXYGraph) => {
       setData(buildData(response))
       setLayout(buildLayout(response))
     })
