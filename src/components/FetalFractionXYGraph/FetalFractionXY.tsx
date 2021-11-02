@@ -11,8 +11,8 @@ type FetalFractionXYGraphProps = {
 const buildData = (response): any[] => {
   const data = [
     {
-      y: response.control?.FF,
-      x: response.control?.FFY,
+      y: response.control?.FFY,
+      x: response.control?.FFX,
       text: response.control?.names,
       name: `Negative N=${response.control?.count}`,
       mode: 'markers',
@@ -25,14 +25,32 @@ const buildData = (response): any[] => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       {
-        y: [response.cases?.FF[index]],
-        x: [response.cases?.FFY[index]],
+        y: [response.cases?.FFY[index]],
+        x: [response.cases?.FFX[index]],
         name: name,
         mode: 'markers',
         text: name,
         type: 'scatter',
       }
     )
+  })
+
+  Object.keys(response.sex_thresholds).forEach((threshold) => {
+    data.push({
+      x: response.sex_thresholds[threshold].x,
+      y: response.sex_thresholds[threshold].y,
+      mode: 'lines',
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      showlegend: false,
+      text: response.sex_thresholds[threshold].text,
+      line: {
+        dash: 'dot',
+        color: 'red',
+        width: 1,
+      },
+      name: threshold,
+    })
   })
   return data
 }
@@ -42,8 +60,8 @@ const buildLayout = (response) => {
     annotations: [],
     legend: { hovermode: 'closest', orientation: 'h' },
     hovermode: 'closest',
-    width: 1500,
-    height: 800,
+    width: 1200,
+    height: 900,
     xaxis: {
       range: [response.max_x, response.min_x],
       showline: true,
