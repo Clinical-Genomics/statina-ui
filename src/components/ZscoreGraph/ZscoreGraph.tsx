@@ -76,7 +76,7 @@ const buildLayout = (response: Zscore, chromosome: number) => {
     },
     yaxis: {
       range: [-10, 10],
-      title: response?.ncv_chrom_data[chromosome].ncv_values,
+      title: response?.ncv_chrom_data[chromosome]?.ncv_values,
     },
     width: 1200,
     height: 600,

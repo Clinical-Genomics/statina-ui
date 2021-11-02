@@ -52,16 +52,39 @@ const buildData = (response): any[] => {
       name: threshold,
     })
   })
+
+  Object.keys(response?.abnormal).forEach((abnormal) => {
+    Object.keys(response.abnormal[abnormal]).forEach((status) => {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      data.push({
+        name: `${abnormal} ${status} ${response.abnormal[abnormal][status].count}`,
+        y: response.abnormal[abnormal][status]?.FFY,
+        x: response.abnormal[abnormal][status]?.FFX,
+        text: response.abnormal[abnormal][status]?.names,
+        mode: 'markers',
+        marker: {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          line: { width: 2 },
+          size: 7,
+          symbol: 'circle-open',
+          type: 'scatter',
+        },
+      })
+    })
+  })
   return data
 }
 
 const buildLayout = (response) => {
   return {
     annotations: [],
-    legend: { hovermode: 'closest', orientation: 'h' },
+    autosize: false,
+    width: 1500,
+    height: 700,
+    legend: { hovermode: 'closest', orientation: 'v' },
     hovermode: 'closest',
-    width: 1200,
-    height: 900,
     xaxis: {
       range: [response.max_x, response.min_x],
       showline: true,
