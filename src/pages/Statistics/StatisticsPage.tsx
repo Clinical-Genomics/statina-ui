@@ -45,21 +45,24 @@ const buildLayout = (selectedPlot: string, statistics: any): Layout => {
 export function StatisticsPage() {
   const userContext = useContext(UserContext)
   const [statistics, setStatistics] = useState<any>()
-  const [selectedPlot, setSelectedPlot] = useState<string>('Chr13_Ratio')
+  const [selectedPlot, setSelectedPlot] = useState<string | undefined>()
+  const defaultTabKey = 0
   useEffect(() => {
-    getStatistics(userContext).then((response) => setStatistics(response))
+    getStatistics(userContext).then((response) => {
+      setStatistics(response)
+      setSelectedPlot(response.box_plots[defaultTabKey])
+    })
   }, [])
   const onTabChange = (key: string) => {
     setSelectedPlot(key)
-    console.log(buildData(selectedPlot, statistics))
   }
   const { TabPane } = Tabs
   return (
     <Card>
-      <Tabs defaultActiveKey="1" onChange={onTabChange} type="card">
+      <Tabs defaultActiveKey={defaultTabKey.toString()} onChange={onTabChange} type="card">
         {statistics?.box_plots.map((box) => (
           <TabPane tab={box} key={box}>
-            {statistics && (
+            {statistics && selectedPlot && (
               <Plot
                 data={buildData(selectedPlot, statistics)}
                 layout={buildLayout(selectedPlot, statistics)}
