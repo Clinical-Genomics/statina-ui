@@ -95,13 +95,29 @@ export const windowMatchMedia = () => {
   )
 }
 
-export const getUserRole = (scopes: string[]): string => {
-  if (scopes.includes('admin')) return 'Admin role'
-  else if (scopes.includes('RW')) return 'Read/Write role'
-  else if (scopes.includes('R')) return 'Read role'
-  else if (scopes.includes('inactive')) return 'Inactive user'
-  else if (scopes.includes('unconfirmed')) return 'Unconfirmed email'
+export const getUserRole = (scopes: string[] = ['']): string => {
+  console.log(scopes)
+  if (scopes.includes('admin')) return userRoles.admin.name
+  else if (scopes.includes('RW')) return userRoles.rw.name
+  else if (scopes.includes('R')) return userRoles.r.name
+  else if (scopes.includes('inactive')) return userRoles.inactive.name
+  else if (scopes.includes('unconfirmed')) return userRoles.unconfirmed.name
   return ''
+}
+
+export const isUserUnconfirmed = (scopes: string[] = ['']): boolean => {
+  return getUserRole(scopes) === userRoles.unconfirmed.name
+}
+export const isUserInactive = (scopes: string[] = ['']): boolean => {
+  return getUserRole(scopes) === userRoles.inactive.name
+}
+
+export const userRoles = {
+  admin: { name: 'Admin role', emailConfirmed: true, adminConfirmed: true },
+  rw: { name: 'Read/Write role', emailConfirmed: true, adminConfirmed: true },
+  r: { name: 'Read role', emailConfirmed: true, adminConfirmed: true },
+  inactive: { name: 'Inactive user', emailConfirmed: false, adminConfirmed: true },
+  unconfirmed: { name: 'Unconfirmed email', emailConfirmed: true, adminConfirmed: false },
 }
 
 export const setCookies = (user, cookieName = userCookie) => {
