@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { UserContext } from '../../services/userContext'
-import { getBatches, getBatchesByText } from '../../services/StatinaApi'
+import { getBatch, getBatches, getBatchesByText } from '../../services/StatinaApi'
 import { Col, Dropdown, Input, Menu, Row, Table, message, Typography } from 'antd'
 import { sortDate } from 'services/helpers/helpers'
 import { Batch } from 'services/interfaces'
@@ -28,12 +28,23 @@ export const BatchesTable = ({ batches, batchesCount }: BatchesProps) => {
       setFilteredBatches(batches.documents), setPageCount(batches.document_count)
     })
   }, [batches])
+
   const onSearch = (searchInput) => {
     setSearchValue(searchInput)
     setCurrentPage(1)
-    getBatchesByText(userContext, 0, 0, searchInput).then((batches) => {
-      setFilteredBatches(batches.documents), setPageCount(batches.document_count)
-    })
+    if (searchInput === '') {
+      getBatches(userContext, 0, 0).then((batches) => {
+        setFilteredBatches(batches.documents), setPageCount(batches.document_count)
+      })
+    } else {
+      if (searchInput.length > 2) {
+        getBatchesByText(userContext, 0, 0, searchInput).then((batches) => {
+          setFilteredBatches(batches.documents), setPageCount(batches.document_count)
+        })
+      } else {
+        message.error('Search terms must contain at least 3 characters.')
+      }
+    }
   }
 
   const onChange = (data) => {
@@ -86,7 +97,7 @@ export const BatchesTable = ({ batches, batchesCount }: BatchesProps) => {
           </Dropdown.Button>
         </Col>
         <Col span={8}>
-          <Search placeholder="Search by Batch or Flowcell ID" onSearch={onSearch} />
+          <Search placeholder="Search by Batch or Flowcell ID" onSearch={onSearch} allowClear />
         </Col>
       </Row>
       {searchValue.length > 0 && (

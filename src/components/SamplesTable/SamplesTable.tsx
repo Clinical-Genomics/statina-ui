@@ -41,9 +41,19 @@ export const SamplesTable = ({ samples, samplesCount, showBatchInfo = true }: Sa
   const onSearch = (searchInput) => {
     setSearchValue(searchInput)
     setCurrentPage(1)
-    getSamplesByText(userContext, 0, 0, searchInput).then((samples) => {
-      setFilteredSamples(samples.documents), setPageCount(samples.document_count)
-    })
+    if (searchInput === '') {
+      getSamples(userContext, 0, 0).then((samples) => {
+        setFilteredSamples(samples.documents), setPageCount(samples.document_count)
+      })
+    } else {
+      if (searchInput.length > 2) {
+        getSamplesByText(userContext, 0, 0, searchInput).then((samples) => {
+          setFilteredSamples(samples.documents), setPageCount(samples.document_count)
+        })
+      } else {
+        message.error('Search terms must contain at least 3 characters.')
+      }
+    }
   }
 
   const onChange = (data) => {
@@ -246,6 +256,7 @@ export const SamplesTable = ({ samples, samplesCount, showBatchInfo = true }: Sa
   return (
     <>
       <Search
+        allowClear
         placeholder={`Search by Sample name${showBatchInfo ? ', Batch name' : ''} or Comment`}
         onSearch={onSearch}
         style={{ paddingBottom: 20 }}
