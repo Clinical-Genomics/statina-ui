@@ -31,13 +31,9 @@ export const BatchesTable = ({ batches, batchesCount }: BatchesProps) => {
   const onSearch = (searchInput) => {
     setSearchValue(searchInput)
     setCurrentPage(1)
-    if (searchInput.length > 2) {
-      getBatchesByText(userContext, 0, 0, searchInput).then((batches) => {
-        setFilteredBatches(batches.documents), setPageCount(batches.document_count)
-      })
-    } else {
-      message.error('Search terms must contain at least 3 characters.')
-    }
+    getBatchesByText(userContext, 0, 0, searchInput).then((batches) => {
+      setFilteredBatches(batches.documents), setPageCount(batches.document_count)
+    })
   }
 
   const onChange = (data) => {
