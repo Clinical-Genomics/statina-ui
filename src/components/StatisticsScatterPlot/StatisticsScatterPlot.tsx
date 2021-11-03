@@ -1,6 +1,5 @@
 import React from 'react'
 import Plot, { Layout, ScatterPlotData } from 'react-plotly.js'
-import { batch } from 'react-redux'
 
 type StatisticsScatterPlotProps = {
   selectedPlot: string
@@ -8,12 +7,10 @@ type StatisticsScatterPlotProps = {
 }
 
 const buildData = (selectedPlot: string, statistics: any): ScatterPlotData[] => {
-  return statistics.batch_ids?.map((batchId: string, index) => {
-    console.log(batchId)
-    console.log(statistics.scatter_stat[batchId][selectedPlot])
+  return statistics.batch_ids?.map((batchId: string) => {
     return {
-      y: statistics.scatter_stat[batchId][selectedPlot],
-      x: Object.keys(statistics.scatter_stat),
+      y: Object.values(statistics.scatter_stat).map((value: any) => value[selectedPlot]),
+      x: statistics.batch_ids,
       type: 'scatter',
       mode: 'markers',
       showlegend: false,
@@ -28,6 +25,8 @@ const buildLayout = (selectedPlot: string, statistics: any): Layout => {
     title: `${selectedPlot} - ${statistics.nr_batches} most recent batches`,
     hovermode: 'closest',
     margin: { b: 100 },
+    height: 600,
+    width: 1000,
     xaxis: {
       showline: true,
       tickvals: statistics.ticks,
