@@ -126,6 +126,11 @@ export const getFetalFractionXYGraph = async (
   return axiosGET(endPoint, context)
 }
 
+export const getStatistics = async (context: UserContext): Promise<any> => {
+  const endPoint = `${REACT_APP_BACKEND_URL}/statistics`
+  return axiosGET(endPoint, context)
+}
+
 export const getSample = async (sampleId: string, context: UserContext): Promise<any> => {
   const endPoint = `${REACT_APP_BACKEND_URL}/sample/${sampleId}/`
   return axiosGET(endPoint, context)
