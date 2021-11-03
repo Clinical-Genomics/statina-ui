@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 import { CloudDownloadOutlined, QuestionCircleOutlined } from '@ant-design/icons'
 import { red } from '@ant-design/colors'
 import { sampleStatusTags, sexTags, tagColors } from 'services/helpers/constants'
+import { escapeRegExp } from 'services/helpers/helpers'
 
 type SamplesProps = {
   samples: any[]
@@ -51,16 +52,17 @@ export const SamplesTable = ({
   }, [samples])
 
   const onSearch = (searchInput) => {
-    setSearchValue(searchInput)
+    const escapInput = escapeRegExp(searchInput)
+    setSearchValue(escapInput)
     setCurrentPage(1)
     if (batchId) {
-      if (searchInput === '') {
-        getBatchSamples(userContext, batchId, 0, 0, searchInput).then((samples) => {
+      if (escapInput === '') {
+        getBatchSamples(userContext, batchId, 0, 0, escapInput).then((samples) => {
           setFilteredSamples(samples.documents), setPageCount(samples.document_count)
         })
       } else {
-        if (searchInput.length > 2) {
-          getBatchSamples(userContext, batchId, 0, 0, searchInput).then((samples) => {
+        if (escapInput.length > 2) {
+          getBatchSamples(userContext, batchId, 0, 0, escapInput).then((samples) => {
             setFilteredSamples(samples.documents), setPageCount(samples.document_count)
           })
         } else {
@@ -68,13 +70,15 @@ export const SamplesTable = ({
         }
       }
     } else {
-      if (searchInput === '') {
-        getSamplesByText(userContext, 0, 0, searchInput).then((samples) => {
+      const escapInput = escapeRegExp(searchInput)
+      setSearchValue(escapInput)
+      if (escapInput === '') {
+        getSamplesByText(userContext, 0, 0, escapInput).then((samples) => {
           setFilteredSamples(samples.documents), setPageCount(samples.document_count)
         })
       } else {
-        if (searchInput.length > 2) {
-          getSamplesByText(userContext, 0, 0, searchInput).then((samples) => {
+        if (escapInput.length > 2) {
+          getSamplesByText(userContext, 0, 0, escapInput).then((samples) => {
             setFilteredSamples(samples.documents), setPageCount(samples.document_count)
           })
         } else {

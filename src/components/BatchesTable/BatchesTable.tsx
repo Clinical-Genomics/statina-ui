@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { UserContext } from '../../services/userContext'
 import { getBatches, getBatchesByText } from '../../services/StatinaApi'
 import { Col, Dropdown, Input, Menu, Row, Table, message, Typography } from 'antd'
-import { sortDate } from 'services/helpers/helpers'
+import { escapeRegExp, sortDate } from 'services/helpers/helpers'
 import { Batch } from 'services/interfaces'
 import { Link } from 'react-router-dom'
 import { ExportCSV } from 'components/ExportCSV/ExportCSV'
@@ -30,15 +30,16 @@ export const BatchesTable = ({ batches, batchesCount }: BatchesProps) => {
   }, [batches])
 
   const onSearch = (searchInput) => {
-    setSearchValue(searchInput)
+    const escapInput = escapeRegExp(searchInput)
+    setSearchValue(escapInput)
     setCurrentPage(1)
-    if (searchInput === '') {
+    if (escapInput === '') {
       getBatches(userContext, 0, 0).then((batches) => {
         setFilteredBatches(batches.documents), setPageCount(batches.document_count)
       })
     } else {
-      if (searchInput.length > 2) {
-        getBatchesByText(userContext, 0, 0, searchInput).then((batches) => {
+      if (escapInput.length > 2) {
+        getBatchesByText(userContext, 0, 0, escapInput).then((batches) => {
           setFilteredBatches(batches.documents), setPageCount(batches.document_count)
         })
       } else {
