@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { UserContext } from '../../services/userContext'
-import { getSamples, getSamplesByText } from '../../services/StatinaApi'
+import { getSamples, getBatchSamples, getSamplesByText } from '../../services/StatinaApi'
 import { Input, message, Table, Tag, Tooltip, Typography } from 'antd'
 import { Link } from 'react-router-dom'
 import { CloudDownloadOutlined, QuestionCircleOutlined } from '@ant-design/icons'
@@ -11,12 +11,18 @@ type SamplesProps = {
   samples: any[]
   samplesCount: number
   showBatchInfo?: boolean
+  batchId?: any
 }
 
 const { Search } = Input
 const { Title, Text } = Typography
 
-export const SamplesTable = ({ samples, samplesCount, showBatchInfo = true }: SamplesProps) => {
+export const SamplesTable = ({
+  samples,
+  samplesCount,
+  showBatchInfo = true,
+  batchId,
+}: SamplesProps) => {
   const userContext = useContext(UserContext)
   const [filteredSamples, setFilteredSamples] = useState<any[]>(samples)
   const [selectedRowKeys, setSelectedRowKeys] = useState<any[]>([])
@@ -25,9 +31,15 @@ export const SamplesTable = ({ samples, samplesCount, showBatchInfo = true }: Sa
   const [currentPage, setCurrentPage] = useState(1)
 
   useEffect(() => {
-    getSamples(userContext, 10, 0).then((samples) => {
-      setFilteredSamples(samples.documents), setPageCount(samples.document_count)
-    })
+    if (batchId) {
+      getBatchSamples(userContext, batchId, 10, 0, searchValue).then((samples) => {
+        setFilteredSamples(samples.documents), setPageCount(samples.document_count)
+      })
+    } else {
+      getSamples(userContext, 10, 0).then((samples) => {
+        setFilteredSamples(samples.documents), setPageCount(samples.document_count)
+      })
+    }
     if (samples?.length > 0) {
       setPageCount(samplesCount)
       const selectedKey: string[] = []
@@ -41,25 +53,51 @@ export const SamplesTable = ({ samples, samplesCount, showBatchInfo = true }: Sa
   const onSearch = (searchInput) => {
     setSearchValue(searchInput)
     setCurrentPage(1)
-    if (searchInput === '') {
-      getSamples(userContext, 0, 0).then((samples) => {
-        setFilteredSamples(samples.documents), setPageCount(samples.document_count)
-      })
+    if (batchId) {
+      if (searchInput === '') {
+        getBatchSamples(userContext, batchId, 0, 0, searchInput).then((samples) => {
+          setFilteredSamples(samples.documents), setPageCount(samples.document_count)
+        })
+      } else {
+        if (searchInput.length > 2) {
+          getBatchSamples(userContext, batchId, 0, 0, searchInput).then((samples) => {
+            setFilteredSamples(samples.documents), setPageCount(samples.document_count)
+          })
+        } else {
+          message.error('Search terms must contain at least 3 characters.')
+        }
+      }
     } else {
-      if (searchInput.length > 2) {
+      if (searchInput === '') {
         getSamplesByText(userContext, 0, 0, searchInput).then((samples) => {
           setFilteredSamples(samples.documents), setPageCount(samples.document_count)
         })
       } else {
-        message.error('Search terms must contain at least 3 characters.')
+        if (searchInput.length > 2) {
+          getSamplesByText(userContext, 0, 0, searchInput).then((samples) => {
+            setFilteredSamples(samples.documents), setPageCount(samples.document_count)
+          })
+        } else {
+          message.error('Search terms must contain at least 3 characters.')
+        }
       }
     }
   }
 
   const onChange = (data) => {
-    getSamplesByText(userContext, data.pageSize, data.current, searchValue).then((samples) => {
-      setFilteredSamples(samples.documents), setPageCount(samples.document_count)
-    })
+    if (batchId) {
+      getBatchSamples(userContext, batchId, data.pageSize, data.current, searchValue).then(
+        (samples) => {
+          setFilteredSamples(samples.documents), setPageCount(samples.document_count)
+          setCurrentPage(data.current)
+        }
+      )
+    } else {
+      getSamples(userContext, data.pageSize, data.current).then((samples) => {
+        setFilteredSamples(samples.documents), setPageCount(samples.document_count)
+        setCurrentPage(data.current)
+      })
+    }
   }
 
   const showTotal = (total, range) => {
@@ -261,11 +299,9 @@ export const SamplesTable = ({ samples, samplesCount, showBatchInfo = true }: Sa
         onSearch={onSearch}
         style={{ paddingBottom: 20 }}
       />
-      {searchValue.length > 0 && (
-        <Text type="secondary">
-          About {pageCount} result{filteredSamples.length > 1 ? `s` : null}
-        </Text>
-      )}
+      <Text type="secondary">
+        About {pageCount} result{filteredSamples.length > 1 ? `s` : null}
+      </Text>
 
       <br />
       <i>Select a sample with the checkbox to include it in the comparison set</i>

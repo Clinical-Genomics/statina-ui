@@ -65,7 +65,12 @@ export const BatchPage = () => {
       </Row>
       <Tabs type="card">
         <TabPane tab="Summary Table" key="1">
-          <SamplesTable samples={samples} samplesCount={samplesCount} showBatchInfo />
+          <SamplesTable
+            samples={samples}
+            samplesCount={samplesCount}
+            batchId={batchId}
+            showBatchInfo
+          />
         </TabPane>
         <TabPane tab="Zscore 13" key="Zscore_13">
           <ZscoreGraph batchId={batchId} chromosome={13} />

@@ -50,6 +50,7 @@ export const BatchesTable = ({ batches, batchesCount }: BatchesProps) => {
   const onChange = (data) => {
     getBatchesByText(userContext, data.pageSize, data.current, searchValue).then((batches) => {
       setFilteredBatches(batches.documents), setPageCount(batches.document_count)
+      setCurrentPage(data.current)
     })
   }
 
@@ -100,11 +101,9 @@ export const BatchesTable = ({ batches, batchesCount }: BatchesProps) => {
           <Search placeholder="Search by Batch or Flowcell ID" onSearch={onSearch} allowClear />
         </Col>
       </Row>
-      {searchValue.length > 0 && (
-        <Text type="secondary">
-          About {pageCount} result{filteredBatches.length > 1 ? `s` : null}
-        </Text>
-      )}
+      <Text type="secondary">
+        About {pageCount} result{filteredBatches.length > 1 ? `s` : null}
+      </Text>
       <Table
         columns={columns}
         dataSource={filteredBatches}

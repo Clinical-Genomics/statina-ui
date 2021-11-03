@@ -78,6 +78,11 @@ export const getBatchesByText = async (
   return axiosGET(endPoint, context)
 }
 
+export const getSamples = async (context: UserContext, pageSize, currentPage): Promise<any> => {
+  const endPoint = `${REACT_APP_BACKEND_URL}/samples?page_size=${pageSize}&page_num=${currentPage}`
+  return axiosGET(endPoint, context)
+}
+
 export const getSamplesByText = async (
   context: UserContext,
   pageSize,
@@ -88,18 +93,14 @@ export const getSamplesByText = async (
   return axiosGET(endPoint, context)
 }
 
-export const getSamples = async (context: UserContext, pageSize, currentPage): Promise<any> => {
-  const endPoint = `${REACT_APP_BACKEND_URL}/samples?page_size=${pageSize}&page_num=${currentPage}`
-  return axiosGET(endPoint, context)
-}
-
 export const getBatchSamples = async (
   context: UserContext,
   batchId: string,
   pageSize,
-  currentPage
+  currentPage,
+  query_string?
 ): Promise<any> => {
-  const endPoint = `${REACT_APP_BACKEND_URL}/batch/${batchId}/samples?page_size=${pageSize}&page_num=${currentPage}`
+  const endPoint = `${REACT_APP_BACKEND_URL}/samples?batch_id=${batchId}&page_size=${pageSize}&page_num=${currentPage}&query_string=${query_string}`
   return axiosGET(endPoint, context)
 }
 
