@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 import { CloudDownloadOutlined, QuestionCircleOutlined } from '@ant-design/icons'
 import { red } from '@ant-design/colors'
 import { sampleStatusTags, sexTags, tagColors } from 'services/helpers/constants'
+import escapeStringRegexp from 'escape-string-regexp'
 
 type SamplesProps = {
   samples: any[]
@@ -51,16 +52,17 @@ export const SamplesTable = ({
   }, [samples])
 
   const onSearch = (searchInput) => {
-    setSearchValue(searchInput)
+    const escapedString = escapeStringRegexp(searchInput)
+    setSearchValue(escapedString)
     setCurrentPage(1)
     if (batchId) {
-      if (searchInput === '') {
-        getBatchSamples(userContext, batchId, 0, 0, searchInput).then((samples) => {
+      if (escapedString === '') {
+        getBatchSamples(userContext, batchId, 0, 0, escapedString).then((samples) => {
           setFilteredSamples(samples.documents), setPageCount(samples.document_count)
         })
       } else {
-        if (searchInput.length > 2) {
-          getBatchSamples(userContext, batchId, 0, 0, searchInput).then((samples) => {
+        if (escapedString.length > 2) {
+          getBatchSamples(userContext, batchId, 0, 0, escapedString).then((samples) => {
             setFilteredSamples(samples.documents), setPageCount(samples.document_count)
           })
         } else {
@@ -68,13 +70,15 @@ export const SamplesTable = ({
         }
       }
     } else {
-      if (searchInput === '') {
-        getSamplesByText(userContext, 0, 0, searchInput).then((samples) => {
+      const escapedString = escapeStringRegexp(searchInput)
+      setSearchValue(escapedString)
+      if (escapedString === '') {
+        getSamplesByText(userContext, 0, 0, escapedString).then((samples) => {
           setFilteredSamples(samples.documents), setPageCount(samples.document_count)
         })
       } else {
-        if (searchInput.length > 2) {
-          getSamplesByText(userContext, 0, 0, searchInput).then((samples) => {
+        if (escapedString.length > 2) {
+          getSamplesByText(userContext, 0, 0, escapedString).then((samples) => {
             setFilteredSamples(samples.documents), setPageCount(samples.document_count)
           })
         } else {

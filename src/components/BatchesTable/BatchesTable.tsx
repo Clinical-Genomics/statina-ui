@@ -1,10 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { UserContext } from '../../services/userContext'
-import { getBatch, getBatches, getBatchesByText } from '../../services/StatinaApi'
+import { getBatches, getBatchesByText } from '../../services/StatinaApi'
 import { Col, Dropdown, Input, Menu, Row, Table, message, Typography } from 'antd'
 import { sortDate } from 'services/helpers/helpers'
 import { Batch } from 'services/interfaces'
 import { Link } from 'react-router-dom'
+import escapeStringRegexp from 'escape-string-regexp'
 import { ExportCSV } from 'components/ExportCSV/ExportCSV'
 import { ExportPDF } from 'components/ExportPDF/ExportPDF'
 
@@ -30,15 +31,16 @@ export const BatchesTable = ({ batches, batchesCount }: BatchesProps) => {
   }, [batches])
 
   const onSearch = (searchInput) => {
-    setSearchValue(searchInput)
+    const escapedString = escapeStringRegexp(searchInput)
+    setSearchValue(escapedString)
     setCurrentPage(1)
-    if (searchInput === '') {
+    if (escapedString === '') {
       getBatches(userContext, 0, 0).then((batches) => {
         setFilteredBatches(batches.documents), setPageCount(batches.document_count)
       })
     } else {
-      if (searchInput.length > 2) {
-        getBatchesByText(userContext, 0, 0, searchInput).then((batches) => {
+      if (escapedString.length > 2) {
+        getBatchesByText(userContext, 0, 0, escapedString).then((batches) => {
           setFilteredBatches(batches.documents), setPageCount(batches.document_count)
         })
       } else {
