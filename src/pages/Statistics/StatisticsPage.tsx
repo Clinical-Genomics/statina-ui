@@ -1,46 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Tabs, Card } from 'antd'
-import Plot, { Layout, BoxPlotData } from 'react-plotly.js'
 import { getStatistics } from '../../services/StatinaApi'
 import { UserContext } from '../../services/userContext'
-
-const buildData = (selectedPlot: string, statistics: any): BoxPlotData[] => {
-  return statistics.batch_ids?.map((batchId: string) => ({
-    y: statistics.box_stat[batchId][selectedPlot],
-    type: 'box',
-    text: statistics.box_stat[batchId]?.sample_ids,
-    showlegend: false,
-    boxpoints: 'all',
-  }))
-}
-
-const buildLayout = (selectedPlot: string, statistics: any): Layout => {
-  return {
-    title: `${selectedPlot} - ${statistics.nr_batches} most recent batches`,
-    hovermode: 'closest',
-    margin: { b: 100 },
-    height: 800,
-    width: 1200,
-    xaxis: {
-      showline: true,
-      tickvals: statistics.ticks,
-      ticktext: statistics.batch_ids,
-      tickangle: 40,
-      zeroline: false,
-      linecolor: '#636363',
-      linewidth: 5,
-      gridcolor: '#bdbdbd',
-    },
-    yaxis: {
-      zeroline: false,
-      showline: true,
-      showgrid: false,
-      linecolor: '#636363',
-      linewidth: 5,
-      title: selectedPlot,
-    },
-  }
-}
+import { StatisticsBoxPlot } from '../../components/StatisticsBoxPlot/StatisticsBoxPlot'
+import { StatisticsScatterPlot } from '../../components/StatisticsScatterPlot/StatisticsScatterPlot'
 
 export function StatisticsPage() {
   const userContext = useContext(UserContext)
@@ -63,10 +26,14 @@ export function StatisticsPage() {
         {statistics?.box_plots.map((box) => (
           <TabPane tab={box} key={box}>
             {statistics && selectedPlot && (
-              <Plot
-                data={buildData(selectedPlot, statistics)}
-                layout={buildLayout(selectedPlot, statistics)}
-              />
+              <StatisticsBoxPlot selectedPlot={selectedPlot} statistics={statistics} />
+            )}
+          </TabPane>
+        ))}
+        {statistics?.scatter_plots.map((scatter) => (
+          <TabPane tab={scatter} key={scatter}>
+            {statistics && selectedPlot && (
+              <StatisticsScatterPlot selectedPlot={selectedPlot} statistics={statistics} />
             )}
           </TabPane>
         ))}
