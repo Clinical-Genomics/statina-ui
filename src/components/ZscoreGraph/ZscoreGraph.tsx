@@ -9,7 +9,7 @@ type ZscoreGraphProps = {
   chromosome: number
 }
 
-const buildData = (response: ZScoreGraph, chromosome: number): any[] => {
+const buildData = (response: ZScoreGraph, chromosome: number): ScatterData[] => {
   const data: ScatterData[] = [
     {
       name: `Current batch ${response?.ncv_chrom_data[chromosome].count}`,
