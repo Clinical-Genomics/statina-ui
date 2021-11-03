@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Card, Tabs, Row, Menu, Col, Dropdown } from 'antd'
 import { useLocation } from 'react-router-dom'
 import { SamplesTable } from '../../components/SamplesTable/SamplesTable'
@@ -11,7 +11,6 @@ import { FetalFractionXY } from '../../components/FetalFractionXYGraph/FetalFrac
 const { TabPane } = Tabs
 
 export const BatchPage = () => {
-  const [batch, setBatch] = useState<any>([])
   const [samples, setSamples] = useState<any[]>([])
   const [samplesCount, setSamplesCount] = useState<number>(0)
   const pageSize = 10
