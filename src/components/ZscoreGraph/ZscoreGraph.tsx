@@ -1,16 +1,16 @@
 import React, { useContext, useEffect, useState } from 'react'
-import Plot from 'react-plotly.js'
+import Plot, { ScatterData, Layout } from 'react-plotly.js'
 import { getZScoreGraph } from '../../services/StatinaApi'
 import { UserContext } from '../../services/userContext'
-import { Zscore } from '../../services/interfaces'
+import { ZScoreGraph } from '../../services/interfaces'
 
 type ZscoreGraphProps = {
   batchId: string
   chromosome: number
 }
 
-const buildData = (response: Zscore, chromosome: number): any[] => {
-  const data = [
+const buildData = (response: ZScoreGraph, chromosome: number): any[] => {
+  const data: ScatterData[] = [
     {
       name: `Current batch ${response?.ncv_chrom_data[chromosome].count}`,
       y: response?.ncv_chrom_data[chromosome].ncv_values,
@@ -51,8 +51,6 @@ const buildData = (response: Zscore, chromosome: number): any[] => {
       y: [response.tris_thresholds[line].Zscore, response.tris_thresholds[line].Zscore],
       mode: 'lines',
       text: response.tris_thresholds[line].text,
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
       showlegend: false,
       line: {
         dash: 'dot',
@@ -65,7 +63,7 @@ const buildData = (response: Zscore, chromosome: number): any[] => {
   return data
 }
 
-const buildLayout = (response: Zscore, chromosome: number) => {
+const buildLayout = (response: ZScoreGraph, chromosome: number): Layout => {
   return {
     legend: { hovermode: 'closest' },
     hovermode: 'closest',
@@ -76,7 +74,7 @@ const buildLayout = (response: Zscore, chromosome: number) => {
     },
     yaxis: {
       range: [-10, 10],
-      title: response?.ncv_chrom_data[chromosome].ncv_values,
+      title: response?.ncv_chrom_data[chromosome]?.ncv_values,
     },
     width: 1200,
     height: 600,
@@ -89,8 +87,8 @@ const buildLayout = (response: Zscore, chromosome: number) => {
 
 export const ZscoreGraph = ({ batchId, chromosome }: ZscoreGraphProps) => {
   const userContext = useContext(UserContext)
-  const [data, setData] = useState<any>()
-  const [layout, setLayout] = useState<any>()
+  const [data, setData] = useState<ScatterData[]>()
+  const [layout, setLayout] = useState<Layout>()
 
   useEffect(() => {
     getZScoreGraph(batchId, chromosome, userContext).then((response) => {

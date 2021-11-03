@@ -6,6 +6,7 @@ import { ZscoreGraph } from '../../components/ZscoreGraph/ZscoreGraph'
 import { BatchTablePDF } from '../../components/ExportPDF/BatchTablePDF'
 import { getBatchSamples } from '../../services/StatinaApi'
 import { UserContext } from '../../services/userContext'
+import { FetalFractionXY } from '../../components/FetalFractionXYGraph/FetalFractionXY'
 
 const { TabPane } = Tabs
 
@@ -56,7 +57,9 @@ export const BatchPage = () => {
         <TabPane tab="Zscore 21" key="Zscore_21">
           <ZscoreGraph batchId={batchId} chromosome={21} />
         </TabPane>
-        <TabPane tab="Fetal Fraction X/Y" key="Fetal_Fraction_X/Y"></TabPane>
+        <TabPane tab="Fetal Fraction X/Y" key="Fetal_Fraction_X/Y">
+          <FetalFractionXY batchId={batchId} chromosome={21} />
+        </TabPane>
       </Tabs>
     </Card>
   )
