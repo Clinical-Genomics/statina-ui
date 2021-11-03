@@ -54,7 +54,7 @@ export const BatchPage = () => {
         </Col>
       </Row>
       <Row>
-        <Col>
+        <Col xl={24}>
           {comment && (
             <Card title="Comment" style={{ marginBottom: 30, marginTop: 15 }}>
               <Text>{comment}</Text>
