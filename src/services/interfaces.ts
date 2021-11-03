@@ -42,3 +42,39 @@ export interface RegisterUser {
   username: string
   email: string
 }
+
+export interface GrahCromosomeData {
+  13?: any
+  18?: any
+  21?: any
+}
+
+export interface ThresholdData {
+  Zscore: number
+  color: string
+  text: string
+}
+
+export interface Threshold {
+  hard_max: ThresholdData
+  hard_min: ThresholdData
+  soft_max: ThresholdData
+  soft_min: ThresholdData
+}
+
+export interface ZScoreGraph {
+  abnormal_data: GrahCromosomeData
+  chromosomes: string[]
+  ncv_chrom_data: GrahCromosomeData
+  normal_data: GrahCromosomeData
+  tris_thresholds
+}
+
+export interface FetalFractionXYGraph {
+  abnormal: any
+  cases: any
+  control: any
+  max_x: number
+  min_x: number
+  sex_thresholds: any
+}
