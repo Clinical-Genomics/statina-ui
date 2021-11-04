@@ -5,6 +5,8 @@ import Cookies from 'universal-cookie'
 
 export const userCookie = 'statinaUser'
 
+export const statinaBackendRepo = 'https://github.com/Clinical-Genomics/statina/issues'
+
 export const ErrorNotification = ({ type, message, description }: Notification) => {
   const key = `open${Date.now()}`
   notification[type]({
