@@ -125,5 +125,5 @@ export const removeCookies = (cookieName = userCookie) => {
 }
 
 export const escapeRegExp = (input) => {
-  return input.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&')
+  return input.replace(/[^A-Za-z0-9 _]/g, '\\$&')
 }

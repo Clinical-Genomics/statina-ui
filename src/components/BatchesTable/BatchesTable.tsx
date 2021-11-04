@@ -33,19 +33,9 @@ export const BatchesTable = ({ batches, batchesCount }: BatchesProps) => {
     const escapInput = escapeRegExp(searchInput)
     setSearchValue(escapInput)
     setCurrentPage(1)
-    if (escapInput === '') {
-      getBatches(userContext, 0, 0).then((batches) => {
-        setFilteredBatches(batches.documents), setPageCount(batches.document_count)
-      })
-    } else {
-      if (escapInput.length > 2) {
-        getBatchesByText(userContext, 0, 0, escapInput).then((batches) => {
-          setFilteredBatches(batches.documents), setPageCount(batches.document_count)
-        })
-      } else {
-        message.error('Search terms must contain at least 3 characters.')
-      }
-    }
+    getBatchesByText(userContext, 0, 0, escapInput).then((batches) => {
+      setFilteredBatches(batches.documents), setPageCount(batches.document_count)
+    })
   }
 
   const onChange = (data) => {
@@ -110,7 +100,12 @@ export const BatchesTable = ({ batches, batchesCount }: BatchesProps) => {
         dataSource={filteredBatches}
         rowKey="batch_id"
         onChange={onChange}
-        pagination={{ total: pageCount, showTotal: showTotal, current: currentPage }}
+        pagination={{
+          total: pageCount,
+          showTotal: showTotal,
+          current: currentPage,
+          pageSize: pageCount,
+        }}
       />
     </>
   )

@@ -56,35 +56,15 @@ export const SamplesTable = ({
     setSearchValue(escapInput)
     setCurrentPage(1)
     if (batchId) {
-      if (escapInput === '') {
-        getBatchSamples(userContext, batchId, 0, 0, escapInput).then((samples) => {
-          setFilteredSamples(samples.documents), setPageCount(samples.document_count)
-        })
-      } else {
-        if (escapInput.length > 2) {
-          getBatchSamples(userContext, batchId, 0, 0, escapInput).then((samples) => {
-            setFilteredSamples(samples.documents), setPageCount(samples.document_count)
-          })
-        } else {
-          message.error('Search terms must contain at least 3 characters.')
-        }
-      }
+      getBatchSamples(userContext, batchId, 0, 0, escapInput).then((samples) => {
+        setFilteredSamples(samples.documents), setPageCount(samples.document_count)
+      })
     } else {
       const escapInput = escapeRegExp(searchInput)
       setSearchValue(escapInput)
-      if (escapInput === '') {
-        getSamplesByText(userContext, 0, 0, escapInput).then((samples) => {
-          setFilteredSamples(samples.documents), setPageCount(samples.document_count)
-        })
-      } else {
-        if (escapInput.length > 2) {
-          getSamplesByText(userContext, 0, 0, escapInput).then((samples) => {
-            setFilteredSamples(samples.documents), setPageCount(samples.document_count)
-          })
-        } else {
-          message.error('Search terms must contain at least 3 characters.')
-        }
-      }
+      getSamplesByText(userContext, 0, 0, escapInput).then((samples) => {
+        setFilteredSamples(samples.documents), setPageCount(samples.document_count)
+      })
     }
   }
 
