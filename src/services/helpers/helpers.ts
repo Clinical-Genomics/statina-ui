@@ -96,7 +96,6 @@ export const windowMatchMedia = () => {
 }
 
 export const getUserRole = (scopes: string[] = ['']): string => {
-  console.log(scopes)
   if (scopes.includes('admin')) return userRoles.admin.name
   else if (scopes.includes('RW')) return userRoles.rw.name
   else if (scopes.includes('R')) return userRoles.r.name
