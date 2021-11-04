@@ -35,7 +35,7 @@ export const BatchPage = () => {
   )
   return (
     <Card>
-      <div id="hiddenDiv" style={{ display: 'none' }}></div>
+      {/* <div id="hiddenDiv" style={{ display: 'none' }}></div> */}
       <Row justify={'end'}>
         <Col>
           <Dropdown.Button overlay={downloadMenu} type="primary" style={{ paddingBottom: 20 }}>
@@ -46,6 +46,11 @@ export const BatchPage = () => {
       <Tabs type="card">
         <TabPane tab="Summary Table" key="1">
           <SamplesTable samples={samples} samplesCount={samplesCount} showBatchInfo />
+          <div id="hiddenDiv">
+            {' '}
+            {/* if the div is hidden the image will be blank */}
+            <FetalFractionXY batchId={batchId} chromosome={21} />
+          </div>
         </TabPane>
         <TabPane tab="Zscore 13" key="Zscore_13">
           <ZscoreGraph batchId={batchId} chromosome={13} />
