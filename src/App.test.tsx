@@ -5,7 +5,7 @@ import { mockBatches } from './mocks/batches'
 import { App } from './App'
 import { Router } from 'react-router-dom'
 import { createMemoryHistory } from 'history'
-import {mockAdminCookie, mockInactiveCookie, mockUnconfirmedCookie} from './mocks/cookies'
+import { mockAdminCookie, mockInactiveCookie, mockUnconfirmedCookie } from './mocks/cookies'
 
 jest.mock('axios')
 const mockedAxios = axios as jest.Mocked<typeof axios>
@@ -79,8 +79,8 @@ describe('App', () => {
         </Router>
       )
     )
-    const username = await waitFor(() => getByText(/You didn't confirm your email address/i))
-    await waitFor(() => expect(username).toBeVisible())
+    const message = await waitFor(() => getByText(/You didn't confirm your email address/i))
+    await waitFor(() => expect(message).toBeVisible())
   })
   test('Signed with inactive permissions should see confirm email component', async () => {
     Object.defineProperty(document, 'cookie', {
@@ -97,7 +97,7 @@ describe('App', () => {
         </Router>
       )
     )
-    const username = await waitFor(() => getByText(/Your account is inactive/i))
-    await waitFor(() => expect(username).toBeVisible())
+    const message = await waitFor(() => getByText(/Your account is inactive/i))
+    await waitFor(() => expect(message).toBeVisible())
   })
 })
