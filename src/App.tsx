@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import styles from './App.module.css'
 import './index.css'
-import { Layout, Menu, Button, Dropdown, Result } from 'antd'
+import { Layout, Menu, Button, Dropdown } from 'antd'
 import { Link, useLocation } from 'react-router-dom'
 import { Routes } from './components/Routes'
 import Logo from './assets/logo.png'
@@ -31,6 +31,7 @@ export const App = () => {
     getCookies()
       .then((userCookie) => {
         initializeUserContext(userCookie)
+        console.log('sdfsadfasdfsdaf')
         setIsLoading(false)
       })
       .catch(() => {

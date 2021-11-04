@@ -1,7 +1,6 @@
 import React from 'react'
 import { render, waitFor } from '@testing-library/react'
 import { SamplePage } from '../Sample/SamplePage'
-import { windowMatchMedia } from '../../services/helpers/helpers'
 import axios from 'axios'
 import { mockSample } from '../../mocks/sample'
 import { BrowserRouter } from 'react-router-dom'
@@ -18,7 +17,6 @@ jest.mock('react-router-dom', () => ({
 
 describe('Sample Page', () => {
   test('Sample Page component should display UI correctly', async () => {
-    window.matchMedia = windowMatchMedia()
     mockedAxios.get.mockReturnValueOnce(Promise.resolve({ data: mockSample }))
     const initializeUserContext = () => null
     const logout = () => null
@@ -45,7 +43,6 @@ describe('Sample Page', () => {
   })
 
   test('Error from backend should display error', async () => {
-    window.matchMedia = windowMatchMedia()
     mockedAxios.get.mockReturnValueOnce(Promise.reject('Something went wrong'))
     const initializeUserContext = () => null
     const logout = () => null

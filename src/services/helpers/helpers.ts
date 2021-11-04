@@ -82,19 +82,6 @@ export const sortDate = (dateA: string, dateB: string) => {
   return dateToNumber(dateA) - dateToNumber(dateB)
 }
 
-export const windowMatchMedia = () => {
-  return (
-    window.matchMedia ||
-    function () {
-      return {
-        matches: false,
-        addListener: () => null,
-        removeListener: () => null,
-      }
-    }
-  )
-}
-
 export const getUserRole = (scopes: string[] = ['']): string => {
   if (scopes.includes('admin')) return userRoles.admin.name
   else if (scopes.includes('RW')) return userRoles.rw.name
