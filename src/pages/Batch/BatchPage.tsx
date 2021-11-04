@@ -29,13 +29,13 @@ export const BatchPage = () => {
   const downloadMenu = (
     <Menu style={{ width: 100, textAlign: 'center' }}>
       <Menu.Item key="pdf">
-        <BatchTablePDF />
+        <BatchTablePDF batchId={batchId} chromosome={21} />
       </Menu.Item>
     </Menu>
   )
   return (
     <Card>
-      {/* <div id="hiddenDiv" style={{ display: 'none' }}></div> */}
+      <div id="hiddenDiv" style={{ display: 'none' }}></div>
       <Row justify={'end'}>
         <Col>
           <Dropdown.Button overlay={downloadMenu} type="primary" style={{ paddingBottom: 20 }}>
@@ -46,8 +46,7 @@ export const BatchPage = () => {
       <Tabs type="card">
         <TabPane tab="Summary Table" key="1">
           <SamplesTable samples={samples} samplesCount={samplesCount} showBatchInfo />
-          <div id="hiddenDiv">
-            {' '}
+          <div id="hiddenDiv2">
             {/* if the div is hidden the image will be blank */}
             <FetalFractionXY batchId={batchId} chromosome={21} />
           </div>

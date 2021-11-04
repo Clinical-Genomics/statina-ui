@@ -105,53 +105,21 @@ const buildLayout = (response: FetalFractionXYGraph): Layout => {
   }
 }
 
-export function BatchTablePDF() {
+export const BatchTablePDF = ({ batchId }: FetalFractionXYGraphProps) => {
   const [imgURI, setImgURI] = useState('')
   const [samples, setSamples] = useState<any[]>([])
-  const [plotlyScore, setPlotlyScore] = useState('Zscore_13') // The plotly should be changed to a Fetal Fraction
   const [data, setData] = useState<ScatterData[]>()
   const [layout, setLayout] = useState<Layout>()
   const pageSize = 0
   const pageNum = 0
   const userContext = useContext(UserContext)
-  const { pathname } = useLocation()
-  const batchId = pathname.substring(pathname.lastIndexOf('/') + 1, pathname.length)
   useEffect(() => {
     getFetalFractionXYGraph(batchId, userContext).then((response: FetalFractionXYGraph) => {
       setData(buildData(response))
       setLayout(buildLayout(response))
     })
   }, [])
-  /* useEffect(() => {
-    if (batchId)
-      getBatchSamples(userContext, batchId, pageSize, pageNum).then((samples) => {
-        setSamples(samples.documents)
-      })
-  }, [batchId]) */
-  /* const plotlyData: any[] = [
-    {
-      name: `Current batch ${samples.length}`,
-      y: samples.map((sample) => sample[plotlyScore]),
-      x: samples.map((sample) => sample?.SampleID),
-      mode: 'markers',
-      type: 'scatter',
-    },
-  ]
-  const layout = {
-    annotations: [],
-    xaxis: {
-      showline: true,
-      showgrid: true,
-    },
-    yaxis: {
-      range: [-10, 10],
-      title: plotlyScore,
-    },
-    height: 600,
-    width: 1200,
-  }
 
-  */
   Plot.newPlot('hiddenDiv', data, layout)
     .then((gd) => {
       return Plot.toImage(gd, {
@@ -231,7 +199,7 @@ export function BatchTablePDF() {
       }
 
       // convert image to base64
-      /* const printArea = document.getElementById('hiddenDiv') as HTMLInputElement
+      /* const printArea = document.getElementById('hiddenDiv2') as HTMLInputElement
       console.log(printArea)
       html2canvas(printArea).then((canvas) => {
         const imgWidth = 208
