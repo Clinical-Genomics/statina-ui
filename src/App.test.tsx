@@ -6,6 +6,7 @@ import { App } from './App'
 import { Router } from 'react-router-dom'
 import { createMemoryHistory } from 'history'
 import { mockAdminCookie } from './mocks/cookies'
+import { userCookie } from './services/helpers/helpers'
 
 jest.mock('axios')
 const mockedAxios = axios as jest.Mocked<typeof axios>
@@ -27,10 +28,10 @@ describe('App', () => {
   test('Signed in app with admin permissions should display batches page', async () => {
     Object.defineProperty(document, 'cookie', {
       writable: true,
-      value: `statinaUser=${mockAdminCookie}`,
+      value: mockAdminCookie,
     })
 
-    mockedAxios.get.mockReturnValueOnce(Promise.resolve({ data: mockBatches }))
+    mockedAxios.get.mockReturnValue(Promise.resolve(mockBatches))
     const history = createMemoryHistory()
 
     const { getByText } = await waitFor(() =>

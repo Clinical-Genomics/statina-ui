@@ -31,10 +31,9 @@ export const App = () => {
     getCookies()
       .then((userCookie) => {
         initializeUserContext(userCookie)
-        console.log('sdfsadfasdfsdaf')
         setIsLoading(false)
       })
-      .catch(() => {
+      .catch((error) => {
         setIsLoading(false)
       })
   }, [])

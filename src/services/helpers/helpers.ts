@@ -3,7 +3,7 @@ import { notification } from 'antd'
 import { AxiosError } from 'axios'
 import Cookies from 'universal-cookie'
 
-const userCookie = 'statinaUser'
+export const userCookie = 'statinaUser'
 
 export const ErrorNotification = ({ type, message, description }: Notification) => {
   const key = `open${Date.now()}`
@@ -113,7 +113,6 @@ export const setCookies = (user, cookieName = userCookie) => {
 
 export const getCookies = (cookieName = userCookie) => {
   const cookies = new Cookies()
-  cookies.get(cookieName)
   return new Promise((resolve, reject) => {
     const cookie = cookies.get(cookieName)
     if (cookie?.access_token) resolve(cookie)
