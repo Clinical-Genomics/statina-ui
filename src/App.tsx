@@ -33,7 +33,7 @@ export const App = () => {
         initializeUserContext(userCookie)
         setIsLoading(false)
       })
-      .catch((error) => {
+      .catch(() => {
         setIsLoading(false)
       })
   }, [])

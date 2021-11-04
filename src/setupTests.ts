@@ -4,9 +4,7 @@ window.URL.createObjectURL = () => ''
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-HTMLCanvasElement.prototype.getContext = () => {
-  console.log('test context')
-}
+HTMLCanvasElement.prototype.getContext = () => ''
 
 global.matchMedia =
   global.matchMedia ||
