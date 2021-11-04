@@ -8,7 +8,7 @@ export const UnconfirmedResult = () => (
     title="You didn't confirm your email address. Please check your email and confirm it"
     extra={
       <a href={'https://clinical-scilifelab.supportsystem.com/scp/login.php'}>
-        Open a ticket on our support system if you encounter any issues
+        Open an issue on on the Statina GitHub repository if you want to contact us
       </a>
     }
   />

@@ -7,7 +7,7 @@ export const InactiveResult = () => (
     title="Your account is inactive. An admin from Clinical Genomics needs to activate your account"
     extra={
       <a href={'https://clinical-scilifelab.supportsystem.com/scp/login.php'}>
-        Open a ticket on our support system if you want to contact us
+        Open an issue on on the Statina GitHub repository if you want to contact us
       </a>
     }
   />
