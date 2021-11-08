@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { UserContext } from '../../services/userContext'
 import { getBatches, getBatchesByText } from '../../services/StatinaApi'
-import { Col, Dropdown, Input, Menu, Row, Table, message, Typography } from 'antd'
+import { Col, Dropdown, Input, Menu, Row, Table, Typography } from 'antd'
 import { escapeRegExp, sortDate } from 'services/helpers/helpers'
 import { Batch } from 'services/interfaces'
 import { Link } from 'react-router-dom'
@@ -89,11 +89,11 @@ export const BatchesTable = ({ batches, batchesCount }: BatchesProps) => {
           </Dropdown.Button>
         </Col>
         <Col span={8}>
-          <Search placeholder="Search by Batch or Flowcell ID" onSearch={onSearch} allowClear />
+          <Search placeholder="Search Batches" onSearch={onSearch} allowClear />
         </Col>
       </Row>
       <Text type="secondary">
-        About {pageCount} result{filteredBatches.length > 1 ? `s` : null}
+        {pageCount} result{filteredBatches.length > 1 ? `s` : null}
       </Text>
       <Table
         columns={columns}
@@ -104,7 +104,6 @@ export const BatchesTable = ({ batches, batchesCount }: BatchesProps) => {
           total: pageCount,
           showTotal: showTotal,
           current: currentPage,
-          pageSize: pageCount,
         }}
       />
     </>

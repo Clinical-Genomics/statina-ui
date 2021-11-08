@@ -1,6 +1,5 @@
 import React from 'react'
 import { render, screen, fireEvent } from '@testing-library/react'
-import { windowMatchMedia } from 'services/helpers/helpers'
 import { SamplesTable } from './SamplesTable'
 import { mockSamples } from 'mocks/samples'
 import { MemoryRouter } from 'react-router-dom'
@@ -8,7 +7,6 @@ import { UserContext } from 'services/userContext'
 
 describe('Samples Table', () => {
   test('Samples Table should display UI correctly', () => {
-    window.matchMedia = windowMatchMedia()
     const initializeUserContext = () => null
     const logout = () => null
     const { getByText } = render(
@@ -33,16 +31,13 @@ describe('Samples Table', () => {
     expect(comment).toBeVisible()
   })
   test('Search samples should work', () => {
-    window.matchMedia = windowMatchMedia()
-    const { getByPlaceholderText, queryByText } = render(
+    const { queryByText } = render(
       <MemoryRouter>
         <SamplesTable samples={mockSamples} samplesCount={20}></SamplesTable>
       </MemoryRouter>
     )
     expect(queryByText(mockSamples[0].sample_id)).toBeInTheDocument()
-    const inputElement = screen.getByPlaceholderText(
-      'Search by Sample name, Batch name or Comment'
-    ) as HTMLInputElement
+    const inputElement = screen.getByPlaceholderText('Search Samples') as HTMLInputElement
     const buttonElement = screen.getByRole('button', {
       name: /Search/i,
     })

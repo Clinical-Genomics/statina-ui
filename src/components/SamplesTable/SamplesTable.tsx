@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { UserContext } from '../../services/userContext'
 import { getSamples, getBatchSamples, getSamplesByText } from '../../services/StatinaApi'
-import { Input, message, Table, Tag, Tooltip, Typography } from 'antd'
+import { Input, Table, Tag, Tooltip, Typography } from 'antd'
 import { Link } from 'react-router-dom'
 import { CloudDownloadOutlined, QuestionCircleOutlined } from '@ant-design/icons'
 import { red } from '@ant-design/colors'
@@ -279,12 +279,12 @@ export const SamplesTable = ({
     <>
       <Search
         allowClear
-        placeholder={`Search by Sample name${showBatchInfo ? ', Batch name' : ''} or Comment`}
+        placeholder={`Search Samples`}
         onSearch={onSearch}
         style={{ paddingBottom: 20 }}
       />
       <Text type="secondary">
-        About {pageCount} result{filteredSamples.length > 1 ? `s` : null}
+        {pageCount} result{filteredSamples.length > 1 ? `s` : null}
       </Text>
 
       <br />

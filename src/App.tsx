@@ -10,8 +10,16 @@ import Footer from './components/Footer/Footer'
 import { UserContext } from 'services/userContext'
 import { ProfileDropdown } from './components/ProfileDropdown/ProfileDropdown'
 import { DownOutlined } from '@ant-design/icons'
-import { getCookies, removeCookies, setCookies } from './services/helpers/helpers'
+import {
+  getCookies,
+  isUserInactive,
+  isUserUnconfirmed,
+  removeCookies,
+  setCookies,
+} from './services/helpers/helpers'
 import { Loading } from './components/Loading'
+import { UnconfirmedResult } from './components/NoPermissonResults/UnconfirmedResult'
+import { InactiveResult } from './components/NoPermissonResults/InactiveResult'
 
 const { Header, Content } = Layout
 export const App = () => {
@@ -97,8 +105,14 @@ export const App = () => {
             }}
           >
             <div className={styles.siteLayoutBackground} style={{ padding: 24, minHeight: 380 }}>
-              {!isLoading && <Routes isLoggedIn={!!token} />}
-              {isLoading && <Loading />}
+              {!isLoading && !isUserInactive(user?.scopes) && !isUserUnconfirmed(user?.scopes) && (
+                <Routes isLoggedIn={!!token} />
+              )}
+              {isLoading && !isUserInactive(user?.scopes) && !isUserUnconfirmed(user?.scopes) && (
+                <Loading />
+              )}
+              {isUserInactive(user?.scopes) && <InactiveResult />}
+              {isUserUnconfirmed(user?.scopes) && <UnconfirmedResult />}
             </div>
           </Content>
           <Footer />
