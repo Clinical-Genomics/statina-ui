@@ -284,7 +284,7 @@ export const SamplesTable = ({
         style={{ paddingBottom: 20 }}
       />
       <Text type="secondary">
-        {pageCount} result{filteredSamples.length > 1 ? `s` : null}
+        {pageCount} result{filteredSamples?.length > 1 ? `s` : null}
       </Text>
 
       <br />

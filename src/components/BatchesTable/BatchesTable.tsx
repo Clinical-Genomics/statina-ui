@@ -25,7 +25,7 @@ export const BatchesTable = ({ batches, batchesCount }: BatchesProps) => {
 
   useEffect(() => {
     getBatches(userContext, 10, 0).then((batches) => {
-      setFilteredBatches(batches.documents), setPageCount(batches.document_count)
+      setFilteredBatches(batches?.documents), setPageCount(batches?.document_count)
     })
   }, [batches])
 
@@ -34,13 +34,13 @@ export const BatchesTable = ({ batches, batchesCount }: BatchesProps) => {
     setSearchValue(escapInput)
     setCurrentPage(1)
     getBatchesByText(userContext, 0, 0, escapInput).then((batches) => {
-      setFilteredBatches(batches.documents), setPageCount(batches.document_count)
+      setFilteredBatches(batches?.documents), setPageCount(batches?.document_count)
     })
   }
 
   const onChange = (data) => {
     getBatchesByText(userContext, data.pageSize, data.current, searchValue).then((batches) => {
-      setFilteredBatches(batches.documents), setPageCount(batches.document_count)
+      setFilteredBatches(batches?.documents), setPageCount(batches?.document_count)
       setCurrentPage(data.current)
     })
   }
@@ -93,7 +93,7 @@ export const BatchesTable = ({ batches, batchesCount }: BatchesProps) => {
         </Col>
       </Row>
       <Text type="secondary">
-        {pageCount} result{filteredBatches.length > 1 ? `s` : null}
+        {pageCount} result{filteredBatches?.length > 1 ? `s` : null}
       </Text>
       <Table
         columns={columns}
