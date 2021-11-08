@@ -1,6 +1,5 @@
 import React from 'react'
 import { render, getByText } from '@testing-library/react'
-import { windowMatchMedia } from 'services/helpers/helpers'
 import { BatchesTable } from './BatchesTable'
 import { mockBatches } from 'mocks/batches'
 import userEvent from '@testing-library/user-event'
@@ -9,7 +8,6 @@ import { UserContext } from 'services/userContext'
 
 describe('Batches Table', () => {
   test('Batches Table should display UI correctly', () => {
-    window.matchMedia = windowMatchMedia()
     const initializeUserContext = () => null
     const logout = () => null
     const { getByText } = render(
@@ -37,7 +35,6 @@ describe('Batches Table', () => {
   })
 
   test('Search batches should work', () => {
-    window.matchMedia = windowMatchMedia()
     const { getByPlaceholderText, queryByText } = render(
       <MemoryRouter>
         <BatchesTable batches={mockBatches} batchesCount={20}></BatchesTable>
