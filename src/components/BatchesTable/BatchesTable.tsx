@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { UserContext } from '../../services/userContext'
-import { getBatches } from '../../services/StatinaApi'
-import { Col, Dropdown, Input, Menu, Row, Table } from 'antd'
-import { sortDate } from 'services/helpers/helpers'
+import { getBatches, getBatchesByText } from '../../services/StatinaApi'
+import { Col, Dropdown, Input, Menu, Row, Table, Typography } from 'antd'
+import { escapeRegExp, sortDate } from 'services/helpers/helpers'
 import { Batch } from 'services/interfaces'
 import { Link } from 'react-router-dom'
 import { ExportCSV } from 'components/ExportCSV/ExportCSV'
@@ -14,28 +14,35 @@ type BatchesProps = {
 }
 
 const { Search } = Input
+const { Text } = Typography
 
 export const BatchesTable = ({ batches, batchesCount }: BatchesProps) => {
-  const [filteredBatches, setFilteredBatches] = useState<Batch[]>(batches)
   const userContext = useContext(UserContext)
+  const [filteredBatches, setFilteredBatches] = useState<Batch[]>(batches)
+  const [pageCount, setPageCount] = useState(batchesCount)
+  const [searchValue, setSearchValue] = useState('')
+  const [currentPage, setCurrentPage] = useState(1)
 
   useEffect(() => {
-    setFilteredBatches(batches)
+    getBatches(userContext, 10, 0).then((batches) => {
+      setFilteredBatches(batches?.documents), setPageCount(batches?.document_count)
+    })
   }, [batches])
+
   const onSearch = (searchInput) => {
-    const lowerCaseInput = searchInput.toLowerCase()
-    const filteredData = batches.filter(
-      (entry) =>
-        entry.batch_id.toLowerCase().includes(lowerCaseInput) ||
-        entry.Flowcell.toLowerCase().includes(lowerCaseInput)
-    )
-    setFilteredBatches(filteredData)
+    const escapInput = escapeRegExp(searchInput)
+    setSearchValue(escapInput)
+    setCurrentPage(1)
+    getBatchesByText(userContext, 0, 0, escapInput).then((batches) => {
+      setFilteredBatches(batches?.documents), setPageCount(batches?.document_count)
+    })
   }
 
   const onChange = (data) => {
-    getBatches(userContext, data.pageSize, data.current).then((batches) =>
-      setFilteredBatches(batches.documents)
-    )
+    getBatchesByText(userContext, data.pageSize, data.current, searchValue).then((batches) => {
+      setFilteredBatches(batches?.documents), setPageCount(batches?.document_count)
+      setCurrentPage(data.current)
+    })
   }
 
   const showTotal = (total, range) => {
@@ -82,15 +89,22 @@ export const BatchesTable = ({ batches, batchesCount }: BatchesProps) => {
           </Dropdown.Button>
         </Col>
         <Col span={8}>
-          <Search placeholder="Search by Batch or Flowcell ID" onSearch={onSearch} />
+          <Search placeholder="Search Batches" onSearch={onSearch} allowClear />
         </Col>
       </Row>
+      <Text type="secondary">
+        {pageCount} result{filteredBatches?.length > 1 ? `s` : null}
+      </Text>
       <Table
         columns={columns}
         dataSource={filteredBatches}
         rowKey="batch_id"
         onChange={onChange}
-        pagination={{ total: batchesCount, showTotal: showTotal }}
+        pagination={{
+          total: pageCount,
+          showTotal: showTotal,
+          current: currentPage,
+        }}
       />
     </>
   )

@@ -5,7 +5,7 @@ import { getBatches } from '../../services/StatinaApi'
 import { UserContext } from '../../services/userContext'
 import { Typography } from 'antd'
 
-const { Title, Text } = Typography
+const { Title } = Typography
 
 export const BatchesPage = () => {
   const userContext = useContext(UserContext)
