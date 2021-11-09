@@ -238,20 +238,19 @@ export const SamplesTable = ({
     {
       title: (
         <Tooltip title="Chomosome abnormalies. Manually classified by user through the sample page">
-          Status
+          Abnormality status
           <QuestionCircleOutlined />
         </Tooltip>
       ),
       dataIndex: 'status',
       key: 'status',
       render: (status: any) => {
-        console.log(Object.keys(status).filter((chrom) => status[chrom].status !== 'Normal'))
         const abnormalStatusTags = Object.keys(status).filter(
           (chrom) => status[chrom].status !== 'Normal'
         )
         return abnormalStatusTags.length > 0
           ? abnormalStatusTags.map((chrom) => (
-              <Tag color={sampleStatusTags[status[chrom].status.toLowerCase()]?.color} key={status}>
+              <Tag color={sampleStatusTags[status[chrom].status.toLowerCase()]?.color} key={chrom}>
                 {chrom} - {status[chrom].status}
               </Tag>
             ))
