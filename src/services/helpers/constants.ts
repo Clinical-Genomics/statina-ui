@@ -23,6 +23,6 @@ export const tagColors = {
   sampleStatus: sampleStatusTags,
   sex: sexTags,
   warning: 'volcano',
-  CNVSegment: 'blue',
+  cnvSegment: 'blue',
   include: includeTags,
 }

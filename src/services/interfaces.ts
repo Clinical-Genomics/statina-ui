@@ -25,71 +25,71 @@ export interface Batch {
 }
 
 export interface Sample {
-  sample_type: 'string'
-  qc_flag: 'string'
-  cnv_segment: 'string'
-  comment: 'string'
-  sample_id: 'string'
-  batch_id: 'string'
+  sample_type: string
+  qc_flag: string
+  cnv_segment: string
+  comment: string
+  sample_id: string
+  batch_id: string
   warnings: {
-    fetal_fraction_preface: 'danger'
-    fetal_fraction_y: 'danger'
-    z_score_13: 'danger'
-    z_score_18: 'danger'
-    z_score_21: 'danger'
-    x0: 'danger'
-    xxx: 'danger'
-    other: 'danger'
-    xxy: 'danger'
-    xyy: 'danger'
+    fetal_fraction_preface: string
+    fetal_fraction_y: string
+    z_score_13: string
+    z_score_18: string
+    z_score_21: string
+    x0: string
+    xxx: string
+    other: string
+    xxy: string
+    xyy: string
   }
-  text_warning: 'string'
-  sex: 'string'
-  sequencing_date: 'string'
+  text_warning: string
+  sex: string
+  sequencing_date: string
   status: {
     '13': {
-      status: 'Normal'
-      edited: 'string'
+      status: string
+      edited: string
     }
     '18': {
-      status: 'Normal'
-      edited: 'string'
+      status: string
+      edited: string
     }
     '21': {
-      status: 'Normal'
-      edited: 'string'
+      status: string
+      edited: string
     }
     x0: {
-      status: 'Normal'
-      edited: 'string'
+      status: string
+      edited: string
     }
     xxx: {
-      status: 'Normal'
-      edited: 'string'
+      status: string
+      edited: string
     }
     xxy: {
-      status: 'Normal'
-      edited: 'string'
+      status: string
+      edited: string
     }
     xyy: {
-      status: 'Normal'
-      edited: 'string'
+      status: string
+      edited: string
     }
   }
   included: {
     include: true
-    edited: 'string'
+    edited: string
   }
   z_score: {
-    '13': 'string'
-    '18': 'string'
-    '21': 'string'
-    x: 'string'
+    '13': string
+    '18': string
+    '21': string
+    x: string
   }
   fetal_fraction: {
-    x: 'string'
-    y: 'string'
-    preface: 'string'
+    x: string
+    y: string
+    preface: string
   }
 }
 
