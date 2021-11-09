@@ -5,7 +5,7 @@ export const mockSamples: Sample[] = [
     sample_type: '',
     qc_flag: 'DuplicationRate',
     cnv_segment: '',
-    comment: '',
+    comment: 'Hello',
     sample_id: '2021-28803-06',
     batch_id: '2117030_NIPT',
     warnings: {
