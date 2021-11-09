@@ -30,10 +30,10 @@ export const BatchesTable = ({ batches, batchesCount }: BatchesProps) => {
   }, [batches])
 
   const onSearch = (searchInput) => {
-    const escapInput = escapeRegExp(searchInput)
-    setSearchValue(escapInput)
+    const escapeInput = escapeRegExp(searchInput)
+    setSearchValue(escapeInput)
     setCurrentPage(1)
-    getBatchesByText(userContext, 0, 0, escapInput).then((batches) => {
+    getBatchesByText(userContext, 0, 0, escapeInput).then((batches) => {
       setFilteredBatches(batches?.documents), setPageCount(batches?.document_count)
     })
   }
