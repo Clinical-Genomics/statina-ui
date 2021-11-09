@@ -38,7 +38,7 @@ describe('Sample Page', () => {
         </UserContext.Provider>
       )
     )
-    const sampleId = await waitFor(() => getAllByText(/2106151/i))
+    const sampleId = await waitFor(() => getAllByText(/2117030_NIPT/i))
     await waitFor(() => expect(sampleId).toHaveLength(1))
   })
 
