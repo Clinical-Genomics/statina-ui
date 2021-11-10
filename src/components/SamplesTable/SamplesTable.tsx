@@ -7,16 +7,17 @@ import { CloudDownloadOutlined, QuestionCircleOutlined } from '@ant-design/icons
 import { red } from '@ant-design/colors'
 import { sampleStatusTags, sexTags, tagColors } from 'services/helpers/constants'
 import { escapeRegExp } from 'services/helpers/helpers'
+import { Sample } from 'services/interfaces'
 
 type SamplesProps = {
-  samples: any[]
+  samples: Sample[]
   samplesCount: number
   showBatchInfo?: boolean
   batchId?: any
 }
 
 const { Search } = Input
-const { Title, Text } = Typography
+const { Text } = Typography
 
 export const SamplesTable = ({
   samples,
@@ -45,24 +46,24 @@ export const SamplesTable = ({
       setPageCount(samplesCount)
       const selectedKey: string[] = []
       samples.forEach((sample) => {
-        if (sample.include) selectedKey.push(sample?.sample_id)
+        if (sample.included?.include) selectedKey.push(sample?.sample_id)
       })
       setSelectedRowKeys(selectedKey)
     }
   }, [samples])
 
   const onSearch = (searchInput) => {
-    const escapInput = escapeRegExp(searchInput)
-    setSearchValue(escapInput)
+    const escapeInput = escapeRegExp(searchInput)
+    setSearchValue(escapeInput)
     setCurrentPage(1)
     if (batchId) {
-      getBatchSamples(userContext, batchId, 0, 0, escapInput).then((samples) => {
+      getBatchSamples(userContext, batchId, 0, 0, escapeInput).then((samples) => {
         setFilteredSamples(samples.documents), setPageCount(samples.document_count)
       })
     } else {
-      const escapInput = escapeRegExp(searchInput)
-      setSearchValue(escapInput)
-      getSamplesByText(userContext, 0, 0, escapInput).then((samples) => {
+      const escapeInput = escapeRegExp(searchInput)
+      setSearchValue(escapeInput)
+      getSamplesByText(userContext, 0, 0, escapeInput).then((samples) => {
         setFilteredSamples(samples.documents), setPageCount(samples.document_count)
       })
     }
@@ -105,86 +106,95 @@ export const SamplesTable = ({
       render: (batch_id: any) => <Link to={`/batches/${batch_id}`}>{batch_id}</Link>,
     },
     {
-      title: 'Zscore 13',
-      dataIndex: 'Zscore_13',
-      key: 'Zscore_13',
+      title: 'z_score 13',
+      dataIndex: 'z_score',
+      key: 'z_score',
       width: 100,
       render(score, sample) {
         return {
           props: {
             style: {
-              background: sample.text_warning.includes('Zscore_13') ? red[1] : null,
+              background: sample.text_warning.includes('z_score_13') ? red[1] : null,
             },
           },
-          children: <div>{score}</div>,
+          children: <div>{score['13']}</div>,
         }
       },
     },
     {
-      title: 'Zscore 18',
-      dataIndex: 'Zscore_18',
-      key: 'Zscore_18',
+      title: 'z_score 18',
+      dataIndex: 'z_score',
+      key: 'z_score',
       width: 100,
       render(score, sample) {
         return {
           props: {
             style: {
-              background: sample.text_warning.includes('Zscore_18') ? red[1] : null,
+              background: sample.text_warning.includes('z_score_18') ? red[1] : null,
             },
           },
-          children: <div>{score}</div>,
+          children: <div>{score['18']}</div>,
         }
       },
     },
     {
-      title: 'Zscore 21',
-      dataIndex: 'Zscore_21',
-      key: 'Zscore_21',
+      title: 'z_score 21',
+      dataIndex: 'z_score',
+      key: 'z_score',
       width: 100,
       render(score, sample) {
         return {
           props: {
             style: {
-              background: sample.text_warning.includes('Zscore_21') ? red[1] : null,
+              background: sample.text_warning.includes('z_score_21') ? red[1] : null,
             },
           },
-          children: <div>{score}</div>,
+          children: <div>{score['21']}</div>,
         }
       },
     },
     {
-      title: 'Zscore X',
-      dataIndex: 'Zscore_X',
-      key: 'Zscore_X',
+      title: 'z_score X',
+      dataIndex: 'z_score',
+      key: 'z_score',
       width: 100,
       render(score, sample) {
         return {
           props: {
             style: {
-              background: sample.text_warning.includes('Zscore_X') ? red[1] : null,
+              background: sample.text_warning.includes('z_score_X') ? red[1] : null,
             },
           },
-          children: <div>{score}</div>,
+          children: <div>{score['x']}</div>,
         }
       },
     },
     {
       title: 'FF-PF (%)',
-      dataIndex: 'FF_Formatted',
-      key: 'FF_Formatted',
+      dataIndex: 'fetal_fraction',
+      key: 'fetalFractionPreface',
       width: 100,
+      render(fetalFraction) {
+        return <div>{fetalFraction.preface}</div>
+      },
     },
     {
       title: 'FF-X (%)',
-      dataIndex: 'FFX',
-      key: 'FFX',
+      dataIndex: 'fetal_fraction',
+      key: 'fetalFractionX',
       width: 100,
+      render(fetalFraction) {
+        return <div>{fetalFraction.x}</div>
+      },
     },
     {
       title: 'FF-Y (%)',
-      dataIndex: 'FFY',
-      key: 'FFY',
+      dataIndex: 'fetal_fraction',
+      key: 'fetalFractionY',
       width: 100,
+      render(fetalFraction) {
+        return <div>{fetalFraction.y}</div>
+      },
     },
     {
       title: 'Sex',
@@ -195,14 +205,14 @@ export const SamplesTable = ({
     },
     {
       title: 'CNV Segment',
-      dataIndex: 'CNVSegment',
-      key: 'CNVSegment',
-      render: (CNVSegment: any) =>
-        CNVSegment ? <Tag color={tagColors.CNVSegment}>{CNVSegment}</Tag> : null,
+      dataIndex: 'cnv_segment',
+      key: 'cnvSegment',
+      render: (cnvSegment: string) =>
+        cnvSegment ? <Tag color={tagColors.cnvSegment}>{cnvSegment}</Tag> : null,
     },
     {
       title: (
-        <Tooltip title="Warning for chomosome abnormality. Automatically generated. Based on pre defined Zscore and Fetal Fraction trsholds">
+        <Tooltip title="Warning for chomosome abnormality. Automatically generated. Based on pre defined z_score and Fetal Fraction trsholds">
           Warning
           <QuestionCircleOutlined />
         </Tooltip>
@@ -221,24 +231,27 @@ export const SamplesTable = ({
     },
     {
       title: 'QC Flag',
-      dataIndex: 'QCFlag',
-      key: 'QCFlag',
+      dataIndex: 'qc_flag',
+      key: 'qcFlag',
       width: 200,
     },
     {
       title: (
         <Tooltip title="Chomosome abnormalies. Manually classified by user through the sample page">
-          Status
+          Abnormality status
           <QuestionCircleOutlined />
         </Tooltip>
       ),
       dataIndex: 'status',
       key: 'status',
       render: (status: any) => {
-        return status.length > 0
-          ? status.split(', ').map((status) => (
-              <Tag color={sampleStatusTags[status.split(' ')[0].toLowerCase()]?.color} key={status}>
-                {status}
+        const abnormalStatusTags = Object.keys(status).filter(
+          (chrom) => status[chrom].status !== 'Normal'
+        )
+        return abnormalStatusTags.length > 0
+          ? abnormalStatusTags.map((chrom) => (
+              <Tag color={sampleStatusTags[status[chrom].status.toLowerCase()]?.color} key={chrom}>
+                {chrom} - {status[chrom].status}
               </Tag>
             ))
           : null
@@ -263,8 +276,9 @@ export const SamplesTable = ({
     },
     {
       title: 'Last changed',
-      dataIndex: 'change_include_date',
-      key: 'change_include_date',
+      dataIndex: 'included',
+      key: 'included',
+      render: (included) => <div>{included.edited}</div>,
     },
   ]
 

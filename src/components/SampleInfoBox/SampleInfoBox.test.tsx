@@ -11,7 +11,7 @@ describe('Sample info box', () => {
         <SampleInfoBox sample={mockSample}></SampleInfoBox>
       </MemoryRouter>
     )
-    const sampleProject = getByText(/2106151/i)
+    const sampleProject = getByText(/2117030_NIPT/i)
     expect(sampleProject).toBeVisible()
   })
 })

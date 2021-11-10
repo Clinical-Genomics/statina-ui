@@ -4,24 +4,93 @@ export interface Notification {
   description?: string
 }
 
+export interface Chromosomes {
+  13: number
+  18: number
+  21: number
+  x: number
+  y: number
+}
+
 export interface Batch {
   batch_id: string
   result_file: string
   multiqc_report: string
   segmental_calls: string
-  Flowcell: string
-  SequencingDate: string
-  Median_13: number
-  Median_18: number
-  Median_21: number
-  Median_X: number
-  Median_Y: number
-  Stdev_13: number
-  Stdev_18: number
-  Stdev_21: number
-  Stdev_X: number
-  Stdev_Y: number
+  flowcell: string
+  sequencing_date: string
+  median: Chromosomes
+  stdev: Chromosomes
   comment: string
+}
+
+export interface Sample {
+  sample_type: string
+  qc_flag: string
+  cnv_segment: string
+  comment: string
+  sample_id: string
+  batch_id: string
+  warnings: {
+    fetal_fraction_preface: string
+    fetal_fraction_y: string
+    z_score_13: string
+    z_score_18: string
+    z_score_21: string
+    x0: string
+    xxx: string
+    other: string
+    xxy: string
+    xyy: string
+  }
+  text_warning: string
+  sex: string
+  sequencing_date: string
+  status: {
+    '13': {
+      status: string
+      edited: string
+    }
+    '18': {
+      status: string
+      edited: string
+    }
+    '21': {
+      status: string
+      edited: string
+    }
+    x0: {
+      status: string
+      edited: string
+    }
+    xxx: {
+      status: string
+      edited: string
+    }
+    xxy: {
+      status: string
+      edited: string
+    }
+    xyy: {
+      status: string
+      edited: string
+    }
+  }
+  included: {
+    include: true
+    edited: string
+  }
+  z_score: {
+    '13': string
+    '18': string
+    '21': string
+    x: string
+  }
+  fetal_fraction: {
+    x: string
+    y: string
+    preface: string
+  }
 }
 
 export interface TracePlot {
