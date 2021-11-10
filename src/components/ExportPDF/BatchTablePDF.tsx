@@ -8,19 +8,17 @@ import { useLocation } from 'react-router-dom'
 import { getBatchSamples } from '../../services/StatinaApi'
 import { UserContext } from '../../services/userContext'
 import { CloudDownloadOutlined } from '@ant-design/icons'
+import { batch } from 'react-redux'
 
-export const BatchTablePDF = () => {
+export const BatchTablePDF = ({ batchId }) => {
   const [imgURI, setImgURI] = useState('')
   const [plotlyScore, setPlotlyScore] = useState('Zscore_13') // The plotly should be changed to a Fetal Fraction
-  const pageSize = 0
-  const pageNum = 0
   const userContext = useContext(UserContext)
   const { pathname } = useLocation()
-  const batchId = pathname.substring(pathname.lastIndexOf('/') + 1, pathname.length)
 
   const exportPDF = () => {
-    getBatchSamples(userContext, batchId, pageSize, pageNum)
-      .then((samples) => {
+    getBatchSamples(userContext, batchId, 0, 0, '')
+      .then(({ documents }) => {
         const unit = 'pt'
         const size = 'A4'
         const orientation = 'landscape'
@@ -30,8 +28,7 @@ export const BatchTablePDF = () => {
 
         doc.setFontSize(15)
 
-        const title = 'NIPT Results'
-        const batchNum = `Batch: ${samples[0].batch_id}`
+        const title = `Batch ${batchId} results`
         const headers = [
           [
             'Sample',
@@ -47,14 +44,14 @@ export const BatchTablePDF = () => {
           ],
         ]
 
-        const TableData = samples.map((item) => [
+        const data = documents.map((item) => [
           item.sample_id,
-          item.Zscore_13,
-          item.Zscore_18,
-          item.Zscore_21,
-          item.FF_Formatted,
-          item.FFX,
-          item.FFY,
+          item.z_score['13'],
+          item.z_score['18'],
+          item.z_score['21'],
+          item.fetal_fraction?.preface,
+          item.fetal_fraction?.x,
+          item.fetal_fraction?.y,
           item.sex,
           item.text_warning,
           item.comment,
@@ -63,47 +60,13 @@ export const BatchTablePDF = () => {
         const content = {
           startY: 50,
           head: headers,
-          body: TableData,
-          theme: 'striped',
-
-          didParseCell: function (data) {
-            if (
-              (data.section === 'body' && data.row.raw[8].includes('Zscore_13')) ||
-              data.row.raw[8].includes('Zscore_18') ||
-              data.row.raw[8].includes('Zscore_21')
-            ) {
-              data.cell.styles.fillColor = 'rgb(255, 204, 199)'
-            }
-            if (data.section === 'head') {
-              data.cell.styles.fillColor = '#43C59E'
-            }
-          },
+          body: data,
+          theme: 'grid',
         }
 
-        doc.setFontSize(20)
-        doc.text(title, marginLeft, 20)
-        doc.setTextColor(105, 105, 105)
-        doc.setFontSize(12)
-        doc.text(batchNum, marginLeft, 40)
-        doc.setTextColor(0, 0, 0)
+        doc.text(title, marginLeft, 40)
         doc.autoTable(content)
-        doc.addPage()
-        doc.text('Fetal Fraction X/Y', marginLeft, 40)
-        doc.addImage(imgURI, 'JPEG', 50, 80, 700, 350)
-        const pageCount = doc.internal.getNumberOfPages()
-        for (let i = 1; i <= pageCount; i++) {
-          doc.setPage(i)
-          doc.setFontSize(8)
-          doc.text(
-            'Page ' + String(i) + ' of ' + String(pageCount),
-            820 - 20,
-            605 - 30,
-            null,
-            null,
-            'right'
-          )
-        }
-        doc.save('Statina.pdf')
+        doc.save(`Statina - batch ${batchId}.pdf`)
         SuccessNotification({
           type: 'success',
           message: 'Download successfully!',

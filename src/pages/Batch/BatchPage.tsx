@@ -7,7 +7,6 @@ import { BatchTablePDF } from '../../components/ExportPDF/BatchTablePDF'
 import { getBatch, getBatchSamples } from '../../services/StatinaApi'
 import { UserContext } from '../../services/userContext'
 import { FetalFractionXY } from '../../components/FetalFractionXYGraph/FetalFractionXY'
-import { CloudDownloadOutlined } from '@ant-design/icons'
 
 const { TabPane } = Tabs
 const { Title, Text } = Typography
@@ -43,7 +42,7 @@ export const BatchPage = () => {
           <Text type="secondary">Sequenced: {sequencingDate}</Text>
         </Col>
         <Col>
-          <BatchTablePDF />
+          <BatchTablePDF batchId={batchId} />
         </Col>
       </Row>
       <Row>
