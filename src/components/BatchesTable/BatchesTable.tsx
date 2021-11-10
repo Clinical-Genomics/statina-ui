@@ -60,7 +60,6 @@ export const BatchesTable = ({ batches, batchesCount }: BatchesProps) => {
       title: 'Sequencing Date',
       dataIndex: 'sequencing_date',
       key: 'sequencing_date',
-      sorter: (a, b) => sortDate(a.SequencingDate, b.SequencingDate),
     },
     {
       title: 'Flowcell ID',
