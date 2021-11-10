@@ -8,13 +8,14 @@ import { UserContext } from '../../services/userContext'
 import { Loading } from '../../components/Loading'
 import { ErrorPage } from '../Error/ErrorPage'
 import { SuccessNotification } from '../../services/helpers/helpers'
+import { Sample } from '../../services/interfaces'
 
 const { Title, Text } = Typography
 const { TabPane } = Tabs
 const { TextArea } = Input
 
 export function SamplePage() {
-  const [sample, setSample] = useState<any>()
+  const [sample, setSample] = useState<Sample>()
   const [error, setError] = useState<any>()
   const userContext = useContext(UserContext)
   const { pathname } = useLocation()
@@ -48,7 +49,7 @@ export function SamplePage() {
             <>
               <Title>Sample {sampleId}</Title>
               <Space size={'large'} direction="vertical" style={{ width: '100%' }}>
-                <SampleInfoBox sample={sample} />
+                {sample && <SampleInfoBox sample={sample} />}
                 <Card title="Comment">
                   <Text italic type="secondary">
                     Press enter to save
