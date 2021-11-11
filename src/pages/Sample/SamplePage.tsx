@@ -71,7 +71,6 @@ export function SamplePage() {
   ]
 
   const onStatusChange = (value, chromosome) => {
-    console.log(value)
     editSample(sampleId, `status=${value}`, `status/${chromosome}?status=${value}`, userContext)
       .then(() => retrieveSample())
       .catch(() => setError(true))
