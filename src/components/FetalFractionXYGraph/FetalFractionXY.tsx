@@ -9,7 +9,7 @@ type FetalFractionXYGraphProps = {
   chromosome: number
 }
 
-const buildData = (response: FetalFractionXYGraph): ScatterData[] => {
+export const buildData = (response: FetalFractionXYGraph): ScatterData[] => {
   const data: ScatterData[] = [
     {
       y: response.control?.FFY,
@@ -68,7 +68,7 @@ const buildData = (response: FetalFractionXYGraph): ScatterData[] => {
   return data
 }
 
-const buildLayout = (response: FetalFractionXYGraph): Layout => {
+export const buildLayout = (response: FetalFractionXYGraph): Layout => {
   return {
     annotations: [],
     autosize: false,
