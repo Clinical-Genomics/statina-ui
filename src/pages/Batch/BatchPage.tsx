@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Card, Tabs, Row, Menu, Col, Dropdown, Typography } from 'antd'
+import { Card, Tabs, Row, Menu, Col, Dropdown, Typography, Button } from 'antd'
 import { useLocation } from 'react-router-dom'
 import { SamplesTable } from '../../components/SamplesTable/SamplesTable'
 import { ZscoreGraph } from '../../components/ZscoreGraph/ZscoreGraph'
@@ -33,13 +33,6 @@ export const BatchPage = () => {
     }
   }, [batchId])
 
-  const downloadMenu = (
-    <Menu style={{ width: 100, textAlign: 'center' }}>
-      <Menu.Item key="pdf">
-        <BatchTablePDF />
-      </Menu.Item>
-    </Menu>
-  )
   return (
     <Card>
       <div id="hiddenDiv" style={{ display: 'none' }}></div>
@@ -49,9 +42,7 @@ export const BatchPage = () => {
           <Text type="secondary">Sequenced: {sequencingDate}</Text>
         </Col>
         <Col>
-          <Dropdown.Button overlay={downloadMenu} type="primary">
-            Batch Downloads
-          </Dropdown.Button>
+          <BatchTablePDF batchId={batchId} />
         </Col>
       </Row>
       <Row>
