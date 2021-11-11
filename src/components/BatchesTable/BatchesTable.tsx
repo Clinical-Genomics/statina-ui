@@ -30,10 +30,10 @@ export const BatchesTable = ({ batches, batchesCount }: BatchesProps) => {
   }, [batches])
 
   const onSearch = (searchInput) => {
-    const escapInput = escapeRegExp(searchInput)
-    setSearchValue(escapInput)
+    const escapeInput = escapeRegExp(searchInput)
+    setSearchValue(escapeInput)
     setCurrentPage(1)
-    getBatchesByText(userContext, 0, 0, escapInput).then((batches) => {
+    getBatchesByText(userContext, 0, 0, escapeInput).then((batches) => {
       setFilteredBatches(batches?.documents), setPageCount(batches?.document_count)
     })
   }
@@ -58,14 +58,13 @@ export const BatchesTable = ({ batches, batchesCount }: BatchesProps) => {
     },
     {
       title: 'Sequencing Date',
-      dataIndex: 'SequencingDate',
-      key: 'SequencingDate',
-      sorter: (a, b) => sortDate(a.SequencingDate, b.SequencingDate),
+      dataIndex: 'sequencing_date',
+      key: 'sequencing_date',
     },
     {
       title: 'Flowcell ID',
-      dataIndex: 'Flowcell',
-      key: 'Flowcell',
+      dataIndex: 'flowcell',
+      key: 'flowcell',
     },
   ]
 
