@@ -108,7 +108,9 @@ export const BatchTablePDF = ({ batchId }) => {
     <Button type="primary" onClick={(e) => exportPDF()}>
       Batch Report
       <CloudDownloadOutlined />
-      <div id={'eheh'} style={{ zIndex: 10000 }}></div>
+      <div hidden>
+        <div id={'eheh'} style={{ zIndex: 10000 }}></div>
+      </div>
     </Button>
   )
 }
