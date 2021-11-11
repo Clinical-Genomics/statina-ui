@@ -7,27 +7,31 @@ import Plotly from 'plotly.js'
 import { getBatchSamples, getFetalFractionXYGraph } from '../../services/StatinaApi'
 import { UserContext } from '../../services/userContext'
 import { CloudDownloadOutlined } from '@ant-design/icons'
-import { batch } from 'react-redux'
-import ReactDOM from 'react-dom'
-import Plot, { ScatterData, Layout } from 'react-plotly.js'
+import { ScatterData, Layout } from 'react-plotly.js'
 import { FetalFractionXYGraph } from '../../services/interfaces'
-import { buildData, buildLayout } from '../FetalFractionXYGraph/FetalFractionXY'
+import {
+  buildFFXYGraphData,
+  buildFFXYGraphLayout,
+  fFXYGraphHeight,
+  fFXYGraphWidth,
+} from '../FetalFractionXYGraph/FetalFractionXY'
 
 export const BatchTablePDF = ({ batchId }) => {
   const [data, setData] = useState<ScatterData[]>()
   const [layout, setLayout] = useState<Layout>()
   const userContext = useContext(UserContext)
+  const graphId = 'pdf-report-graph'
 
   useEffect(() => {
     getFetalFractionXYGraph(batchId, userContext).then((response: FetalFractionXYGraph) => {
-      setData(buildData(response))
-      setLayout(buildLayout(response))
+      setData(buildFFXYGraphData(response))
+      setLayout(buildFFXYGraphLayout(response, true))
     })
   }, [])
 
   const exportPDF = () => {
     getBatchSamples(userContext, batchId, 0, 0, '').then(({ documents }) => {
-      const graph = document.getElementById('eheh')
+      const graph = document.getElementById(graphId)
       const unit = 'pt'
       const size = 'A4'
       const orientation = 'landscape'
@@ -69,7 +73,7 @@ export const BatchTablePDF = ({ batchId }) => {
       const content = {
         startY: 50,
         head: headers,
-        body: data,
+        body: pdfData,
         theme: 'grid',
       }
 
@@ -83,12 +87,13 @@ export const BatchTablePDF = ({ batchId }) => {
       // @ts-ignore
       Plotly.toImage(graph, {
         format: 'png',
-        width: 800,
-        height: 600,
+        width: fFXYGraphWidth,
+        height: fFXYGraphHeight,
       })
         .then(function (dataUrl) {
           doc.setFontSize(40)
-          doc.addImage(dataUrl, 'png', 15, 40, 180, 160)
+          doc.addPage()
+          doc.addImage(dataUrl, 'png', 15, 40, 800, 500)
           doc.save(`Statina - batch ${batchId}.pdf`)
           SuccessNotification({
             type: 'success',
@@ -109,7 +114,7 @@ export const BatchTablePDF = ({ batchId }) => {
       Batch Report
       <CloudDownloadOutlined />
       <div hidden>
-        <div id={'eheh'} style={{ zIndex: 10000 }}></div>
+        <div id={graphId}></div>
       </div>
     </Button>
   )
