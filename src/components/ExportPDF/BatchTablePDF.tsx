@@ -75,6 +75,15 @@ export const BatchTablePDF = ({ batchId }) => {
         head: headers,
         body: pdfData,
         theme: 'grid',
+        didParseCell: function (data) {
+          console.log(data.row.raw)
+          if (data.row.raw[8].length > 0) {
+            data.cell.styles.fillColor = 'rgb(255, 204, 199)'
+          }
+          if (data.section === 'head') {
+            data.cell.styles.fillColor = '#43C59E'
+          }
+        },
       }
 
       doc.text(title, marginLeft, 40)
