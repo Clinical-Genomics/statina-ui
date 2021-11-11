@@ -44,6 +44,52 @@ const axiosPUT = (endPoint, body, { token, logout }: UserContext) => {
   })
 }
 
+const axiosIncludePUT = (endPoint, { token, logout }: UserContext) => {
+  const body = null
+  return new Promise((resolve, reject) => {
+    axios
+      .put(endPoint, body, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          ContentType: 'application/x-www-form-urlencoded',
+        },
+      })
+      .then(function (response) {
+        resolve(response.data)
+      })
+      .catch(function (error) {
+        if (error?.response?.status === 401) {
+          logout()
+        }
+        reject(error)
+        createErrorNotification(error)
+      })
+  })
+}
+
+const axiosIncludePATCH = (endPoint, { token, logout }: UserContext) => {
+  const body = null
+  return new Promise((resolve, reject) => {
+    axios
+      .patch(endPoint, body, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          ContentType: 'application/x-www-form-urlencoded',
+        },
+      })
+      .then(function (response) {
+        resolve(response.data)
+      })
+      .catch(function (error) {
+        if (error?.response?.status === 401) {
+          logout()
+        }
+        reject(error)
+        createErrorNotification(error)
+      })
+  })
+}
+
 const axiosPostToken = (endPoint, formInput) => {
   return new Promise((resolve, reject) => {
     const params = new URLSearchParams(formInput)
@@ -144,6 +190,24 @@ export const editSample = async (
 ): Promise<any> => {
   const endPoint = `${REACT_APP_BACKEND_URL}/sample/${sampleId}/${request}`
   return axiosPUT(endPoint, body, context)
+}
+
+export const includeBatchSamples = async (
+  batchId: string,
+  context: UserContext,
+  include
+): Promise<any> => {
+  const endPoint = `${REACT_APP_BACKEND_URL}/batch/${batchId}/include_samples?include=${include}`
+  return axiosIncludePATCH(endPoint, context)
+}
+
+export const includeSample = async (
+  sampleId: string,
+  context: UserContext,
+  include
+): Promise<any> => {
+  const endPoint = `${REACT_APP_BACKEND_URL}/sample/${sampleId}/include?include=${include}`
+  return axiosIncludePUT(endPoint, context)
 }
 
 export const login = async (formInput: Login): Promise<any> => {

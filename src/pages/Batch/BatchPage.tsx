@@ -28,7 +28,7 @@ export const BatchPage = () => {
         setSamples(samples.documents), setSamplesCount(samples?.document_count)
       })
       getBatch(batchId, userContext).then((samples) => {
-        setSequencingDate(samples.SequencingDate), setComment(samples.comment)
+        setSequencingDate(samples.sequencing_date), setComment(samples.comment)
       })
     }
   }, [batchId])
@@ -40,6 +40,7 @@ export const BatchPage = () => {
       </Menu.Item>
     </Menu>
   )
+
   return (
     <Card>
       <div id="hiddenDiv" style={{ display: 'none' }}></div>
