@@ -106,10 +106,6 @@ export const SamplesTable = ({
     includeBatchSamples(batchId, userContext, data)
   }
 
-  const onSelectInvert = (selectedRowKeys) => {
-    console.log(selectedRowKeys)
-  }
-
   const rowSelection = {
     onChange: (selectedRowKeys) => {
       setSelectedRowKeys(selectedRowKeys)
@@ -342,7 +338,6 @@ export const SamplesTable = ({
           ...rowSelection,
           hideSelectAll: batchId ? false : true,
           onSelectAll: onSelectAll,
-          onSelectInvert: onSelectInvert,
           onSelect: handleSelect,
         }}
         onChange={onChange}
