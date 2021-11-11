@@ -76,7 +76,6 @@ export const BatchTablePDF = ({ batchId }) => {
         body: pdfData,
         theme: 'grid',
         didParseCell: function (data) {
-          console.log(data.row.raw)
           if (data.row.raw[8].length > 0) {
             data.cell.styles.fillColor = 'rgb(255, 204, 199)'
           }
