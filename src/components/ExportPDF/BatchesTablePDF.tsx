@@ -6,7 +6,7 @@ import jsPDF from 'jspdf'
 import { Tooltip } from 'antd'
 import { ErrorNotification, SuccessNotification } from 'services/helpers/helpers'
 
-export function ExportPDF() {
+export function BatchesTablePDF() {
   const [batches, setBatches] = useState<Batch[]>([])
   const userContext = useContext(UserContext)
 

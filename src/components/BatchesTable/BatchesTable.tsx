@@ -6,7 +6,7 @@ import { escapeRegExp, sortDate } from 'services/helpers/helpers'
 import { Batch } from 'services/interfaces'
 import { Link } from 'react-router-dom'
 import { ExportCSV } from 'components/ExportCSV/ExportCSV'
-import { ExportPDF } from 'components/ExportPDF/ExportPDF'
+import { BatchesTablePDF } from 'components/ExportPDF/BatchesTablePDF'
 
 type BatchesProps = {
   batches: Batch[]
@@ -75,7 +75,7 @@ export const BatchesTable = ({ batches, batchesCount }: BatchesProps) => {
         <ExportCSV fileName={'Statina'} />
       </Menu.Item>
       <Menu.Item key="pdf">
-        <ExportPDF />
+        <BatchesTablePDF />
       </Menu.Item>
     </Menu>
   )
