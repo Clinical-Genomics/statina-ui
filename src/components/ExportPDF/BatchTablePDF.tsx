@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import jsPDF from 'jspdf'
 import 'jspdf-autotable'
-import { Button, Tooltip } from 'antd'
+import { Button } from 'antd'
 import { ErrorNotification, SuccessNotification } from '../../services/helpers/helpers'
 import Plotly from 'plotly.js'
 import { getBatchSamples, getFetalFractionXYGraph } from '../../services/StatinaApi'
@@ -79,34 +79,33 @@ export const BatchTablePDF = ({ batchId }) => {
 
       doc.text(title, marginLeft, 40)
       doc.autoTable(content)
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      Plotly.newPlot(graph, data, layout)
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      Plotly.toImage(graph, {
-        format: 'png',
-        width: fFXYGraphWidth,
-        height: fFXYGraphHeight,
-      })
-        .then(function (dataUrl) {
-          doc.setFontSize(40)
-          doc.addPage()
-          doc.addImage(dataUrl, 'png', 15, 40, 800, 500)
-          doc.save(`Statina - batch ${batchId}.pdf`)
-          SuccessNotification({
-            type: 'success',
-            message: 'Download successfully!',
+      if (graph && data && layout) {
+        Plotly.newPlot(graph, data, layout).then((plot) =>
+          Plotly.toImage(plot, {
+            format: 'png',
+            width: fFXYGraphWidth,
+            height: fFXYGraphHeight,
           })
-        })
-        .catch((error) => {
-          ErrorNotification({
-            type: 'error',
-            message: 'Download failed!',
-            description: error.message,
-          })
-        })
+            .then(function (dataUrl) {
+              doc.setFontSize(40)
+              doc.addPage()
+              doc.addImage(dataUrl, 'png', 15, 40, 800, 500)
+              doc.save(`Statina - batch ${batchId}.pdf`)
+              SuccessNotification({
+                type: 'success',
+                message: 'Download successfully!',
+              })
+            })
+            .catch((error) => {
+              ErrorNotification({
+                type: 'error',
+                message: 'Download failed!',
+                description: error.message,
+              })
+            })
+        )
+      }
     })
   }
   return (
