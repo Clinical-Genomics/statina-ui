@@ -2,7 +2,7 @@ import React from 'react'
 import { render, waitFor } from '@testing-library/react'
 import { SamplePage } from '../Sample/SamplePage'
 import axios from 'axios'
-import { mockSample } from '../../mocks/sample'
+import {mockSample, mockSamplePlot} from '../../mocks/sample'
 import { BrowserRouter } from 'react-router-dom'
 import { UserContext } from 'services/userContext'
 
@@ -18,6 +18,7 @@ jest.mock('react-router-dom', () => ({
 describe('Sample Page', () => {
   test('Sample Page component should display UI correctly', async () => {
     mockedAxios.get.mockReturnValueOnce(Promise.resolve({ data: mockSample }))
+    mockedAxios.get.mockReturnValueOnce(Promise.resolve({ data: mockSamplePlot }))
     const initializeUserContext = () => null
     const logout = () => null
     const { getAllByText } = await waitFor(() =>
