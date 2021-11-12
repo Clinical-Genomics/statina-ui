@@ -172,13 +172,21 @@ export const getFetalFractionXYGraph = async (
   return axiosGET(endPoint, context)
 }
 
+export const getChromosomeRatioGraph = async (
+  batchId: string,
+  context: UserContext
+): Promise<any> => {
+  const endPoint = `${REACT_APP_BACKEND_URL}/batch/${batchId}/coverage`
+  return axiosGET(endPoint, context)
+}
+
 export const getStatistics = async (context: UserContext): Promise<any> => {
   const endPoint = `${REACT_APP_BACKEND_URL}/statistics`
   return axiosGET(endPoint, context)
 }
 
 export const getSample = async (sampleId: string, context: UserContext): Promise<any> => {
-  const endPoint = `${REACT_APP_BACKEND_URL}/sample/${sampleId}/`
+  const endPoint = `${REACT_APP_BACKEND_URL}/sample/${sampleId}`
   return axiosGET(endPoint, context)
 }
 
@@ -208,6 +216,14 @@ export const includeSample = async (
 ): Promise<any> => {
   const endPoint = `${REACT_APP_BACKEND_URL}/sample/${sampleId}/include?include=${include}`
   return axiosIncludePUT(endPoint, context)
+}
+export const editBatchComment = async (
+  batchId: string,
+  body,
+  context: UserContext
+): Promise<any> => {
+  const endPoint = `${REACT_APP_BACKEND_URL}/batch/${batchId}/comment`
+  return axiosPUT(endPoint, body, context)
 }
 
 export const login = async (formInput: Login): Promise<any> => {
