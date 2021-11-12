@@ -1,22 +1,22 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Card, Space, Typography, Tabs, Input, Table, Select } from 'antd'
-import { SampleInfoBox } from 'components/SampleInfoBox/SampleInfoBox'
+import { Card, Space, Typography, Input, Table, Select, Descriptions, Tag } from 'antd'
 import { editSample, getSample } from '../../services/StatinaApi'
-import { useLocation } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { UserContext } from '../../services/userContext'
 import { Loading } from '../../components/Loading'
 import { ErrorPage } from '../Error/ErrorPage'
 import { SuccessNotification } from '../../services/helpers/helpers'
 import { Sample } from '../../services/interfaces'
-import { sampleStatusTags } from '../../services/helpers/constants'
+import { sampleStatusTags, sexTags } from '../../services/helpers/constants'
+import { SamplePlot } from '../../components/SamplePlot/SamplePlot'
 
 const { Title, Text } = Typography
-const { TabPane } = Tabs
 const { TextArea } = Input
 
 export function SamplePage() {
   const [sample, setSample] = useState<Sample>()
   const [error, setError] = useState<any>()
+  const [abnormalStatusTags, setAbnormalStatusTags] = useState<any>()
   const userContext = useContext(UserContext)
   const { Option } = Select
   const { pathname } = useLocation()
@@ -31,6 +31,11 @@ export function SamplePage() {
       .then((sampleResponse) => {
         setSample(sampleResponse)
         setError(null)
+        setAbnormalStatusTags(
+          Object.keys(sampleResponse.status).filter(
+            (chrom) => sampleResponse.status[chrom].status !== 'Normal'
+          )
+        )
       })
       .catch((error) => {
         setError(error)
@@ -92,30 +97,55 @@ export function SamplePage() {
             <>
               <Title>Sample {sampleId}</Title>
               <Space size={'large'} direction="vertical" style={{ width: '100%' }}>
-                {sample && <SampleInfoBox sample={sample} />}
-                <Card title="Comment">
+                <Card>
+                  <Descriptions
+                    bordered
+                    column={2}
+                    labelStyle={{ fontWeight: 'bold' }}
+                    size="small"
+                  >
+                    <Descriptions.Item label="Batch:">
+                      <Link to={`/batches/${sample.batch_id}`}>{sample.batch_id}</Link>
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Sample Type:">{sample.sample_type}</Descriptions.Item>
+                    <Descriptions.Item label="QCFlags:">{sample.qc_flag}</Descriptions.Item>
+                    <Descriptions.Item label="Sex (Auto Classified):">
+                      {sample.sex && <Tag color={sexTags[sample.sex]}>{sample.sex}</Tag>}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Abnormality status (Auto Classified):">
+                      {abnormalStatusTags?.length > 0
+                        ? abnormalStatusTags.map((chrom) => (
+                            <Tag
+                              color={
+                                sampleStatusTags[sample.status[chrom].status.toLowerCase()]?.color
+                              }
+                              key={chrom}
+                            >
+                              {chrom} - {sample.status[chrom].status}
+                            </Tag>
+                          ))
+                        : null}
+                    </Descriptions.Item>
+                  </Descriptions>
+                  <br />
                   <Text italic type="secondary">
-                    Press enter to save
+                    Comment - press enter to save
                   </Text>
                   <TextArea rows={4} onPressEnter={onCommentChange} defaultValue={sample.comment} />
                 </Card>
                 <Card>
-                  <Tabs defaultActiveKey="1" type="card">
-                    <TabPane tab="Status Table" key="1">
-                      <Space size={'large'} direction="vertical" style={{ width: '100%' }}>
-                        <Table
-                          columns={columns}
-                          dataSource={Object.entries(sample.status)}
-                          rowKey="0"
-                          pagination={false}
-                          bordered={true}
-                        />
-                      </Space>
-                    </TabPane>
-                    <TabPane tab="Tab 2" key="2">
-                      test
-                    </TabPane>
-                  </Tabs>
+                  <Space size={'large'} direction="vertical" style={{ width: '100%' }}>
+                    <Table
+                      columns={columns}
+                      dataSource={Object.entries(sample.status)}
+                      rowKey="0"
+                      pagination={false}
+                      bordered={true}
+                    />
+                  </Space>
+                  <Space size={'large'} direction="vertical" style={{ width: '100%' }}>
+                    <SamplePlot sampleId={sampleId} />
+                  </Space>
                 </Card>
               </Space>
             </>

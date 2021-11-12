@@ -118,6 +118,11 @@ export const getZScoreGraph = async (
   return axiosGET(endPoint, context)
 }
 
+export const getSamplePlot = async (sampleId: string, context: UserContext): Promise<any> => {
+  const endPoint = `${REACT_APP_BACKEND_URL}/sample/${sampleId}/tris`
+  return axiosGET(endPoint, context)
+}
+
 export const getFetalFractionXYGraph = async (
   batchId: string,
   context: UserContext
