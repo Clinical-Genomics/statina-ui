@@ -46,36 +46,7 @@ export interface Sample {
   text_warning: string
   sex: string
   sequencing_date: string
-  status: {
-    '13': {
-      status: string
-      edited: string
-    }
-    '18': {
-      status: string
-      edited: string
-    }
-    '21': {
-      status: string
-      edited: string
-    }
-    x0: {
-      status: string
-      edited: string
-    }
-    xxx: {
-      status: string
-      edited: string
-    }
-    xxy: {
-      status: string
-      edited: string
-    }
-    xyy: {
-      status: string
-      edited: string
-    }
-  }
+  status: SampleStatus
   included: {
     include: true
     edited: string
@@ -146,4 +117,35 @@ export interface FetalFractionXYGraph {
   max_x: number
   min_x: number
   sex_thresholds: any
+}
+
+export interface SampleStatus {
+  '13': {
+    status: string
+    edited: string
+  }
+  '18': {
+    status: string
+    edited: string
+  }
+  '21': {
+    status: string
+    edited: string
+  }
+  x0: {
+    status: string
+    edited: string
+  }
+  xxx: {
+    status: string
+    edited: string
+  }
+  xxy: {
+    status: string
+    edited: string
+  }
+  xyy: {
+    status: string
+    edited: string
+  }
 }
