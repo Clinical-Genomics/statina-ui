@@ -7,6 +7,7 @@ import { BatchTablePDF } from '../../components/ExportPDF/BatchTablePDF'
 import { getBatch, getBatchSamples } from '../../services/StatinaApi'
 import { UserContext } from '../../services/userContext'
 import { FetalFractionXY } from '../../components/FetalFractionXYGraph/FetalFractionXY'
+import { ChromosomesRatioPlot } from '../../components/ChromosomesRatioPlot/ChromosomesRatioPlot'
 
 const { TabPane } = Tabs
 const { Title, Text } = Typography
@@ -74,6 +75,9 @@ export const BatchPage = () => {
         </TabPane>
         <TabPane tab="Fetal Fraction X/Y" key="Fetal_Fraction_X/Y">
           <FetalFractionXY batchId={batchId} chromosome={21} />
+        </TabPane>
+        <TabPane tab="Ratio (Chromosomes 1-22)" key="ratio">
+          <ChromosomesRatioPlot batchId={batchId} />
         </TabPane>
       </Tabs>
     </Card>
