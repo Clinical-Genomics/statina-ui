@@ -47,7 +47,7 @@ export const SamplesTable = ({ showBatchInfo = true, batchId }: SamplesProps) =>
   }, [])
 
   const inclodedSamples = (samples) => {
-    if (samples.length > 0) {
+    if (samples?.length > 0) {
       const selectedKey: string[] = []
       samples.forEach((sample) => {
         if (sample.included.include) {
