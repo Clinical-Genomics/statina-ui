@@ -64,13 +64,17 @@ export const SamplesTable = ({ showBatchInfo = true, batchId }: SamplesProps) =>
     setCurrentPage(1)
     if (batchId) {
       getBatchSamples(userContext, batchId, 0, 0, escapeInput).then((samples) => {
-        setFilteredSamples(samples.documents), setPageCount(samples.document_count)
+        setFilteredSamples(samples.documents),
+          setPageCount(samples.document_count),
+          inclodedSamples(samples?.documents)
       })
     } else {
       const escapeInput = escapeRegExp(searchInput)
       setSearchValue(escapeInput)
       getSamplesByText(userContext, 0, 0, escapeInput).then((samples) => {
-        setFilteredSamples(samples.documents), setPageCount(samples.document_count)
+        setFilteredSamples(samples.documents),
+          setPageCount(samples.document_count),
+          inclodedSamples(samples?.documents)
       })
     }
   }
