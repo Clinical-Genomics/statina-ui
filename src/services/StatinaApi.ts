@@ -185,7 +185,7 @@ export const getSample = async (sampleId: string, context: UserContext): Promise
 export const editSample = async (
   sampleId: string,
   body,
-  request: 'comment' | 'include',
+  request: 'comment' | 'include' | string,
   context: UserContext
 ): Promise<any> => {
   const endPoint = `${REACT_APP_BACKEND_URL}/sample/${sampleId}/${request}`

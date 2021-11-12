@@ -1,70 +1,37 @@
 import React, { useContext, useEffect, useState } from 'react'
 import jsPDF from 'jspdf'
 import 'jspdf-autotable'
-import { Tooltip } from 'antd'
+import { Button } from 'antd'
 import { ErrorNotification, SuccessNotification } from '../../services/helpers/helpers'
 import Plotly from 'plotly.js'
-import { useLocation } from 'react-router-dom'
-import { getBatchSamples } from '../../services/StatinaApi'
+import { getBatchSamples, getFetalFractionXYGraph } from '../../services/StatinaApi'
 import { UserContext } from '../../services/userContext'
+import { CloudDownloadOutlined } from '@ant-design/icons'
+import { ScatterData, Layout } from 'react-plotly.js'
+import { FetalFractionXYGraph } from '../../services/interfaces'
+import {
+  buildFFXYGraphData,
+  buildFFXYGraphLayout,
+  fFXYGraphHeight,
+  fFXYGraphWidth,
+} from '../FetalFractionXYGraph/FetalFractionXY'
 
-export function BatchTablePDF() {
-  const [imgURI, setImgURI] = useState('')
-  const [samples, setSamples] = useState<any[]>([])
-  const [plotlyScore, setPlotlyScore] = useState('Zscore_13') // The plotly should be changed to a Fetal Fraction
-  const pageSize = 0
-  const pageNum = 0
+export const BatchTablePDF = ({ batchId }) => {
+  const [data, setData] = useState<ScatterData[]>()
+  const [layout, setLayout] = useState<Layout>()
   const userContext = useContext(UserContext)
-  const { pathname } = useLocation()
-  const batchId = pathname.substring(pathname.lastIndexOf('/') + 1, pathname.length)
-  useEffect(() => {
-    if (batchId)
-      getBatchSamples(userContext, batchId, pageSize, pageNum).then((samples) => {
-        setSamples(samples.documents)
-      })
-  }, [batchId])
-  const plotlyData: any[] = [
-    {
-      name: `Current batch ${samples.length}`,
-      y: samples.map((sample) => sample[plotlyScore]),
-      x: samples.map((sample) => sample?.SampleID),
-      mode: 'markers',
-      type: 'scatter',
-    },
-  ]
-  const layout = {
-    annotations: [],
-    xaxis: {
-      showline: true,
-      showgrid: true,
-    },
-    yaxis: {
-      range: [-10, 10],
-      title: plotlyScore,
-    },
-    height: 600,
-    width: 1200,
-  }
+  const graphId = 'pdf-report-graph'
 
-  Plotly.newPlot('hiddenDiv', plotlyData, layout)
-    .then((gd) => {
-      return Plotly.toImage(gd, {
-        format: 'png',
-        height: 600,
-        width: 1200,
-      })
+  useEffect(() => {
+    getFetalFractionXYGraph(batchId, userContext).then((response: FetalFractionXYGraph) => {
+      setData(buildFFXYGraphData(response))
+      setLayout(buildFFXYGraphLayout(response, true))
     })
-    .then((dataURI) => {
-      setImgURI(dataURI)
-    })
+  }, [])
+
   const exportPDF = () => {
-    if (samples === undefined || samples.length == 0) {
-      ErrorNotification({
-        type: 'error',
-        message: 'Download failed!',
-        description: 'There is no data to download!',
-      })
-    } else {
+    getBatchSamples(userContext, batchId, 0, 0, '').then(({ documents }) => {
+      const graph = document.getElementById(graphId)
       const unit = 'pt'
       const size = 'A4'
       const orientation = 'landscape'
@@ -74,8 +41,7 @@ export function BatchTablePDF() {
 
       doc.setFontSize(15)
 
-      const title = 'NIPT Results'
-      const batchNum = `Batch: ${samples[0].batch_id}`
+      const title = `Batch ${batchId} results`
       const headers = [
         [
           'Sample',
@@ -91,14 +57,14 @@ export function BatchTablePDF() {
         ],
       ]
 
-      const TableData = samples.map((item) => [
+      const pdfData = documents.map((item) => [
         item.sample_id,
-        item.Zscore_13,
-        item.Zscore_18,
-        item.Zscore_21,
-        item.FF_Formatted,
-        item.FFX,
-        item.FFY,
+        item.z_score['13'],
+        item.z_score['18'],
+        item.z_score['21'],
+        item.fetal_fraction?.preface,
+        item.fetal_fraction?.x,
+        item.fetal_fraction?.y,
         item.sex,
         item.text_warning,
         item.comment,
@@ -107,15 +73,10 @@ export function BatchTablePDF() {
       const content = {
         startY: 50,
         head: headers,
-        body: TableData,
-        theme: 'striped',
-
+        body: pdfData,
+        theme: 'grid',
         didParseCell: function (data) {
-          if (
-            (data.section === 'body' && data.row.raw[8].includes('Zscore_13')) ||
-            data.row.raw[8].includes('Zscore_18') ||
-            data.row.raw[8].includes('Zscore_21')
-          ) {
+          if (data.row.raw[8].length > 0) {
             data.cell.styles.fillColor = 'rgb(255, 204, 199)'
           }
           if (data.section === 'head') {
@@ -124,39 +85,44 @@ export function BatchTablePDF() {
         },
       }
 
-      doc.setFontSize(20)
-      doc.text(title, marginLeft, 20)
-      doc.setTextColor(105, 105, 105)
-      doc.setFontSize(12)
-      doc.text(batchNum, marginLeft, 40)
-      doc.setTextColor(0, 0, 0)
+      doc.text(title, marginLeft, 40)
       doc.autoTable(content)
-      doc.addPage()
-      doc.text('Fetal Fraction X/Y', marginLeft, 40)
-      doc.addImage(imgURI, 'JPEG', 50, 80, 700, 350)
-      const pageCount = doc.internal.getNumberOfPages()
-      for (let i = 1; i <= pageCount; i++) {
-        doc.setPage(i)
-        doc.setFontSize(8)
-        doc.text(
-          'Page ' + String(i) + ' of ' + String(pageCount),
-          820 - 20,
-          605 - 30,
-          null,
-          null,
-          'right'
+
+      if (graph && data && layout) {
+        Plotly.newPlot(graph, data, layout).then((plot) =>
+          Plotly.toImage(plot, {
+            format: 'png',
+            width: fFXYGraphWidth,
+            height: fFXYGraphHeight,
+          })
+            .then(function (dataUrl) {
+              doc.setFontSize(40)
+              doc.addPage()
+              doc.addImage(dataUrl, 'png', 15, 40, 800, 500)
+              doc.save(`Statina - batch ${batchId}.pdf`)
+              SuccessNotification({
+                type: 'success',
+                message: 'Download successfully!',
+              })
+            })
+            .catch((error) => {
+              ErrorNotification({
+                type: 'error',
+                message: 'Download failed!',
+                description: error.message,
+              })
+            })
         )
       }
-      doc.save('Statina.pdf')
-      SuccessNotification({
-        type: 'success',
-        message: 'Download successfully!',
-      })
-    }
+    })
   }
   return (
-    <Tooltip title="Export to PDF">
-      <span onClick={(e) => exportPDF()}>Report</span>
-    </Tooltip>
+    <Button type="primary" onClick={(e) => exportPDF()}>
+      Batch Report
+      <CloudDownloadOutlined />
+      <div hidden>
+        <div id={graphId}></div>
+      </div>
+    </Button>
   )
 }

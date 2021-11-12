@@ -2,11 +2,11 @@ import React, { useContext, useEffect, useState } from 'react'
 import { UserContext } from '../../services/userContext'
 import { getBatches, getBatchesByText } from '../../services/StatinaApi'
 import { Col, Dropdown, Input, Menu, Row, Table, Typography } from 'antd'
-import { escapeRegExp, sortDate } from 'services/helpers/helpers'
+import { escapeRegExp } from 'services/helpers/helpers'
 import { Batch } from 'services/interfaces'
 import { Link } from 'react-router-dom'
 import { ExportCSV } from 'components/ExportCSV/ExportCSV'
-import { ExportPDF } from 'components/ExportPDF/ExportPDF'
+import { BatchesTablePDF } from 'components/ExportPDF/BatchesTablePDF'
 
 type BatchesProps = {
   batches: Batch[]
@@ -16,10 +16,10 @@ type BatchesProps = {
 const { Search } = Input
 const { Text } = Typography
 
-export const BatchesTable = ({ batches, batchesCount }: BatchesProps) => {
+export const BatchesTable = () => {
   const userContext = useContext(UserContext)
-  const [filteredBatches, setFilteredBatches] = useState<Batch[]>(batches)
-  const [pageCount, setPageCount] = useState(batchesCount)
+  const [filteredBatches, setFilteredBatches] = useState<Batch[]>([])
+  const [pageCount, setPageCount] = useState(0)
   const [searchValue, setSearchValue] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
 
@@ -27,7 +27,7 @@ export const BatchesTable = ({ batches, batchesCount }: BatchesProps) => {
     getBatches(userContext, 10, 0).then((batches) => {
       setFilteredBatches(batches?.documents), setPageCount(batches?.document_count)
     })
-  }, [batches])
+  }, [])
 
   const onSearch = (searchInput) => {
     const escapeInput = escapeRegExp(searchInput)
@@ -74,7 +74,7 @@ export const BatchesTable = ({ batches, batchesCount }: BatchesProps) => {
         <ExportCSV fileName={'Statina'} />
       </Menu.Item>
       <Menu.Item key="pdf">
-        <ExportPDF />
+        <BatchesTablePDF />
       </Menu.Item>
     </Menu>
   )
