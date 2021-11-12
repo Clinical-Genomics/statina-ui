@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from 'react'
 import Plot, { Layout, BoxPlotData } from 'react-plotly.js'
 import { getChromosomeRatioGraph } from '../../services/StatinaApi'
 import { FetalFractionXYGraph } from '../../services/interfaces'
-import { buildFFXYGraphData, buildFFXYGraphLayout } from '../FetalFractionXYGraph/FetalFractionXY'
 import { UserContext } from '../../services/userContext'
 import { ScatterData } from 'plotly.js'
 
@@ -11,19 +10,34 @@ type ChromosomesRatioPlotProps = {
 }
 
 const buildData = (statistics: any): BoxPlotData[] => {
-  return statistics.batch_ids?.map((batchId: string) => ({
-    y: [],
-    type: 'box',
-    text: statistics.box_stat[batchId]?.sample_ids,
-    showlegend: false,
-    boxpoints: 'all',
+  const scatterData = Object.keys(statistics.scatter_data).map((batchId) => ({
+    name: batchId,
+    y: statistics.scatter_data[batchId].y_axis,
+    x: statistics.scatter_data[batchId].x_axis,
+    mode: 'markers',
+    text: batchId,
+    type: 'scatter',
   }))
+
+  const boxData = Object.keys(statistics.box_data).map((chromosome, i) => ({
+    name: chromosome,
+    y: statistics.box_data[chromosome],
+    x: chromosome,
+    showlegend: false,
+    boxpoints: false,
+    text: chromosome,
+    marker: { color: '#ccccb3' },
+    type: 'box',
+  }))
+  return [...boxData, ...scatterData]
 }
 
-const buildLayout = (response: any): Layout => {
+const buildLayout = (statistics: any): Layout => {
   return {
     legend: { hovermode: 'closest' },
     hovermode: 'closest',
+    width: 1200,
+    height: 600,
     xaxis: {
       showline: true,
       zeroline: false,
@@ -32,7 +46,7 @@ const buildLayout = (response: any): Layout => {
       showgrid: true,
       gridcolor: '#bdbdbd',
       title: 'Chromosome',
-      tickvals: response.x_data,
+      tickvals: statistics.x_axis,
     },
     yaxis: {
       zeroline: false,
@@ -52,7 +66,6 @@ export const ChromosomesRatioPlot = ({ batchId }: ChromosomesRatioPlotProps) => 
 
   useEffect(() => {
     getChromosomeRatioGraph(batchId, userContext).then((response: FetalFractionXYGraph) => {
-      console.log(response)
       setData(buildData(response))
       setLayout(buildLayout(response))
     })
