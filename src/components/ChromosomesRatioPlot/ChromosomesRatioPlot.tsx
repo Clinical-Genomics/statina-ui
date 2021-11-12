@@ -1,0 +1,74 @@
+import React, { useContext, useEffect, useState } from 'react'
+import Plot, { Layout, BoxPlotData } from 'react-plotly.js'
+import { getChromosomeRatioGraph } from '../../services/StatinaApi'
+import { FetalFractionXYGraph } from '../../services/interfaces'
+import { UserContext } from '../../services/userContext'
+import { ScatterData } from 'plotly.js'
+
+type ChromosomesRatioPlotProps = {
+  batchId: string
+}
+
+const buildData = (statistics: any): BoxPlotData[] => {
+  const scatterData = Object.keys(statistics.scatter_data).map((batchId) => ({
+    name: batchId,
+    y: statistics.scatter_data[batchId].y_axis,
+    x: statistics.scatter_data[batchId].x_axis,
+    mode: 'markers',
+    text: batchId,
+    type: 'scatter',
+  }))
+
+  const boxData = Object.keys(statistics.box_data).map((chromosome, i) => ({
+    name: chromosome,
+    y: statistics.box_data[chromosome],
+    x: chromosome,
+    showlegend: false,
+    boxpoints: false,
+    text: chromosome,
+    marker: { color: '#ccccb3' },
+    type: 'box',
+  }))
+  return [...boxData, ...scatterData]
+}
+
+const buildLayout = (statistics: any): Layout => {
+  return {
+    legend: { hovermode: 'closest' },
+    hovermode: 'closest',
+    width: 1200,
+    height: 600,
+    xaxis: {
+      showline: true,
+      zeroline: false,
+      linecolor: '#636363',
+      linewidth: 5,
+      showgrid: true,
+      gridcolor: '#bdbdbd',
+      title: 'Chromosome',
+      tickvals: statistics.x_axis,
+    },
+    yaxis: {
+      zeroline: false,
+      showline: true,
+      showgrid: false,
+      linecolor: '#636363',
+      linewidth: 5,
+      title: 'Coverage Ratio',
+    },
+  }
+}
+
+export const ChromosomesRatioPlot = ({ batchId }: ChromosomesRatioPlotProps) => {
+  const userContext = useContext(UserContext)
+  const [data, setData] = useState<ScatterData[]>()
+  const [layout, setLayout] = useState<Layout>()
+
+  useEffect(() => {
+    getChromosomeRatioGraph(batchId, userContext).then((response: FetalFractionXYGraph) => {
+      setData(buildData(response))
+      setLayout(buildLayout(response))
+    })
+  }, [])
+  return <Plot data={data} layout={layout} />
+}
