@@ -27,11 +27,11 @@ export const SamplesTable = ({ showBatchInfo = true, batchId }: SamplesProps) =>
   useEffect(() => {
     if (batchId) {
       getBatchSamples(userContext, batchId, 10, 0, searchValue).then((samples) => {
-        setFilteredSamples(samples.documents), setPageCount(samples.document_count)
+        setFilteredSamples(samples?.documents), setPageCount(samples?.document_count)
       })
     } else {
       getSamples(userContext, 10, 0).then((samples) => {
-        setFilteredSamples(samples.documents), setPageCount(samples.document_count)
+        setFilteredSamples(samples?.documents), setPageCount(samples?.document_count)
       })
     }
     if (filteredSamples?.length > 0) {
