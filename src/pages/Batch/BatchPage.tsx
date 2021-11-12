@@ -4,11 +4,12 @@ import { useLocation } from 'react-router-dom'
 import { SamplesTable } from '../../components/SamplesTable/SamplesTable'
 import { ZscoreGraph } from '../../components/ZscoreGraph/ZscoreGraph'
 import { BatchTablePDF } from '../../components/ExportPDF/BatchTablePDF'
-import { editBatchComment, getBatch, getBatchSamples } from '../../services/StatinaApi'
+import { editBatchComment, getBatch } from '../../services/StatinaApi'
 import { UserContext } from '../../services/userContext'
-import { FetalFractionXY } from '../../components/FetalFractionXYGraph/FetalFractionXY'
 import { SuccessNotification } from '../../services/helpers/helpers'
 import { Batch } from '../../services/interfaces'
+import { FetalFractionXY } from '../../components/FetalFractionXYGraph/FetalFractionXY'
+import { ChromosomesRatioPlot } from '../../components/ChromosomesRatioPlot/ChromosomesRatioPlot'
 
 const { TabPane } = Tabs
 const { Title, Text } = Typography
@@ -16,24 +17,14 @@ const { TextArea } = Input
 
 export const BatchPage = () => {
   const userContext = useContext(UserContext)
-  const [samples, setSamples] = useState<any[]>([])
-  const [samplesCount, setSamplesCount] = useState<number>(0)
   const [batch, setBatch] = useState<Batch | null>()
   const { pathname } = useLocation()
   const batchId = pathname.substring(pathname.lastIndexOf('/') + 1, pathname.length)
-  const pageSize = 10
-  const pageNum = 0
 
   useEffect(() => {
-    if (batchId) {
-      getBatchSamples(userContext, batchId, pageSize, pageNum).then((samples) => {
-        setSamples(samples.documents), setSamplesCount(samples?.document_count)
-      })
-      getBatch(batchId, userContext).then((batch) => {
-        setBatch(batch)
-        console.log(batch)
-      })
-    }
+    getBatch(batchId, userContext).then((batch) => {
+      setBatch(batch)
+    })
   }, [batchId])
 
   const updateComment = (e) => {
@@ -69,12 +60,7 @@ export const BatchPage = () => {
       </Row>
       <Tabs type="card">
         <TabPane tab="Summary Table" key="1">
-          <SamplesTable
-            samples={samples}
-            samplesCount={samplesCount}
-            batchId={batchId}
-            showBatchInfo
-          />
+          <SamplesTable batchId={batchId} showBatchInfo />
         </TabPane>
         <TabPane tab="Zscore 13" key="Zscore_13">
           <ZscoreGraph batchId={batchId} chromosome={13} />
@@ -87,6 +73,9 @@ export const BatchPage = () => {
         </TabPane>
         <TabPane tab="Fetal Fraction X/Y" key="Fetal_Fraction_X/Y">
           <FetalFractionXY batchId={batchId} chromosome={21} />
+        </TabPane>
+        <TabPane tab="Ratio (Chromosomes 1-22)" key="ratio">
+          <ChromosomesRatioPlot batchId={batchId} />
         </TabPane>
       </Tabs>
     </Card>

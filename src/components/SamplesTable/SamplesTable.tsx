@@ -7,11 +7,8 @@ import { CloudDownloadOutlined, QuestionCircleOutlined } from '@ant-design/icons
 import { red } from '@ant-design/colors'
 import { sampleStatusTags, sexTags, tagColors } from 'services/helpers/constants'
 import { escapeRegExp } from 'services/helpers/helpers'
-import { Sample } from 'services/interfaces'
 
 type SamplesProps = {
-  samples: Sample[]
-  samplesCount: number
   showBatchInfo?: boolean
   batchId?: any
 }
@@ -19,38 +16,33 @@ type SamplesProps = {
 const { Search } = Input
 const { Text } = Typography
 
-export const SamplesTable = ({
-  samples,
-  samplesCount,
-  showBatchInfo = true,
-  batchId,
-}: SamplesProps) => {
+export const SamplesTable = ({ showBatchInfo = true, batchId }: SamplesProps) => {
   const userContext = useContext(UserContext)
-  const [filteredSamples, setFilteredSamples] = useState<any[]>(samples)
+  const [filteredSamples, setFilteredSamples] = useState<any[]>([])
   const [selectedRowKeys, setSelectedRowKeys] = useState<any[]>([])
-  const [pageCount, setPageCount] = useState(samplesCount)
+  const [pageCount, setPageCount] = useState(0)
   const [searchValue, setSearchValue] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
 
   useEffect(() => {
     if (batchId) {
       getBatchSamples(userContext, batchId, 10, 0, searchValue).then((samples) => {
-        setFilteredSamples(samples.documents), setPageCount(samples.document_count)
+        setFilteredSamples(samples?.documents), setPageCount(samples?.document_count)
       })
     } else {
       getSamples(userContext, 10, 0).then((samples) => {
-        setFilteredSamples(samples.documents), setPageCount(samples.document_count)
+        setFilteredSamples(samples?.documents), setPageCount(samples?.document_count)
       })
     }
-    if (samples?.length > 0) {
-      setPageCount(samplesCount)
+    if (filteredSamples?.length > 0) {
+      setPageCount(0)
       const selectedKey: string[] = []
-      samples.forEach((sample) => {
+      filteredSamples.forEach((sample) => {
         if (sample.included?.include) selectedKey.push(sample?.sample_id)
       })
       setSelectedRowKeys(selectedKey)
     }
-  }, [samples])
+  }, [])
 
   const onSearch = (searchInput) => {
     const escapeInput = escapeRegExp(searchInput)
