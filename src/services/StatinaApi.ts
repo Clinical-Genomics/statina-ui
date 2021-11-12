@@ -154,6 +154,15 @@ export const editSample = async (
   return axiosPUT(endPoint, body, context)
 }
 
+export const editBatchComment = async (
+  batchId: string,
+  body,
+  context: UserContext
+): Promise<any> => {
+  const endPoint = `${REACT_APP_BACKEND_URL}/batch/${batchId}/comment`
+  return axiosPUT(endPoint, body, context)
+}
+
 export const login = async (formInput: Login): Promise<any> => {
   const endPoint = `${REACT_APP_BACKEND_URL}/token`
   return axiosPostToken(endPoint, formInput)
