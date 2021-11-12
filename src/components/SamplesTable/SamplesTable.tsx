@@ -30,10 +30,26 @@ export const SamplesTable = ({ showBatchInfo = true, batchId }: SamplesProps) =>
   const [searchValue, setSearchValue] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
 
-  const selectedKeys = () => {
-    if (filteredSamples?.length > 0) {
+  useEffect(() => {
+    if (batchId) {
+      getBatchSamples(userContext, batchId, 10, 0, searchValue).then((samples) => {
+        setFilteredSamples(samples?.documents),
+          setPageCount(samples?.document_count),
+          inclodedSamples(samples?.documents)
+      })
+    } else {
+      getSamples(userContext, 10, 0).then((samples) => {
+        setFilteredSamples(samples?.documents),
+          setPageCount(samples?.document_count),
+          inclodedSamples(samples?.documents)
+      })
+    }
+  }, [])
+
+  const inclodedSamples = (samples) => {
+    if (samples.length > 0) {
       const selectedKey: string[] = []
-      filteredSamples.forEach((sample) => {
+      samples.forEach((sample) => {
         if (sample.included.include) {
           selectedKey.push(sample?.sample_id)
         }
@@ -41,25 +57,6 @@ export const SamplesTable = ({ showBatchInfo = true, batchId }: SamplesProps) =>
       setSelectedRowKeys(selectedKey)
     }
   }
-  useEffect(() => {
-    if (batchId) {
-      getBatchSamples(userContext, batchId, 10, 0, searchValue).then((samples) => {
-        setFilteredSamples(samples?.documents), setPageCount(samples?.document_count)
-      })
-    } else {
-      getSamples(userContext, 10, 0).then((samples) => {
-        setFilteredSamples(samples?.documents), setPageCount(samples?.document_count)
-      })
-    }
-    if (filteredSamples?.length > 0) {
-      setPageCount(0)
-      const selectedKey: string[] = []
-      filteredSamples.forEach((sample) => {
-        if (sample.included?.include) selectedKey.push(sample?.sample_id)
-      })
-      setSelectedRowKeys(selectedKey)
-    }
-  }, [])
 
   const onSearch = (searchInput) => {
     const escapeInput = escapeRegExp(searchInput)
@@ -76,7 +73,6 @@ export const SamplesTable = ({ showBatchInfo = true, batchId }: SamplesProps) =>
         setFilteredSamples(samples.documents), setPageCount(samples.document_count)
       })
     }
-    selectedKeys()
   }
 
   const onChange = (data) => {
@@ -84,16 +80,15 @@ export const SamplesTable = ({ showBatchInfo = true, batchId }: SamplesProps) =>
       getBatchSamples(userContext, batchId, data.pageSize, data.current, searchValue).then(
         (samples) => {
           setFilteredSamples(samples.documents), setPageCount(samples.document_count)
-          setCurrentPage(data.current)
+          setCurrentPage(data.current), inclodedSamples(samples.documents)
         }
       )
     } else {
       getSamples(userContext, data.pageSize, data.current).then((samples) => {
         setFilteredSamples(samples.documents), setPageCount(samples.document_count)
-        setCurrentPage(data.current)
+        setCurrentPage(data.current), inclodedSamples(samples.documents)
       })
     }
-    selectedKeys()
   }
 
   const showTotal = (total, range) => {
