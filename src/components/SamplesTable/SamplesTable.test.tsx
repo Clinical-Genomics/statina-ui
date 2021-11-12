@@ -17,7 +17,7 @@ jest.mock('react-router-dom', () => ({
 
 describe('Samples Table', () => {
   test('Samples Table should display UI correctly', async () => {
-    mockedAxios.get.mockReturnValueOnce(Promise.resolve({ data: mockSamples }))    
+    mockedAxios.get.mockReturnValueOnce(Promise.resolve({ data: mockSamples }))
     const initializeUserContext = () => null
     const logout = () => null
     const { getAllByText } = await waitFor(() =>
