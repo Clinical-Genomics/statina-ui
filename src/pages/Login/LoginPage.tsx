@@ -21,14 +21,16 @@ export const LoginPage = () => {
   }
   return (
     <div className={styles.homeContainer}>
-      <h1>Welcome to the visualization tool for NIPT data</h1>
-      <h3>
-        Developed and maintained by{' '}
-        <a href={'https://www.scilifelab.se/units/clinical-genomics-stockholm/'}>
-          Clinical Genomics - Scilifelab
-        </a>
-        .
-      </h3>
+      <p>
+        <h1>Welcome to Statina, the visualization tool for NIPT data</h1>
+        <h3>
+          Developed and maintained by{' '}
+          <a href={'https://www.scilifelab.se/units/clinical-genomics-stockholm/'}>
+            Clinical Genomics - Scilifelab
+          </a>
+          .
+        </h3>
+      </p>
       <div className={styles.loginContainer}>
         <div className={styles.form}>
           <Form name="basic" onFinish={onSubmit} onFinishFailed={onSubmitFailed} autoComplete="off">
@@ -63,7 +65,6 @@ export const LoginPage = () => {
           </Form>
         </div>
       </div>
-      <br />
     </div>
   )
 }
