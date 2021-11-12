@@ -2,7 +2,7 @@ import React from 'react'
 import { render, waitFor } from '@testing-library/react'
 import { SamplePage } from '../Sample/SamplePage'
 import axios from 'axios'
-import {mockSample, mockSamplePlot} from '../../mocks/sample'
+import { mockSample, mockSamplePlot } from '../../mocks/sample'
 import { BrowserRouter } from 'react-router-dom'
 import { UserContext } from 'services/userContext'
 
