@@ -1,6 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { UserContext } from '../../services/userContext'
-import { getSamples, getBatchSamples, getSamplesByText } from '../../services/StatinaApi'
+import {
+  getSamples,
+  getBatchSamples,
+  getSamplesByText,
+  includeSample,
+  includeBatchSamples,
+} from '../../services/StatinaApi'
 import { Input, Table, Tag, Tooltip, Typography } from 'antd'
 import { Link } from 'react-router-dom'
 import { CloudDownloadOutlined, QuestionCircleOutlined } from '@ant-design/icons'
@@ -27,22 +33,30 @@ export const SamplesTable = ({ showBatchInfo = true, batchId }: SamplesProps) =>
   useEffect(() => {
     if (batchId) {
       getBatchSamples(userContext, batchId, 10, 0, searchValue).then((samples) => {
-        setFilteredSamples(samples?.documents), setPageCount(samples?.document_count)
+        setFilteredSamples(samples?.documents),
+          setPageCount(samples?.document_count),
+          inclodedSamples(samples?.documents)
       })
     } else {
       getSamples(userContext, 10, 0).then((samples) => {
-        setFilteredSamples(samples?.documents), setPageCount(samples?.document_count)
+        setFilteredSamples(samples?.documents),
+          setPageCount(samples?.document_count),
+          inclodedSamples(samples?.documents)
       })
     }
-    if (filteredSamples?.length > 0) {
-      setPageCount(0)
+  }, [])
+
+  const inclodedSamples = (samples) => {
+    if (samples?.length > 0) {
       const selectedKey: string[] = []
-      filteredSamples.forEach((sample) => {
-        if (sample.included?.include) selectedKey.push(sample?.sample_id)
+      samples.forEach((sample) => {
+        if (sample.included.include) {
+          selectedKey.push(sample?.sample_id)
+        }
       })
       setSelectedRowKeys(selectedKey)
     }
-  }, [])
+  }
 
   const onSearch = (searchInput) => {
     const escapeInput = escapeRegExp(searchInput)
@@ -50,13 +64,17 @@ export const SamplesTable = ({ showBatchInfo = true, batchId }: SamplesProps) =>
     setCurrentPage(1)
     if (batchId) {
       getBatchSamples(userContext, batchId, 0, 0, escapeInput).then((samples) => {
-        setFilteredSamples(samples.documents), setPageCount(samples.document_count)
+        setFilteredSamples(samples.documents),
+          setPageCount(samples.document_count),
+          inclodedSamples(samples?.documents)
       })
     } else {
       const escapeInput = escapeRegExp(searchInput)
       setSearchValue(escapeInput)
       getSamplesByText(userContext, 0, 0, escapeInput).then((samples) => {
-        setFilteredSamples(samples.documents), setPageCount(samples.document_count)
+        setFilteredSamples(samples.documents),
+          setPageCount(samples.document_count),
+          inclodedSamples(samples?.documents)
       })
     }
   }
@@ -66,19 +84,38 @@ export const SamplesTable = ({ showBatchInfo = true, batchId }: SamplesProps) =>
       getBatchSamples(userContext, batchId, data.pageSize, data.current, searchValue).then(
         (samples) => {
           setFilteredSamples(samples.documents), setPageCount(samples.document_count)
-          setCurrentPage(data.current)
+          setCurrentPage(data.current), inclodedSamples(samples.documents)
         }
       )
     } else {
       getSamples(userContext, data.pageSize, data.current).then((samples) => {
         setFilteredSamples(samples.documents), setPageCount(samples.document_count)
-        setCurrentPage(data.current)
+        setCurrentPage(data.current), inclodedSamples(samples.documents)
       })
     }
   }
 
   const showTotal = (total, range) => {
     return `${range[0]}-${range[1]} of ${total}`
+  }
+
+  const onSelectAll = (data) => {
+    includeBatchSamples(batchId, userContext, data)
+  }
+
+  const rowSelection = {
+    onChange: (selectedRowKeys) => {
+      setSelectedRowKeys(selectedRowKeys)
+    },
+    selectedRowKeys,
+  }
+
+  const handleSelect = (record, selected) => {
+    if (selected) {
+      includeSample(record.sample_id, userContext, selected)
+    } else {
+      includeSample(record.sample_id, userContext, selected)
+    }
   }
 
   const columns: any = [
@@ -274,13 +311,6 @@ export const SamplesTable = ({ showBatchInfo = true, batchId }: SamplesProps) =>
     },
   ]
 
-  const rowSelection = {
-    onChange: (selectedRowKeys) => {
-      setSelectedRowKeys(selectedRowKeys)
-    },
-    selectedRowKeys,
-  }
-
   return (
     <>
       <Search
@@ -292,7 +322,6 @@ export const SamplesTable = ({ showBatchInfo = true, batchId }: SamplesProps) =>
       <Text type="secondary">
         {pageCount} result{filteredSamples?.length > 1 ? `s` : null}
       </Text>
-
       <br />
       <i>Select a sample with the checkbox to include it in the comparison set</i>
       <Table
@@ -304,6 +333,9 @@ export const SamplesTable = ({ showBatchInfo = true, batchId }: SamplesProps) =>
         scroll={{ x: 2300 }}
         rowSelection={{
           ...rowSelection,
+          hideSelectAll: batchId ? false : true,
+          onSelectAll: onSelectAll,
+          onSelect: handleSelect,
         }}
         onChange={onChange}
         pagination={{ total: pageCount, showTotal: showTotal, current: currentPage }}
