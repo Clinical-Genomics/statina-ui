@@ -9,10 +9,10 @@ type FetalFractionPrefaceProps = {
   chromosome: number
 }
 
-export const fFPFGraphWidth = 1200
-export const fFPFGraphHeight = 800
+const fFPFGraphWidth = 1200
+const fFPFGraphHeight = 800
 
-export const buildFFPFYGraphData = (response: FetalFractionPrefaceGraph): ScatterData[] => {
+const buildFFPFYGraphData = (response: FetalFractionPrefaceGraph): ScatterData[] => {
   const data: ScatterData[] = [
     {
       y: response.control?.FF,
@@ -38,7 +38,7 @@ export const buildFFPFYGraphData = (response: FetalFractionPrefaceGraph): Scatte
   return data
 }
 
-export const buildFFPFYGraphLayout = (
+const buildFFPFYGraphLayout = (
   response: FetalFractionPrefaceGraph,
   width = fFPFGraphWidth,
   height = fFPFGraphHeight
@@ -70,7 +70,7 @@ export const buildFFPFYGraphLayout = (
   }
 }
 
-export const buildFFPFXGraphData = (response: FetalFractionPrefaceGraph): ScatterData[] => {
+const buildFFPFXGraphData = (response: FetalFractionPrefaceGraph): ScatterData[] => {
   const data: ScatterData[] = [
     {
       y: response.control?.FF,
@@ -96,7 +96,7 @@ export const buildFFPFXGraphData = (response: FetalFractionPrefaceGraph): Scatte
   return data
 }
 
-export const buildFFPFXGraphLayout = (
+const buildFFPFXGraphLayout = (
   response: FetalFractionPrefaceGraph,
   width = fFPFGraphWidth,
   height = fFPFGraphHeight
