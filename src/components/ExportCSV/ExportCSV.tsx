@@ -27,8 +27,8 @@ export const ExportCSV = ({ fileName }: { fileName: string }) => {
     } else {
       const exportData = batches.map((item) => ({
         Batch_ID: item.batch_id,
-        Sequencing_Date: item.SequencingDate,
-        Flowcell_ID: item.Flowcell,
+        Sequencing_Date: item.sequencing_date,
+        Flowcell_ID: item.flowcell,
       }))
       const ws = XLSX.utils.json_to_sheet(exportData)
       const wb = { Sheets: { data: ws }, SheetNames: ['data'] }
