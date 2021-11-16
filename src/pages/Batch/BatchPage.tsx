@@ -9,6 +9,7 @@ import { UserContext } from '../../services/userContext'
 import { SuccessNotification } from '../../services/helpers/helpers'
 import { Batch } from '../../services/interfaces'
 import { FetalFractionXY } from '../../components/FetalFractionXYGraph/FetalFractionXY'
+import { FetalFractionPreface } from '../../components/FetalFractionPrefaceGraph/FetalFractionPreface'
 import { ChromosomesRatioPlot } from '../../components/ChromosomesRatioPlot/ChromosomesRatioPlot'
 
 const { TabPane } = Tabs
@@ -70,6 +71,9 @@ export const BatchPage = () => {
         </TabPane>
         <TabPane tab="Zscore 21" key="Zscore_21">
           <ZscoreGraph batchId={batchId} chromosome={21} />
+        </TabPane>
+        <TabPane tab="Fetal Fraction Preface" key="Fetal_Fraction_Preface">
+          <FetalFractionPreface batchId={batchId} chromosome={21} />
         </TabPane>
         <TabPane tab="Fetal Fraction X/Y" key="Fetal_Fraction_X/Y">
           <FetalFractionXY batchId={batchId} chromosome={21} />

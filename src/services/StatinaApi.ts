@@ -177,6 +177,14 @@ export const getFetalFractionXYGraph = async (
   return axiosGET(endPoint, context)
 }
 
+export const getFetalFractionPrefaceGraph = async (
+  batchId: string,
+  context: UserContext
+): Promise<any> => {
+  const endPoint = `${REACT_APP_BACKEND_URL}/batch/${batchId}/fetal_fraction`
+  return axiosGET(endPoint, context)
+}
+
 export const getChromosomeRatioGraph = async (
   batchId: string,
   context: UserContext
