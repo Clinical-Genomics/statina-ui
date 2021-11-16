@@ -40,7 +40,6 @@ export const buildFFPFYGraphData = (response: FetalFractionPrefaceGraph): Scatte
 
 export const buildFFPFYGraphLayout = (
   response: FetalFractionPrefaceGraph,
-  isPDF = false,
   width = fFPFGraphWidth,
   height = fFPFGraphHeight
 ): Layout => {
@@ -48,7 +47,7 @@ export const buildFFPFYGraphLayout = (
     annotations: [],
     width: width,
     height: height,
-    legend: { hovermode: 'closest', orientation: isPDF ? 'h' : 'v' },
+    legend: { hovermode: 'closest', orientation: 'v' },
     hovermode: 'closest',
     title: 'Fetal fraction Y and Preface correlation.',
     xaxis: {
@@ -99,7 +98,6 @@ export const buildFFPFXGraphData = (response: FetalFractionPrefaceGraph): Scatte
 
 export const buildFFPFXGraphLayout = (
   response: FetalFractionPrefaceGraph,
-  isPDF = false,
   width = fFPFGraphWidth,
   height = fFPFGraphHeight
 ): Layout => {
@@ -107,7 +105,7 @@ export const buildFFPFXGraphLayout = (
     annotations: [],
     width: width,
     height: height,
-    legend: { hovermode: 'closest', orientation: isPDF ? 'h' : 'v' },
+    legend: { hovermode: 'closest', orientation: 'v' },
     hovermode: 'closest',
     title: 'Fetal fraction X and Preface correlation.',
     xaxis: {
