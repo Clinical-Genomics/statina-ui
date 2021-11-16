@@ -7,7 +7,6 @@ import { Batch } from 'services/interfaces'
 import { Link } from 'react-router-dom'
 import { ExportCSV } from 'components/ExportCSV/ExportCSV'
 import { BatchesTablePDF } from 'components/ExportPDF/BatchesTablePDF'
-import { Loading } from '../Loading'
 import { DownOutlined } from '@ant-design/icons'
 
 const { Search } = Input
@@ -19,15 +18,11 @@ export const BatchesTable = () => {
   const [pageCount, setPageCount] = useState(0)
   const [searchValue, setSearchValue] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
-  const [isLoading, setIsLoading] = React.useState<boolean>(true)
 
   useEffect(() => {
-    getBatches(userContext, 10, 0)
-      .then((batches) => {
-        setFilteredBatches(() => batches.documents), setPageCount(batches?.document_count)
-        setIsLoading(false)
-      })
-      .catch(() => setIsLoading(false))
+    getBatches(userContext, 10, 0).then((batches) => {
+      setFilteredBatches(() => batches?.documents), setPageCount(batches?.document_count)
+    })
   }, [])
 
   const onSearch = (searchInput) => {
@@ -80,9 +75,7 @@ export const BatchesTable = () => {
     </Menu>
   )
 
-  return isLoading ? (
-    <Loading />
-  ) : (
+  return (
     <>
       <Row justify="space-between" style={{ paddingBottom: 20 }}>
         <Col span={2}>
