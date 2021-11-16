@@ -231,6 +231,14 @@ export const editBatchComment = async (
   return axiosPUT(endPoint, body, context)
 }
 
+export const downloadSegmentalFraction = async (
+  sampleId: string,
+  context: UserContext
+): Promise<any> => {
+  const endPoint = `${REACT_APP_BACKEND_URL}/sample/${sampleId}/download/segmental_calls`
+  return axiosGET(endPoint, context)
+}
+
 export const login = async (formInput: Login): Promise<any> => {
   const endPoint = `${REACT_APP_BACKEND_URL}/token`
   return axiosPostToken(endPoint, formInput)

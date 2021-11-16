@@ -6,6 +6,7 @@ import {
   getSamplesByText,
   includeSample,
   includeBatchSamples,
+  downloadSegmentalFraction,
 } from '../../services/StatinaApi'
 import { Input, Table, Tag, Tooltip, Typography } from 'antd'
 import { Link } from 'react-router-dom'
@@ -13,6 +14,7 @@ import { CloudDownloadOutlined, QuestionCircleOutlined } from '@ant-design/icons
 import { red } from '@ant-design/colors'
 import { sampleStatusTags, sexTags, tagColors } from 'services/helpers/constants'
 import { escapeRegExp } from 'services/helpers/helpers'
+import fileDownload from 'js-file-download'
 
 type SamplesProps = {
   showBatchInfo?: boolean
@@ -77,6 +79,12 @@ export const SamplesTable = ({ showBatchInfo = true, batchId }: SamplesProps) =>
           inclodedSamples(samples?.documents)
       })
     }
+  }
+
+  const downloadSF = (sample) => {
+    downloadSegmentalFraction(sample.sample_id, userContext).then((response) => {
+      fileDownload(response, `${sample.sample_id}.WCXpredict_aberrations.filt.bed`)
+    })
   }
 
   const onChange = (data) => {
@@ -292,9 +300,12 @@ export const SamplesTable = ({ showBatchInfo = true, batchId }: SamplesProps) =>
       key: 'segmental_calls',
       width: 120,
       render: (sample: any) => (
-        <a href={`/sample_download/${sample.sample_id}/segmental_calls`} download>
+        <span
+          onClick={() => downloadSF(sample)}
+          style={{ cursor: 'pointer', border: 'none', color: '#16a4f2' }}
+        >
           <CloudDownloadOutlined style={{ fontSize: '30px', marginLeft: '30%' }} />
-        </a>
+        </span>
       ),
     },
     {
