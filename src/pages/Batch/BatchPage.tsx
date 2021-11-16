@@ -47,8 +47,7 @@ export const BatchPage = () => {
   return isLoading ? (
     <Loading />
   ) : (
-    <Card>
-      <div id="hiddenDiv" style={{ display: 'none' }}></div>
+    <Card className={styles.card}>
       <Row justify={'space-between'}>
         <Col style={{ marginBottom: 15 }}>
           <Title>{batchId}</Title>
