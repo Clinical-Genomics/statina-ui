@@ -1,17 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { UserContext } from '../../services/userContext'
 import { getBatches, getBatchesByText } from '../../services/StatinaApi'
-import { Col, Dropdown, Input, Menu, Row, Table, Typography } from 'antd'
+import { Button, Col, Dropdown, Input, Menu, Row, Table, Typography } from 'antd'
 import { escapeRegExp } from 'services/helpers/helpers'
 import { Batch } from 'services/interfaces'
 import { Link } from 'react-router-dom'
 import { ExportCSV } from 'components/ExportCSV/ExportCSV'
 import { BatchesTablePDF } from 'components/ExportPDF/BatchesTablePDF'
-
-type BatchesProps = {
-  batches: Batch[]
-  batchesCount: number
-}
+import { Loading } from '../Loading'
+import { DownOutlined } from '@ant-design/icons'
 
 const { Search } = Input
 const { Text } = Typography
@@ -22,11 +19,15 @@ export const BatchesTable = () => {
   const [pageCount, setPageCount] = useState(0)
   const [searchValue, setSearchValue] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
+  const [isLoading, setIsLoading] = React.useState<boolean>(true)
 
   useEffect(() => {
-    getBatches(userContext, 10, 0).then((batches) => {
-      setFilteredBatches(batches?.documents), setPageCount(batches?.document_count)
-    })
+    getBatches(userContext, 10, 0)
+      .then((batches) => {
+        setFilteredBatches(() => batches.documents), setPageCount(batches?.document_count)
+        setIsLoading(false)
+      })
+      .catch(() => setIsLoading(false))
   }, [])
 
   const onSearch = (searchInput) => {
@@ -79,13 +80,17 @@ export const BatchesTable = () => {
     </Menu>
   )
 
-  return (
+  return isLoading ? (
+    <Loading />
+  ) : (
     <>
       <Row justify="space-between" style={{ paddingBottom: 20 }}>
         <Col span={2}>
-          <Dropdown.Button overlay={downloadMenu} type="primary">
-            Download all batches
-          </Dropdown.Button>
+          <Dropdown overlay={downloadMenu}>
+            <Button type={'primary'}>
+              Download batches list <DownOutlined />
+            </Button>
+          </Dropdown>
         </Col>
         <Col span={8}>
           <Search placeholder="Search Batches" onSearch={onSearch} allowClear />

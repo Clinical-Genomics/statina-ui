@@ -3,6 +3,7 @@ import Plot, { ScatterData, Layout } from 'react-plotly.js'
 import { getFetalFractionXYGraph } from '../../services/StatinaApi'
 import { UserContext } from '../../services/userContext'
 import { FetalFractionXYGraph } from '../../services/interfaces'
+import { Loading } from '../Loading'
 
 type FetalFractionXYGraphProps = {
   batchId: string
@@ -108,13 +109,17 @@ export const FetalFractionXY = ({ batchId }: FetalFractionXYGraphProps) => {
   const userContext = useContext(UserContext)
   const [data, setData] = useState<ScatterData[]>()
   const [layout, setLayout] = useState<Layout>()
+  const [isLoading, setIsLoading] = React.useState<boolean>(true)
 
   useEffect(() => {
-    getFetalFractionXYGraph(batchId, userContext).then((response: FetalFractionXYGraph) => {
-      setData(buildFFXYGraphData(response))
-      setLayout(buildFFXYGraphLayout(response))
-    })
+    getFetalFractionXYGraph(batchId, userContext)
+      .then((response: FetalFractionXYGraph) => {
+        setData(buildFFXYGraphData(response))
+        setLayout(buildFFXYGraphLayout(response))
+        setIsLoading(false)
+      })
+      .catch(() => setIsLoading(false))
   }, [])
 
-  return <Plot data={data} layout={layout} />
+  return isLoading ? <Loading /> : <Plot data={data} layout={layout} />
 }
