@@ -119,6 +119,11 @@ export interface FetalFractionXYGraph {
   sex_thresholds: any
 }
 
+export interface FetalFractionPrefaceGraph {
+  cases: any
+  control: any
+}
+
 export interface SampleStatus {
   '13': {
     status: string
