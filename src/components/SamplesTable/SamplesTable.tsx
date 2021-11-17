@@ -38,7 +38,7 @@ export const SamplesTable = ({ showBatchInfo = true, batchId }: SamplesProps) =>
         .then((samples) => {
           setFilteredSamples(samples?.documents),
             setPageCount(samples?.document_count),
-            inclodedSamples(samples?.documents)
+            includedSamples(samples?.documents)
           setIsLoading(false)
         })
         .catch(() => setIsLoading(false))
@@ -47,14 +47,14 @@ export const SamplesTable = ({ showBatchInfo = true, batchId }: SamplesProps) =>
         .then((samples) => {
           setFilteredSamples(samples?.documents),
             setPageCount(samples?.document_count),
-            inclodedSamples(samples?.documents)
+            includedSamples(samples?.documents)
           setIsLoading(false)
         })
         .catch(() => setIsLoading(false))
     }
   }, [])
 
-  const inclodedSamples = (samples) => {
+  const includedSamples = (samples) => {
     if (samples?.length > 0) {
       const selectedKey: string[] = []
       samples.forEach((sample) => {
@@ -74,7 +74,7 @@ export const SamplesTable = ({ showBatchInfo = true, batchId }: SamplesProps) =>
       getBatchSamples(userContext, batchId, 0, 0, escapeInput).then((samples) => {
         setFilteredSamples(samples.documents),
           setPageCount(samples.document_count),
-          inclodedSamples(samples?.documents)
+          includedSamples(samples?.documents)
       })
     } else {
       const escapeInput = escapeRegExp(searchInput)
@@ -82,7 +82,7 @@ export const SamplesTable = ({ showBatchInfo = true, batchId }: SamplesProps) =>
       getSamplesByText(userContext, 0, 0, escapeInput).then((samples) => {
         setFilteredSamples(samples.documents),
           setPageCount(samples.document_count),
-          inclodedSamples(samples?.documents)
+          includedSamples(samples?.documents)
       })
     }
   }
@@ -92,13 +92,13 @@ export const SamplesTable = ({ showBatchInfo = true, batchId }: SamplesProps) =>
       getBatchSamples(userContext, batchId, data.pageSize, data.current, searchValue).then(
         (samples) => {
           setFilteredSamples(samples.documents), setPageCount(samples.document_count)
-          setCurrentPage(data.current), inclodedSamples(samples.documents)
+          setCurrentPage(data.current), includedSamples(samples.documents)
         }
       )
     } else {
       getSamples(userContext, data.pageSize, data.current).then((samples) => {
         setFilteredSamples(samples.documents), setPageCount(samples.document_count)
-        setCurrentPage(data.current), inclodedSamples(samples.documents)
+        setCurrentPage(data.current), includedSamples(samples.documents)
       })
     }
   }
