@@ -24,7 +24,7 @@ export const BatchesTable = () => {
   const [currentPage, setCurrentPage] = useState(1)
 
   useEffect(() => {
-    getBatches(userContext, 10, 0).then((batches) => {
+    getBatches(userContext, 10, 0, searchValue).then((batches) => {
       setFilteredBatches(batches?.documents), setPageCount(batches?.document_count)
     })
   }, [])
@@ -33,13 +33,13 @@ export const BatchesTable = () => {
     const escapeInput = escapeRegExp(searchInput)
     setSearchValue(escapeInput)
     setCurrentPage(1)
-    getBatchesByText(userContext, 0, 0, escapeInput).then((batches) => {
+    getBatches(userContext, 0, 0, escapeInput).then((batches) => {
       setFilteredBatches(batches?.documents), setPageCount(batches?.document_count)
     })
   }
 
   const onChange = (data) => {
-    getBatchesByText(userContext, data.pageSize, data.current, searchValue).then((batches) => {
+    getBatches(userContext, data.pageSize, data.current, searchValue).then((batches) => {
       setFilteredBatches(batches?.documents), setPageCount(batches?.document_count)
       setCurrentPage(data.current)
     })
