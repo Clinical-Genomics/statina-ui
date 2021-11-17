@@ -6,7 +6,7 @@ import { ErrorNotification, SuccessNotification } from '../../services/helpers/h
 import Plotly from 'plotly.js'
 import { getBatchSamples, getFetalFractionXYGraph } from '../../services/StatinaApi'
 import { UserContext } from '../../services/userContext'
-import { CloudDownloadOutlined } from '@ant-design/icons'
+import { CloudDownloadOutlined, LoadingOutlined } from '@ant-design/icons'
 import { ScatterData, Layout } from 'react-plotly.js'
 import { FetalFractionXYGraph } from '../../services/interfaces'
 import {
@@ -20,6 +20,8 @@ export const BatchTablePDF = ({ batchId }) => {
   const [data, setData] = useState<ScatterData[]>()
   const [layout, setLayout] = useState<Layout>()
   const userContext = useContext(UserContext)
+  const [isLoading, setIsLoading] = React.useState<boolean>(false)
+
   const graphId = 'pdf-report-graph'
 
   useEffect(() => {
@@ -30,6 +32,7 @@ export const BatchTablePDF = ({ batchId }) => {
   }, [])
 
   const exportPDF = () => {
+    setIsLoading(true)
     getBatchSamples(userContext, batchId, 0, 0, '').then(({ documents }) => {
       const graph = document.getElementById(graphId)
       const unit = 'pt'
@@ -100,6 +103,7 @@ export const BatchTablePDF = ({ batchId }) => {
               doc.addPage()
               doc.addImage(dataUrl, 'png', 15, 40, 800, 500)
               doc.save(`Statina - batch ${batchId}.pdf`)
+              setIsLoading(false)
               SuccessNotification({
                 type: 'success',
                 message: 'Download successfully!',
@@ -119,7 +123,7 @@ export const BatchTablePDF = ({ batchId }) => {
   return (
     <Button type="primary" onClick={(e) => exportPDF()}>
       Batch Report
-      <CloudDownloadOutlined />
+      {isLoading ? <LoadingOutlined /> : <CloudDownloadOutlined />}
       <div hidden>
         <div id={graphId}></div>
       </div>
