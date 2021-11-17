@@ -3,6 +3,7 @@ import Plot, { ScatterData, Layout } from 'react-plotly.js'
 import { getZScoreGraph } from '../../services/StatinaApi'
 import { UserContext } from '../../services/userContext'
 import { ZScoreGraph } from '../../services/interfaces'
+import { Loading } from '../Loading'
 
 type ZscoreGraphProps = {
   batchId: string
@@ -89,13 +90,17 @@ export const ZscoreGraph = ({ batchId, chromosome }: ZscoreGraphProps) => {
   const userContext = useContext(UserContext)
   const [data, setData] = useState<ScatterData[]>()
   const [layout, setLayout] = useState<Layout>()
+  const [isLoading, setIsLoading] = React.useState<boolean>(true)
 
   useEffect(() => {
-    getZScoreGraph(batchId, chromosome, userContext).then((response) => {
-      setData(buildData(response, chromosome))
-      setLayout(buildLayout(response, chromosome))
-    })
+    getZScoreGraph(batchId, chromosome, userContext)
+      .then((response) => {
+        setData(buildData(response, chromosome))
+        setLayout(buildLayout(response, chromosome))
+        setIsLoading(false)
+      })
+      .catch(() => setIsLoading(false))
   }, [])
 
-  return <Plot data={data} layout={layout} />
+  return isLoading ? <Loading /> : <Plot data={data} layout={layout} />
 }

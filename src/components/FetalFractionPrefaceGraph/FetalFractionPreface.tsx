@@ -3,6 +3,7 @@ import Plot, { ScatterData, Layout } from 'react-plotly.js'
 import { getFetalFractionPrefaceGraph } from '../../services/StatinaApi'
 import { FetalFractionPrefaceGraph } from '../../services/interfaces'
 import { UserContext } from '../../services/userContext'
+import { Loading } from '../Loading'
 
 type FetalFractionPrefaceProps = {
   batchId: string
@@ -134,19 +135,23 @@ export const FetalFractionPreface = ({ batchId }: FetalFractionPrefaceProps) => 
   const [layoutY, setLayoutY] = useState<Layout>()
   const [dataX, setDataX] = useState<ScatterData[]>()
   const [layoutX, setLayoutX] = useState<Layout>()
+  const [isLoading, setIsLoading] = React.useState<boolean>(true)
 
   useEffect(() => {
-    getFetalFractionPrefaceGraph(batchId, userContext).then(
-      (response: FetalFractionPrefaceGraph) => {
+    getFetalFractionPrefaceGraph(batchId, userContext)
+      .then((response: FetalFractionPrefaceGraph) => {
         setDataY(buildFFPFYGraphData(response))
         setLayoutY(buildFFPFYGraphLayout(response))
         setDataX(buildFFPFXGraphData(response))
         setLayoutX(buildFFPFXGraphLayout(response))
-      }
-    )
+        setIsLoading(false)
+      })
+      .catch(() => setIsLoading(false))
   }, [])
 
-  return (
+  return isLoading ? (
+    <Loading />
+  ) : (
     <>
       <Plot data={dataY} layout={layoutY} />
       <Plot data={dataX} layout={layoutX} />

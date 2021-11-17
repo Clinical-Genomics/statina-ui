@@ -7,6 +7,7 @@ import { CloudDownloadOutlined, QuestionCircleOutlined } from '@ant-design/icons
 import { red } from '@ant-design/colors'
 import { sampleStatusTags, sexTags, tagColors } from 'services/helpers/constants'
 import { escapeRegExp } from 'services/helpers/helpers'
+import { Loading } from '../Loading'
 
 type SamplesProps = {
   showBatchInfo?: boolean
@@ -22,16 +23,20 @@ export const SamplesTable = ({ showBatchInfo = true }: SamplesProps) => {
   const [pageCount, setPageCount] = useState(0)
   const [searchValue, setSearchValue] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
+  const [isLoading, setIsLoading] = React.useState<boolean>(true)
 
   useEffect(() => {
-    getSamples(userContext, 10, 0, searchValue).then((samples) => {
-      setFilteredSamples(samples?.documents),
-        setPageCount(samples?.document_count),
-        inclodedSamples(samples?.documents)
-    })
+    getSamples(userContext, 10, 0, searchValue)
+      .then((samples) => {
+        setFilteredSamples(samples?.documents),
+          setPageCount(samples?.document_count),
+          includedSamples(samples?.documents)
+        setIsLoading(false)
+      })
+      .catch(() => setIsLoading(false))
   }, [])
 
-  const inclodedSamples = (samples) => {
+  const includedSamples = (samples) => {
     if (samples?.length > 0) {
       const selectedKey: string[] = []
       samples.forEach((sample) => {
@@ -47,17 +52,18 @@ export const SamplesTable = ({ showBatchInfo = true }: SamplesProps) => {
     const escapeInput = escapeRegExp(searchInput)
     setSearchValue(escapeInput)
     setCurrentPage(1)
+    setSearchValue(escapeInput)
     getSamples(userContext, 0, 0, escapeInput).then((samples) => {
       setFilteredSamples(samples.documents),
         setPageCount(samples.document_count),
-        inclodedSamples(samples?.documents)
+        includedSamples(samples?.documents)
     })
   }
 
   const onChange = (data) => {
     getSamples(userContext, data.pageSize, data.current, searchValue).then((samples) => {
       setFilteredSamples(samples.documents), setPageCount(samples.document_count)
-      setCurrentPage(data.current), inclodedSamples(samples.documents)
+      setCurrentPage(data.current), includedSamples(samples.documents)
     })
   }
 
@@ -273,7 +279,9 @@ export const SamplesTable = ({ showBatchInfo = true }: SamplesProps) => {
     },
   ]
 
-  return (
+  return isLoading ? (
+    <Loading />
+  ) : (
     <>
       <Search
         allowClear

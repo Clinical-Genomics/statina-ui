@@ -11,6 +11,8 @@ import { FetalFractionXY } from '../../components/FetalFractionXYGraph/FetalFrac
 import { FetalFractionPreface } from '../../components/FetalFractionPrefaceGraph/FetalFractionPreface'
 import { ChromosomesRatioPlot } from '../../components/ChromosomesRatioPlot/ChromosomesRatioPlot'
 import { BatchSamplesTable } from 'components/BatchSamplesTable/BatchSamplesTable'
+import { Loading } from '../../components/Loading'
+import styles from './BatchPage.module.css'
 
 const { TabPane } = Tabs
 const { Title, Text } = Typography
@@ -21,11 +23,17 @@ export const BatchPage = () => {
   const [batch, setBatch] = useState<Batch | null>()
   const { pathname } = useLocation()
   const batchId = pathname.substring(pathname.lastIndexOf('/') + 1, pathname.length)
+  const [isLoading, setIsLoading] = React.useState<boolean>(true)
 
   useEffect(() => {
-    getBatch(batchId, userContext).then((batch) => {
-      setBatch(batch)
-    })
+    getBatch(batchId, userContext)
+      .then((batch) => {
+        setBatch(batch)
+        setIsLoading(false)
+      })
+      .catch(() => {
+        setIsLoading(false)
+      })
   }, [batchId])
 
   const updateComment = (e) => {
@@ -37,9 +45,10 @@ export const BatchPage = () => {
     })
   }
 
-  return (
-    <Card>
-      <div id="hiddenDiv" style={{ display: 'none' }}></div>
+  return isLoading ? (
+    <Loading />
+  ) : (
+    <Card className={styles.card}>
       <Row justify={'space-between'}>
         <Col style={{ marginBottom: 15 }}>
           <Title>{batchId}</Title>
@@ -50,32 +59,30 @@ export const BatchPage = () => {
         </Col>
       </Row>
       <Row>
-        {batch && (
-          <p>
-            <Text italic type="secondary">
-              Comment - press enter to save
-            </Text>
-            <TextArea onPressEnter={updateComment} defaultValue={batch?.comment} />
-          </p>
-        )}
+        <p>
+          <Text italic type="secondary">
+            Comment - press enter to save
+          </Text>
+          <TextArea onPressEnter={updateComment} defaultValue={batch?.comment} />
+        </p>
       </Row>
       <Tabs type="card">
         <TabPane tab="Summary Table" key="1">
           <BatchSamplesTable batchId={batchId} showBatchInfo />
         </TabPane>
-        <TabPane tab="Zscore 13" key="Zscore_13">
+        <TabPane tab="Zscore 13" key="Zscore_13" className={styles.tab}>
           <ZscoreGraph batchId={batchId} chromosome={13} />
         </TabPane>
-        <TabPane tab="Zscore 18" key="Zscore_18">
+        <TabPane tab="Zscore 18" key="Zscore_18" className={styles.tab}>
           <ZscoreGraph batchId={batchId} chromosome={18} />
         </TabPane>
-        <TabPane tab="Zscore 21" key="Zscore_21">
+        <TabPane tab="Zscore 21" key="Zscore_21" className={styles.tab}>
           <ZscoreGraph batchId={batchId} chromosome={21} />
         </TabPane>
-        <TabPane tab="Fetal Fraction Preface" key="Fetal_Fraction_Preface">
+        <TabPane tab="Fetal Fraction Preface" key="Fetal_Fraction_Preface" className={styles.tab}>
           <FetalFractionPreface batchId={batchId} chromosome={21} />
         </TabPane>
-        <TabPane tab="Fetal Fraction X/Y" key="Fetal_Fraction_X/Y">
+        <TabPane tab="Fetal Fraction X/Y" key="Fetal_Fraction_X/Y" className={styles.tab}>
           <FetalFractionXY batchId={batchId} chromosome={21} />
         </TabPane>
         <TabPane tab="Ratio (Chromosomes 1-22)" key="ratio">

@@ -6,6 +6,7 @@ import { Tooltip } from 'antd'
 import * as FileSaver from 'file-saver'
 import * as XLSX from 'xlsx'
 import { ErrorNotification, SuccessNotification } from 'services/helpers/helpers'
+import { DownloadOutlined } from '@ant-design/icons'
 
 export const ExportCSV = ({ fileName }: { fileName: string }) => {
   const [batches, setBatches] = useState<Batch[]>([])

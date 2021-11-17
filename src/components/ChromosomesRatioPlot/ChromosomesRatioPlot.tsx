@@ -4,6 +4,7 @@ import { getChromosomeRatioGraph } from '../../services/StatinaApi'
 import { FetalFractionXYGraph } from '../../services/interfaces'
 import { UserContext } from '../../services/userContext'
 import { ScatterData } from 'plotly.js'
+import { Loading } from '../Loading'
 
 type ChromosomesRatioPlotProps = {
   batchId: string
@@ -63,12 +64,16 @@ export const ChromosomesRatioPlot = ({ batchId }: ChromosomesRatioPlotProps) => 
   const userContext = useContext(UserContext)
   const [data, setData] = useState<ScatterData[]>()
   const [layout, setLayout] = useState<Layout>()
+  const [isLoading, setIsLoading] = React.useState<boolean>(true)
 
   useEffect(() => {
-    getChromosomeRatioGraph(batchId, userContext).then((response: FetalFractionXYGraph) => {
-      setData(buildData(response))
-      setLayout(buildLayout(response))
-    })
+    getChromosomeRatioGraph(batchId, userContext)
+      .then((response: FetalFractionXYGraph) => {
+        setData(buildData(response))
+        setLayout(buildLayout(response))
+        setIsLoading(false)
+      })
+      .catch(() => setIsLoading(false))
   }, [])
-  return <Plot data={data} layout={layout} />
+  return isLoading ? <Loading /> : <Plot data={data} layout={layout} />
 }
