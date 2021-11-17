@@ -14,7 +14,6 @@ import { CloudDownloadOutlined, QuestionCircleOutlined } from '@ant-design/icons
 import { red } from '@ant-design/colors'
 import { sampleStatusTags, sexTags, tagColors } from 'services/helpers/constants'
 import { escapeRegExp } from 'services/helpers/helpers'
-import fileDownload from 'js-file-download'
 
 type SamplesProps = {
   showBatchInfo?: boolean
@@ -83,7 +82,14 @@ export const SamplesTable = ({ showBatchInfo = true, batchId }: SamplesProps) =>
 
   const downloadSF = (sample) => {
     downloadSegmentalFraction(sample.sample_id, userContext).then((response) => {
-      fileDownload(response, `${sample.sample_id}.WCXpredict_aberrations.filt.bed`)
+      const fileName = sample.sample_id + 'WCXpredict_aberrations.filt.bed'
+      const fileBlob = new Blob([response])
+      const url = window.URL.createObjectURL(fileBlob)
+      const link = document.createElement('a')
+      link.href = url
+      link.setAttribute('download', fileName)
+      document.body.appendChild(link)
+      link.click()
     })
   }
 
