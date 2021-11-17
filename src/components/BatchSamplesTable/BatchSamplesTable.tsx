@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { UserContext } from '../../services/userContext'
-import { getSamples, includeSample } from '../../services/StatinaApi'
+import { getBatchSamples, includeSample, includeBatchSamples } from '../../services/StatinaApi'
 import { Input, Table, Tag, Tooltip, Typography } from 'antd'
 import { Link } from 'react-router-dom'
 import { CloudDownloadOutlined, QuestionCircleOutlined } from '@ant-design/icons'
@@ -10,12 +10,13 @@ import { escapeRegExp } from 'services/helpers/helpers'
 
 type SamplesProps = {
   showBatchInfo?: boolean
+  batchId: any
 }
 
 const { Search } = Input
 const { Text } = Typography
 
-export const SamplesTable = ({ showBatchInfo = true }: SamplesProps) => {
+export const BatchSamplesTable = ({ showBatchInfo = true, batchId }: SamplesProps) => {
   const userContext = useContext(UserContext)
   const [filteredSamples, setFilteredSamples] = useState<any[]>([])
   const [selectedRowKeys, setSelectedRowKeys] = useState<any[]>([])
@@ -24,7 +25,7 @@ export const SamplesTable = ({ showBatchInfo = true }: SamplesProps) => {
   const [currentPage, setCurrentPage] = useState(1)
 
   useEffect(() => {
-    getSamples(userContext, 10, 0, searchValue).then((samples) => {
+    getBatchSamples(userContext, batchId, 10, 0, searchValue).then((samples) => {
       setFilteredSamples(samples?.documents),
         setPageCount(samples?.document_count),
         inclodedSamples(samples?.documents)
@@ -47,7 +48,7 @@ export const SamplesTable = ({ showBatchInfo = true }: SamplesProps) => {
     const escapeInput = escapeRegExp(searchInput)
     setSearchValue(escapeInput)
     setCurrentPage(1)
-    getSamples(userContext, 0, 0, escapeInput).then((samples) => {
+    getBatchSamples(userContext, batchId, 0, 0, escapeInput).then((samples) => {
       setFilteredSamples(samples.documents),
         setPageCount(samples.document_count),
         inclodedSamples(samples?.documents)
@@ -55,14 +56,20 @@ export const SamplesTable = ({ showBatchInfo = true }: SamplesProps) => {
   }
 
   const onChange = (data) => {
-    getSamples(userContext, data.pageSize, data.current, searchValue).then((samples) => {
-      setFilteredSamples(samples.documents), setPageCount(samples.document_count)
-      setCurrentPage(data.current), inclodedSamples(samples.documents)
-    })
+    getBatchSamples(userContext, batchId, data.pageSize, data.current, searchValue).then(
+      (samples) => {
+        setFilteredSamples(samples.documents), setPageCount(samples.document_count)
+        setCurrentPage(data.current), inclodedSamples(samples.documents)
+      }
+    )
   }
 
   const showTotal = (total, range) => {
     return `${range[0]}-${range[1]} of ${total}`
+  }
+
+  const onSelectAll = (data) => {
+    includeBatchSamples(batchId, userContext, data)
   }
 
   const rowSelection = {
@@ -87,14 +94,6 @@ export const SamplesTable = ({ showBatchInfo = true }: SamplesProps) => {
       key: 'sample_id',
       fixed: 'left',
       render: (sample_id: any) => <Link to={`/samples/${sample_id}`}>{sample_id}</Link>,
-    },
-    {
-      title: 'Batch ID',
-      dataIndex: 'batch_id',
-      key: 'batch_id',
-      fixed: 'left',
-      visible: showBatchInfo,
-      render: (batch_id: any) => <Link to={`/batches/${batch_id}`}>{batch_id}</Link>,
     },
     {
       title: 'z_score 13',
@@ -295,7 +294,8 @@ export const SamplesTable = ({ showBatchInfo = true }: SamplesProps) => {
         scroll={{ x: 2300 }}
         rowSelection={{
           ...rowSelection,
-          hideSelectAll: true,
+          hideSelectAll: batchId ? false : true,
+          onSelectAll: onSelectAll,
           onSelect: handleSelect,
         }}
         onChange={onChange}
