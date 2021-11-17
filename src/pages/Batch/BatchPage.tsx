@@ -9,6 +9,7 @@ import { UserContext } from '../../services/userContext'
 import { SuccessNotification } from '../../services/helpers/helpers'
 import { Batch } from '../../services/interfaces'
 import { FetalFractionXY } from '../../components/FetalFractionXYGraph/FetalFractionXY'
+import { FetalFractionPreface } from '../../components/FetalFractionPrefaceGraph/FetalFractionPreface'
 import { ChromosomesRatioPlot } from '../../components/ChromosomesRatioPlot/ChromosomesRatioPlot'
 import { Loading } from '../../components/Loading'
 import styles from './BatchPage.module.css'
@@ -78,10 +79,13 @@ export const BatchPage = () => {
         <TabPane tab="Zscore 21" key="Zscore_21" className={styles.tab}>
           <ZscoreGraph batchId={batchId} chromosome={21} />
         </TabPane>
+        <TabPane tab="Fetal Fraction Preface" key="Fetal_Fraction_Preface" className={styles.tab}>
+          <FetalFractionPreface batchId={batchId} chromosome={21} />
+        </TabPane>
         <TabPane tab="Fetal Fraction X/Y" key="Fetal_Fraction_X/Y" className={styles.tab}>
           <FetalFractionXY batchId={batchId} chromosome={21} />
         </TabPane>
-        <TabPane tab="Ratio (Chromosomes 1-22)" key="ratio" className={styles.tab}>
+        <TabPane tab="Ratio (Chromosomes 1-22)" key="ratio">
           <ChromosomesRatioPlot batchId={batchId} />
         </TabPane>
       </Tabs>
