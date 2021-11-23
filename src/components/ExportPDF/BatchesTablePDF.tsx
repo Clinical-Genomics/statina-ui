@@ -46,10 +46,6 @@ export function BatchesTablePDF() {
       doc.text(title, marginLeft, 40)
       doc.autoTable(content)
       doc.save('Statina.pdf')
-      SuccessNotification({
-        type: 'success',
-        message: 'Download successfully!',
-      })
     }
   }
   return (
