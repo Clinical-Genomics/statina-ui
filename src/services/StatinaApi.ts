@@ -1,4 +1,4 @@
-import { createErrorNotification } from './helpers/helpers'
+import { createErrorNotification, SuccessNotification } from './helpers/helpers'
 import { Login, RegisterUser } from './interfaces'
 import { UserContext } from './userContext'
 const { REACT_APP_BACKEND_URL } = process.env
@@ -17,7 +17,11 @@ const axiosGET = (endPoint, { token, logout }: UserContext) => {
           logout()
         }
         reject(error)
-        createErrorNotification(error)
+        SuccessNotification({
+          type: 'info',
+          message: 'You were logged out',
+          description: 'Login again to browse the data',
+        })
       })
   })
 }
