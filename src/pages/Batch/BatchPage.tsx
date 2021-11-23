@@ -14,6 +14,7 @@ import { ChromosomesRatioPlot } from '../../components/ChromosomesRatioPlot/Chro
 import { Loading } from '../../components/Loading'
 import styles from './BatchPage.module.css'
 import { BatchDownloadFile } from '../../components/ExportPDF/BatchDownloadFiles'
+import { batchDownloadFileTypes } from '../../services/helpers/constants'
 
 const { TabPane } = Tabs
 const { Title, Text } = Typography
@@ -58,9 +59,9 @@ export const BatchPage = () => {
         <Col>
           <div className={styles.downloadButtons}>
             <BatchTablePDF batchId={batchId} />
-            <BatchDownloadFile batchId={batchId} fileType={'segmental_calls'} />
-            <BatchDownloadFile batchId={batchId} fileType={'multiqc_report'} />
-            <BatchDownloadFile batchId={batchId} fileType={'result_file'} />
+            {batchDownloadFileTypes.map((type) => (
+              <BatchDownloadFile batchId={batchId} fileType={type} key={type.name} />
+            ))}
           </div>
         </Col>
       </Row>
