@@ -133,8 +133,9 @@ export const createFileDownload = (response) => {
   const url = window.URL.createObjectURL(fileBlob)
   const link = document.createElement('a')
   link.href = url
-  const fileName = response.headers['content-disposition']?.split('filename=')[1]
-  console.log(response.headers)
+  const fileName = response.headers['content-disposition']
+    ?.split('filename=')[1]
+    .replace(/['"]+/g, '')
   link.setAttribute('download', fileName || 'statina-report')
   document.body.appendChild(link)
   link.click()
