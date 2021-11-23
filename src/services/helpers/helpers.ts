@@ -129,11 +129,13 @@ export const escapeRegExp = (input) => {
 }
 
 export const createFileDownload = (response) => {
-  const fileBlob: Blob = new Blob([response])
+  const fileBlob: Blob = new Blob([response.data])
   const url = window.URL.createObjectURL(fileBlob)
   const link = document.createElement('a')
   link.href = url
-  link.setAttribute('download', 'fileName')
+  const fileName = response.headers['content-disposition']?.split('filename=')[1]
+  console.log(response.headers)
+  link.setAttribute('download', fileName || 'statina-report')
   document.body.appendChild(link)
   link.click()
 }

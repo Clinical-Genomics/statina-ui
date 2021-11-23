@@ -26,6 +26,27 @@ const axiosGET = (endPoint, { token, logout }: UserContext) => {
   })
 }
 
+const axiosGETWholeResponse = (endPoint, { token, logout }: UserContext) => {
+  return new Promise((resolve, reject) => {
+    axios
+      .get(endPoint, { headers: { Authorization: `Bearer ${token}` } })
+      .then(function (response) {
+        resolve(response)
+      })
+      .catch(function (error) {
+        if (error?.response?.status === 401) {
+          logout()
+        }
+        reject(error)
+        SuccessNotification({
+          type: 'info',
+          message: 'You were logged out',
+          description: 'Login again to browse the data',
+        })
+      })
+  })
+}
+
 const axiosPUT = (endPoint, body, { token, logout }: UserContext) => {
   return new Promise((resolve, reject) => {
     axios
@@ -259,5 +280,5 @@ export const downloadBatchFiles = async (
   context: UserContext
 ): Promise<any> => {
   const endPoint = `${REACT_APP_BACKEND_URL}/batch/${batchId}/download/${fileType}`
-  return axiosGET(endPoint, context)
+  return axiosGETWholeResponse(endPoint, context)
 }
