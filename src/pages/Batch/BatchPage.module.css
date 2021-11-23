@@ -5,3 +5,7 @@
 .card {
   min-height: 600px;
 }
+
+.downloadButtons > button {
+  margin: 10px;
+}

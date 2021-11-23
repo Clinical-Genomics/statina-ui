@@ -10,6 +10,7 @@ export const BatchDownloadFile = ({ batchId, fileType }) => {
   const [isLoading, setIsLoading] = React.useState<boolean>(false)
 
   const downloadFile = (batchId) => {
+    setIsLoading(true)
     downloadBatchFiles(batchId, fileType, userContext).then((response) => {
       const fileBlob = new Blob([response])
       const url = window.URL.createObjectURL(fileBlob)
@@ -18,6 +19,7 @@ export const BatchDownloadFile = ({ batchId, fileType }) => {
       link.setAttribute('download', 'fileName')
       document.body.appendChild(link)
       link.click()
+      setIsLoading(false)
     })
   }
 

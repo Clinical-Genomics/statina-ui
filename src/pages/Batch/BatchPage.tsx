@@ -56,10 +56,12 @@ export const BatchPage = () => {
           <Text>Sequencing date: {batch?.sequencing_date}</Text>
         </Col>
         <Col>
-          <BatchTablePDF batchId={batchId} />
-          <BatchDownloadFile batchId={batchId} fileType={'segmental_calls'} />
-          <BatchDownloadFile batchId={batchId} fileType={'multiqc_report'} />
-          <BatchDownloadFile batchId={batchId} fileType={'result_file'} />
+          <div className={styles.downloadButtons}>
+            <BatchTablePDF batchId={batchId} />
+            <BatchDownloadFile batchId={batchId} fileType={'segmental_calls'} />
+            <BatchDownloadFile batchId={batchId} fileType={'multiqc_report'} />
+            <BatchDownloadFile batchId={batchId} fileType={'result_file'} />
+          </div>
         </Col>
       </Row>
       <Row>
