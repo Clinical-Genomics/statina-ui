@@ -19,7 +19,7 @@ export const BatchDownloadFile = ({ batchId, fileType }) => {
   }
 
   return (
-    <Button type="primary" onClick={(e) => downloadFile(batchId, fileType.type)}>
+    <Button type="dashed" onClick={(e) => downloadFile(batchId, fileType.type)}>
       {fileType.name}
       {isLoading ? <LoadingOutlined /> : <CloudDownloadOutlined />}
     </Button>
