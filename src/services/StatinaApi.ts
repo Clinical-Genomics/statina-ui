@@ -26,7 +26,7 @@ const axiosGET = (endPoint, { token, logout }: UserContext) => {
   })
 }
 
-const axiosGETWholeResponse = (endPoint, { token, logout }: UserContext) => {
+const axiosGETDownloadFile = (endPoint, { token, logout }: UserContext) => {
   return new Promise((resolve, reject) => {
     axios
       .get(endPoint, { headers: { Authorization: `Bearer ${token}` }, responseType: 'arraybuffer' })
@@ -280,5 +280,5 @@ export const downloadBatchFiles = async (
   context: UserContext
 ): Promise<any> => {
   const endPoint = `${REACT_APP_BACKEND_URL}/batch/${batchId}/download/${fileType}`
-  return axiosGETWholeResponse(endPoint, context)
+  return axiosGETDownloadFile(endPoint, context)
 }
