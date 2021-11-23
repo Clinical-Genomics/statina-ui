@@ -29,7 +29,7 @@ const axiosGET = (endPoint, { token, logout }: UserContext) => {
 const axiosGETWholeResponse = (endPoint, { token, logout }: UserContext) => {
   return new Promise((resolve, reject) => {
     axios
-      .get(endPoint, { headers: { Authorization: `Bearer ${token}` } })
+      .get(endPoint, { headers: { Authorization: `Bearer ${token}` }, responseType: 'arraybuffer' })
       .then(function (response) {
         resolve(response)
       })
