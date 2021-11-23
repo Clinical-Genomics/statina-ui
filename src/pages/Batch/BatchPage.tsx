@@ -13,6 +13,7 @@ import { FetalFractionPreface } from '../../components/FetalFractionPrefaceGraph
 import { ChromosomesRatioPlot } from '../../components/ChromosomesRatioPlot/ChromosomesRatioPlot'
 import { Loading } from '../../components/Loading'
 import styles from './BatchPage.module.css'
+import { BatchDownloadFile } from '../../components/ExportPDF/BatchDownloadFiles'
 
 const { TabPane } = Tabs
 const { Title, Text } = Typography
@@ -56,6 +57,9 @@ export const BatchPage = () => {
         </Col>
         <Col>
           <BatchTablePDF batchId={batchId} />
+          <BatchDownloadFile batchId={batchId} fileType={'segmental_calls'} />
+          <BatchDownloadFile batchId={batchId} fileType={'multiqc_report'} />
+          <BatchDownloadFile batchId={batchId} fileType={'result_file'} />
         </Col>
       </Row>
       <Row>

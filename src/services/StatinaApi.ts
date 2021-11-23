@@ -248,3 +248,12 @@ export const registerUser = async (formInput: RegisterUser): Promise<any> => {
   const endPoint = `${REACT_APP_BACKEND_URL}/user/register`
   return axiosPostToken(endPoint, formInput)
 }
+
+export const downloadBatchFiles = async (
+  batchId: string,
+  fileType: 'segmental_calls' | 'result_file' | 'multiqc_report',
+  context: UserContext
+): Promise<any> => {
+  const endPoint = `${REACT_APP_BACKEND_URL}/batch/${batchId}/download/${fileType}`
+  return axiosGET(endPoint, context)
+}
