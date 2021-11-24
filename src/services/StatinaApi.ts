@@ -1,4 +1,4 @@
-import { createErrorNotification } from './helpers/helpers'
+import { handleBackendError } from './helpers/helpers'
 import { Login, RegisterUser } from './interfaces'
 import { UserContext } from './userContext'
 const { REACT_APP_BACKEND_URL } = process.env
@@ -19,6 +19,17 @@ const axiosGET = (endPoint, { token, logout }: UserContext) => {
         reject(error)
         createErrorNotification(error)
       })
+      .then((response) => resolve(response.data))
+      .catch((error) => handleBackendError(error, reject, logout))
+  })
+}
+
+const axiosGETDownloadFile = (endPoint, { token, logout }: UserContext) => {
+  return new Promise((resolve, reject) => {
+    axios
+      .get(endPoint, { headers: { Authorization: `Bearer ${token}` }, responseType: 'arraybuffer' })
+      .then((response) => resolve(response))
+      .catch((error) => handleBackendError(error, reject, logout))
   })
 }
 
@@ -31,16 +42,8 @@ const axiosPUT = (endPoint, body, { token, logout }: UserContext) => {
           ContentType: 'application/x-www-form-urlencoded',
         },
       })
-      .then(function (response) {
-        resolve(response.data)
-      })
-      .catch(function (error) {
-        if (error?.response?.status === 401) {
-          logout()
-        }
-        reject(error)
-        createErrorNotification(error)
-      })
+      .then((response) => resolve(response.data))
+      .catch((error) => handleBackendError(error, reject, logout))
   })
 }
 
@@ -54,16 +57,8 @@ const axiosIncludePUT = (endPoint, { token, logout }: UserContext) => {
           ContentType: 'application/x-www-form-urlencoded',
         },
       })
-      .then(function (response) {
-        resolve(response.data)
-      })
-      .catch(function (error) {
-        if (error?.response?.status === 401) {
-          logout()
-        }
-        reject(error)
-        createErrorNotification(error)
-      })
+      .then((response) => resolve(response.data))
+      .catch((error) => handleBackendError(error, reject, logout))
   })
 }
 
@@ -77,16 +72,8 @@ const axiosIncludePATCH = (endPoint, { token, logout }: UserContext) => {
           ContentType: 'application/x-www-form-urlencoded',
         },
       })
-      .then(function (response) {
-        resolve(response.data)
-      })
-      .catch(function (error) {
-        if (error?.response?.status === 401) {
-          logout()
-        }
-        reject(error)
-        createErrorNotification(error)
-      })
+      .then((response) => resolve(response.data))
+      .catch((error) => handleBackendError(error, reject, logout))
   })
 }
 
@@ -99,13 +86,8 @@ const axiosPostToken = (endPoint, formInput) => {
           'Content-Type': 'application/x-www-form-urlencoded',
         },
       })
-      .then(function (response) {
-        resolve(response.data)
-      })
-      .catch(function (error) {
-        reject(error)
-        createErrorNotification(error)
-      })
+      .then((response) => resolve(response.data))
+      .catch((error) => handleBackendError(error, reject))
   })
 }
 
