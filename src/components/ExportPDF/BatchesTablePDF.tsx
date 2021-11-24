@@ -30,7 +30,9 @@ export function BatchesTablePDF({ searchValue }: BatchesTablePDFProps) {
 
         doc.setFontSize(15)
 
-        const title = 'Statina - NIPT Batches'
+        const title = searchValue
+          ? 'Statina - NIPT Batches - Search results'
+          : 'Statina - NIPT Batches'
         const headers = [['Batch_ID', 'Sequencing_Date', 'Flowcell_ID']]
 
         const data = documents.map((item) => [item.batch_id, item.sequencing_date, item.flowcell])
