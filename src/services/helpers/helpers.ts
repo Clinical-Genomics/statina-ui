@@ -140,3 +140,16 @@ export const createFileDownload = (response) => {
   document.body.appendChild(link)
   link.click()
 }
+
+export const handleBackendError = (error, reject, logout?) => {
+  createErrorNotification(error)
+  if (error?.response?.status === 401) {
+    logout()
+    SuccessNotification({
+      type: 'info',
+      message: 'You were logged out',
+      description: 'Login again to browse the data',
+    })
+  }
+  reject(error)
+}
