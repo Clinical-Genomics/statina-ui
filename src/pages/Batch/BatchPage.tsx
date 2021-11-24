@@ -10,9 +10,9 @@ import { Batch } from '../../services/interfaces'
 import { FetalFractionXY } from '../../components/FetalFractionXYGraph/FetalFractionXY'
 import { FetalFractionPreface } from '../../components/FetalFractionPrefaceGraph/FetalFractionPreface'
 import { ChromosomesRatioPlot } from '../../components/ChromosomesRatioPlot/ChromosomesRatioPlot'
-import { BatchSamplesTable } from 'components/BatchSamplesTable/BatchSamplesTable'
 import { Loading } from '../../components/Loading'
 import styles from './BatchPage.module.css'
+import { SamplesTable } from 'components/SamplesTable/SamplesTable'
 
 const { TabPane } = Tabs
 const { Title, Text } = Typography
@@ -68,7 +68,7 @@ export const BatchPage = () => {
       </Row>
       <Tabs type="card">
         <TabPane tab="Summary Table" key="1">
-          <BatchSamplesTable batchId={batchId} showBatchInfo />
+          <SamplesTable batchId={batchId} />
         </TabPane>
         <TabPane tab="Zscore 13" key="Zscore_13" className={styles.tab}>
           <ZscoreGraph batchId={batchId} chromosome={13} />

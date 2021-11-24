@@ -67,10 +67,10 @@ export const BatchesTable = () => {
   const downloadMenu = (
     <Menu style={{ width: 100, textAlign: 'center' }}>
       <Menu.Item key="excel">
-        <ExportCSV fileName={'Statina'} />
+        <ExportCSV fileName={'Statina'} searchValue={searchValue} />
       </Menu.Item>
       <Menu.Item key="pdf">
-        <BatchesTablePDF />
+        <BatchesTablePDF searchValue={searchValue} />
       </Menu.Item>
     </Menu>
   )
