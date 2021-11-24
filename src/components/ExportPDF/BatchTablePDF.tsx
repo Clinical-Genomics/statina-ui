@@ -4,7 +4,7 @@ import 'jspdf-autotable'
 import { Button } from 'antd'
 import { ErrorNotification, SuccessNotification } from '../../services/helpers/helpers'
 import Plotly from 'plotly.js'
-import { getBatchSamples, getFetalFractionXYGraph } from '../../services/StatinaApi'
+import { getSamples, getFetalFractionXYGraph } from '../../services/StatinaApi'
 import { UserContext } from '../../services/userContext'
 import { CloudDownloadOutlined, LoadingOutlined } from '@ant-design/icons'
 import { ScatterData, Layout } from 'react-plotly.js'
@@ -33,7 +33,7 @@ export const BatchTablePDF = ({ batchId }) => {
 
   const exportPDF = () => {
     setIsLoading(true)
-    getBatchSamples(userContext, batchId, 0, 0, '').then(({ documents }) => {
+    getSamples(userContext, 0, 0, batchId, '').then(({ documents }) => {
       const graph = document.getElementById(graphId)
       const unit = 'pt'
       const size = 'A4'
