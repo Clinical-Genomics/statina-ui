@@ -131,7 +131,6 @@ export const escapeRegExp = (input) => {
   return input.replace(/[^A-Za-z0-9 _]/g, '\\$&')
 }
 
-
 export const createFileDownload = (response) => {
   const fileBlob: Blob = new Blob([response.data])
   const url = window.URL.createObjectURL(fileBlob)
