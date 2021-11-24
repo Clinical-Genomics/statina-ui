@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Card, Tabs, Row, Col, Typography, Input } from 'antd'
 import { useLocation } from 'react-router-dom'
-import { SamplesTable } from '../../components/SamplesTable/SamplesTable'
 import { ZscoreGraph } from '../../components/ZscoreGraph/ZscoreGraph'
 import { BatchTablePDF } from '../../components/ExportPDF/BatchTablePDF'
 import { editBatchComment, getBatch } from '../../services/StatinaApi'
@@ -13,6 +12,7 @@ import { FetalFractionPreface } from '../../components/FetalFractionPrefaceGraph
 import { ChromosomesRatioPlot } from '../../components/ChromosomesRatioPlot/ChromosomesRatioPlot'
 import { Loading } from '../../components/Loading'
 import styles from './BatchPage.module.css'
+import { SamplesTable } from 'components/SamplesTable/SamplesTable'
 import { BatchDownloadFile } from '../../components/ExportPDF/BatchDownloadFiles'
 import { batchDownloadFileTypes } from '../../services/helpers/constants'
 
@@ -74,8 +74,8 @@ export const BatchPage = () => {
         </p>
       </Row>
       <Tabs type="card">
-        <TabPane tab="Summary Table" key="1" className={styles.tab}>
-          <SamplesTable batchId={batchId} showBatchInfo />
+        <TabPane tab="Summary Table" key="1">
+          <SamplesTable batchId={batchId} />
         </TabPane>
         <TabPane tab="Zscore 13" key="Zscore_13" className={styles.tab}>
           <ZscoreGraph batchId={batchId} chromosome={13} />

@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { UserContext } from '../../services/userContext'
-import { getBatches, getBatchesByText } from '../../services/StatinaApi'
+import { getBatches } from '../../services/StatinaApi'
 import { Button, Col, Dropdown, Input, Menu, Row, Table, Typography } from 'antd'
 import { escapeRegExp } from 'services/helpers/helpers'
 import { Batch } from 'services/interfaces'
@@ -20,8 +20,8 @@ export const BatchesTable = () => {
   const [currentPage, setCurrentPage] = useState(1)
 
   useEffect(() => {
-    getBatches(userContext, 10, 0).then((batches) => {
-      setFilteredBatches(() => batches?.documents), setPageCount(batches?.document_count)
+    getBatches(userContext, 10, 0, searchValue).then((batches) => {
+      setFilteredBatches(batches?.documents), setPageCount(batches?.document_count)
     })
   }, [])
 
@@ -29,13 +29,13 @@ export const BatchesTable = () => {
     const escapeInput = escapeRegExp(searchInput)
     setSearchValue(escapeInput)
     setCurrentPage(1)
-    getBatchesByText(userContext, 0, 0, escapeInput).then((batches) => {
+    getBatches(userContext, 0, 0, escapeInput).then((batches) => {
       setFilteredBatches(batches?.documents), setPageCount(batches?.document_count)
     })
   }
 
   const onChange = (data) => {
-    getBatchesByText(userContext, data.pageSize, data.current, searchValue).then((batches) => {
+    getBatches(userContext, data.pageSize, data.current, searchValue).then((batches) => {
       setFilteredBatches(batches?.documents), setPageCount(batches?.document_count)
       setCurrentPage(data.current)
     })
@@ -67,10 +67,10 @@ export const BatchesTable = () => {
   const downloadMenu = (
     <Menu style={{ width: 100, textAlign: 'center' }}>
       <Menu.Item key="excel">
-        <ExportCSV fileName={'Statina'} />
+        <ExportCSV fileName={'Statina'} searchValue={searchValue} />
       </Menu.Item>
       <Menu.Item key="pdf">
-        <BatchesTablePDF />
+        <BatchesTablePDF searchValue={searchValue} />
       </Menu.Item>
     </Menu>
   )
