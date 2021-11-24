@@ -36,10 +36,6 @@ export const ExportCSV = ({ fileName }: { fileName: string }) => {
       const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' })
       const data = new Blob([excelBuffer], { type: fileType })
       FileSaver.saveAs(data, fileName + fileExtension)
-      SuccessNotification({
-        type: 'success',
-        message: 'Download successfully!',
-      })
     }
   }
   return (

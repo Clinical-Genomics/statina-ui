@@ -13,6 +13,8 @@ import { FetalFractionPreface } from '../../components/FetalFractionPrefaceGraph
 import { ChromosomesRatioPlot } from '../../components/ChromosomesRatioPlot/ChromosomesRatioPlot'
 import { Loading } from '../../components/Loading'
 import styles from './BatchPage.module.css'
+import { BatchDownloadFile } from '../../components/ExportPDF/BatchDownloadFiles'
+import { batchDownloadFileTypes } from '../../services/helpers/constants'
 
 const { TabPane } = Tabs
 const { Title, Text } = Typography
@@ -55,7 +57,12 @@ export const BatchPage = () => {
           <Text>Sequencing date: {batch?.sequencing_date}</Text>
         </Col>
         <Col>
-          <BatchTablePDF batchId={batchId} />
+          <div className={styles.downloadButtons}>
+            <BatchTablePDF batchId={batchId} />
+            {batchDownloadFileTypes.map((type) => (
+              <BatchDownloadFile batchId={batchId} fileType={type} key={type.name} />
+            ))}
+          </div>
         </Col>
       </Row>
       <Row>

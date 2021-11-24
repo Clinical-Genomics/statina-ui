@@ -2,10 +2,7 @@ import { Notification } from '../interfaces'
 import { notification } from 'antd'
 import { AxiosError } from 'axios'
 import Cookies from 'universal-cookie'
-
-export const userCookie = 'statinaUser'
-
-export const statinaBackendRepo = 'https://github.com/Clinical-Genomics/statina/issues'
+import { userCookie } from './constants'
 
 export const ErrorNotification = ({ type, message, description }: Notification) => {
   const key = `open${Date.now()}`
@@ -129,4 +126,17 @@ export const removeCookies = (cookieName = userCookie) => {
 
 export const escapeRegExp = (input) => {
   return input.replace(/[^A-Za-z0-9 _]/g, '\\$&')
+}
+
+export const createFileDownload = (response) => {
+  const fileBlob: Blob = new Blob([response.data])
+  const url = window.URL.createObjectURL(fileBlob)
+  const link = document.createElement('a')
+  link.href = url
+  const fileName = response.headers['content-disposition']
+    ?.split('filename=')[1]
+    .replace(/['"]+/g, '')
+  link.setAttribute('download', fileName || 'statina-report')
+  document.body.appendChild(link)
+  link.click()
 }

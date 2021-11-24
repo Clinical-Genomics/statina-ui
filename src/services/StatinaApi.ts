@@ -1,4 +1,4 @@
-import { createErrorNotification } from './helpers/helpers'
+import { createErrorNotification, SuccessNotification } from './helpers/helpers'
 import { Login, RegisterUser } from './interfaces'
 import { UserContext } from './userContext'
 const { REACT_APP_BACKEND_URL } = process.env
@@ -17,7 +17,32 @@ const axiosGET = (endPoint, { token, logout }: UserContext) => {
           logout()
         }
         reject(error)
-        createErrorNotification(error)
+        SuccessNotification({
+          type: 'info',
+          message: 'You were logged out',
+          description: 'Login again to browse the data',
+        })
+      })
+  })
+}
+
+const axiosGETDownloadFile = (endPoint, { token, logout }: UserContext) => {
+  return new Promise((resolve, reject) => {
+    axios
+      .get(endPoint, { headers: { Authorization: `Bearer ${token}` }, responseType: 'arraybuffer' })
+      .then(function (response) {
+        resolve(response)
+      })
+      .catch(function (error) {
+        if (error?.response?.status === 401) {
+          logout()
+        }
+        reject(error)
+        SuccessNotification({
+          type: 'info',
+          message: 'You were logged out',
+          description: 'Login again to browse the data',
+        })
       })
   })
 }
@@ -247,4 +272,13 @@ export const login = async (formInput: Login): Promise<any> => {
 export const registerUser = async (formInput: RegisterUser): Promise<any> => {
   const endPoint = `${REACT_APP_BACKEND_URL}/user/register`
   return axiosPostToken(endPoint, formInput)
+}
+
+export const downloadBatchFiles = async (
+  batchId: string,
+  fileType: 'segmental_calls' | 'result_file' | 'multiqc_report',
+  context: UserContext
+): Promise<any> => {
+  const endPoint = `${REACT_APP_BACKEND_URL}/batch/${batchId}/download/${fileType}`
+  return axiosGETDownloadFile(endPoint, context)
 }

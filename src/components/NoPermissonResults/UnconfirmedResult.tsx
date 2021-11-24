@@ -1,7 +1,7 @@
 import { MailOutlined } from '@ant-design/icons'
 import { Result } from 'antd'
 import React from 'react'
-import { statinaBackendRepo } from '../../services/helpers/helpers'
+import { statinaBackendRepo } from '../../services/helpers/constants'
 
 export const UnconfirmedResult = () => (
   <Result
