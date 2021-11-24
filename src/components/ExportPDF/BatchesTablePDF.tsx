@@ -3,7 +3,7 @@ import { UserContext } from '../../services/userContext'
 import { getBatches } from '../../services/StatinaApi'
 import jsPDF from 'jspdf'
 import { Tooltip } from 'antd'
-import { ErrorNotification, SuccessNotification } from 'services/helpers/helpers'
+import { ErrorNotification } from 'services/helpers/helpers'
 
 type BatchesTablePDFProps = {
   searchValue: string
@@ -45,10 +45,6 @@ export function BatchesTablePDF({ searchValue }: BatchesTablePDFProps) {
         doc.text(title, marginLeft, 40)
         doc.autoTable(content)
         doc.save('Statina.pdf')
-        SuccessNotification({
-          type: 'success',
-          message: 'Download successfully!',
-        })
       }
     })
   }

@@ -4,7 +4,7 @@ import { getBatches } from '../../services/StatinaApi'
 import { Tooltip } from 'antd'
 import * as FileSaver from 'file-saver'
 import * as XLSX from 'xlsx'
-import { ErrorNotification, SuccessNotification } from 'services/helpers/helpers'
+import { ErrorNotification } from 'services/helpers/helpers'
 
 type BatchesTablePDFProps = {
   fileName: string
@@ -36,10 +36,6 @@ export const ExportCSV = ({ fileName, searchValue }: BatchesTablePDFProps) => {
         const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' })
         const data = new Blob([excelBuffer], { type: fileType })
         FileSaver.saveAs(data, fileName + fileExtension)
-        SuccessNotification({
-          type: 'success',
-          message: 'Download successfully!',
-        })
       }
     })
   }

@@ -104,10 +104,6 @@ export const BatchTablePDF = ({ batchId }) => {
               doc.addImage(dataUrl, 'png', 15, 40, 800, 500)
               doc.save(`Statina - batch ${batchId}.pdf`)
               setIsLoading(false)
-              SuccessNotification({
-                type: 'success',
-                message: 'Download successfully!',
-              })
             })
             .catch((error) => {
               ErrorNotification({
