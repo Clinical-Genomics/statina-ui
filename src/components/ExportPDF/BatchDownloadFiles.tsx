@@ -1,5 +1,4 @@
-import React, { useContext } from 'react'
-import 'jspdf-autotable'
+import React, { useContext, useState } from 'react'
 import { Button } from 'antd'
 import { downloadBatchFiles } from '../../services/StatinaApi'
 import { UserContext } from '../../services/userContext'
@@ -8,7 +7,7 @@ import { createFileDownload } from '../../services/helpers/helpers'
 
 export const BatchDownloadFile = ({ batchId, fileType }) => {
   const userContext = useContext(UserContext)
-  const [isLoading, setIsLoading] = React.useState<boolean>(false)
+  const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const downloadFile = (batchId, file) => {
     setIsLoading(true)
