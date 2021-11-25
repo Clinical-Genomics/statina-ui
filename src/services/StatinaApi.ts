@@ -211,3 +211,11 @@ export const downloadBatchFiles = async (
   const endPoint = `${REACT_APP_BACKEND_URL}/batch/${batchId}/download/${fileType}`
   return axiosGETDownloadFile(endPoint, context)
 }
+
+export const downloadSeqmentalCalls = async (
+  sample_id: string,
+  context: UserContext
+): Promise<any> => {
+  const endPoint = `${REACT_APP_BACKEND_URL}/sample/${sample_id}/download/segmental_calls`
+  return axiosGETDownloadFile(endPoint, context)
+}
