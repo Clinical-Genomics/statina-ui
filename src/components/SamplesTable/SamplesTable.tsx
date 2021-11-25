@@ -1,12 +1,17 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { UserContext } from '../../services/userContext'
-import { getSamples, includeSample, includeBatchSamples } from '../../services/StatinaApi'
+import {
+  getSamples,
+  includeSample,
+  includeBatchSamples,
+  downloadSeqmentalCalls,
+} from '../../services/StatinaApi'
 import { Input, Table, Tag, Tooltip, Typography } from 'antd'
 import { Link } from 'react-router-dom'
 import { CloudDownloadOutlined, QuestionCircleOutlined } from '@ant-design/icons'
 import { red } from '@ant-design/colors'
 import { sampleStatusTags, sexTags, tagColors } from 'services/helpers/constants'
-import { escapeRegExp } from 'services/helpers/helpers'
+import { createFileDownload, escapeRegExp } from 'services/helpers/helpers'
 import { Loading } from '../Loading'
 
 type SamplesProps = {
@@ -83,6 +88,12 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
 
   const handleSelect = (record, selected) => {
     includeSample(record.sample_id, userContext, selected)
+  }
+
+  const downloadSC = (sample) => {
+    downloadSeqmentalCalls(sample.sample_id, userContext).then((file) => {
+      createFileDownload(file)
+    })
   }
 
   const columns: any = [
@@ -258,9 +269,12 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
       key: 'segmental_calls',
       width: 120,
       render: (sample: any) => (
-        <a href={`/sample_download/${sample.sample_id}/segmental_calls`} download>
+        <span
+          onClick={() => downloadSC(sample)}
+          style={{ cursor: 'pointer', border: 'none', color: '#16a4f2' }}
+        >
           <CloudDownloadOutlined style={{ fontSize: '30px', marginLeft: '30%' }} />
-        </a>
+        </span>
       ),
     },
     {

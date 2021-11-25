@@ -32,7 +32,7 @@ export const userCookie = 'statinaUser'
 export const statinaBackendRepo = 'https://github.com/Clinical-Genomics/statina/issues'
 
 export const batchDownloadFileTypes = [
-  { name: 'Result file', type: 'result_file' },
+  { name: 'Fluffy Result file', type: 'result_file' },
   { name: 'MultiQC', type: 'multiqc_report' },
-  { name: 'Segmental calls', type: 'segmental_calls' },
+  { name: 'Full Batch Archive', type: 'segmental_calls' },
 ]
