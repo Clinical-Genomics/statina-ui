@@ -49,7 +49,7 @@ export const BatchesTable = () => {
     deleteBatch(batch_id, userContext).then(() => {
       SuccessNotification({
         type: 'success',
-        message: `Batch (${batch_id}) deleted`,
+        message: `Batch ${batch_id} deleted`,
       })
       getBatches(userContext, 10, 0, searchValue).then((batches) => {
         setFilteredBatches(batches?.documents), setPageCount(batches?.document_count)
