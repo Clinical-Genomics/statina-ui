@@ -1,13 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { UserContext } from '../../services/userContext'
-import { getBatches } from '../../services/StatinaApi'
-import { Button, Col, Dropdown, Input, Menu, Row, Table, Typography } from 'antd'
-import { escapeRegExp } from 'services/helpers/helpers'
+import { deleteBatch, getBatches } from '../../services/StatinaApi'
+import { Button, Col, Dropdown, Input, Menu, Row, Table, Typography, Popconfirm } from 'antd'
+import { escapeRegExp, SuccessNotification } from 'services/helpers/helpers'
 import { Batch } from 'services/interfaces'
 import { Link } from 'react-router-dom'
 import { ExportCSV } from 'components/ExportCSV/ExportCSV'
 import { BatchesTablePDF } from 'components/ExportPDF/BatchesTablePDF'
-import { DownOutlined } from '@ant-design/icons'
+import { DownOutlined, DeleteTwoTone } from '@ant-design/icons'
 
 const { Search } = Input
 const { Text } = Typography
@@ -45,6 +45,18 @@ export const BatchesTable = () => {
     return `${range[0]}-${range[1]} of ${total}`
   }
 
+  const confirmDeleteBatch = ({ batch_id }) => {
+    deleteBatch(batch_id, userContext).then(() => {
+      SuccessNotification({
+        type: 'success',
+        message: `Batch (${batch_id}) deleted`,
+      })
+      getBatches(userContext, 10, 0, searchValue).then((batches) => {
+        setFilteredBatches(batches?.documents), setPageCount(batches?.document_count)
+      })
+    })
+  }
+
   const columns: any = [
     {
       title: 'Batch ID',
@@ -61,6 +73,20 @@ export const BatchesTable = () => {
       title: 'Flowcell ID',
       dataIndex: 'flowcell',
       key: 'flowcell',
+    },
+    {
+      title: 'Delete Batch',
+      key: 'delete_batch_id',
+      render: (batch_id: any) => (
+        <Popconfirm
+          title="Are you sure you want to delete this batch?"
+          onConfirm={() => confirmDeleteBatch(batch_id)}
+          okText="Yes"
+          cancelText="No"
+        >
+          <DeleteTwoTone style={{ fontSize: '20px' }} />
+        </Popconfirm>
+      ),
     },
   ]
 
