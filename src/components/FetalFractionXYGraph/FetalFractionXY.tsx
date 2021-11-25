@@ -22,7 +22,7 @@ export const buildFFXYGraphData = (response: FetalFractionXYGraph): ScatterData[
       name: `Negative N=${response.control?.count}`,
       mode: 'markers',
       type: 'scatter',
-      marker: { color: '#ccccb3' },
+      marker: { color: '#e0dede' },
     },
   ]
   response.cases?.names?.forEach((name, index) => {
@@ -33,6 +33,11 @@ export const buildFFXYGraphData = (response: FetalFractionXYGraph): ScatterData[
       mode: 'markers',
       text: name,
       type: 'scatter',
+      marker: {
+        size: 15,
+        symbol: index < 30 ? index : index + 100,
+        type: 'scatter',
+      },
     })
   })
 
