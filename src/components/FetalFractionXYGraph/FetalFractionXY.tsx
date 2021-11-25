@@ -34,9 +34,8 @@ export const buildFFXYGraphData = (response: FetalFractionXYGraph): ScatterData[
       text: name,
       type: 'scatter',
       marker: {
-        line: { width: 2 },
-        size: 7,
-        symbol: 'diamond-cross',
+        size: 10,
+        symbol: index < 20 ? index : index + 100,
         type: 'scatter',
       },
     })
