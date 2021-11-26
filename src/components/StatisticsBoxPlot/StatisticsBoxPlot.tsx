@@ -21,8 +21,7 @@ const buildLayout = (selectedPlot: string, statistics: any): Layout => {
     title: `${selectedPlot} - ${statistics.nr_batches} most recent batches`,
     hovermode: 'closest',
     margin: { b: 100 },
-    height: 800,
-    width: 1200,
+    height: 600,
     xaxis: {
       showline: true,
       tickvals: statistics.ticks,
@@ -49,6 +48,7 @@ export const StatisticsBoxPlot = ({ selectedPlot, statistics }: StatisticsBoxPlo
     <Plot
       data={buildData(selectedPlot, statistics)}
       layout={buildLayout(selectedPlot, statistics)}
+      style={{ width: '100%' }}
     />
   )
 }

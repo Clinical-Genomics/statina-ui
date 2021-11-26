@@ -26,7 +26,6 @@ const buildLayout = (selectedPlot: string, statistics: any): Layout => {
     hovermode: 'closest',
     margin: { b: 100 },
     height: 600,
-    width: 1000,
     xaxis: {
       showline: true,
       tickvals: statistics.ticks,
@@ -53,6 +52,7 @@ export const StatisticsScatterPlot = ({ selectedPlot, statistics }: StatisticsSc
     <Plot
       data={buildData(selectedPlot, statistics)}
       layout={buildLayout(selectedPlot, statistics)}
+      style={{ width: '100%' }}
     />
   )
 }
