@@ -9,12 +9,10 @@ import { UserContext } from '../../services/userContext'
 import { CloudDownloadOutlined, LoadingOutlined } from '@ant-design/icons'
 import { ScatterData, Layout } from 'react-plotly.js'
 import { FetalFractionXYGraph } from '../../services/interfaces'
-import {
-  buildFFXYGraphData,
-  buildFFXYGraphLayout,
-  fFXYGraphHeight,
-  fFXYGraphWidth,
-} from '../FetalFractionXYGraph/FetalFractionXY'
+import { buildFFXYGraphData, buildFFXYGraphLayout } from '../FetalFractionXYGraph/FetalFractionXY'
+
+const fFXYGraphHeight = 1000
+const fFXYGraphWidth = 1200
 
 export const BatchTablePDF = ({ batchId }) => {
   const [data, setData] = useState<ScatterData[]>()

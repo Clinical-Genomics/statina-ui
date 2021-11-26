@@ -10,9 +10,6 @@ type FetalFractionXYGraphProps = {
   chromosome: number
 }
 
-export const fFXYGraphHeight = 600
-export const fFXYGraphWidth = 1200
-
 export const buildFFXYGraphData = (response: FetalFractionXYGraph): ScatterData[] => {
   const data: ScatterData[] = [
     {
@@ -80,7 +77,7 @@ export const buildFFXYGraphData = (response: FetalFractionXYGraph): ScatterData[
 export const buildFFXYGraphLayout = (
   response: FetalFractionXYGraph,
   isPDF = false,
-  height = fFXYGraphHeight
+  height = 600
 ): Layout => {
   return {
     annotations: [],
