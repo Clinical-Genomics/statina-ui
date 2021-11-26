@@ -81,6 +81,18 @@ const axiosPostToken = (endPoint, formInput) => {
   })
 }
 
+const axiosDELETE = (endPoint, body, { token, logout }: UserContext) => {
+  axios.delete(endPoint, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      ContentType: 'application/x-www-form-urlencoded',
+    },
+    data: {
+      source: body,
+    },
+  })
+}
+
 export const getBatches = async (
   context: UserContext,
   pageSize,
@@ -218,4 +230,9 @@ export const downloadSeqmentalCalls = async (
 ): Promise<any> => {
   const endPoint = `${REACT_APP_BACKEND_URL}/sample/${sample_id}/download/segmental_calls`
   return axiosGETDownloadFile(endPoint, context)
+}
+
+export const deleteBatch = async (batchId: string, context: UserContext): Promise<any> => {
+  const endPoint = `${REACT_APP_BACKEND_URL}/batch/${batchId}`
+  return axiosDELETE(endPoint, batchId, context)
 }
