@@ -10,7 +10,7 @@ type FetalFractionXYGraphProps = {
   chromosome: number
 }
 
-export const fFXYGraphHeight = 1000
+export const fFXYGraphHeight = 600
 export const fFXYGraphWidth = 1200
 
 export const buildFFXYGraphData = (response: FetalFractionXYGraph): ScatterData[] => {
@@ -80,12 +80,10 @@ export const buildFFXYGraphData = (response: FetalFractionXYGraph): ScatterData[
 export const buildFFXYGraphLayout = (
   response: FetalFractionXYGraph,
   isPDF = false,
-  width = fFXYGraphWidth,
   height = fFXYGraphHeight
 ): Layout => {
   return {
     annotations: [],
-    width: width,
     height: height,
     legend: { hovermode: 'closest', orientation: isPDF ? 'h' : 'v' },
     hovermode: 'closest',
@@ -126,5 +124,5 @@ export const FetalFractionXY = ({ batchId }: FetalFractionXYGraphProps) => {
       .catch(() => setIsLoading(false))
   }, [])
 
-  return isLoading ? <Loading /> : <Plot data={data} layout={layout} />
+  return isLoading ? <Loading /> : <Plot data={data} layout={layout} style={{ width: '100%' }} />
 }
