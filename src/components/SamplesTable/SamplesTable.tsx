@@ -5,19 +5,20 @@ import {
   includeSample,
   includeBatchSamples,
   downloadSeqmentalCalls,
+  editSample,
 } from '../../services/StatinaApi'
-import { Input, Table, Tag, Tooltip, Typography } from 'antd'
+import { Input, Popover, Table, Tag, Tooltip, Typography } from 'antd'
 import { Link } from 'react-router-dom'
 import { CloudDownloadOutlined, QuestionCircleOutlined } from '@ant-design/icons'
 import { red } from '@ant-design/colors'
 import { sampleStatusTags, sexTags, tagColors } from 'services/helpers/constants'
-import { createFileDownload, escapeRegExp } from 'services/helpers/helpers'
+import { createFileDownload, escapeRegExp, SuccessNotification } from 'services/helpers/helpers'
 import { Loading } from '../Loading'
 
 type SamplesProps = {
   batchId?: any
 }
-
+const { TextArea } = Input
 const { Search } = Input
 const { Text } = Typography
 
@@ -94,6 +95,25 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
     downloadSeqmentalCalls(sample.sample_id, userContext).then((file) => {
       createFileDownload(file)
     })
+  }
+
+  const onCommentChange = ({ sample_id }, e) => {
+    if (e?.target?.value === '\n') {
+      const comment = ''
+      editSample(sample_id, `comment=${comment}`, 'comment', userContext).then(() => {
+        SuccessNotification({
+          type: 'success',
+          message: 'Comment updated',
+        })
+      })
+    } else {
+      editSample(sample_id, `comment=${e?.target?.value}`, 'comment', userContext).then(() => {
+        SuccessNotification({
+          type: 'success',
+          message: 'Comment updated',
+        })
+      })
+    }
   }
 
   const columns: any = [
@@ -282,6 +302,9 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
       dataIndex: 'comment',
       key: 'comment',
       width: 200,
+      render: (comment: string, sample: any) => (
+        <TextArea onPressEnter={(e) => onCommentChange(sample, e)} defaultValue={comment} />
+      ),
     },
     {
       title: 'Last changed',
