@@ -180,8 +180,15 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
       dataIndex: 'fetal_fraction',
       key: 'fetalFractionPreface',
       width: 100,
-      render(fetalFraction) {
-        return <div>{fetalFraction.preface}</div>
+      render(fetalFraction, sample) {
+        return {
+          props: {
+            style: {
+              background: sample.text_warning.includes('fetal_fraction_pf') ? red[1] : null,
+            },
+          },
+          children: <div>{fetalFraction.preface}</div>,
+        }
       },
     },
     {
@@ -189,8 +196,15 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
       dataIndex: 'fetal_fraction',
       key: 'fetalFractionX',
       width: 100,
-      render(fetalFraction) {
-        return <div>{fetalFraction.x}</div>
+      render(fetalFraction, sample) {
+        return {
+          props: {
+            style: {
+              background: sample.text_warning.includes('fetal_fraction_x') ? red[1] : null,
+            },
+          },
+          children: <div>{fetalFraction.x}</div>,
+        }
       },
     },
     {
@@ -198,8 +212,15 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
       dataIndex: 'fetal_fraction',
       key: 'fetalFractionY',
       width: 100,
-      render(fetalFraction) {
-        return <div>{fetalFraction.y}</div>
+      render(fetalFraction, sample) {
+        return {
+          props: {
+            style: {
+              background: sample.text_warning.includes('fetal_fraction_y') ? red[1] : null,
+            },
+          },
+          children: <div>{fetalFraction.y}</div>,
+        }
       },
     },
     {
