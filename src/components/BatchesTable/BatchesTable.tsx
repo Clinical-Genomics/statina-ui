@@ -7,13 +7,14 @@ import { Batch } from 'services/interfaces'
 import { Link } from 'react-router-dom'
 import { ExportCSV } from 'components/ExportCSV/ExportCSV'
 import { BatchesTablePDF } from 'components/ExportPDF/BatchesTablePDF'
-import { DownOutlined, DeleteTwoTone } from '@ant-design/icons'
+import { DownOutlined, DeleteTwoTone, DeleteOutlined } from '@ant-design/icons'
 
 const { Search } = Input
 const { Text } = Typography
 
 export const BatchesTable = () => {
   const userContext = useContext(UserContext)
+  const { permissions } = userContext
   const [filteredBatches, setFilteredBatches] = useState<Batch[]>([])
   const [pageCount, setPageCount] = useState(0)
   const [searchValue, setSearchValue] = useState('')
@@ -77,6 +78,7 @@ export const BatchesTable = () => {
     {
       title: 'Delete Batch',
       key: 'delete_batch_id',
+      hidden: !permissions.includes('RW'),
       render: (batch_id: any) => (
         <Popconfirm
           title="Are you sure you want to delete this batch?"
@@ -88,7 +90,7 @@ export const BatchesTable = () => {
         </Popconfirm>
       ),
     },
-  ]
+  ].filter((column) => !column.hidden)
 
   const downloadMenu = (
     <Menu style={{ width: 100, textAlign: 'center' }}>
