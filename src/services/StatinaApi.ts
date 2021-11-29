@@ -82,14 +82,19 @@ const axiosPostToken = (endPoint, formInput) => {
 }
 
 const axiosDELETE = (endPoint, body, { token, logout }: UserContext) => {
-  axios.delete(endPoint, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-      ContentType: 'application/x-www-form-urlencoded',
-    },
-    data: {
-      source: body,
-    },
+  return new Promise((resolve, reject) => {
+    axios
+      .delete(endPoint, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          ContentType: 'application/x-www-form-urlencoded',
+        },
+        data: {
+          source: body,
+        },
+      })
+      .then((response) => resolve(response.data))
+      .catch((error) => handleBackendError(error, reject))
   })
 }
 
