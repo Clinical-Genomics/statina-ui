@@ -58,7 +58,13 @@ export const Routes = (props: RoutesProps) => {
           isLoggedIn === true ? <SamplesPage /> : <Redirect to={{ pathname: '/login' }} />
         }
       />
-      <Route path="/samples/:sampleId" component={SamplePage} />
+      <Route
+        path="/samples/:sampleId"
+        exact
+        render={() =>
+          isLoggedIn === true ? <SamplePage /> : <Redirect to={{ pathname: '/login' }} />
+        }
+      />
       <Route
         path="/statistics"
         exact

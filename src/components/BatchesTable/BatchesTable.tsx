@@ -78,7 +78,7 @@ export const BatchesTable = () => {
     {
       title: 'Delete Batch',
       key: 'delete_batch_id',
-      hidden: !permissions.includes('RW'),
+      hidden: !permissions?.includes('RW'),
       render: (batch_id: any) => (
         <Popconfirm
           title="Are you sure you want to delete this batch?"

@@ -18,6 +18,7 @@ export function SamplePage() {
   const [error, setError] = useState<any>()
   const [abnormalStatusTags, setAbnormalStatusTags] = useState<any>()
   const userContext = useContext(UserContext)
+  const { permissions } = userContext
   const { Option } = Select
   const { pathname } = useLocation()
   const sampleId = pathname.substring(pathname.lastIndexOf('/') + 1, pathname.length)
@@ -53,19 +54,24 @@ export function SamplePage() {
       title: 'Status',
       dataIndex: 'status',
       key: 'status',
-      render: (key, chromosome) => (
-        <Select
-          defaultValue={chromosome[1].status || sampleStatusTags.normal.label}
-          style={{ width: 120 }}
-          onChange={(value) => onStatusChange(value, chromosome[0])}
-        >
-          {Object.values(sampleStatusTags).map((status) => (
-            <Option value={status.label} key={status.label}>
-              {status.label}
-            </Option>
-          ))}
-        </Select>
-      ),
+      render: (key, chromosome) =>
+        permissions?.includes('RW') ? (
+          <Select
+            defaultValue={chromosome[1].status || sampleStatusTags.normal.label}
+            style={{ width: 120 }}
+            onChange={(value) => onStatusChange(value, chromosome[0])}
+          >
+            {Object.values(sampleStatusTags).map((status) => (
+              <Option value={status.label} key={status.label}>
+                {status.label}
+              </Option>
+            ))}
+          </Select>
+        ) : (
+          <Tag color={sampleStatusTags[chromosome[1].status.toLowerCase()]?.color} key={status}>
+            {chromosome[1].status || sampleStatusTags.normal.label}
+          </Tag>
+        ),
     },
     {
       title: 'Latest change',
