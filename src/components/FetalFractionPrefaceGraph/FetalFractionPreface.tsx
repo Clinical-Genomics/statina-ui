@@ -10,8 +10,7 @@ type FetalFractionPrefaceProps = {
   chromosome: number
 }
 
-const fFPFGraphWidth = 1200
-const fFPFGraphHeight = 800
+const fFPFGraphHeight = 600
 
 const buildFFPFYGraphData = (response: FetalFractionPrefaceGraph): ScatterData[] => {
   const data: ScatterData[] = [
@@ -41,12 +40,10 @@ const buildFFPFYGraphData = (response: FetalFractionPrefaceGraph): ScatterData[]
 
 const buildFFPFYGraphLayout = (
   response: FetalFractionPrefaceGraph,
-  width = fFPFGraphWidth,
   height = fFPFGraphHeight
 ): Layout => {
   return {
     annotations: [],
-    width: width,
     height: height,
     legend: { hovermode: 'closest', orientation: 'v' },
     hovermode: 'closest',
@@ -99,12 +96,10 @@ const buildFFPFXGraphData = (response: FetalFractionPrefaceGraph): ScatterData[]
 
 const buildFFPFXGraphLayout = (
   response: FetalFractionPrefaceGraph,
-  width = fFPFGraphWidth,
   height = fFPFGraphHeight
 ): Layout => {
   return {
     annotations: [],
-    width: width,
     height: height,
     legend: { hovermode: 'closest', orientation: 'v' },
     hovermode: 'closest',
@@ -153,8 +148,8 @@ export const FetalFractionPreface = ({ batchId }: FetalFractionPrefaceProps) => 
     <Loading />
   ) : (
     <>
-      <Plot data={dataY} layout={layoutY} />
-      <Plot data={dataX} layout={layoutX} />
+      <Plot data={dataY} layout={layoutY} style={{ width: '100%' }} />
+      <Plot data={dataX} layout={layoutX} style={{ width: '100%' }} />
     </>
   )
 }

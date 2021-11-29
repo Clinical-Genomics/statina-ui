@@ -61,7 +61,6 @@ const buildLayout = (sampleId): Layout => {
   return {
     title: `Sample: ${sampleId}`,
     legend: { hovermode: 'closest' },
-    width: 1000,
     height: 500,
     hovermode: 'closest',
     annotations: [],
@@ -98,5 +97,5 @@ export const SamplePlot = ({ sampleId }: SamplePlotProps) => {
     })
   }, [])
 
-  return <Plot data={data} layout={layout} />
+  return <Plot data={data} layout={layout} style={{ width: '100%' }} />
 }

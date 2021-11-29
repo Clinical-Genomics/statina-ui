@@ -37,7 +37,6 @@ const buildLayout = (statistics: any): Layout => {
   return {
     legend: { hovermode: 'closest' },
     hovermode: 'closest',
-    width: 1200,
     height: 600,
     xaxis: {
       showline: true,
@@ -75,5 +74,5 @@ export const ChromosomesRatioPlot = ({ batchId }: ChromosomesRatioPlotProps) => 
       })
       .catch(() => setIsLoading(false))
   }, [])
-  return isLoading ? <Loading /> : <Plot data={data} layout={layout} />
+  return isLoading ? <Loading /> : <Plot data={data} layout={layout} style={{ width: '100%' }} />
 }

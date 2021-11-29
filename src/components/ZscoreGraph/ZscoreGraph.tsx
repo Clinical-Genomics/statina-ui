@@ -77,8 +77,6 @@ const buildLayout = (response: ZScoreGraph, chromosome: number): Layout => {
       range: [-10, 10],
       title: response?.ncv_chrom_data[chromosome]?.ncv_values,
     },
-    width: 1200,
-    height: 600,
     margin: {
       b: 100,
       pad: 4,
@@ -102,5 +100,5 @@ export const ZscoreGraph = ({ batchId, chromosome }: ZscoreGraphProps) => {
       .catch(() => setIsLoading(false))
   }, [])
 
-  return isLoading ? <Loading /> : <Plot data={data} layout={layout} />
+  return isLoading ? <Loading /> : <Plot data={data} layout={layout} style={{ width: '100%' }} />
 }
