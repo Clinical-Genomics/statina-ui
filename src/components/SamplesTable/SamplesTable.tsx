@@ -18,9 +18,10 @@ import { Loading } from '../Loading'
 type SamplesProps = {
   batchId?: any
 }
-const { TextArea } = Input
+
 const { Search } = Input
 const { Text } = Typography
+const { Paragraph } = Typography
 
 export const SamplesTable = ({ batchId }: SamplesProps) => {
   const userContext = useContext(UserContext)
@@ -98,22 +99,18 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
   }
 
   const onCommentChange = ({ sample_id }, e) => {
-    if (e?.target?.value === '\n') {
-      const comment = ''
-      editSample(sample_id, `comment=${comment}`, 'comment', userContext).then(() => {
-        SuccessNotification({
-          type: 'success',
-          message: 'Comment updated',
-        })
+    editSample(sample_id, `comment=${e ? e : ' '}`, 'comment', userContext).then(() => {
+      SuccessNotification({
+        type: 'success',
+        message: 'Comment updated',
       })
-    } else {
-      editSample(sample_id, `comment=${e?.target?.value}`, 'comment', userContext).then(() => {
-        SuccessNotification({
-          type: 'success',
-          message: 'Comment updated',
-        })
+      getSamples(userContext, 10, currentPage, batchId, searchValue).then((samples) => {
+        setFilteredSamples(samples?.documents),
+          setPageCount(samples?.document_count),
+          includedSamples(samples?.documents)
+        setIsLoading(false)
       })
-    }
+    })
   }
 
   const columns: any = [
@@ -303,7 +300,14 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
       key: 'comment',
       width: 200,
       render: (comment: string, sample: any) => (
-        <TextArea onPressEnter={(e) => onCommentChange(sample, e)} defaultValue={comment} />
+        <Paragraph
+          editable={{
+            onChange: (e) => onCommentChange(sample, e),
+            tooltip: false,
+          }}
+        >
+          {comment}
+        </Paragraph>
       ),
     },
     {
