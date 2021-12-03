@@ -9,9 +9,8 @@ import { SuccessNotification } from '../../services/helpers/helpers'
 import { Sample } from '../../services/interfaces'
 import { sampleStatusTags, sexTags } from '../../services/helpers/constants'
 import { SamplePlot } from '../../components/SamplePlot/SamplePlot'
-import Paragraph from 'antd/es/typography/Paragraph'
 
-const { Title } = Typography
+const { Paragraph, Title } = Typography
 
 export function SamplePage() {
   const [sample, setSample] = useState<Sample>()

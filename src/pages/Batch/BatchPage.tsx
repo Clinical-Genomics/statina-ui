@@ -15,10 +15,9 @@ import styles from './BatchPage.module.css'
 import { SamplesTable } from 'components/SamplesTable/SamplesTable'
 import { BatchDownloadFile } from '../../components/ExportPDF/BatchDownloadFiles'
 import { batchDownloadFileTypes } from '../../services/helpers/constants'
-import Paragraph from 'antd/es/typography/Paragraph'
 
 const { TabPane } = Tabs
-const { Title, Text } = Typography
+const { Paragraph, Title, Text } = Typography
 
 export const BatchPage = () => {
   const userContext = useContext(UserContext)
