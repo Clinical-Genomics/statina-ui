@@ -7,7 +7,7 @@ import {
   downloadSeqmentalCalls,
   editSample,
 } from '../../services/StatinaApi'
-import { Input, Popover, Table, Tag, Tooltip, Typography } from 'antd'
+import { Input, Table, Tag, Tooltip, Typography } from 'antd'
 import { Link } from 'react-router-dom'
 import { CloudDownloadOutlined, QuestionCircleOutlined } from '@ant-design/icons'
 import { red } from '@ant-design/colors'

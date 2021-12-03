@@ -15,6 +15,7 @@ import styles from './BatchPage.module.css'
 import { SamplesTable } from 'components/SamplesTable/SamplesTable'
 import { BatchDownloadFile } from '../../components/ExportPDF/BatchDownloadFiles'
 import { batchDownloadFileTypes } from '../../services/helpers/constants'
+import Paragraph from 'antd/es/typography/Paragraph'
 
 const { TabPane } = Tabs
 const { Title, Text } = Typography
@@ -39,11 +40,10 @@ export const BatchPage = () => {
   }, [batchId])
 
   const updateComment = (e) => {
-    editBatchComment(
-      batchId,
-      `comment=${e?.target?.value ? e?.target?.value : ' '}`,
-      userContext
-    ).then((response) => {
+    editBatchComment(batchId, `comment=${e ? e : ' '}`, userContext).then(() => {
+      getBatch(batchId, userContext).then((batch) => {
+        setBatch(batch)
+      })
       SuccessNotification({
         type: 'success',
         message: 'Comment updated',
@@ -70,12 +70,16 @@ export const BatchPage = () => {
         </Col>
       </Row>
       <Row>
-        <p>
-          <Text italic type="secondary">
-            Comment - press enter to save
-          </Text>
-          <TextArea onPressEnter={updateComment} defaultValue={batch?.comment} />
-        </p>
+        <div>
+          <Paragraph
+            editable={{
+              onChange: updateComment,
+              tooltip: false,
+            }}
+          >
+            Comment: {batch?.comment}
+          </Paragraph>
+        </div>
       </Row>
       <Tabs type="card">
         <TabPane tab="Summary Table" key="1">

@@ -9,9 +9,9 @@ import { SuccessNotification } from '../../services/helpers/helpers'
 import { Sample } from '../../services/interfaces'
 import { sampleStatusTags, sexTags } from '../../services/helpers/constants'
 import { SamplePlot } from '../../components/SamplePlot/SamplePlot'
+import Paragraph from 'antd/es/typography/Paragraph'
 
-const { Title, Text } = Typography
-const { TextArea } = Input
+const { Title } = Typography
 
 export function SamplePage() {
   const [sample, setSample] = useState<Sample>()
@@ -88,18 +88,17 @@ export function SamplePage() {
   }
 
   const onCommentChange = (e) => {
-    editSample(
-      sampleId,
-      `comment=${e?.target?.value ? e?.target?.value : ' '}`,
-      'comment',
-      userContext
-    ).then(() => {
-      SuccessNotification({
-        type: 'success',
-        message: 'Comment updated',
+    editSample(sampleId, `comment=${e ? e : ' '}`, 'comment', userContext).then(() => {
+      getSample(sampleId, userContext).then((sampleResponse) => {
+        setSample(sampleResponse)
+        SuccessNotification({
+          type: 'success',
+          message: 'Comment updated',
+        })
       })
     })
   }
+
   return (
     <>
       {!error && (
@@ -115,15 +114,15 @@ export function SamplePage() {
                     labelStyle={{ fontWeight: 'bold' }}
                     size="small"
                   >
-                    <Descriptions.Item label="Batch:">
+                    <Descriptions.Item label="Batch">
                       <Link to={`/batches/${sample.batch_id}`}>{sample.batch_id}</Link>
                     </Descriptions.Item>
-                    <Descriptions.Item label="Sample Type:">{sample.sample_type}</Descriptions.Item>
-                    <Descriptions.Item label="QCFlags:">{sample.qc_flag}</Descriptions.Item>
-                    <Descriptions.Item label="Sex (Auto Classified):">
+                    <Descriptions.Item label="Sample Type">{sample.sample_type}</Descriptions.Item>
+                    <Descriptions.Item label="QCFlags">{sample.qc_flag}</Descriptions.Item>
+                    <Descriptions.Item label="Sex (Auto Classified)">
                       {sample.sex && <Tag color={sexTags[sample.sex]}>{sample.sex}</Tag>}
                     </Descriptions.Item>
-                    <Descriptions.Item label="Abnormality status (Auto Classified):">
+                    <Descriptions.Item label="Abnormality status (Auto Classified)">
                       {abnormalStatusTags?.length > 0
                         ? abnormalStatusTags.map((chrom) => (
                             <Tag
@@ -137,12 +136,19 @@ export function SamplePage() {
                           ))
                         : null}
                     </Descriptions.Item>
+                    <Descriptions.Item label="Comment">
+                      <div>
+                        <Paragraph
+                          editable={{
+                            onChange: onCommentChange,
+                            tooltip: false,
+                          }}
+                        >
+                          {sample?.comment}
+                        </Paragraph>
+                      </div>
+                    </Descriptions.Item>
                   </Descriptions>
-                  <br />
-                  <Text italic type="secondary">
-                    Comment - press enter to save
-                  </Text>
-                  <TextArea rows={4} onPressEnter={onCommentChange} defaultValue={sample.comment} />
                 </Card>
                 <Card>
                   <Space size={'large'} direction="vertical" style={{ width: '100%' }}>
