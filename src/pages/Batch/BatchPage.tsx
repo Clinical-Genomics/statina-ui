@@ -69,6 +69,7 @@ export const BatchPage = () => {
         </Col>
       </Row>
       <Row>
+        <Text strong>{`Comment:\u00A0`}</Text>
         {permissions?.includes('RW') ? (
           <Paragraph
             editable={{
@@ -76,12 +77,10 @@ export const BatchPage = () => {
               tooltip: false,
             }}
           >
-            <Text strong>Comment:</Text> {batch?.comment}
+            {batch?.comment}
           </Paragraph>
         ) : (
-          <p>
-            <Text strong>Comment:</Text> {batch?.comment}
-          </p>
+          <p>{batch?.comment}</p>
         )}
       </Row>
       <Tabs type="card">
