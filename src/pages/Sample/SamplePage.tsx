@@ -137,14 +137,18 @@ export function SamplePage() {
                     </Descriptions.Item>
                     <Descriptions.Item label="Comment">
                       <div>
-                        <Paragraph
-                          editable={{
-                            onChange: onCommentChange,
-                            tooltip: false,
-                          }}
-                        >
-                          {sample?.comment}
-                        </Paragraph>
+                        {permissions?.includes('RW') ? (
+                          <Paragraph
+                            editable={{
+                              onChange: onCommentChange,
+                              tooltip: false,
+                            }}
+                          >
+                            {sample?.comment}
+                          </Paragraph>
+                        ) : (
+                          <div> {sample?.comment}</div>
+                        )}
                       </div>
                     </Descriptions.Item>
                   </Descriptions>

@@ -21,6 +21,7 @@ const { Paragraph, Title, Text } = Typography
 
 export const BatchPage = () => {
   const userContext = useContext(UserContext)
+  const { permissions } = userContext
   const [batch, setBatch] = useState<Batch | null>()
   const { pathname } = useLocation()
   const batchId = pathname.substring(pathname.lastIndexOf('/') + 1, pathname.length)
@@ -56,7 +57,7 @@ export const BatchPage = () => {
       <Row justify={'space-between'}>
         <Col style={{ marginBottom: 15 }}>
           <Title>{batchId}</Title>
-          <Text>Sequencing date: {batch?.sequencing_date}</Text>
+          <Text strong>Sequencing date:</Text> {batch?.sequencing_date}
         </Col>
         <Col>
           <div className={styles.downloadButtons}>
@@ -68,16 +69,20 @@ export const BatchPage = () => {
         </Col>
       </Row>
       <Row>
-        <div>
+        {permissions?.includes('RW') ? (
           <Paragraph
             editable={{
               onChange: updateComment,
               tooltip: false,
             }}
           >
-            Comment: {batch?.comment}
+            <Text strong>Comment:</Text> {batch?.comment}
           </Paragraph>
-        </div>
+        ) : (
+          <p>
+            <Text strong>Comment:</Text> {batch?.comment}
+          </p>
+        )}
       </Row>
       <Tabs type="card">
         <TabPane tab="Summary Table" key="1">

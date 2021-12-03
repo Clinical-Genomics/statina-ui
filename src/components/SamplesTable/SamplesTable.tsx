@@ -25,6 +25,7 @@ const { Paragraph } = Typography
 
 export const SamplesTable = ({ batchId }: SamplesProps) => {
   const userContext = useContext(UserContext)
+  const { permissions } = userContext
   const [filteredSamples, setFilteredSamples] = useState<any[]>([])
   const [selectedRowKeys, setSelectedRowKeys] = useState<any[]>([])
   const [pageCount, setPageCount] = useState(0)
@@ -320,16 +321,19 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
       dataIndex: 'comment',
       key: 'comment',
       width: 200,
-      render: (comment: string, sample: any) => (
-        <Paragraph
-          editable={{
-            onChange: (e) => onCommentChange(sample, e),
-            tooltip: false,
-          }}
-        >
-          {comment}
-        </Paragraph>
-      ),
+      render: (comment: string, sample: any) =>
+        permissions?.includes('RW') ? (
+          <Paragraph
+            editable={{
+              onChange: (e) => onCommentChange(sample, e),
+              tooltip: false,
+            }}
+          >
+            {comment}
+          </Paragraph>
+        ) : (
+          <p>{comment}</p>
+        ),
     },
     {
       title: 'Last changed',
