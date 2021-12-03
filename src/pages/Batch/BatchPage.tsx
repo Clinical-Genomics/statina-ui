@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Card, Tabs, Row, Col, Typography, Input } from 'antd'
+import { Card, Tabs, Row, Col, Typography } from 'antd'
 import { useLocation } from 'react-router-dom'
 import { ZscoreGraph } from '../../components/ZscoreGraph/ZscoreGraph'
 import { BatchTablePDF } from '../../components/ExportPDF/BatchTablePDF'
@@ -17,11 +17,11 @@ import { BatchDownloadFile } from '../../components/ExportPDF/BatchDownloadFiles
 import { batchDownloadFileTypes } from '../../services/helpers/constants'
 
 const { TabPane } = Tabs
-const { Title, Text } = Typography
-const { TextArea } = Input
+const { Paragraph, Title, Text } = Typography
 
 export const BatchPage = () => {
   const userContext = useContext(UserContext)
+  const { permissions } = userContext
   const [batch, setBatch] = useState<Batch | null>()
   const { pathname } = useLocation()
   const batchId = pathname.substring(pathname.lastIndexOf('/') + 1, pathname.length)
@@ -39,11 +39,10 @@ export const BatchPage = () => {
   }, [batchId])
 
   const updateComment = (e) => {
-    editBatchComment(
-      batchId,
-      `comment=${e?.target?.value ? e?.target?.value : ' '}`,
-      userContext
-    ).then((response) => {
+    editBatchComment(batchId, `comment=${e ? e : ' '}`, userContext).then(() => {
+      getBatch(batchId, userContext).then((batch) => {
+        setBatch(batch)
+      })
       SuccessNotification({
         type: 'success',
         message: 'Comment updated',
@@ -58,7 +57,7 @@ export const BatchPage = () => {
       <Row justify={'space-between'}>
         <Col style={{ marginBottom: 15 }}>
           <Title>{batchId}</Title>
-          <Text>Sequencing date: {batch?.sequencing_date}</Text>
+          <Text strong>Sequencing date:</Text> {batch?.sequencing_date}
         </Col>
         <Col>
           <div className={styles.downloadButtons}>
@@ -70,12 +69,19 @@ export const BatchPage = () => {
         </Col>
       </Row>
       <Row>
-        <p>
-          <Text italic type="secondary">
-            Comment - press enter to save
-          </Text>
-          <TextArea onPressEnter={updateComment} defaultValue={batch?.comment} />
-        </p>
+        <Text strong>{`Comment:\u00A0`}</Text>
+        {permissions?.includes('RW') ? (
+          <Paragraph
+            editable={{
+              onChange: updateComment,
+              tooltip: false,
+            }}
+          >
+            {batch?.comment}
+          </Paragraph>
+        ) : (
+          <p>{batch?.comment}</p>
+        )}
       </Row>
       <Tabs type="card">
         <TabPane tab="Summary Table" key="1">

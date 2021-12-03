@@ -143,7 +143,7 @@ export const createFileDownload = (response) => {
 
 export const handleBackendError = (error, reject, logout?) => {
   createErrorNotification(error)
-  if (error?.response?.status === 401) {
+  if (error?.response?.status === 401 && logout) {
     logout()
     SuccessNotification({
       type: 'info',

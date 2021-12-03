@@ -52,7 +52,7 @@ export function BatchesTablePDF({ searchValue }: BatchesTablePDFProps) {
   }
   return (
     <Tooltip title="Export to PDF">
-      <span onClick={(e) => exportPDF()}>PDF</span>
+      <span onClick={() => exportPDF()}>PDF</span>
     </Tooltip>
   )
 }

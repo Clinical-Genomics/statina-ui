@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, screen, fireEvent, waitFor } from '@testing-library/react'
+import { render } from '@testing-library/react'
 import { BatchesTable } from './BatchesTable'
 import { mockBatches } from 'mocks/batches'
 import { MemoryRouter } from 'react-router-dom'
@@ -36,6 +36,7 @@ describe('Batches Table', () => {
         </MemoryRouter>
       </UserContext.Provider>
     )
+    console.log(getAllByText)
     /* const batchID = await waitFor(() => getAllByText(mockBatches[0].batch_id))
     await waitFor(() => expect(batchID).toBeVisible())
     const date = await waitFor(() => getAllByText(mockBatches[0].sequencing_date))

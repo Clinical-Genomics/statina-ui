@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, screen, fireEvent, waitFor } from '@testing-library/react'
+import { render, waitFor } from '@testing-library/react'
 import { SamplesTable } from './SamplesTable'
 import { mockSamples } from 'mocks/samples'
 import { MemoryRouter } from 'react-router-dom'
@@ -38,6 +38,7 @@ describe('Samples Table', () => {
         </UserContext.Provider>
       )
     )
+    console.log(getAllByText)
     /* const sample_id = await waitFor(() => getAllByText(mockSamples[0].sample_id))
     await waitFor(() => expect(sample_id).toBeVisible())
     const comment = await waitFor(() => getAllByText(mockSamples[0].comment))
