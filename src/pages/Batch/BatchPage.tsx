@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Card, Tabs, Row, Col, Typography, Input } from 'antd'
+import { Card, Tabs, Row, Col, Typography } from 'antd'
 import { useLocation } from 'react-router-dom'
 import { ZscoreGraph } from '../../components/ZscoreGraph/ZscoreGraph'
 import { BatchTablePDF } from '../../components/ExportPDF/BatchTablePDF'
@@ -19,7 +19,6 @@ import Paragraph from 'antd/es/typography/Paragraph'
 
 const { TabPane } = Tabs
 const { Title, Text } = Typography
-const { TextArea } = Input
 
 export const BatchPage = () => {
   const userContext = useContext(UserContext)

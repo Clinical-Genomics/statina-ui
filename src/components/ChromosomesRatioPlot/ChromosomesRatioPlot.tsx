@@ -20,7 +20,7 @@ const buildData = (statistics: any): BoxPlotData[] => {
     type: 'scatter',
   }))
 
-  const boxData = Object.keys(statistics.box_data).map((chromosome, i) => ({
+  const boxData = Object.keys(statistics.box_data).map((chromosome) => ({
     name: chromosome,
     y: statistics.box_data[chromosome],
     x: chromosome,

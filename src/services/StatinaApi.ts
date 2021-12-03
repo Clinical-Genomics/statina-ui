@@ -81,7 +81,7 @@ const axiosPostToken = (endPoint, formInput) => {
   })
 }
 
-const axiosDELETE = (endPoint, body, { token, logout }: UserContext) => {
+const axiosDELETE = (endPoint, body, { token }: UserContext) => {
   return new Promise((resolve, reject) => {
     axios
       .delete(endPoint, {

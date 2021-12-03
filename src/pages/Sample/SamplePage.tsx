@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Card, Space, Typography, Input, Table, Select, Descriptions, Tag } from 'antd'
+import { Card, Space, Typography, Table, Select, Descriptions, Tag } from 'antd'
 import { editSample, getSample } from '../../services/StatinaApi'
 import { Link, useLocation } from 'react-router-dom'
 import { UserContext } from '../../services/userContext'

@@ -115,7 +115,7 @@ export const BatchTablePDF = ({ batchId }) => {
     })
   }
   return (
-    <Button type="primary" onClick={(e) => exportPDF()}>
+    <Button type="primary" onClick={() => exportPDF()}>
       Batch Report
       {isLoading ? <LoadingOutlined /> : <CloudDownloadOutlined />}
       <div hidden>

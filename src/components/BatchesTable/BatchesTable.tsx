@@ -7,7 +7,7 @@ import { Batch } from 'services/interfaces'
 import { Link } from 'react-router-dom'
 import { ExportCSV } from 'components/ExportCSV/ExportCSV'
 import { BatchesTablePDF } from 'components/ExportPDF/BatchesTablePDF'
-import { DownOutlined, DeleteTwoTone, DeleteOutlined } from '@ant-design/icons'
+import { DownOutlined, DeleteTwoTone } from '@ant-design/icons'
 
 const { Search } = Input
 const { Text } = Typography

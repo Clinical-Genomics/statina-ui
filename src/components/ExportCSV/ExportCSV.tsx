@@ -41,7 +41,7 @@ export const ExportCSV = ({ fileName, searchValue }: BatchesTablePDFProps) => {
   }
   return (
     <Tooltip title="Export to Excel">
-      <span onClick={(e) => exportToCSV(fileName)}>Excel</span>
+      <span onClick={() => exportToCSV(fileName)}>Excel</span>
     </Tooltip>
   )
 }
