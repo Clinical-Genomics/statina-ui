@@ -39,7 +39,11 @@ export const BatchPage = () => {
   }, [batchId])
 
   const updateComment = (e) => {
-    editBatchComment(batchId, `comment=${e?.target?.value}`, userContext).then((response) => {
+    editBatchComment(
+      batchId,
+      `comment=${e?.target?.value ? e?.target?.value : ' '}`,
+      userContext
+    ).then((response) => {
       SuccessNotification({
         type: 'success',
         message: 'Comment updated',

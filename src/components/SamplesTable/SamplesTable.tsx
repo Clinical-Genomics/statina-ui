@@ -5,13 +5,14 @@ import {
   includeSample,
   includeBatchSamples,
   downloadSeqmentalCalls,
+  editSample,
 } from '../../services/StatinaApi'
-import { Input, Table, Tag, Tooltip, Typography } from 'antd'
+import { Input, Popover, Table, Tag, Tooltip, Typography } from 'antd'
 import { Link } from 'react-router-dom'
 import { CloudDownloadOutlined, QuestionCircleOutlined } from '@ant-design/icons'
 import { red } from '@ant-design/colors'
 import { sampleStatusTags, sexTags, tagColors } from 'services/helpers/constants'
-import { createFileDownload, escapeRegExp } from 'services/helpers/helpers'
+import { createFileDownload, escapeRegExp, SuccessNotification } from 'services/helpers/helpers'
 import { Loading } from '../Loading'
 
 type SamplesProps = {
@@ -20,6 +21,7 @@ type SamplesProps = {
 
 const { Search } = Input
 const { Text } = Typography
+const { Paragraph } = Typography
 
 export const SamplesTable = ({ batchId }: SamplesProps) => {
   const userContext = useContext(UserContext)
@@ -93,6 +95,21 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
   const downloadSC = (sample) => {
     downloadSeqmentalCalls(sample.sample_id, userContext).then((file) => {
       createFileDownload(file)
+    })
+  }
+
+  const onCommentChange = ({ sample_id }, e) => {
+    editSample(sample_id, `comment=${e ? e : ' '}`, 'comment', userContext).then(() => {
+      SuccessNotification({
+        type: 'success',
+        message: 'Comment updated',
+      })
+      getSamples(userContext, 10, currentPage, batchId, searchValue).then((samples) => {
+        setFilteredSamples(samples?.documents),
+          setPageCount(samples?.document_count),
+          includedSamples(samples?.documents)
+        setIsLoading(false)
+      })
     })
   }
 
@@ -303,6 +320,16 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
       dataIndex: 'comment',
       key: 'comment',
       width: 200,
+      render: (comment: string, sample: any) => (
+        <Paragraph
+          editable={{
+            onChange: (e) => onCommentChange(sample, e),
+            tooltip: false,
+          }}
+        >
+          {comment}
+        </Paragraph>
+      ),
     },
     {
       title: 'Last changed',

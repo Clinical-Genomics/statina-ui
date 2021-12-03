@@ -88,7 +88,12 @@ export function SamplePage() {
   }
 
   const onCommentChange = (e) => {
-    editSample(sampleId, `comment=${e?.target?.value}`, 'comment', userContext).then(() => {
+    editSample(
+      sampleId,
+      `comment=${e?.target?.value ? e?.target?.value : ' '}`,
+      'comment',
+      userContext
+    ).then(() => {
       SuccessNotification({
         type: 'success',
         message: 'Comment updated',
