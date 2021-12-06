@@ -16,7 +16,7 @@ jobs:
       - name: Run Stylelint check
         run: npx stylelint "**/*.css"
       - name: Test
-        run: yarn test
+        run: yarn coverage
       - name: Build Stage
         run: yarn build
         env:
