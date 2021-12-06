@@ -34,6 +34,7 @@
     "start": "craco --max_old_space_size=4096 start",
     "build": "craco --max_old_space_size=4096 build",
     "test": "craco test",
+    "coverage": "craco test --coverage --watchAll",
     "lint": "eslint 'src/**'"
   },
   "browserslist": {
@@ -47,6 +48,12 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx,ts,tsx}"
+    ],
+    "coverageReporters": ["text"]
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^4.2.4",
