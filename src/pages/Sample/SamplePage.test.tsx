@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, waitFor } from '@testing-library/react'
+import { fireEvent, render, waitFor } from '@testing-library/react'
 import { SamplePage } from '../Sample/SamplePage'
 import axios from 'axios'
 import { mockSample, mockSamplePlot } from '../../mocks/sample'
@@ -15,12 +15,13 @@ jest.mock('react-router-dom', () => ({
   }),
 }))
 
+const initializeUserContext = () => null
+const logout = () => null
+
 describe('Sample Page', () => {
   test('Sample Page component should display UI correctly', async () => {
     mockedAxios.get.mockReturnValueOnce(Promise.resolve({ data: mockSample }))
     mockedAxios.get.mockReturnValueOnce(Promise.resolve({ data: mockSamplePlot }))
-    const initializeUserContext = () => null
-    const logout = () => null
     const { getAllByText } = await waitFor(() =>
       render(
         <UserContext.Provider
@@ -43,10 +44,60 @@ describe('Sample Page', () => {
     await waitFor(() => expect(sampleId).toHaveLength(1))
   })
 
+  test('Read/write user should see edit comment icon', async () => {
+    mockedAxios.get.mockReturnValueOnce(Promise.resolve({ data: mockSample }))
+    mockedAxios.get.mockReturnValueOnce(Promise.resolve({ data: mockSamplePlot }))
+    const { getByTestId } = await waitFor(() =>
+      render(
+        <UserContext.Provider
+          value={{
+            initializeUserContext,
+            logout,
+            token: 'token',
+            username: 'elevu',
+            email: 'testemail',
+            permissions: ['RW'],
+          }}
+        >
+          <BrowserRouter>
+            <SamplePage />
+          </BrowserRouter>
+        </UserContext.Provider>
+      )
+    )
+
+    const buttonElement = await waitFor(() => getByTestId('edit-comment'))
+    await waitFor(() => expect(buttonElement).toBeVisible())
+  })
+
+  test('Read only user should not see edit comment icon', async () => {
+    mockedAxios.get.mockReturnValueOnce(Promise.resolve({ data: mockSample }))
+    mockedAxios.get.mockReturnValueOnce(Promise.resolve({ data: mockSamplePlot }))
+    const { queryByTestId } = await waitFor(() =>
+      render(
+        <UserContext.Provider
+          value={{
+            initializeUserContext,
+            logout,
+            token: 'token',
+            username: 'elevu',
+            email: 'testemail',
+            permissions: ['R'],
+          }}
+        >
+          <BrowserRouter>
+            <SamplePage />
+          </BrowserRouter>
+        </UserContext.Provider>
+      )
+    )
+
+    const buttonElement = await waitFor(() => queryByTestId('edit-comment'))
+    await waitFor(() => expect(buttonElement).toBeNull())
+  })
+
   test('Error from backend should display error', async () => {
     mockedAxios.get.mockReturnValueOnce(Promise.reject('Something went wrong'))
-    const initializeUserContext = () => null
-    const logout = () => null
     const { getAllByText } = await waitFor(() =>
       render(
         <UserContext.Provider

@@ -4,7 +4,7 @@ export const mockSample: Sample = {
   sample_type: '',
   qc_flag: 'DuplicationRate',
   cnv_segment: 'yes',
-  comment: '',
+  comment: 'Hello test comment here',
   sample_id: '2021-28790-06',
   batch_id: '2117030_NIPT',
   warnings: {

@@ -143,6 +143,7 @@ export function SamplePage() {
                               onChange: onCommentChange,
                               tooltip: false,
                             }}
+                            data-testid="edit-comment"
                           >
                             {sample?.comment}
                           </Paragraph>
