@@ -1,10 +1,11 @@
 import React from 'react'
-import { render, waitFor } from '@testing-library/react'
+import { fireEvent, render, waitFor } from '@testing-library/react'
 import { SamplePage } from '../Sample/SamplePage'
 import axios from 'axios'
 import { mockSample, mockSamplePlot } from '../../mocks/sample'
 import { BrowserRouter } from 'react-router-dom'
 import { UserContext } from 'services/userContext'
+import { screen } from '@testing-library/react'
 
 jest.mock('axios')
 const mockedAxios = axios as jest.Mocked<typeof axios>
@@ -70,6 +71,31 @@ describe('Sample Page', () => {
     await waitFor(() => expect(buttonElement).toBeVisible())
   })
 
+  test('Read/write user should see status selector', async () => {
+    mockedAxios.get.mockReturnValueOnce(Promise.resolve({ data: mockSample }))
+    mockedAxios.get.mockReturnValueOnce(Promise.resolve({ data: mockSamplePlot }))
+    const { getAllByTestId } = await waitFor(() =>
+      render(
+        <UserContext.Provider
+          value={{
+            initializeUserContext,
+            logout,
+            token: 'token',
+            username: 'elevu',
+            email: 'testemail',
+            permissions: ['RW'],
+          }}
+        >
+          <BrowserRouter>
+            <SamplePage />
+          </BrowserRouter>
+        </UserContext.Provider>
+      )
+    )
+    const buttonElement = await waitFor(() => getAllByTestId('status-selector'))
+    await waitFor(() => expect(buttonElement).toHaveLength(7))
+  })
+
   test('Read only user should not see edit comment icon', async () => {
     mockedAxios.get.mockReturnValueOnce(Promise.resolve({ data: mockSample }))
     mockedAxios.get.mockReturnValueOnce(Promise.resolve({ data: mockSamplePlot }))
@@ -93,6 +119,31 @@ describe('Sample Page', () => {
     )
 
     const buttonElement = await waitFor(() => queryByTestId('edit-comment'))
+    await waitFor(() => expect(buttonElement).toBeNull())
+  })
+
+  test('Read only user should not see status selector', async () => {
+    mockedAxios.get.mockReturnValueOnce(Promise.resolve({ data: mockSample }))
+    mockedAxios.get.mockReturnValueOnce(Promise.resolve({ data: mockSamplePlot }))
+    const { queryByTestId } = await waitFor(() =>
+      render(
+        <UserContext.Provider
+          value={{
+            initializeUserContext,
+            logout,
+            token: 'token',
+            username: 'elevu',
+            email: 'testemail',
+            permissions: ['R'],
+          }}
+        >
+          <BrowserRouter>
+            <SamplePage />
+          </BrowserRouter>
+        </UserContext.Provider>
+      )
+    )
+    const buttonElement = await waitFor(() => queryByTestId('status-selector'))
     await waitFor(() => expect(buttonElement).toBeNull())
   })
 

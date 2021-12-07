@@ -59,6 +59,7 @@ export function SamplePage() {
             defaultValue={chromosome[1].status || sampleStatusTags.normal.label}
             style={{ width: 120 }}
             onChange={(value) => onStatusChange(value, chromosome[0])}
+            data-testid="status-selector"
           >
             {Object.values(sampleStatusTags).map((status) => (
               <Option value={status.label} key={status.label}>
