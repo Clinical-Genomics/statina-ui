@@ -4,7 +4,6 @@
   "private": true,
   "dependencies": {
     "@craco/craco": "^6.3.0",
-    "@reduxjs/toolkit": "^1.5.0",
     "@types/jspdf": "^2.0.0",
     "@types/plotly.js": "^1.54.16",
     "antd": "^4.6.2",
@@ -78,9 +77,14 @@
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-react": "^7.21.5",
     "eslint-plugin-react-hooks": "^1.7.0",
-    "firebase-tools": "^8.10.0",
+    "firebase-tools": "^9.23.0",
     "prettier": "^2.1.1",
     "raw.macro": "^0.4.2",
     "react-markdown": "^6.0.2"
-  }
+  },
+    "resolutions": {
+      "ansi-html": "https://registry.yarnpkg.com/ansi-html-community/-/ansi-html-community-0.0.8.tgz#69fbc4d6ccbe383f9736934ae34c3f8290f1bf41",
+      "immer": "9.0.6",
+      "glob-parent": "5.1.2"
+    }
 }
