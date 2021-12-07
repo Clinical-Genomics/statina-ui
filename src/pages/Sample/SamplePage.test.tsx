@@ -1,5 +1,5 @@
 import React from 'react'
-import { fireEvent, render, waitFor } from '@testing-library/react'
+import { render, waitFor } from '@testing-library/react'
 import { SamplePage } from '../Sample/SamplePage'
 import axios from 'axios'
 import { mockSample, mockSamplePlot } from '../../mocks/sample'
