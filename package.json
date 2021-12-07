@@ -4,7 +4,6 @@
   "private": true,
   "dependencies": {
     "@craco/craco": "^6.3.0",
-    "@reduxjs/toolkit": "^1.5.0",
     "@types/jspdf": "^2.0.0",
     "@types/plotly.js": "^1.54.16",
     "antd": "^4.6.2",
@@ -82,5 +81,8 @@
     "prettier": "^2.1.1",
     "raw.macro": "^0.4.2",
     "react-markdown": "^6.0.2"
-  }
+  },
+    "resolutions": {
+    "immer": "9.0.6"
+    }
 }
