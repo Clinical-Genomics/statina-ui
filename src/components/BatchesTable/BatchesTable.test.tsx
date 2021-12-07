@@ -1,5 +1,5 @@
 import React from 'react'
-import { render } from '@testing-library/react'
+import { render, waitFor } from '@testing-library/react'
 import { BatchesTable } from './BatchesTable'
 import { mockBatches } from 'mocks/batches'
 import { MemoryRouter } from 'react-router-dom'
@@ -17,40 +17,45 @@ jest.mock('react-router-dom', () => ({
 
 describe('Batches Table', () => {
   test('Batches Table should display UI correctly', async () => {
-    mockedAxios.get.mockReturnValue(Promise.resolve({ data: mockBatches }))
+    mockedAxios.get.mockReturnValueOnce(Promise.resolve({ data: mockBatches }))
+    /* mockedAxios.get.mockReturnValueOnce(Promise.reject('Something went wrong')) */
     const initializeUserContext = () => null
     const logout = () => null
-    const { getAllByText } = render(
-      <UserContext.Provider
-        value={{
-          initializeUserContext,
-          logout,
-          token: 'token',
-          username: 'elevu',
-          email: 'testemail',
-          permissions: ['R'],
-        }}
-      >
-        <MemoryRouter>
-          <BatchesTable />
-        </MemoryRouter>
-      </UserContext.Provider>
+    const { getAllByText } = await waitFor(() =>
+      render(
+        <UserContext.Provider
+          value={{
+            initializeUserContext,
+            logout,
+            token: 'token',
+            username: 'elevu',
+            email: 'testemail',
+            permissions: ['R'],
+          }}
+        >
+          <MemoryRouter>
+            <BatchesTable />
+          </MemoryRouter>
+        </UserContext.Provider>
+      )
     )
-    console.log(getAllByText)
-    /* const batchID = await waitFor(() => getAllByText(mockBatches[0].batch_id))
-    await waitFor(() => expect(batchID).toBeVisible())
-    const date = await waitFor(() => getAllByText(mockBatches[0].sequencing_date))
-    await waitFor(() => expect(date).toBeVisible())
-    const flowcell = await waitFor(() => getAllByText(mockBatches[0].segmental_calls))
-    await waitFor(() => expect(flowcell).toBeVisible()) */
+    expect(mockedAxios.get).toHaveBeenCalledTimes(1)
+    const batch_id = await waitFor(() => getAllByText(mockBatches[0].batch_id))
+    await waitFor(() => expect(batch_id).toBeVisible())
+    /* const errorMessage = await waitFor(() => getAllByText(/Something went wrong/i))
+    await waitFor(() => expect(errorMessage).toHaveLength(1)) */
+    /* const batch_id = await waitFor(() => getAllByText(mockBatches[0].batch_id))
+    await waitFor(() => expect(batch_id).toBeVisible())
+    const comment = await waitFor(() => getAllByText(mockBatches[0].comment))
+    await waitFor(() => expect(comment).toBeVisible()) */
   })
-  /* test('Search batches should work', () => {
+  /* test('Search batches should work', async () => {
     const { queryByText } = render(
       <MemoryRouter>
         <BatchesTable></BatchesTable>
       </MemoryRouter>
     )
-    expect(queryByText(mockBatches[1].batch_id)).toBeVisible()
+    await waitFor(() => expect(queryByText(mockBatches[0].batch_id)).toBeInTheDocument())
     const inputElement = screen.getByPlaceholderText('Search Batches') as HTMLInputElement
     const buttonElement = screen.getByRole('button', {
       name: /Search/i,
@@ -58,6 +63,6 @@ describe('Batches Table', () => {
     fireEvent.change(inputElement, { target: { value: mockBatches[0].batch_id } })
     expect(inputElement.value).toBe(mockBatches[0].batch_id)
     fireEvent.click(buttonElement)
-    expect(screen.getByText(mockBatches[0].flowcell)).toBeInTheDocument()
+    expect(screen.getByText(mockBatches[0].batch_id)).toBeVisible()
   }) */
 })
