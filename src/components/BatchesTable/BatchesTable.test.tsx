@@ -1,8 +1,8 @@
 import React from 'react'
-import { render } from '@testing-library/react'
+import { render, waitFor } from '@testing-library/react'
 import { BatchesTable } from './BatchesTable'
 import { mockBatches } from 'mocks/batches'
-import { MemoryRouter } from 'react-router-dom'
+import { BrowserRouter, MemoryRouter } from 'react-router-dom'
 import { UserContext } from 'services/userContext'
 import axios from 'axios'
 
@@ -14,6 +14,9 @@ jest.mock('react-router-dom', () => ({
     pathname: 'https://statina.scilifelab.se/batches',
   }),
 }))
+
+const initializeUserContext = () => null
+const logout = () => null
 
 describe('Batches Table', () => {
   test('Batches Table should display UI correctly', async () => {
@@ -60,4 +63,29 @@ describe('Batches Table', () => {
     fireEvent.click(buttonElement)
     expect(screen.getByText(mockBatches[0].flowcell)).toBeInTheDocument()
   }) */
+})
+
+test('Read only user should not see delete batch icon', async () => {
+  mockedAxios.get.mockReturnValue(Promise.resolve({ data: mockBatches }))
+  const { queryByTestId } = await waitFor(() =>
+    render(
+      <UserContext.Provider
+        value={{
+          initializeUserContext,
+          logout,
+          token: 'token',
+          username: 'elevu',
+          email: 'testemail',
+          permissions: ['R'],
+        }}
+      >
+        <BrowserRouter>
+          <BatchesTable />
+        </BrowserRouter>
+      </UserContext.Provider>
+    )
+  )
+
+  const buttonElement = await waitFor(() => queryByTestId('delete-batch'))
+  await waitFor(() => expect(buttonElement).toBeNull())
 })
