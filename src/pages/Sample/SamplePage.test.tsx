@@ -1,11 +1,10 @@
 import React from 'react'
-import { fireEvent, render, waitFor } from '@testing-library/react'
+import { render, waitFor } from '@testing-library/react'
 import { SamplePage } from '../Sample/SamplePage'
 import axios from 'axios'
 import { mockSample, mockSamplePlot } from '../../mocks/sample'
 import { BrowserRouter } from 'react-router-dom'
 import { UserContext } from 'services/userContext'
-import { screen } from '@testing-library/react'
 
 jest.mock('axios')
 const mockedAxios = axios as jest.Mocked<typeof axios>
