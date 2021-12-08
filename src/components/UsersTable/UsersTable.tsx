@@ -92,7 +92,7 @@ export const UsersTable = () => {
       <Title>Users</Title>
       <Row justify="space-between" style={{ paddingBottom: 20 }}>
         <Col span={8}>
-          <Search placeholder="Search Users" onSearch={onSearch} allowClear />
+          <Search placeholder="Search users" onSearch={onSearch} allowClear />
         </Col>
       </Row>
       <Table
