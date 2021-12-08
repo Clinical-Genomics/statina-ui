@@ -11,23 +11,22 @@ export interface Chromosomes {
   x: number
   y: number
 }
-
-export interface Batch {
+export interface BatchDocuments {
   batch_id: string
   result_file: string
   multiqc_report: string
   segmental_calls: string
   flowcell: string
   sequencing_date: string
+  comment: string
   median: Chromosomes
   stdev: Chromosomes
-  comment: string
 }
 
-export interface Sample {
+export interface SampleDocuments {
   sample_type: string
   qc_flag: string
-  cnv_segment: string
+  cnv_segment: string | null
   comment: string
   sample_id: string
   batch_id: string
@@ -45,7 +44,7 @@ export interface Sample {
   }
   text_warning: string
   sex: string
-  sequencing_date: string
+  sequencing_date: string | null
   status: SampleStatus
   included: {
     include: true
@@ -62,6 +61,16 @@ export interface Sample {
     y: string
     preface: string
   }
+}
+
+export interface Batch {
+  document_count: number
+  documents: BatchDocuments[]
+}
+
+export interface Sample {
+  document_count: number
+  documents: SampleDocuments[]
 }
 
 export interface TracePlot {

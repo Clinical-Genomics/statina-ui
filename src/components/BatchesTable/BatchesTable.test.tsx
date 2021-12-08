@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, waitFor } from '@testing-library/react'
+import { fireEvent, render, waitFor } from '@testing-library/react'
 import { BatchesTable } from './BatchesTable'
 import { mockBatches } from 'mocks/batches'
 import { MemoryRouter } from 'react-router-dom'
@@ -17,11 +17,17 @@ jest.mock('react-router-dom', () => ({
 
 describe('Batches Table', () => {
   test('Batches Table should display UI correctly', async () => {
-    mockedAxios.get.mockReturnValueOnce(Promise.resolve({ data: mockBatches }))
-    /* mockedAxios.get.mockReturnValueOnce(Promise.reject('Something went wrong')) */
+    mockedAxios.get.mockReturnValueOnce(
+      Promise.resolve({
+        data: {
+          documents: mockBatches[0].documents,
+          document_count: mockBatches[0].document_count,
+        },
+      })
+    )
     const initializeUserContext = () => null
     const logout = () => null
-    const { getAllByText } = await waitFor(() =>
+    const { getByText, queryAllByText } = await waitFor(() =>
       render(
         <UserContext.Provider
           value={{
@@ -40,29 +46,49 @@ describe('Batches Table', () => {
       )
     )
     expect(mockedAxios.get).toHaveBeenCalledTimes(1)
-    const batch_id = await waitFor(() => getAllByText(mockBatches[0].batch_id))
+    const batch_id = await waitFor(() => getByText(/2116014_NIPT/i))
     await waitFor(() => expect(batch_id).toBeVisible())
-    /* const errorMessage = await waitFor(() => getAllByText(/Something went wrong/i))
-    await waitFor(() => expect(errorMessage).toHaveLength(1)) */
-    /* const batch_id = await waitFor(() => getAllByText(mockBatches[0].batch_id))
-    await waitFor(() => expect(batch_id).toBeVisible())
-    const comment = await waitFor(() => getAllByText(mockBatches[0].comment))
-    await waitFor(() => expect(comment).toBeVisible()) */
+    const deleteBtn = await waitFor(() => queryAllByText(/Delete Batch/i))
+    await waitFor(() => expect(deleteBtn).toEqual([]))
   })
-  /* test('Search batches should work', async () => {
-    const { queryByText } = render(
-      <MemoryRouter>
-        <BatchesTable></BatchesTable>
-      </MemoryRouter>
+  test('Read write user can delete batch', async () => {
+    mockedAxios.get.mockReturnValueOnce(
+      Promise.resolve({
+        data: {
+          documents: mockBatches[0].documents,
+          document_count: mockBatches[0].document_count,
+        },
+      })
     )
-    await waitFor(() => expect(queryByText(mockBatches[0].batch_id)).toBeInTheDocument())
-    const inputElement = screen.getByPlaceholderText('Search Batches') as HTMLInputElement
-    const buttonElement = screen.getByRole('button', {
-      name: /Search/i,
-    })
-    fireEvent.change(inputElement, { target: { value: mockBatches[0].batch_id } })
-    expect(inputElement.value).toBe(mockBatches[0].batch_id)
-    fireEvent.click(buttonElement)
-    expect(screen.getByText(mockBatches[0].batch_id)).toBeVisible()
-  }) */
+    const initializeUserContext = () => null
+    const logout = () => null
+    const { getByText, queryAllByLabelText } = await waitFor(() =>
+      render(
+        <UserContext.Provider
+          value={{
+            initializeUserContext,
+            logout,
+            token: 'token',
+            username: 'elevu',
+            email: 'testemail',
+            permissions: ['RW'],
+          }}
+        >
+          <MemoryRouter>
+            <BatchesTable />
+          </MemoryRouter>
+        </UserContext.Provider>
+      )
+    )
+    const deleteCol = await waitFor(() => getByText(/Delete Batch/i))
+    await waitFor(() => expect(deleteCol).toBeVisible())
+    const deleteBtn = await waitFor(() => queryAllByLabelText('delete'))
+    await waitFor(() => expect(deleteBtn).toHaveLength(mockBatches[0].document_count))
+    const deletBatch = await waitFor(() => deleteBtn[0])
+    fireEvent.click(deletBatch)
+    const confirmation = await waitFor(() =>
+      getByText(/Are you sure you want to delete this batch?/i)
+    )
+    await waitFor(() => expect(confirmation).toBeInTheDocument())
+  })
 })
