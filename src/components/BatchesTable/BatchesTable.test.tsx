@@ -1,8 +1,8 @@
 import React from 'react'
-import { render, waitFor } from '@testing-library/react'
+import { render } from '@testing-library/react'
 import { BatchesTable } from './BatchesTable'
 import { mockBatches } from 'mocks/batches'
-import { BrowserRouter, MemoryRouter } from 'react-router-dom'
+import { MemoryRouter } from 'react-router-dom'
 import { UserContext } from 'services/userContext'
 import axios from 'axios'
 
@@ -14,9 +14,6 @@ jest.mock('react-router-dom', () => ({
     pathname: 'https://statina.scilifelab.se/batches',
   }),
 }))
-
-const initializeUserContext = () => null
-const logout = () => null
 
 describe('Batches Table', () => {
   test('Batches Table should display UI correctly', async () => {
