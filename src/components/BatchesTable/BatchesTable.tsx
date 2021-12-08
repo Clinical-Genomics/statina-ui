@@ -86,7 +86,7 @@ export const BatchesTable = () => {
           okText="Yes"
           cancelText="No"
         >
-          <DeleteTwoTone style={{ fontSize: '20px' }} data-testid={'delete-batch'} />
+          <DeleteTwoTone style={{ fontSize: '20px' }} />
         </Popconfirm>
       ),
     },

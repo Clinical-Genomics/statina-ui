@@ -64,28 +64,3 @@ describe('Batches Table', () => {
     expect(screen.getByText(mockBatches[0].flowcell)).toBeInTheDocument()
   }) */
 })
-
-test('Read only user should not see delete batch icon', async () => {
-  mockedAxios.get.mockReturnValue(Promise.resolve({ data: mockBatches }))
-  const { queryByTestId } = await waitFor(() =>
-    render(
-      <UserContext.Provider
-        value={{
-          initializeUserContext,
-          logout,
-          token: 'token',
-          username: 'elevu',
-          email: 'testemail',
-          permissions: ['R'],
-        }}
-      >
-        <BrowserRouter>
-          <BatchesTable />
-        </BrowserRouter>
-      </UserContext.Provider>
-    )
-  )
-
-  const buttonElement = await waitFor(() => queryByTestId('delete-batch'))
-  await waitFor(() => expect(buttonElement).toBeNull())
-})
