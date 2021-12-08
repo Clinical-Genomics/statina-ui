@@ -1,6 +1,6 @@
 import React from 'react'
 import { render } from '@testing-library/react'
-import { BatchesTable } from './BatchesTable'
+import { UsersTable } from './UsersTable'
 import { mockBatches } from 'mocks/batches'
 import { MemoryRouter } from 'react-router-dom'
 import { UserContext } from 'services/userContext'
@@ -32,7 +32,7 @@ describe('Batches Table', () => {
         }}
       >
         <MemoryRouter>
-          <BatchesTable />
+          <UsersTable />
         </MemoryRouter>
       </UserContext.Provider>
     )

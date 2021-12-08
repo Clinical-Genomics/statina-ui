@@ -241,3 +241,13 @@ export const deleteBatch = async (batchId: string, context: UserContext): Promis
   const endPoint = `${REACT_APP_BACKEND_URL}/batch/${batchId}`
   return axiosDELETE(endPoint, batchId, context)
 }
+
+export const getUsers = async (context: UserContext): Promise<any> => {
+  const endPoint = `${REACT_APP_BACKEND_URL}/users`
+  return axiosGET(endPoint, context)
+}
+
+export const deleteUser = async (username: string, context: UserContext): Promise<any> => {
+  const endPoint = `${REACT_APP_BACKEND_URL}/user/${username}`
+  return axiosDELETE(endPoint, username, context)
+}
