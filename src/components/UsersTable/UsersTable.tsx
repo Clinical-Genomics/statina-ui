@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { UserContext } from '../../services/userContext'
-import { deleteUser, getUsers } from '../../services/StatinaApi'
-import { Col, Row, Table, Popconfirm } from 'antd'
-import { escapeRegExp, SuccessNotification } from 'services/helpers/helpers'
+import { deleteUser, getUsers, putUserRole } from '../../services/StatinaApi'
+import { Col, Row, Table, Popconfirm, Select } from 'antd'
+import { escapeRegExp, SuccessNotification, userRoles } from 'services/helpers/helpers'
 import { DeleteTwoTone } from '@ant-design/icons'
 import Title from 'antd/es/typography/Title'
 import { User } from '../../services/interfaces'
@@ -10,11 +10,12 @@ import Search from 'antd/lib/input/Search'
 
 export const UsersTable = () => {
   const userContext = useContext(UserContext)
-  const { permissions } = userContext
   const [users, setUsers] = useState<User[]>()
   const [pageCount, setPageCount] = useState(0)
   const [searchValue, setSearchValue] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
+
+  const { Option } = Select
 
   useEffect(() => {
     getUsers(userContext, 10, 0, searchValue).then((users) => {
@@ -42,6 +43,18 @@ export const UsersTable = () => {
     return `${range[0]}-${range[1]} of ${total}`
   }
 
+  const setUserRole = (username, role) => {
+    putUserRole(username, role, userContext).then(() => {
+      getUsers(userContext, 10, currentPage, searchValue).then((users) => {
+        SuccessNotification({
+          type: 'success',
+          message: `${username} updated to ${role}`,
+        })
+        setUsers(users?.documents), setPageCount(users?.document_count)
+      })
+    })
+  }
+
   const confirmDeleteUser = (username: string) => {
     deleteUser(username, userContext).then(() => {
       SuccessNotification({
@@ -59,6 +72,25 @@ export const UsersTable = () => {
       title: 'Username',
       dataIndex: 'username',
       key: 'username',
+    },
+    {
+      title: 'Role',
+      dataIndex: 'role',
+      key: 'role',
+      render: (role, user) => (
+        <Select
+          defaultValue={role || 'N/A'}
+          style={{ width: 120 }}
+          onChange={(value) => setUserRole(user?.username, value)}
+          data-testid="status-selector"
+        >
+          {Object.keys(userRoles).map((role) => (
+            <Option value={role} key={role}>
+              {role}
+            </Option>
+          ))}
+        </Select>
+      ),
     },
     {
       title: 'E-mail',

@@ -83,8 +83,8 @@ export const sortDate = (dateA: string, dateB: string) => {
 
 export const getUserRole = (scopes: string[] = ['']): string => {
   if (scopes.includes('admin')) return userRoles.admin.name
-  else if (scopes.includes('RW')) return userRoles.rw.name
-  else if (scopes.includes('R')) return userRoles.r.name
+  else if (scopes.includes('RW')) return userRoles.RW.name
+  else if (scopes.includes('R')) return userRoles.R.name
   else if (scopes.includes('inactive')) return userRoles.inactive.name
   else if (scopes.includes('unconfirmed')) return userRoles.unconfirmed.name
   return ''
@@ -99,8 +99,8 @@ export const isUserInactive = (scopes: string[] = ['']): boolean => {
 
 export const userRoles = {
   admin: { name: 'Admin role', emailConfirmed: true, adminConfirmed: true },
-  rw: { name: 'Read/Write role', emailConfirmed: true, adminConfirmed: true },
-  r: { name: 'Read role', emailConfirmed: true, adminConfirmed: true },
+  RW: { name: 'Read/Write role', emailConfirmed: true, adminConfirmed: true },
+  R: { name: 'Read role', emailConfirmed: true, adminConfirmed: true },
   inactive: { name: 'Inactive user', emailConfirmed: false, adminConfirmed: true },
   unconfirmed: { name: 'Unconfirmed email', emailConfirmed: true, adminConfirmed: false },
 }

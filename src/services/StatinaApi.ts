@@ -1,6 +1,7 @@
 import { handleBackendError } from './helpers/helpers'
 import { Login, RegisterUser } from './interfaces'
 import { UserContext } from './userContext'
+
 const { REACT_APP_BACKEND_URL } = process.env
 
 const axios = require('axios').default
@@ -255,4 +256,13 @@ export const getUsers = async (
 export const deleteUser = async (username: string, context: UserContext): Promise<any> => {
   const endPoint = `${REACT_APP_BACKEND_URL}/user/${username}`
   return axiosDELETE(endPoint, username, context)
+}
+
+export const putUserRole = async (
+  username: string,
+  role: string,
+  context: UserContext
+): Promise<any> => {
+  const endPoint = `${REACT_APP_BACKEND_URL}/user/${username}/role?role=${role}`
+  return axiosPUT(endPoint, null, context)
 }
