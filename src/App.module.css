@@ -1,20 +1,7 @@
-.logoutButton {
-  position: absolute;
-  top: 0;
-  right: 75px;
-}
-
 .header {
   position: fixed;
   z-index: 10;
   width: 100%;
-}
-
-.greeting {
-  position: absolute;
-  top: 0;
-  right: 220px;
-  color: white;
 }
 
 .logo {
