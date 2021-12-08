@@ -40,7 +40,7 @@ export const mockSample: Sample = {
       edited: '',
     },
     xxx: {
-      status: 'Normal',
+      status: 'Suspected',
       edited: '',
     },
     xxy: {
