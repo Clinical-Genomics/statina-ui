@@ -20,14 +20,14 @@ describe('Batches Table', () => {
     mockedAxios.get.mockReturnValueOnce(
       Promise.resolve({
         data: {
-          documents: mockBatches[0].documents,
-          document_count: mockBatches[0].document_count,
+          documents: mockBatches,
+          document_count: mockBatches.length,
         },
       })
     )
     const initializeUserContext = () => null
     const logout = () => null
-    const { getByText, queryAllByText } = await waitFor(() =>
+    const { getByText } = await waitFor(() =>
       render(
         <UserContext.Provider
           value={{
@@ -45,9 +45,38 @@ describe('Batches Table', () => {
         </UserContext.Provider>
       )
     )
-    expect(mockedAxios.get).toHaveBeenCalledTimes(1)
-    const batch_id = await waitFor(() => getByText(/2116014_NIPT/i))
+    const batch_id = await waitFor(() => getByText(mockBatches[0].batch_id))
     await waitFor(() => expect(batch_id).toBeVisible())
+  })
+  test('Delete Batch button should not render for read user', async () => {
+    mockedAxios.get.mockReturnValueOnce(
+      Promise.resolve({
+        data: {
+          documents: mockBatches,
+          document_count: mockBatches.length,
+        },
+      })
+    )
+    const initializeUserContext = () => null
+    const logout = () => null
+    const { queryAllByText } = await waitFor(() =>
+      render(
+        <UserContext.Provider
+          value={{
+            initializeUserContext,
+            logout,
+            token: 'token',
+            username: 'elevu',
+            email: 'testemail',
+            permissions: ['R'],
+          }}
+        >
+          <MemoryRouter>
+            <BatchesTable />
+          </MemoryRouter>
+        </UserContext.Provider>
+      )
+    )
     const deleteBtn = await waitFor(() => queryAllByText(/Delete Batch/i))
     await waitFor(() => expect(deleteBtn).toEqual([]))
   })
@@ -55,8 +84,8 @@ describe('Batches Table', () => {
     mockedAxios.get.mockReturnValueOnce(
       Promise.resolve({
         data: {
-          documents: mockBatches[0].documents,
-          document_count: mockBatches[0].document_count,
+          documents: mockBatches,
+          document_count: mockBatches.length,
         },
       })
     )
@@ -83,7 +112,7 @@ describe('Batches Table', () => {
     const deleteCol = await waitFor(() => getByText(/Delete Batch/i))
     await waitFor(() => expect(deleteCol).toBeVisible())
     const deleteBtn = await waitFor(() => queryAllByLabelText('delete'))
-    await waitFor(() => expect(deleteBtn).toHaveLength(mockBatches[0].document_count))
+    await waitFor(() => expect(deleteBtn).toHaveLength(mockBatches.length))
     const deletBatch = await waitFor(() => deleteBtn[0])
     fireEvent.click(deletBatch)
     const confirmation = await waitFor(() =>

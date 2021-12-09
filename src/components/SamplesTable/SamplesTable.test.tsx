@@ -20,8 +20,8 @@ describe('Batches Table', () => {
     mockedAxios.get.mockReturnValueOnce(
       Promise.resolve({
         data: {
-          documents: mockSamples[0].documents,
-          document_count: mockSamples[0].document_count,
+          documents: mockSamples,
+          document_count: mockSamples.length,
         },
       })
     )
@@ -45,8 +45,7 @@ describe('Batches Table', () => {
         </UserContext.Provider>
       )
     )
-    expect(mockedAxios.get).toHaveBeenCalledTimes(1)
-    const sample_id = await waitFor(() => getByText(mockSamples[0].documents[0].sample_id))
+    const sample_id = await waitFor(() => getByText(mockSamples[0].sample_id))
     await waitFor(() => expect(sample_id).toBeVisible())
     const batch_id = await waitFor(() => queryByText(/Batch ID/i))
     await waitFor(() => expect(batch_id).toBeVisible())
@@ -55,8 +54,8 @@ describe('Batches Table', () => {
     mockedAxios.get.mockReturnValueOnce(
       Promise.resolve({
         data: {
-          documents: mockSamples[0].documents,
-          document_count: mockSamples[0].document_count,
+          documents: mockSamples,
+          document_count: mockSamples.length,
         },
       })
     )
@@ -80,10 +79,9 @@ describe('Batches Table', () => {
         </UserContext.Provider>
       )
     )
-    expect(mockedAxios.get).toHaveBeenCalledTimes(1)
     const batch_id = await waitFor(() => queryByText(/Batch ID/i))
     await waitFor(() => expect(batch_id).toBeNull())
-    const sample_id = await waitFor(() => getByText(mockSamples[0].documents[1].sample_id))
+    const sample_id = await waitFor(() => getByText(mockSamples[0].sample_id))
     await waitFor(() => expect(sample_id).toBeVisible())
   })
 })
