@@ -9,7 +9,7 @@ import './App.less'
 import Footer from './components/Footer/Footer'
 import { UserContext } from 'services/userContext'
 import { ProfileDropdown } from './components/ProfileDropdown/ProfileDropdown'
-import { DownOutlined } from '@ant-design/icons'
+import { DownOutlined, ToolFilled } from '@ant-design/icons'
 import {
   getCookies,
   isUserInactive,
@@ -85,16 +85,23 @@ export const App = () => {
                   <span>Statistics</span>
                 </Link>
               </Menu.Item>
+              {user?.scopes?.includes('admin') && (
+                <Menu.Item key="/admin" disabled={!token} style={{ marginLeft: 'auto' }}>
+                  <Link to="/admin">
+                    Admin <ToolFilled />
+                  </Link>
+                </Menu.Item>
+              )}
+              {!!token && !!user?.username && (
+                <Menu.Item key="/user" disabled={!token}>
+                  <Dropdown overlay={<ProfileDropdown user={user} logout={logout} />}>
+                    <Button type="primary">
+                      {user?.username} <DownOutlined />
+                    </Button>
+                  </Dropdown>
+                </Menu.Item>
+              )}
             </Menu>
-            {!!token && !!user?.username && (
-              <div className={styles.logoutButton}>
-                <Dropdown overlay={<ProfileDropdown user={user} logout={logout} />}>
-                  <Button type="primary">
-                    {user?.username} <DownOutlined />
-                  </Button>
-                </Dropdown>
-              </div>
-            )}
           </Header>
           <Content
             className={styles.siteLayout}

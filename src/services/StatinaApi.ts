@@ -1,7 +1,8 @@
 import { handleBackendError } from './helpers/helpers'
 import { Login, RegisterUser } from './interfaces'
 import { UserContext } from './userContext'
-const { REACT_APP_BACKEND_URL } = process.env
+
+export const { REACT_APP_BACKEND_URL } = process.env
 
 const axios = require('axios').default
 
@@ -240,4 +241,28 @@ export const downloadSeqmentalCalls = async (
 export const deleteBatch = async (batchId: string, context: UserContext): Promise<any> => {
   const endPoint = `${REACT_APP_BACKEND_URL}/batch/${batchId}`
   return axiosDELETE(endPoint, batchId, context)
+}
+
+export const getUsers = async (
+  context: UserContext,
+  pageSize,
+  currentPage,
+  query_string?
+): Promise<any> => {
+  const endPoint = `${REACT_APP_BACKEND_URL}/users?page_size=${pageSize}&page_num=${currentPage}&query_string=${query_string}`
+  return axiosGET(endPoint, context)
+}
+
+export const deleteUser = async (username: string, context: UserContext): Promise<any> => {
+  const endPoint = `${REACT_APP_BACKEND_URL}/user/${username}`
+  return axiosDELETE(endPoint, username, context)
+}
+
+export const putUserRole = async (
+  username: string,
+  role: string,
+  context: UserContext
+): Promise<any> => {
+  const endPoint = `${REACT_APP_BACKEND_URL}/user/${username}/role?role=${role}`
+  return axiosPUT(endPoint, null, context)
 }

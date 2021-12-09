@@ -154,3 +154,10 @@ export interface SampleStatus {
     edited: string
   }
 }
+
+export interface User {
+  added: string
+  email: string
+  role: string
+  username: string
+}

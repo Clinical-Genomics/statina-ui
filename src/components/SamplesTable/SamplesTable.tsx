@@ -355,7 +355,7 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
         <>
           <Search
             allowClear
-            placeholder={`Search Samples`}
+            placeholder={`Search samples`}
             onSearch={onSearch}
             style={{ paddingBottom: 20 }}
           />

@@ -8,6 +8,7 @@ import { StatisticsPage } from 'pages/Statistics/StatisticsPage'
 import { SamplePage } from 'pages/Sample/SamplePage'
 import { LoginPage } from '../pages/Login/LoginPage'
 import { PageNotFound } from 'pages/PageNotFound/PageNotFound'
+import { AdminPage } from '../pages/Admin/AdminPage'
 
 type RoutesProps = {
   isLoggedIn: boolean
@@ -36,6 +37,13 @@ export const Routes = (props: RoutesProps) => {
           ) : (
             <Redirect to={{ pathname: '/login' }} />
           )
+        }
+      />
+      <Route
+        path="/admin"
+        exact
+        render={() =>
+          isLoggedIn === true ? <AdminPage /> : <Redirect to={{ pathname: '/login' }} />
         }
       />
       <Route
