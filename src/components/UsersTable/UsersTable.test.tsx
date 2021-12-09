@@ -1,5 +1,5 @@
 import React from 'react'
-import { fireEvent, getByText, queryAllByTestId, render, waitFor } from '@testing-library/react'
+import { fireEvent, getByText, render, waitFor } from '@testing-library/react'
 import { UsersTable } from './UsersTable'
 import { mockUsers } from 'mocks/users'
 import { MemoryRouter } from 'react-router-dom'
@@ -57,7 +57,7 @@ describe('Users Table', () => {
       })
     )
     mockedAxios.put.mockReturnValue(Promise.resolve('success'))
-    const { queryAllByText, getByText, container } = await waitFor(() =>
+    const { queryAllByText, getByText } = await waitFor(() =>
       render(
         <UserContext.Provider
           value={{
@@ -75,13 +75,10 @@ describe('Users Table', () => {
         </UserContext.Provider>
       )
     )
-    expect(queryAllByText(/inactive/i)).toHaveLength(0)
     const updateStatusDropdown = await waitFor(() => queryAllByText(mockUsers[0].role))
     const editStatus = await waitFor(() => updateStatusDropdown[0])
-    await waitFor(() => fireEvent.click(container))
     await waitFor(() => fireEvent.mouseDown(editStatus))
     await waitFor(() => fireEvent.click(getByText(/inactive/i)))
-    await waitFor(() => fireEvent.click(container))
     expect(axios.put).toHaveBeenCalledWith(
       `${REACT_APP_BACKEND_URL}/user/${mockUsers[0].username}/role?role=inactive`,
       null,
