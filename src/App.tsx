@@ -8,7 +8,7 @@ import Logo from './assets/logo.png'
 import './App.less'
 import Footer from './components/Footer/Footer'
 import { UserContext } from 'services/userContext'
-import { ProfileDropdown } from './components/Dropdown/ProfileDropdown'
+import { ProfileDropdown } from './components/ProfileDropdown/ProfileDropdown'
 import { DownOutlined, ToolFilled } from '@ant-design/icons'
 import {
   getCookies,
