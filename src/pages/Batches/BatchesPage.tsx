@@ -4,11 +4,9 @@ import { Typography } from 'antd'
 
 const { Title } = Typography
 
-export const BatchesPage = () => {
-  return (
-    <>
-      <Title>NIPT Batches</Title>
-      <BatchesTable></BatchesTable>
-    </>
-  )
-}
+export const BatchesPage = () => (
+  <>
+    <Title>NIPT Batches</Title>
+    <BatchesTable></BatchesTable>
+  </>
+)

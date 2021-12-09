@@ -114,7 +114,7 @@ export const BatchesTable = () => {
           </Dropdown>
         </Col>
         <Col span={8}>
-          <Search placeholder="Search Batches" onSearch={onSearch} allowClear />
+          <Search placeholder="Search batches" onSearch={onSearch} allowClear />
         </Col>
       </Row>
       <Text type="secondary">
