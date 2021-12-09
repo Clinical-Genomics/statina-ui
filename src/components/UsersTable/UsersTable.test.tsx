@@ -1,63 +1,132 @@
 import React from 'react'
-import { render } from '@testing-library/react'
+import { fireEvent, getByText, queryAllByTestId, render, waitFor } from '@testing-library/react'
 import { UsersTable } from './UsersTable'
-import { mockBatches } from 'mocks/batches'
+import { mockUsers } from 'mocks/users'
 import { MemoryRouter } from 'react-router-dom'
 import { UserContext } from 'services/userContext'
 import axios from 'axios'
+import { REACT_APP_BACKEND_URL } from '../../services/StatinaApi'
 
 jest.mock('axios')
 const mockedAxios = axios as jest.Mocked<typeof axios>
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  useLocation: () => ({
-    pathname: 'https://statina.scilifelab.se/batches',
-  }),
-}))
 
-describe('Batches Table', () => {
-  test('Batches Table should display UI correctly', async () => {
-    mockedAxios.get.mockReturnValue(Promise.resolve({ data: mockBatches }))
-    const initializeUserContext = () => null
-    const logout = () => null
-    const { getAllByText } = render(
-      <UserContext.Provider
-        value={{
-          initializeUserContext,
-          logout,
-          token: 'token',
-          username: 'elevu',
-          email: 'testemail',
-          permissions: ['R'],
-        }}
-      >
-        <MemoryRouter>
-          <UsersTable />
-        </MemoryRouter>
-      </UserContext.Provider>
+const initializeUserContext = () => null
+const logout = () => null
+
+describe('Users Table', () => {
+  test('Users Table should display UI correctly', async () => {
+    mockedAxios.get.mockReturnValueOnce(
+      Promise.resolve({
+        data: {
+          documents: mockUsers,
+          document_count: mockUsers.length,
+        },
+      })
     )
-    console.log(getAllByText)
-    /* const batchID = await waitFor(() => getAllByText(mockBatches[0].batch_id))
-    await waitFor(() => expect(batchID).toBeVisible())
-    const date = await waitFor(() => getAllByText(mockBatches[0].sequencing_date))
-    await waitFor(() => expect(date).toBeVisible())
-    const flowcell = await waitFor(() => getAllByText(mockBatches[0].segmental_calls))
-    await waitFor(() => expect(flowcell).toBeVisible()) */
-  })
-  /* test('Search batches should work', () => {
-    const { queryByText } = render(
-      <MemoryRouter>
-        <UsersTable></UsersTable>
-      </MemoryRouter>
+    const { getByText } = await waitFor(() =>
+      render(
+        <UserContext.Provider
+          value={{
+            initializeUserContext,
+            logout,
+            token: 'token',
+            username: 'elevu',
+            email: 'testemail',
+            permissions: ['R'],
+          }}
+        >
+          <MemoryRouter>
+            <UsersTable />
+          </MemoryRouter>
+        </UserContext.Provider>
+      )
     )
-    expect(queryByText(mockBatches[1].batch_id)).toBeVisible()
-    const inputElement = screen.getByPlaceholderText('Search Batches') as HTMLInputElement
-    const buttonElement = screen.getByRole('button', {
-      name: /Search/i,
+    mockUsers.forEach((user) => {
+      const username = getByText(user.username)
+      expect(username).toBeVisible()
     })
-    fireEvent.change(inputElement, { target: { value: mockBatches[0].batch_id } })
-    expect(inputElement.value).toBe(mockBatches[0].batch_id)
-    fireEvent.click(buttonElement)
-    expect(screen.getByText(mockBatches[0].flowcell)).toBeInTheDocument()
-  }) */
+  })
+
+  test('Admin can update user status', async () => {
+    mockedAxios.get.mockReturnValue(
+      Promise.resolve({
+        data: {
+          documents: mockUsers,
+          document_count: mockUsers.length,
+        },
+      })
+    )
+    mockedAxios.put.mockReturnValue(Promise.resolve('success'))
+    const { queryAllByText, getByText, container } = await waitFor(() =>
+      render(
+        <UserContext.Provider
+          value={{
+            initializeUserContext,
+            logout,
+            token: 'token',
+            username: 'elevu',
+            email: 'testemail',
+            permissions: ['RW'],
+          }}
+        >
+          <MemoryRouter>
+            <UsersTable />
+          </MemoryRouter>
+        </UserContext.Provider>
+      )
+    )
+    expect(queryAllByText(/inactive/i)).toHaveLength(0)
+    const updateStatusDropdown = await waitFor(() => queryAllByText(mockUsers[0].role))
+    const editStatus = await waitFor(() => updateStatusDropdown[0])
+    await waitFor(() => fireEvent.click(container))
+    await waitFor(() => fireEvent.mouseDown(editStatus))
+    await waitFor(() => fireEvent.click(getByText(/inactive/i)))
+    await waitFor(() => fireEvent.click(container))
+    expect(axios.put).toHaveBeenCalledWith(
+      `${REACT_APP_BACKEND_URL}/user/${mockUsers[0].username}/role?role=inactive`,
+      null,
+      {
+        headers: {
+          Authorization: 'Bearer token',
+          ContentType: 'application/x-www-form-urlencoded',
+        },
+      }
+    )
+  })
+
+  test('Admin can delete user', async () => {
+    mockedAxios.get.mockReturnValue(
+      Promise.resolve({
+        data: {
+          documents: mockUsers,
+          document_count: mockUsers.length,
+        },
+      })
+    )
+    const { getByText, queryAllByLabelText } = await waitFor(() =>
+      render(
+        <UserContext.Provider
+          value={{
+            initializeUserContext,
+            logout,
+            token: 'token',
+            username: 'elevu',
+            email: 'testemail',
+            permissions: ['RW'],
+          }}
+        >
+          <MemoryRouter>
+            <UsersTable />
+          </MemoryRouter>
+        </UserContext.Provider>
+      )
+    )
+    const deleteBtn = await waitFor(() => queryAllByLabelText('delete'))
+    const deleteUser = await waitFor(() => deleteBtn[0])
+    fireEvent.click(deleteUser)
+    const confirmation = await waitFor(() =>
+      getByText(/Are you sure you want to delete this user?/i)
+    )
+    await waitFor(() => expect(confirmation).toBeInTheDocument())
+  })
 })

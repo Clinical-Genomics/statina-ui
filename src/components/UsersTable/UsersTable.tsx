@@ -1,10 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { UserContext } from '../../services/userContext'
 import { deleteUser, getUsers, putUserRole } from '../../services/StatinaApi'
-import { Col, Row, Table, Popconfirm, Select } from 'antd'
+import { Col, Row, Table, Popconfirm, Select, Typography } from 'antd'
 import { escapeRegExp, SuccessNotification, userRoles } from 'services/helpers/helpers'
 import { DeleteTwoTone } from '@ant-design/icons'
-import Title from 'antd/es/typography/Title'
 import { User } from '../../services/interfaces'
 import Search from 'antd/lib/input/Search'
 
@@ -16,6 +15,7 @@ export const UsersTable = () => {
   const [currentPage, setCurrentPage] = useState(1)
 
   const { Option } = Select
+  const { Title } = Typography
 
   useEffect(() => {
     getUsers(userContext, 10, 0, searchValue).then((users) => {
@@ -82,7 +82,6 @@ export const UsersTable = () => {
           defaultValue={role || 'N/A'}
           style={{ width: 120 }}
           onChange={(value) => setUserRole(user?.username, value)}
-          data-testid="status-selector"
         >
           {Object.keys(userRoles).map((role) => (
             <Option value={role} key={role}>

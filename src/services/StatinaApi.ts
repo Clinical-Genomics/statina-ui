@@ -2,7 +2,7 @@ import { handleBackendError } from './helpers/helpers'
 import { Login, RegisterUser } from './interfaces'
 import { UserContext } from './userContext'
 
-const { REACT_APP_BACKEND_URL } = process.env
+export const { REACT_APP_BACKEND_URL } = process.env
 
 const axios = require('axios').default
 
