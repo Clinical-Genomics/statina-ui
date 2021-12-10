@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom'
 import { ExportCSV } from 'components/ExportCSV/ExportCSV'
 import { BatchesTablePDF } from 'components/ExportPDF/BatchesTablePDF'
 import { DownOutlined, DeleteTwoTone } from '@ant-design/icons'
+import { ErrorPage } from 'pages/Error/ErrorPage'
 
 const { Search } = Input
 const { Text } = Typography
@@ -19,11 +20,16 @@ export const BatchesTable = () => {
   const [pageCount, setPageCount] = useState(0)
   const [searchValue, setSearchValue] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
+  const [error, setError] = useState<any>()
 
   useEffect(() => {
-    getBatches(userContext, 10, 0, searchValue).then((batches) => {
-      setFilteredBatches(batches?.documents), setPageCount(batches?.document_count)
-    })
+    getBatches(userContext, 10, 0, searchValue)
+      .then((batches) => {
+        setFilteredBatches(batches?.documents), setPageCount(batches?.document_count)
+      })
+      .catch((error) => {
+        setError(error)
+      })
   }, [])
 
   const onSearch = (searchInput) => {
@@ -105,32 +111,37 @@ export const BatchesTable = () => {
 
   return (
     <>
-      <Row justify="space-between" style={{ paddingBottom: 20 }}>
-        <Col span={2}>
-          <Dropdown overlay={downloadMenu}>
-            <Button type={'primary'}>
-              Download batches list <DownOutlined />
-            </Button>
-          </Dropdown>
-        </Col>
-        <Col span={8}>
-          <Search placeholder="Search batches" onSearch={onSearch} allowClear />
-        </Col>
-      </Row>
-      <Text type="secondary">
-        {pageCount} result{filteredBatches?.length > 1 ? `s` : null}
-      </Text>
-      <Table
-        columns={columns}
-        dataSource={filteredBatches}
-        rowKey="batch_id"
-        onChange={onChange}
-        pagination={{
-          total: pageCount,
-          showTotal: showTotal,
-          current: currentPage,
-        }}
-      />
+      {!error && (
+        <>
+          <Row justify="space-between" style={{ paddingBottom: 20 }}>
+            <Col span={2}>
+              <Dropdown overlay={downloadMenu}>
+                <Button type={'primary'}>
+                  Download batches list <DownOutlined />
+                </Button>
+              </Dropdown>
+            </Col>
+            <Col span={8}>
+              <Search placeholder="Search batches" onSearch={onSearch} allowClear />
+            </Col>
+          </Row>
+          <Text type="secondary">
+            {pageCount} result{filteredBatches?.length > 1 ? `s` : null}
+          </Text>
+          <Table
+            columns={columns}
+            dataSource={filteredBatches}
+            rowKey="batch_id"
+            onChange={onChange}
+            pagination={{
+              total: pageCount,
+              showTotal: showTotal,
+              current: currentPage,
+            }}
+          />
+        </>
+      )}
+      {error && <ErrorPage error={error} />}
     </>
   )
 }

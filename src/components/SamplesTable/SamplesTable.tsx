@@ -14,6 +14,7 @@ import { red } from '@ant-design/colors'
 import { sampleStatusTags, sexTags, tagColors } from 'services/helpers/constants'
 import { createFileDownload, escapeRegExp, SuccessNotification } from 'services/helpers/helpers'
 import { Loading } from '../Loading'
+import { ErrorPage } from 'pages/Error/ErrorPage'
 
 type SamplesProps = {
   batchId?: any
@@ -32,6 +33,7 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
   const [searchValue, setSearchValue] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
   const [isLoading, setIsLoading] = React.useState<boolean>(true)
+  const [error, setError] = useState<any>()
 
   useEffect(() => {
     getSamples(userContext, 10, 0, batchId, searchValue)
@@ -41,7 +43,9 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
           includedSamples(samples?.documents)
         setIsLoading(false)
       })
-      .catch(() => setIsLoading(false))
+      .catch((error) => {
+        setIsLoading(false), setError(error)
+      })
   }, [])
 
   const includedSamples = (samples) => {
@@ -347,31 +351,36 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
     <Loading />
   ) : (
     <>
-      <Search
-        allowClear
-        placeholder={`Search samples`}
-        onSearch={onSearch}
-        style={{ paddingBottom: 20 }}
-      />
-      <Text type="secondary">
-        {pageCount} result{filteredSamples?.length > 1 ? `s` : null}
-      </Text>
-      <br />
-      <i>Select a sample with the checkbox to include it in the comparison set</i>
-      <Table
-        columns={columns.filter((column) => (!batchId ? column : column.key !== 'batch_id'))}
-        dataSource={filteredSamples}
-        rowKey="sample_id"
-        scroll={{ x: 2300 }}
-        rowSelection={{
-          ...rowSelection,
-          hideSelectAll: batchId ? false : true,
-          onSelectAll: onSelectAll,
-          onSelect: handleSelect,
-        }}
-        onChange={onChange}
-        pagination={{ total: pageCount, showTotal: showTotal, current: currentPage }}
-      />
+      {!error && (
+        <>
+          <Search
+            allowClear
+            placeholder={`Search samples`}
+            onSearch={onSearch}
+            style={{ paddingBottom: 20 }}
+          />
+          <Text type="secondary">
+            {pageCount} result{filteredSamples?.length > 1 ? `s` : null}
+          </Text>
+          <br />
+          <i>Select a sample with the checkbox to include it in the comparison set</i>
+          <Table
+            columns={columns.filter((column) => (!batchId ? column : column.key !== 'batch_id'))}
+            dataSource={filteredSamples}
+            rowKey="sample_id"
+            scroll={{ x: 2300 }}
+            rowSelection={{
+              ...rowSelection,
+              hideSelectAll: batchId ? false : true,
+              onSelectAll: onSelectAll,
+              onSelect: handleSelect,
+            }}
+            onChange={onChange}
+            pagination={{ total: pageCount, showTotal: showTotal, current: currentPage }}
+          />
+        </>
+      )}
+      {error && <ErrorPage error={error} />}
     </>
   )
 }

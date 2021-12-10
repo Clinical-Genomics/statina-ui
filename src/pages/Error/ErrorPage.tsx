@@ -5,7 +5,18 @@ import { Link } from 'react-router-dom'
 export const ErrorPage = ({ error }) => {
   switch (error?.response?.status) {
     case 404:
-      return <Result status="404" title="404" subTitle="Data not found" />
+      return (
+        <Result
+          status="404"
+          title="404"
+          subTitle="Sorry, the page you visited does not exist."
+          extra={
+            <Button type="primary" key="console">
+              <Link to="/">Back to Home</Link>
+            </Button>
+          }
+        />
+      )
       break
     default:
       return (

@@ -15,6 +15,7 @@ import styles from './BatchPage.module.css'
 import { SamplesTable } from 'components/SamplesTable/SamplesTable'
 import { BatchDownloadFile } from '../../components/ExportPDF/BatchDownloadFiles'
 import { batchDownloadFileTypes } from '../../services/helpers/constants'
+import { ErrorPage } from 'pages/Error/ErrorPage'
 
 const { TabPane } = Tabs
 const { Paragraph, Title, Text } = Typography
@@ -26,6 +27,7 @@ export const BatchPage = () => {
   const { pathname } = useLocation()
   const batchId = pathname.substring(pathname.lastIndexOf('/') + 1, pathname.length)
   const [isLoading, setIsLoading] = React.useState<boolean>(true)
+  const [error, setError] = useState<any>()
 
   useEffect(() => {
     getBatch(batchId, userContext)
@@ -33,8 +35,8 @@ export const BatchPage = () => {
         setBatch(batch)
         setIsLoading(false)
       })
-      .catch(() => {
-        setIsLoading(false)
+      .catch((error) => {
+        setIsLoading(false), setError(error)
       })
   }, [batchId])
 
@@ -53,59 +55,68 @@ export const BatchPage = () => {
   return isLoading ? (
     <Loading />
   ) : (
-    <Card className={styles.card}>
-      <Row justify={'space-between'}>
-        <Col style={{ marginBottom: 15 }}>
-          <Title>{batchId}</Title>
-          <Text strong>Sequencing date:</Text> {batch?.sequencing_date}
-        </Col>
-        <Col>
-          <div className={styles.downloadButtons}>
-            <BatchTablePDF batchId={batchId} />
-            {batchDownloadFileTypes.map((type) => (
-              <BatchDownloadFile batchId={batchId} fileType={type} key={type.name} />
-            ))}
-          </div>
-        </Col>
-      </Row>
-      <Row>
-        <Text strong>{`Comment:\u00A0`}</Text>
-        {permissions?.includes('RW') ? (
-          <Paragraph
-            editable={{
-              onChange: updateComment,
-              tooltip: false,
-            }}
-          >
-            {batch?.comment}
-          </Paragraph>
-        ) : (
-          <p>{batch?.comment}</p>
-        )}
-      </Row>
-      <Tabs type="card">
-        <TabPane tab="Summary Table" key="1">
-          <SamplesTable batchId={batchId} />
-        </TabPane>
-        <TabPane tab="Zscore 13" key="Zscore_13" className={styles.tab}>
-          <ZscoreGraph batchId={batchId} chromosome={13} />
-        </TabPane>
-        <TabPane tab="Zscore 18" key="Zscore_18" className={styles.tab}>
-          <ZscoreGraph batchId={batchId} chromosome={18} />
-        </TabPane>
-        <TabPane tab="Zscore 21" key="Zscore_21" className={styles.tab}>
-          <ZscoreGraph batchId={batchId} chromosome={21} />
-        </TabPane>
-        <TabPane tab="Fetal Fraction Preface" key="Fetal_Fraction_Preface" className={styles.tab}>
-          <FetalFractionPreface batchId={batchId} chromosome={21} />
-        </TabPane>
-        <TabPane tab="Fetal Fraction X/Y" key="Fetal_Fraction_X/Y" className={styles.tab}>
-          <FetalFractionXY batchId={batchId} chromosome={21} />
-        </TabPane>
-        <TabPane tab="Ratio (Chromosomes 1-22)" key="ratio">
-          <ChromosomesRatioPlot batchId={batchId} />
-        </TabPane>
-      </Tabs>
-    </Card>
+    <>
+      {!error && (
+        <Card className={styles.card}>
+          <Row justify={'space-between'}>
+            <Col style={{ marginBottom: 15 }}>
+              <Title>{batchId}</Title>
+              <Text strong>Sequencing date:</Text> {batch?.sequencing_date}
+            </Col>
+            <Col>
+              <div className={styles.downloadButtons}>
+                <BatchTablePDF batchId={batchId} />
+                {batchDownloadFileTypes.map((type) => (
+                  <BatchDownloadFile batchId={batchId} fileType={type} key={type.name} />
+                ))}
+              </div>
+            </Col>
+          </Row>
+          <Row>
+            <Text strong>{`Comment:\u00A0`}</Text>
+            {permissions?.includes('RW') ? (
+              <Paragraph
+                editable={{
+                  onChange: updateComment,
+                  tooltip: false,
+                }}
+              >
+                {batch?.comment}
+              </Paragraph>
+            ) : (
+              <p>{batch?.comment}</p>
+            )}
+          </Row>
+          <Tabs type="card">
+            <TabPane tab="Summary Table" key="1">
+              <SamplesTable batchId={batchId} />
+            </TabPane>
+            <TabPane tab="Zscore 13" key="Zscore_13" className={styles.tab}>
+              <ZscoreGraph batchId={batchId} chromosome={13} />
+            </TabPane>
+            <TabPane tab="Zscore 18" key="Zscore_18" className={styles.tab}>
+              <ZscoreGraph batchId={batchId} chromosome={18} />
+            </TabPane>
+            <TabPane tab="Zscore 21" key="Zscore_21" className={styles.tab}>
+              <ZscoreGraph batchId={batchId} chromosome={21} />
+            </TabPane>
+            <TabPane
+              tab="Fetal Fraction Preface"
+              key="Fetal_Fraction_Preface"
+              className={styles.tab}
+            >
+              <FetalFractionPreface batchId={batchId} chromosome={21} />
+            </TabPane>
+            <TabPane tab="Fetal Fraction X/Y" key="Fetal_Fraction_X/Y" className={styles.tab}>
+              <FetalFractionXY batchId={batchId} chromosome={21} />
+            </TabPane>
+            <TabPane tab="Ratio (Chromosomes 1-22)" key="ratio">
+              <ChromosomesRatioPlot batchId={batchId} />
+            </TabPane>
+          </Tabs>
+        </Card>
+      )}
+      {error && <ErrorPage error={error} />}
+    </>
   )
 }
