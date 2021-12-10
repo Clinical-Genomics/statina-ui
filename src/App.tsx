@@ -86,14 +86,14 @@ export const App = () => {
                 </Link>
               </Menu.Item>
               {user?.scopes?.includes('admin') && (
-                <Menu.Item key="/admin" disabled={!token} style={{ marginLeft: 'auto' }}>
+                <Menu.Item key="/admin" disabled={!token}>
                   <Link to="/admin">
                     Admin <ToolFilled />
                   </Link>
                 </Menu.Item>
               )}
               {!!token && !!user?.username && (
-                <Menu.Item key="/user" disabled={!token}>
+                <Menu.Item key="/user" disabled={!token} style={{ marginLeft: 'auto' }}>
                   <Dropdown overlay={<ProfileDropdown user={user} logout={logout} />}>
                     <Button type="primary">
                       {user?.username} <DownOutlined />
