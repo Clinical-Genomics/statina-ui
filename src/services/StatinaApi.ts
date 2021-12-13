@@ -38,6 +38,19 @@ const axiosPUT = (endPoint, body, { token, logout }: UserContext) => {
   })
 }
 
+const axiosPATCH = (endPoint, body) => {
+  return new Promise((resolve, reject) => {
+    axios
+      .patch(endPoint, body, {
+        headers: {
+          ContentType: 'application/x-www-form-urlencoded',
+        },
+      })
+      .then((response) => resolve(response.data))
+      .catch((error) => handleBackendError(error, reject))
+  })
+}
+
 const axiosIncludePUT = (endPoint, { token, logout }: UserContext) => {
   const body = null
   return new Promise((resolve, reject) => {
@@ -265,4 +278,12 @@ export const putUserRole = async (
 ): Promise<any> => {
   const endPoint = `${REACT_APP_BACKEND_URL}/user/${username}/role?role=${role}`
   return axiosPUT(endPoint, null, context)
+}
+
+export const validateUserEmail = async (
+  username: string,
+  verificationhex: string
+): Promise<any> => {
+  const endPoint = `${REACT_APP_BACKEND_URL}/user/${username}/validate?verification_hex=${verificationhex}`
+  return axiosPATCH(endPoint, username)
 }

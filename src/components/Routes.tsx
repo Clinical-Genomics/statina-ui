@@ -9,6 +9,7 @@ import { SamplePage } from 'pages/Sample/SamplePage'
 import { LoginPage } from '../pages/Login/LoginPage'
 import { PageNotFound } from 'pages/PageNotFound/PageNotFound'
 import { AdminPage } from '../pages/Admin/AdminPage'
+import { ConfirmedResult } from './NoPermissonResults/ConfirmedResult'
 
 type RoutesProps = {
   isLoggedIn: boolean
@@ -81,6 +82,7 @@ export const Routes = (props: RoutesProps) => {
           isLoggedIn === true ? <StatisticsPage /> : <Redirect to={{ pathname: '/login' }} />
         }
       />
+      <Route path="/:username/:verificationhex" exact render={() => <ConfirmedResult />} />
       <Route
         path="*"
         exact
