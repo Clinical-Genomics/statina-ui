@@ -20,7 +20,7 @@ export const ConfirmedResult = () => {
       {!error && (
         <Result
           icon={<CheckOutlined />}
-          title={`Hello, ${username.substring(username.indexOf('=') + 1)}!`}
+          title={`Hello, ${userName}!`}
           subTitle="Your email has been confirmed, you can now login."
           extra={
             <a href={`/`}>
