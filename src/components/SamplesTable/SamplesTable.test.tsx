@@ -1,10 +1,16 @@
 import React from 'react'
-import { render, waitFor } from '@testing-library/react'
+import { fireEvent, render, waitFor } from '@testing-library/react'
 import { SamplesTable } from './SamplesTable'
 import { mockSamples } from 'mocks/samples'
 import { MemoryRouter } from 'react-router-dom'
 import { UserContext } from 'services/userContext'
 import axios from 'axios'
+import { mockUsers } from '../../mocks/users'
+import { UsersTable } from '../UsersTable/UsersTable'
+import { REACT_APP_BACKEND_URL } from '../../services/StatinaApi'
+
+const initializeUserContext = () => null
+const logout = () => null
 
 jest.mock('axios')
 const mockedAxios = axios as jest.Mocked<typeof axios>
@@ -25,8 +31,6 @@ describe('Batches Table', () => {
         },
       })
     )
-    const initializeUserContext = () => null
-    const logout = () => null
     const { getByText, queryByText } = await waitFor(() =>
       render(
         <UserContext.Provider
@@ -59,8 +63,6 @@ describe('Batches Table', () => {
         },
       })
     )
-    const initializeUserContext = () => null
-    const logout = () => null
     const { queryByText, getByText } = await waitFor(() =>
       render(
         <UserContext.Provider
@@ -84,4 +86,39 @@ describe('Batches Table', () => {
     const sample_id = await waitFor(() => getByText(mockSamples[0].sample_id))
     await waitFor(() => expect(sample_id).toBeVisible())
   })
+})
+
+test('Call to backend has correct query parameters on sort', async () => {
+  mockedAxios.get.mockReturnValue(
+    Promise.resolve({
+      data: {
+        documents: mockSamples,
+        document_count: mockSamples.length,
+      },
+    })
+  )
+  const batch = 'NGh678'
+  const { getByText } = await waitFor(() =>
+    render(
+      <UserContext.Provider
+        value={{
+          initializeUserContext,
+          logout,
+          token: 'token',
+          username: 'elevu',
+          email: 'testemail',
+          permissions: ['RW'],
+        }}
+      >
+        <MemoryRouter>
+          <SamplesTable batchId={batch} />
+        </MemoryRouter>
+      </UserContext.Provider>
+    )
+  )
+  await waitFor(() => fireEvent.click(getByText(/Sample Name/i)))
+  expect(axios.get).toHaveBeenLastCalledWith(
+    `${REACT_APP_BACKEND_URL}/samples?&page_size=10&page_num=1&batch_id=${batch}&sort_key=sample_id&sort_direction=ascend`,
+    expect.any(Object)
+  )
 })

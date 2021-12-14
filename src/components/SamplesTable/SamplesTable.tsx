@@ -74,7 +74,6 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
   }
 
   const onTableChange = (data, filter, sorter) => {
-    console.log(sorter)
     setSortDirection(sorter?.order)
     setSortKey(sorter?.column?.key)
     getSamples(

@@ -159,7 +159,6 @@ export const createParamURL = (url, params): URL => {
     .filter((param) => params[param])
     .map((definedParam) => {
       url = url.concat(`&${definedParam}=${params[definedParam]}`)
-      console.log(definedParam)
     })
   return url
 }
