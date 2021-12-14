@@ -41,11 +41,11 @@ export const createErrorMessage = (error: AxiosError) => {
   switch (error?.response?.status) {
     case 400:
       return {
-        errorMessage: `${error?.response?.data}`,
+        errorMessage: `${error?.message}`,
       }
     case 401:
       return {
-        errorMessage: `${error?.response?.data}`,
+        errorMessage: `${error?.message}`,
         errorDescription: `Login failed, wrong credentials or no permissions. Try to login again`,
       }
     case 403:
