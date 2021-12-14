@@ -1,7 +1,6 @@
-import { handleBackendError } from './helpers/helpers'
+import { createParamURL, handleBackendError } from './helpers/helpers'
 import { Login, RegisterUser } from './interfaces'
 import { UserContext } from './userContext'
-import { end } from 'cheerio/lib/api/traversing'
 
 export const { REACT_APP_BACKEND_URL } = process.env
 
@@ -110,13 +109,7 @@ export const getBatches = async (
   return axiosGET(endPoint, context)
 }
 
-export const getSamplessss = async (...queryArguments): Promise<any> => {
-  console.log(queryArguments)
-  const endPoint = new URL(`${REACT_APP_BACKEND_URL}/samples?`)
-  return axiosGET(endPoint, queryArguments[0])
-}
-
-export const getSamples = async (
+export const getSamples2 = async (
   context: UserContext,
   pageSize: number,
   currentPage: number,
@@ -125,11 +118,31 @@ export const getSamples = async (
   sortKey?: string,
   sortDirection?: 'ascend' | 'descend'
 ): Promise<any> => {
-  let endPoint = batchId
-    ? `${REACT_APP_BACKEND_URL}/samples?batch_id=${batchId}&page_size=${pageSize}&page_num=${currentPage}&query_string=${query_string}`
-    : `${REACT_APP_BACKEND_URL}/samples?page_size=${pageSize}&page_num=${currentPage}&query_string=${query_string}`
+  let endPoint = `${REACT_APP_BACKEND_URL}/samples?page_size=${pageSize}&page_num=${currentPage}&query_string=${query_string}`
+  if (batchId) endPoint = endPoint.concat(`&batch_id=${batchId}`)
   if (sortKey) endPoint = endPoint.concat(`&sort_direction=${sortDirection}ing&sort_key=${sortKey}`)
   return axiosGET(endPoint, context)
+}
+export const getSamples = async (
+  context: UserContext,
+  pageSize: number,
+  currentPage: number,
+  batchId?: string,
+  queryString?: string,
+  sortKey?: string,
+  sortDirection?: 'ascend' | 'descend'
+): Promise<any> => {
+  return axiosGET(
+    createParamURL(`${REACT_APP_BACKEND_URL}/samples?`, {
+      page_size: pageSize,
+      page_num: currentPage,
+      batch_id: batchId,
+      query_string: queryString,
+      sort_key: sortKey,
+      sort_direction: sortDirection,
+    }),
+    context
+  )
 }
 
 export const getBatch = async (batchId: string, context: UserContext): Promise<any> => {
