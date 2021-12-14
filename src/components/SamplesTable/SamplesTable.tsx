@@ -32,8 +32,8 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
   const [pageCount, setPageCount] = useState(0)
   const [searchValue, setSearchValue] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
-  const [sortDirection, setSortDirection] = useState<'ascend' | 'descend'>('ascend')
-  const [sortKey, setSortKey] = useState<'sample_id' | 'batch_id'>('sample_id')
+  const [sortDirection, setSortDirection] = useState<'ascend' | 'descend'>()
+  const [sortKey, setSortKey] = useState<'sample_id' | 'batch_id'>()
   const [isLoading, setIsLoading] = React.useState<boolean>(true)
   const [error, setError] = useState<any>()
 
@@ -66,7 +66,7 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
     const escapeInput = escapeRegExp(searchInput)
     setSearchValue(escapeInput)
     setCurrentPage(1)
-    getSamples(userContext, 0, 0, batchId, escapeInput).then((samples) => {
+    getSamples(userContext, 0, 0, batchId, escapeInput, sortKey, sortDirection).then((samples) => {
       setFilteredSamples(samples.documents),
         setPageCount(samples.document_count),
         includedSamples(samples?.documents)
@@ -75,6 +75,8 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
 
   const onTableChange = (data, filter, sorter) => {
     console.log(sorter)
+    setSortDirection(sorter?.order)
+    setSortKey(sorter?.column?.key)
     getSamples(
       userContext,
       data.pageSize,
@@ -120,12 +122,14 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
         type: 'success',
         message: 'Comment updated',
       })
-      getSamples(userContext, 10, currentPage, batchId, searchValue).then((samples) => {
-        setFilteredSamples(samples?.documents),
-          setPageCount(samples?.document_count),
-          includedSamples(samples?.documents)
-        setIsLoading(false)
-      })
+      getSamples(userContext, 10, currentPage, batchId, searchValue, sortKey, sortDirection).then(
+        (samples) => {
+          setFilteredSamples(samples?.documents),
+            setPageCount(samples?.document_count),
+            includedSamples(samples?.documents)
+          setIsLoading(false)
+        }
+      )
     })
   }
 

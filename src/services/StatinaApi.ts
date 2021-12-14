@@ -110,6 +110,12 @@ export const getBatches = async (
   return axiosGET(endPoint, context)
 }
 
+export const getSamplessss = async (...queryArguments): Promise<any> => {
+  console.log(queryArguments)
+  const endPoint = new URL(`${REACT_APP_BACKEND_URL}/samples?`)
+  return axiosGET(endPoint, queryArguments[0])
+}
+
 export const getSamples = async (
   context: UserContext,
   pageSize: number,
