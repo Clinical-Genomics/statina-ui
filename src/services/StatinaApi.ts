@@ -1,6 +1,7 @@
 import { handleBackendError } from './helpers/helpers'
 import { Login, RegisterUser } from './interfaces'
 import { UserContext } from './userContext'
+import { end } from 'cheerio/lib/api/traversing'
 
 export const { REACT_APP_BACKEND_URL } = process.env
 
@@ -114,11 +115,14 @@ export const getSamples = async (
   pageSize: number,
   currentPage: number,
   batchId?: string,
-  query_string?: string
+  query_string?: string,
+  sortKey?: string,
+  sortDirection?: 'ascend' | 'descend'
 ): Promise<any> => {
-  const endPoint = batchId
+  let endPoint = batchId
     ? `${REACT_APP_BACKEND_URL}/samples?batch_id=${batchId}&page_size=${pageSize}&page_num=${currentPage}&query_string=${query_string}`
     : `${REACT_APP_BACKEND_URL}/samples?page_size=${pageSize}&page_num=${currentPage}&query_string=${query_string}`
+  if (sortKey) endPoint = endPoint.concat(`&sort_direction=${sortDirection}ing&sort_key=${sortKey}`)
   return axiosGET(endPoint, context)
 }
 
