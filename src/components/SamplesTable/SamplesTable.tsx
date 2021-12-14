@@ -32,11 +32,13 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
   const [pageCount, setPageCount] = useState(0)
   const [searchValue, setSearchValue] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
+  const [sortDirection, setSortDirection] = useState<'ascend' | 'descend'>()
+  const [sortKey, setSortKey] = useState<'sample_id' | 'batch_id'>()
   const [isLoading, setIsLoading] = React.useState<boolean>(true)
   const [error, setError] = useState<any>()
 
   useEffect(() => {
-    getSamples(userContext, 10, 0, batchId, searchValue)
+    getSamples(userContext, 10, 0, batchId, searchValue, sortKey, sortDirection)
       .then((samples) => {
         setFilteredSamples(samples?.documents),
           setPageCount(samples?.document_count),
@@ -64,15 +66,25 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
     const escapeInput = escapeRegExp(searchInput)
     setSearchValue(escapeInput)
     setCurrentPage(1)
-    getSamples(userContext, 0, 0, batchId, escapeInput).then((samples) => {
+    getSamples(userContext, 0, 0, batchId, escapeInput, sortKey, sortDirection).then((samples) => {
       setFilteredSamples(samples.documents),
         setPageCount(samples.document_count),
         includedSamples(samples?.documents)
     })
   }
 
-  const onChange = (data) => {
-    getSamples(userContext, data.pageSize, data.current, batchId, searchValue).then((samples) => {
+  const onTableChange = (data, filter, sorter) => {
+    setSortDirection(sorter?.order)
+    setSortKey(sorter?.column?.key)
+    getSamples(
+      userContext,
+      data.pageSize,
+      data.current,
+      batchId,
+      searchValue,
+      sorter?.column?.key,
+      sorter?.order
+    ).then((samples) => {
       setFilteredSamples(samples.documents), setPageCount(samples.document_count)
       setCurrentPage(data.current), includedSamples(samples.documents)
     })
@@ -109,12 +121,14 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
         type: 'success',
         message: 'Comment updated',
       })
-      getSamples(userContext, 10, currentPage, batchId, searchValue).then((samples) => {
-        setFilteredSamples(samples?.documents),
-          setPageCount(samples?.document_count),
-          includedSamples(samples?.documents)
-        setIsLoading(false)
-      })
+      getSamples(userContext, 10, currentPage, batchId, searchValue, sortKey, sortDirection).then(
+        (samples) => {
+          setFilteredSamples(samples?.documents),
+            setPageCount(samples?.document_count),
+            includedSamples(samples?.documents)
+          setIsLoading(false)
+        }
+      )
     })
   }
 
@@ -125,19 +139,22 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
       key: 'sample_id',
       fixed: 'left',
       render: (sample_id: any) => <Link to={`/samples/${sample_id}`}>{sample_id}</Link>,
+      sorter: true,
     },
     {
       title: 'Batch ID',
       dataIndex: 'batch_id',
       key: 'batch_id',
       fixed: 'left',
+      sorter: true,
       render: (batch_id: any) => <Link to={`/batches/${batch_id}`}>{batch_id}</Link>,
     },
     {
       title: 'z_score 13',
       dataIndex: 'z_score',
-      key: 'z_score',
+      key: 'Zscore_13',
       width: 100,
+      sorter: true,
       render(score, sample) {
         return {
           props: {
@@ -152,8 +169,9 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
     {
       title: 'z_score 18',
       dataIndex: 'z_score',
-      key: 'z_score',
+      key: 'Zscore_18',
       width: 100,
+      sorter: true,
       render(score, sample) {
         return {
           props: {
@@ -168,8 +186,9 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
     {
       title: 'z_score 21',
       dataIndex: 'z_score',
-      key: 'z_score',
+      key: 'Zscore_21',
       width: 100,
+      sorter: true,
       render(score, sample) {
         return {
           props: {
@@ -184,8 +203,9 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
     {
       title: 'z_score X',
       dataIndex: 'z_score',
-      key: 'z_score',
+      key: 'Zscore_X',
       width: 100,
+      sorter: true,
       render(score, sample) {
         return {
           props: {
@@ -200,8 +220,9 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
     {
       title: 'FF-PF (%)',
       dataIndex: 'fetal_fraction',
-      key: 'fetalFractionPreface',
+      key: 'FF_Formatted',
       width: 100,
+      sorter: true,
       render(fetalFraction, sample) {
         return {
           props: {
@@ -216,8 +237,9 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
     {
       title: 'FF-X (%)',
       dataIndex: 'fetal_fraction',
-      key: 'fetalFractionX',
+      key: 'FFX',
       width: 100,
+      sorter: true,
       render(fetalFraction, sample) {
         return {
           props: {
@@ -232,8 +254,9 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
     {
       title: 'FF-Y (%)',
       dataIndex: 'fetal_fraction',
-      key: 'fetalFractionY',
+      key: 'FFY',
       width: 100,
+      sorter: true,
       render(fetalFraction, sample) {
         return {
           props: {
@@ -255,7 +278,8 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
     {
       title: 'CNV Segment',
       dataIndex: 'cnv_segment',
-      key: 'cnvSegment',
+      key: 'CNVSegment',
+      sorter: true,
       render: (cnvSegment: string) =>
         cnvSegment ? <Tag color={tagColors.cnvSegment}>{cnvSegment}</Tag> : null,
     },
@@ -281,8 +305,9 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
     {
       title: 'QC Flag',
       dataIndex: 'qc_flag',
-      key: 'qcFlag',
+      key: 'QCFlag',
       width: 200,
+      sorter: true,
     },
     {
       title: (
@@ -325,6 +350,7 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
       dataIndex: 'comment',
       key: 'comment',
       width: 200,
+      sorter: true,
       render: (comment: string, sample: any) =>
         permissions?.includes('RW') ? (
           <Paragraph
@@ -375,7 +401,7 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
               onSelectAll: onSelectAll,
               onSelect: handleSelect,
             }}
-            onChange={onChange}
+            onChange={onTableChange}
             pagination={{ total: pageCount, showTotal: showTotal, current: currentPage }}
           />
         </>

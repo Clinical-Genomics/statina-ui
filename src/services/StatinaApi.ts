@@ -1,4 +1,4 @@
-import { handleBackendError } from './helpers/helpers'
+import { createParamURL, handleBackendError } from './helpers/helpers'
 import { Login, RegisterUser } from './interfaces'
 import { UserContext } from './userContext'
 
@@ -127,12 +127,21 @@ export const getSamples = async (
   pageSize: number,
   currentPage: number,
   batchId?: string,
-  query_string?: string
+  queryString?: string,
+  sortKey?: string,
+  sortDirection?: 'ascend' | 'descend'
 ): Promise<any> => {
-  const endPoint = batchId
-    ? `${REACT_APP_BACKEND_URL}/samples?batch_id=${batchId}&page_size=${pageSize}&page_num=${currentPage}&query_string=${query_string}`
-    : `${REACT_APP_BACKEND_URL}/samples?page_size=${pageSize}&page_num=${currentPage}&query_string=${query_string}`
-  return axiosGET(endPoint, context)
+  return axiosGET(
+    createParamURL(`${REACT_APP_BACKEND_URL}/samples?`, {
+      page_size: pageSize,
+      page_num: currentPage,
+      batch_id: batchId,
+      query_string: queryString,
+      sort_key: sortKey,
+      sort_direction: sortDirection,
+    }),
+    context
+  )
 }
 
 export const getBatch = async (batchId: string, context: UserContext): Promise<any> => {

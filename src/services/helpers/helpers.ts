@@ -41,11 +41,11 @@ export const createErrorMessage = (error: AxiosError) => {
   switch (error?.response?.status) {
     case 400:
       return {
-        errorMessage: `${error?.response?.data}`,
+        errorMessage: `${error?.message}`,
       }
     case 401:
       return {
-        errorMessage: `${error?.response?.data}`,
+        errorMessage: `${error?.message}`,
         errorDescription: `Login failed, wrong credentials or no permissions. Try to login again`,
       }
     case 403:
@@ -156,4 +156,13 @@ export const handleBackendError = (error, reject, logout?) => {
     })
   }
   reject(error)
+}
+
+export const createParamURL = (url, params): URL => {
+  Object.keys(params)
+    .filter((param) => params[param])
+    .map((definedParam) => {
+      url = url.concat(`&${definedParam}=${params[definedParam]}`)
+    })
+  return url
 }
