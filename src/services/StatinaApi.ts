@@ -122,20 +122,6 @@ export const getBatches = async (
   return axiosGET(endPoint, context)
 }
 
-export const getSamples2 = async (
-  context: UserContext,
-  pageSize: number,
-  currentPage: number,
-  batchId?: string,
-  query_string?: string,
-  sortKey?: string,
-  sortDirection?: 'ascend' | 'descend'
-): Promise<any> => {
-  let endPoint = `${REACT_APP_BACKEND_URL}/samples?page_size=${pageSize}&page_num=${currentPage}&query_string=${query_string}`
-  if (batchId) endPoint = endPoint.concat(`&batch_id=${batchId}`)
-  if (sortKey) endPoint = endPoint.concat(`&sort_direction=${sortDirection}ing&sort_key=${sortKey}`)
-  return axiosGET(endPoint, context)
-}
 export const getSamples = async (
   context: UserContext,
   pageSize: number,
