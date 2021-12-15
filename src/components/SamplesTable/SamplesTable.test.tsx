@@ -5,8 +5,6 @@ import { mockSamples } from 'mocks/samples'
 import { MemoryRouter } from 'react-router-dom'
 import { UserContext } from 'services/userContext'
 import axios from 'axios'
-import { mockUsers } from '../../mocks/users'
-import { UsersTable } from '../UsersTable/UsersTable'
 import { REACT_APP_BACKEND_URL } from '../../services/StatinaApi'
 
 const initializeUserContext = () => null
