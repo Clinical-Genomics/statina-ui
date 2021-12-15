@@ -31,7 +31,7 @@ export const BatchTablePDF = ({ batchId }) => {
 
   const exportPDF = () => {
     setIsLoading(true)
-    getSamples(userContext, 0, 0, batchId, '').then(({ documents }) => {
+    getSamples(userContext, 0, 0, batchId, '', 'sample_id', 'descend').then(({ documents }) => {
       const graph = document.getElementById(graphId)
       const unit = 'pt'
       const size = 'A4'

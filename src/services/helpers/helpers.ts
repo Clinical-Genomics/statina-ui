@@ -3,6 +3,7 @@ import { notification } from 'antd'
 import { AxiosError } from 'axios'
 import Cookies from 'universal-cookie'
 import { userCookie } from './constants'
+import { isNil } from 'ramda'
 
 export const ErrorNotification = ({ type, message, description }: Notification) => {
   const key = `open${Date.now()}`
@@ -160,7 +161,7 @@ export const handleBackendError = (error, reject, logout?) => {
 
 export const createParamURL = (url, params): URL => {
   Object.keys(params)
-    .filter((param) => params[param])
+    .filter((param) => !isNil(params[param]))
     .map((definedParam) => {
       url = url.concat(`&${definedParam}=${params[definedParam]}`)
     })
