@@ -32,8 +32,8 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
   const [pageCount, setPageCount] = useState(0)
   const [searchValue, setSearchValue] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
-  const [sortDirection, setSortDirection] = useState<'ascend' | 'descend'>()
-  const [sortKey, setSortKey] = useState<'sample_id' | 'batch_id'>()
+  const [sortDirection, setSortDirection] = useState<'ascend' | 'descend'>('ascend')
+  const [sortKey, setSortKey] = useState<string>('sample_id')
   const [isLoading, setIsLoading] = React.useState<boolean>(true)
   const [error, setError] = useState<any>()
 
@@ -138,6 +138,7 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
       dataIndex: 'sample_id',
       key: 'sample_id',
       fixed: 'left',
+      defaultSortOrder: sortDirection,
       render: (sample_id: any) => <Link to={`/samples/${sample_id}`}>{sample_id}</Link>,
       sorter: true,
     },
