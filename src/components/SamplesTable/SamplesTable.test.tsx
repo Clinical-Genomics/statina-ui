@@ -19,8 +19,8 @@ jest.mock('react-router-dom', () => ({
   }),
 }))
 
-describe('Batches Table', () => {
-  test('Batches Table should display UI correctly', async () => {
+describe('Samples Table', () => {
+  test('Samples Table should display UI correctly', async () => {
     mockedAxios.get.mockReturnValueOnce(
       Promise.resolve({
         data: {
@@ -49,7 +49,7 @@ describe('Batches Table', () => {
     )
     const sample_id = await waitFor(() => getByText(mockSamples[0].sample_id))
     await waitFor(() => expect(sample_id).toBeVisible())
-    const batch_id = await waitFor(() => queryByText(/Batch ID/i))
+    const batch_id = await waitFor(() => queryByText(/Batch/i))
     await waitFor(() => expect(batch_id).toBeVisible())
   })
   test('Batch ID column should not render in the batch samples page', async () => {
@@ -96,7 +96,7 @@ test('Call to backend has correct query parameters on sort', async () => {
     })
   )
   const batch = 'NGh678'
-  const { getByText } = await waitFor(() =>
+  const { getAllByText } = await waitFor(() =>
     render(
       <UserContext.Provider
         value={{
@@ -114,9 +114,9 @@ test('Call to backend has correct query parameters on sort', async () => {
       </UserContext.Provider>
     )
   )
-  await waitFor(() => fireEvent.click(getByText(/Sample Name/i)))
+  await waitFor(() => fireEvent.click(getAllByText(/Sample/i)[0]))
   expect(axios.get).toHaveBeenLastCalledWith(
-    `${REACT_APP_BACKEND_URL}/samples?&page_size=10&page_num=1&batch_id=${batch}&query_string=&sort_key=sample_id&sort_direction=descend`,
+    `${REACT_APP_BACKEND_URL}/samples?&page_size=100&page_num=0&batch_id=${batch}&query_string=&sort_key=sample_id&sort_direction=ascend`,
     expect.any(Object)
   )
 })

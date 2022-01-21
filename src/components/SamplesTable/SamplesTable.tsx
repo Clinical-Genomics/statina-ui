@@ -36,9 +36,10 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
   const [sortKey, setSortKey] = useState<string>('sample_id')
   const [isLoading, setIsLoading] = React.useState<boolean>(true)
   const [error, setError] = useState<any>()
+  const pageSize = 100
 
   useEffect(() => {
-    getSamples(userContext, 10, 0, batchId, searchValue, sortKey, sortDirection)
+    getSamples(userContext, pageSize, 0, batchId, searchValue, sortKey, sortDirection)
       .then((samples) => {
         setFilteredSamples(samples?.documents),
           setPageCount(samples?.document_count),
@@ -121,40 +122,48 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
         type: 'success',
         message: 'Comment updated',
       })
-      getSamples(userContext, 10, currentPage, batchId, searchValue, sortKey, sortDirection).then(
-        (samples) => {
-          setFilteredSamples(samples?.documents),
-            setPageCount(samples?.document_count),
-            includedSamples(samples?.documents)
-          setIsLoading(false)
-        }
-      )
+      getSamples(
+        userContext,
+        pageSize,
+        currentPage,
+        batchId,
+        searchValue,
+        sortKey,
+        sortDirection
+      ).then((samples) => {
+        setFilteredSamples(samples?.documents),
+          setPageCount(samples?.document_count),
+          includedSamples(samples?.documents)
+        setIsLoading(false)
+      })
     })
   }
 
   const columns: any = [
     {
-      title: 'Sample name',
+      title: 'Sample',
       dataIndex: 'sample_id',
       key: 'sample_id',
       fixed: 'left',
+      width: 127,
       defaultSortOrder: sortDirection,
       render: (sample_id: any) => <Link to={`/samples/${sample_id}`}>{sample_id}</Link>,
       sorter: true,
     },
     {
-      title: 'Batch ID',
+      title: 'Batch',
       dataIndex: 'batch_id',
       key: 'batch_id',
       fixed: 'left',
+      width: 127,
       sorter: true,
       render: (batch_id: any) => <Link to={`/batches/${batch_id}`}>{batch_id}</Link>,
     },
     {
-      title: 'z_score 13',
+      title: 'Z_13',
       dataIndex: 'z_score',
       key: 'Zscore_13',
-      width: 100,
+      width: 70,
       sorter: true,
       render(score, sample) {
         return {
@@ -168,10 +177,10 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
       },
     },
     {
-      title: 'z_score 18',
+      title: 'Z_18',
       dataIndex: 'z_score',
       key: 'Zscore_18',
-      width: 100,
+      width: 70,
       sorter: true,
       render(score, sample) {
         return {
@@ -185,11 +194,11 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
       },
     },
     {
-      title: 'z_score 21',
+      title: 'Z_21',
       dataIndex: 'z_score',
       key: 'Zscore_21',
-      width: 100,
       sorter: true,
+      width: 70,
       render(score, sample) {
         return {
           props: {
@@ -202,28 +211,11 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
       },
     },
     {
-      title: 'z_score X',
-      dataIndex: 'z_score',
-      key: 'Zscore_X',
-      width: 100,
-      sorter: true,
-      render(score, sample) {
-        return {
-          props: {
-            style: {
-              background: sample.text_warning.includes('z_score_X') ? red[1] : null,
-            },
-          },
-          children: <div>{score['x']}</div>,
-        }
-      },
-    },
-    {
-      title: 'FF-PF (%)',
+      title: 'FFPF',
       dataIndex: 'fetal_fraction',
       key: 'FF_Formatted',
-      width: 100,
       sorter: true,
+      width: 63,
       render(fetalFraction, sample) {
         return {
           props: {
@@ -236,10 +228,10 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
       },
     },
     {
-      title: 'FF-X (%)',
+      title: 'FFX',
       dataIndex: 'fetal_fraction',
       key: 'FFX',
-      width: 100,
+      width: 63,
       sorter: true,
       render(fetalFraction, sample) {
         return {
@@ -253,10 +245,10 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
       },
     },
     {
-      title: 'FF-Y (%)',
+      title: 'FFY',
       dataIndex: 'fetal_fraction',
       key: 'FFY',
-      width: 100,
+      width: 63,
       sorter: true,
       render(fetalFraction, sample) {
         return {
@@ -277,20 +269,13 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
       render: (sex: any) => <Tag color={sexTags[sex]}>{sex}</Tag>,
     },
     {
-      title: 'CNV Segment',
-      dataIndex: 'cnv_segment',
-      key: 'CNVSegment',
-      sorter: true,
-      render: (cnvSegment: string) =>
-        cnvSegment ? <Tag color={tagColors.cnvSegment}>{cnvSegment}</Tag> : null,
-    },
-    {
       title: (
         <Tooltip title="Warning for chomosome abnormality. Automatically generated. Based on pre defined z_score and Fetal Fraction trsholds">
           Warning
           <QuestionCircleOutlined />
         </Tooltip>
       ),
+      width: 93,
       dataIndex: 'text_warning',
       key: 'text_warning',
       render: (warnings: any) => {
@@ -304,20 +289,39 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
       },
     },
     {
+      title: 'Comment',
+      dataIndex: 'comment',
+      key: 'comment',
+      sorter: true,
+      render: (comment: string, sample: any) =>
+        permissions?.includes('RW') ? (
+          <Paragraph
+            editable={{
+              onChange: (e) => onCommentChange(sample, e),
+              tooltip: false,
+            }}
+          >
+            {comment}
+          </Paragraph>
+        ) : (
+          <p>{comment}</p>
+        ),
+    },
+    {
       title: 'QC Flag',
       dataIndex: 'qc_flag',
       key: 'QCFlag',
-      width: 200,
       sorter: true,
     },
     {
       title: (
         <Tooltip title="Chomosome abnormalies. Manually classified by user through the sample page">
-          Abnormality status
+          Classification
           <QuestionCircleOutlined />
         </Tooltip>
       ),
       dataIndex: 'status',
+      width: 120,
       key: 'status',
       render: (status: any) => {
         const abnormalStatusTags = Object.keys(status).filter(
@@ -345,26 +349,6 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
           <CloudDownloadOutlined style={{ fontSize: '30px', marginLeft: '30%' }} />
         </span>
       ),
-    },
-    {
-      title: 'Comment',
-      dataIndex: 'comment',
-      key: 'comment',
-      width: 200,
-      sorter: true,
-      render: (comment: string, sample: any) =>
-        permissions?.includes('RW') ? (
-          <Paragraph
-            editable={{
-              onChange: (e) => onCommentChange(sample, e),
-              tooltip: false,
-            }}
-          >
-            {comment}
-          </Paragraph>
-        ) : (
-          <p>{comment}</p>
-        ),
     },
     {
       title: 'Last changed',
@@ -395,7 +379,8 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
             columns={columns.filter((column) => (!batchId ? column : column.key !== 'batch_id'))}
             dataSource={filteredSamples}
             rowKey="sample_id"
-            scroll={{ x: 2300 }}
+            size="small"
+            scroll={{ x: 1600 }}
             rowSelection={{
               ...rowSelection,
               hideSelectAll: batchId ? false : true,
@@ -403,7 +388,12 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
               onSelect: handleSelect,
             }}
             onChange={onTableChange}
-            pagination={{ total: pageCount, showTotal: showTotal, current: currentPage }}
+            pagination={{
+              total: pageCount,
+              showTotal: showTotal,
+              current: currentPage,
+              pageSize: pageSize,
+            }}
           />
         </>
       )}
