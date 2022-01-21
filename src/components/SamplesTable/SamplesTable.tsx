@@ -162,6 +162,7 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
       title: 'Z_13',
       dataIndex: 'z_score',
       key: 'Zscore_13',
+      width: 70,
       sorter: true,
       render(score, sample) {
         return {
@@ -178,6 +179,7 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
       title: 'Z_18',
       dataIndex: 'z_score',
       key: 'Zscore_18',
+      width: 70,
       sorter: true,
       render(score, sample) {
         return {
@@ -195,6 +197,7 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
       dataIndex: 'z_score',
       key: 'Zscore_21',
       sorter: true,
+      width: 70,
       render(score, sample) {
         return {
           props: {
@@ -211,6 +214,7 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
       dataIndex: 'fetal_fraction',
       key: 'FF_Formatted',
       sorter: true,
+      width: 63,
       render(fetalFraction, sample) {
         return {
           props: {
@@ -226,6 +230,7 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
       title: 'FFX',
       dataIndex: 'fetal_fraction',
       key: 'FFX',
+      width: 63,
       sorter: true,
       render(fetalFraction, sample) {
         return {
@@ -242,6 +247,7 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
       title: 'FFY',
       dataIndex: 'fetal_fraction',
       key: 'FFY',
+      width: 63,
       sorter: true,
       render(fetalFraction, sample) {
         return {
