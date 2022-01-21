@@ -36,9 +36,10 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
   const [sortKey, setSortKey] = useState<string>('sample_id')
   const [isLoading, setIsLoading] = React.useState<boolean>(true)
   const [error, setError] = useState<any>()
+  const pageSize = 100
 
   useEffect(() => {
-    getSamples(userContext, 10, 0, batchId, searchValue, sortKey, sortDirection)
+    getSamples(userContext, pageSize, 0, batchId, searchValue, sortKey, sortDirection)
       .then((samples) => {
         setFilteredSamples(samples?.documents),
           setPageCount(samples?.document_count),
@@ -121,14 +122,20 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
         type: 'success',
         message: 'Comment updated',
       })
-      getSamples(userContext, 10, currentPage, batchId, searchValue, sortKey, sortDirection).then(
-        (samples) => {
-          setFilteredSamples(samples?.documents),
-            setPageCount(samples?.document_count),
-            includedSamples(samples?.documents)
-          setIsLoading(false)
-        }
-      )
+      getSamples(
+        userContext,
+        pageSize,
+        currentPage,
+        batchId,
+        searchValue,
+        sortKey,
+        sortDirection
+      ).then((samples) => {
+        setFilteredSamples(samples?.documents),
+          setPageCount(samples?.document_count),
+          includedSamples(samples?.documents)
+        setIsLoading(false)
+      })
     })
   }
 
@@ -403,7 +410,12 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
               onSelect: handleSelect,
             }}
             onChange={onTableChange}
-            pagination={{ total: pageCount, showTotal: showTotal, current: currentPage }}
+            pagination={{
+              total: pageCount,
+              showTotal: showTotal,
+              current: currentPage,
+              pageSize: pageSize,
+            }}
           />
         </>
       )}
