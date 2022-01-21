@@ -96,7 +96,7 @@ test('Call to backend has correct query parameters on sort', async () => {
     })
   )
   const batch = 'NGh678'
-  const { getByText } = await waitFor(() =>
+  const { getAllByText } = await waitFor(() =>
     render(
       <UserContext.Provider
         value={{
@@ -114,9 +114,9 @@ test('Call to backend has correct query parameters on sort', async () => {
       </UserContext.Provider>
     )
   )
-  await waitFor(() => fireEvent.click(getByText(/Sample/i)))
+  await waitFor(() => fireEvent.click(getAllByText(/Sample/i)[0]))
   expect(axios.get).toHaveBeenLastCalledWith(
-    `${REACT_APP_BACKEND_URL}/samples?&page_size=10&page_num=1&batch_id=${batch}&query_string=&sort_key=sample_id&sort_direction=descend`,
+    `${REACT_APP_BACKEND_URL}/samples?&page_size=100&page_num=0&batch_id=${batch}&query_string=&sort_key=sample_id&sort_direction=ascend`,
     expect.any(Object)
   )
 })
