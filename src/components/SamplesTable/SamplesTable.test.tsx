@@ -114,7 +114,7 @@ test('Call to backend has correct query parameters on sort', async () => {
       </UserContext.Provider>
     )
   )
-  await waitFor(() => fireEvent.click(getByText(/Sample Name/i)))
+  await waitFor(() => fireEvent.click(getByText(/Sample/i)))
   expect(axios.get).toHaveBeenLastCalledWith(
     `${REACT_APP_BACKEND_URL}/samples?&page_size=10&page_num=1&batch_id=${batch}&query_string=&sort_key=sample_id&sort_direction=descend`,
     expect.any(Object)
