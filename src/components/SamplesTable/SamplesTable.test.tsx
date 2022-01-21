@@ -19,8 +19,8 @@ jest.mock('react-router-dom', () => ({
   }),
 }))
 
-describe('Batches Table', () => {
-  test('Batches Table should display UI correctly', async () => {
+describe('Samples Table', () => {
+  test('Samples Table should display UI correctly', async () => {
     mockedAxios.get.mockReturnValueOnce(
       Promise.resolve({
         data: {
@@ -49,7 +49,7 @@ describe('Batches Table', () => {
     )
     const sample_id = await waitFor(() => getByText(mockSamples[0].sample_id))
     await waitFor(() => expect(sample_id).toBeVisible())
-    const batch_id = await waitFor(() => queryByText(/Batch ID/i))
+    const batch_id = await waitFor(() => queryByText(/Batch/i))
     await waitFor(() => expect(batch_id).toBeVisible())
   })
   test('Batch ID column should not render in the batch samples page', async () => {
