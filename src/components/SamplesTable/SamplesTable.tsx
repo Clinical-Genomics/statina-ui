@@ -207,22 +207,6 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
       },
     },
     {
-      title: 'Z_X',
-      dataIndex: 'z_score',
-      key: 'Zscore_X',
-      sorter: true,
-      render(score, sample) {
-        return {
-          props: {
-            style: {
-              background: sample.text_warning.includes('z_score_X') ? red[1] : null,
-            },
-          },
-          children: <div>{score['x']}</div>,
-        }
-      },
-    },
-    {
       title: 'FFPF',
       dataIndex: 'fetal_fraction',
       key: 'FF_Formatted',
@@ -278,14 +262,6 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
       render: (sex: any) => <Tag color={sexTags[sex]}>{sex}</Tag>,
     },
     {
-      title: 'CNV Segment',
-      dataIndex: 'cnv_segment',
-      key: 'CNVSegment',
-      sorter: true,
-      render: (cnvSegment: string) =>
-        cnvSegment ? <Tag color={tagColors.cnvSegment}>{cnvSegment}</Tag> : null,
-    },
-    {
       title: (
         <Tooltip title="Warning for chomosome abnormality. Automatically generated. Based on pre defined z_score and Fetal Fraction trsholds">
           Warning
@@ -304,6 +280,26 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
             ))
           : null
       },
+    },
+    {
+      title: 'Comment',
+      dataIndex: 'comment',
+      key: 'comment',
+      width: 200,
+      sorter: true,
+      render: (comment: string, sample: any) =>
+        permissions?.includes('RW') ? (
+          <Paragraph
+            editable={{
+              onChange: (e) => onCommentChange(sample, e),
+              tooltip: false,
+            }}
+          >
+            {comment}
+          </Paragraph>
+        ) : (
+          <p>{comment}</p>
+        ),
     },
     {
       title: 'QC Flag',
@@ -347,26 +343,6 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
           <CloudDownloadOutlined style={{ fontSize: '30px', marginLeft: '30%' }} />
         </span>
       ),
-    },
-    {
-      title: 'Comment',
-      dataIndex: 'comment',
-      key: 'comment',
-      width: 200,
-      sorter: true,
-      render: (comment: string, sample: any) =>
-        permissions?.includes('RW') ? (
-          <Paragraph
-            editable={{
-              onChange: (e) => onCommentChange(sample, e),
-              tooltip: false,
-            }}
-          >
-            {comment}
-          </Paragraph>
-        ) : (
-          <p>{comment}</p>
-        ),
     },
     {
       title: 'Last changed',
