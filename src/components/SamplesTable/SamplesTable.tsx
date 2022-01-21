@@ -155,6 +155,7 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
       dataIndex: 'batch_id',
       key: 'batch_id',
       fixed: 'left',
+      width: 127,
       sorter: true,
       render: (batch_id: any) => <Link to={`/batches/${batch_id}`}>{batch_id}</Link>,
     },
@@ -291,7 +292,6 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
       title: 'Comment',
       dataIndex: 'comment',
       key: 'comment',
-      width: 200,
       sorter: true,
       render: (comment: string, sample: any) =>
         permissions?.includes('RW') ? (
@@ -311,7 +311,6 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
       title: 'QC Flag',
       dataIndex: 'qc_flag',
       key: 'QCFlag',
-      width: 200,
       sorter: true,
     },
     {
@@ -322,6 +321,7 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
         </Tooltip>
       ),
       dataIndex: 'status',
+      width: 120,
       key: 'status',
       render: (status: any) => {
         const abnormalStatusTags = Object.keys(status).filter(
