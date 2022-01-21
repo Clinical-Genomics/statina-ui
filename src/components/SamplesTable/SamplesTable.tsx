@@ -141,16 +141,17 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
 
   const columns: any = [
     {
-      title: 'Sample name',
+      title: 'Sample',
       dataIndex: 'sample_id',
       key: 'sample_id',
       fixed: 'left',
+      width: 127,
       defaultSortOrder: sortDirection,
       render: (sample_id: any) => <Link to={`/samples/${sample_id}`}>{sample_id}</Link>,
       sorter: true,
     },
     {
-      title: 'Batch ID',
+      title: 'Batch',
       dataIndex: 'batch_id',
       key: 'batch_id',
       fixed: 'left',
@@ -158,10 +159,9 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
       render: (batch_id: any) => <Link to={`/batches/${batch_id}`}>{batch_id}</Link>,
     },
     {
-      title: 'z_score 13',
+      title: 'Z_13',
       dataIndex: 'z_score',
       key: 'Zscore_13',
-      width: 100,
       sorter: true,
       render(score, sample) {
         return {
@@ -175,10 +175,9 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
       },
     },
     {
-      title: 'z_score 18',
+      title: 'Z_18',
       dataIndex: 'z_score',
       key: 'Zscore_18',
-      width: 100,
       sorter: true,
       render(score, sample) {
         return {
@@ -192,10 +191,9 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
       },
     },
     {
-      title: 'z_score 21',
+      title: 'Z_21',
       dataIndex: 'z_score',
       key: 'Zscore_21',
-      width: 100,
       sorter: true,
       render(score, sample) {
         return {
@@ -209,10 +207,9 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
       },
     },
     {
-      title: 'z_score X',
+      title: 'Z_X',
       dataIndex: 'z_score',
       key: 'Zscore_X',
-      width: 100,
       sorter: true,
       render(score, sample) {
         return {
@@ -226,10 +223,9 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
       },
     },
     {
-      title: 'FF-PF (%)',
+      title: 'FFPF',
       dataIndex: 'fetal_fraction',
       key: 'FF_Formatted',
-      width: 100,
       sorter: true,
       render(fetalFraction, sample) {
         return {
@@ -243,10 +239,9 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
       },
     },
     {
-      title: 'FF-X (%)',
+      title: 'FFX',
       dataIndex: 'fetal_fraction',
       key: 'FFX',
-      width: 100,
       sorter: true,
       render(fetalFraction, sample) {
         return {
@@ -260,10 +255,9 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
       },
     },
     {
-      title: 'FF-Y (%)',
+      title: 'FFY',
       dataIndex: 'fetal_fraction',
       key: 'FFY',
-      width: 100,
       sorter: true,
       render(fetalFraction, sample) {
         return {
@@ -298,6 +292,7 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
           <QuestionCircleOutlined />
         </Tooltip>
       ),
+      width: 93,
       dataIndex: 'text_warning',
       key: 'text_warning',
       render: (warnings: any) => {
@@ -320,7 +315,7 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
     {
       title: (
         <Tooltip title="Chomosome abnormalies. Manually classified by user through the sample page">
-          Abnormality status
+          Classification
           <QuestionCircleOutlined />
         </Tooltip>
       ),
@@ -402,7 +397,8 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
             columns={columns.filter((column) => (!batchId ? column : column.key !== 'batch_id'))}
             dataSource={filteredSamples}
             rowKey="sample_id"
-            scroll={{ x: 2300 }}
+            size="small"
+            scroll={{ x: 1600 }}
             rowSelection={{
               ...rowSelection,
               hideSelectAll: batchId ? false : true,
