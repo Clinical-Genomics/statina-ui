@@ -132,6 +132,7 @@ export const BatchesTable = () => {
             columns={columns}
             dataSource={filteredBatches}
             rowKey="batch_id"
+            bordered
             onChange={onChange}
             pagination={{
               total: pageCount,
