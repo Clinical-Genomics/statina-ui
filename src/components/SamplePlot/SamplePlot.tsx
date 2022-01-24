@@ -67,7 +67,7 @@ const buildLayout = (sampleId): Layout => {
     xaxis: {
       showline: true,
       tickvals: [1, 2, 3],
-      ticktext: ['NCV13', 'NCV18', 'NCV21'],
+      ticktext: ['Zscore 13', 'Zscore 18', 'Zscore 21'],
       linecolor: '#636363',
       linewidth: 5,
       showgrid: true,
