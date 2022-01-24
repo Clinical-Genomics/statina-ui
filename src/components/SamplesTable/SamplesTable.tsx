@@ -380,6 +380,7 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
             dataSource={filteredSamples}
             rowKey="sample_id"
             size="small"
+            bordered
             scroll={{ x: 1600 }}
             rowSelection={{
               ...rowSelection,
