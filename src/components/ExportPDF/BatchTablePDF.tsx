@@ -14,7 +14,7 @@ import { buildFFXYGraphData, buildFFXYGraphLayout } from '../FetalFractionXYGrap
 const fFXYGraphHeight = 1000
 const fFXYGraphWidth = 1200
 
-export const BatchTablePDF = ({ batchId }) => {
+export const BatchTablePDF = ({ batchId, batchComment }) => {
   const [data, setData] = useState<ScatterData[]>()
   const [layout, setLayout] = useState<Layout>()
   const userContext = useContext(UserContext)
@@ -42,20 +42,10 @@ export const BatchTablePDF = ({ batchId }) => {
 
       doc.setFontSize(15)
 
-      const title = `Batch ${batchId} results`
+      const title = `Batch ${batchId} report`
+      const subtitle = `comment: ${batchComment}`
       const headers = [
-        [
-          'Sample',
-          'Zscore13',
-          'Zscore18',
-          'Zscore21',
-          'FFPF(%)',
-          'FFX(%)',
-          'FFY(%)',
-          'Sex',
-          'Warning',
-          'Comment',
-        ],
+        ['Sample', 'Z_13', 'Z_18', 'Z_21', 'FFPF', 'FFX', 'FFY', 'Sex', 'Warning', 'Comment'],
       ]
 
       const pdfData = documents.map((item) => [
@@ -72,7 +62,7 @@ export const BatchTablePDF = ({ batchId }) => {
       ])
 
       const content = {
-        startY: 50,
+        startY: 80,
         head: headers,
         body: pdfData,
         theme: 'grid',
@@ -87,6 +77,7 @@ export const BatchTablePDF = ({ batchId }) => {
       }
 
       doc.text(title, marginLeft, 40)
+      doc.text(subtitle, marginLeft, 60)
       doc.autoTable(content)
 
       if (graph && data && layout) {
