@@ -27,7 +27,7 @@ export const BatchTablePDF = ({ batchId, batchComment }) => {
   useEffect(() => {
     getFetalFractionXYGraph(batchId, userContext).then((response: FetalFractionXYGraph) => {
       setData(buildFFXYGraphData(response))
-      setLayout(buildFFXYGraphLayout(response, true))
+      setLayout(buildFFXYGraphLayout(response))
     })
   }, [])
 
