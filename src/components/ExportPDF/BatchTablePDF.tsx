@@ -63,7 +63,7 @@ export const BatchTablePDF = ({ batchId, batchComment }) => {
         item.comment,
       ])
 
-      const contentStart = batchComment.match(/(.{1,100})/g).length * 20 + 50
+      const contentStart = batchComment ? batchComment.match(/(.{1,100})/g).length * 20 + 50 : 70
 
       const content = {
         startY: contentStart,
