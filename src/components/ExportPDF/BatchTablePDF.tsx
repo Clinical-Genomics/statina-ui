@@ -43,7 +43,7 @@ export const BatchTablePDF = ({ batchId, batchComment }) => {
       doc.setFontSize(15)
 
       const title = `Batch ${batchId} report`
-      const subtitle = `comment: ${batchComment}`
+      const subtitle = `${batchComment}`
       const headers = [
         ['Sample', 'Z_13', 'Z_18', 'Z_21', 'FFPF', 'FFX', 'FFY', 'Sex', 'Warning', 'Comment'],
       ]
