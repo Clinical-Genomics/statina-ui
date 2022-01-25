@@ -61,8 +61,10 @@ export const BatchTablePDF = ({ batchId, batchComment }) => {
         item.comment,
       ])
 
+      const contentStart = batchComment.match(/(.{1,100})/g).length * 20 + 50
+
       const content = {
-        startY: 80,
+        startY: contentStart,
         head: headers,
         body: pdfData,
         theme: 'grid',
@@ -77,7 +79,9 @@ export const BatchTablePDF = ({ batchId, batchComment }) => {
       }
 
       doc.text(title, marginLeft, 40)
-      doc.text(subtitle, marginLeft, 60)
+      doc.text(subtitle, marginLeft, 60, {
+        maxWidth: 750,
+      })
       doc.autoTable(content)
 
       if (graph && data && layout) {
