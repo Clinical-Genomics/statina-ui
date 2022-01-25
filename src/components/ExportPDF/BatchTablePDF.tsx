@@ -9,10 +9,12 @@ import { UserContext } from '../../services/userContext'
 import { CloudDownloadOutlined, LoadingOutlined } from '@ant-design/icons'
 import { ScatterData, Layout } from 'react-plotly.js'
 import { FetalFractionXYGraph } from '../../services/interfaces'
-import { buildFFXYGraphData, buildFFXYGraphLayout } from '../FetalFractionXYGraph/FetalFractionXY'
-
-const fFXYGraphHeight = 1000
-const fFXYGraphWidth = 1200
+import {
+  buildFFXYGraphData,
+  buildFFXYGraphLayout,
+  fFXYGraphHeight,
+  fFXYGraphWidth,
+} from '../FetalFractionXYGraph/FetalFractionXY'
 
 export const BatchTablePDF = ({ batchId, batchComment }) => {
   const [data, setData] = useState<ScatterData[]>()
@@ -90,11 +92,12 @@ export const BatchTablePDF = ({ batchId, batchComment }) => {
             format: 'png',
             width: fFXYGraphWidth,
             height: fFXYGraphHeight,
+            scale: 1,
           })
             .then(function (dataUrl) {
               doc.setFontSize(40)
               doc.addPage()
-              doc.addImage(dataUrl, 'png', 15, 40, 800, 500)
+              doc.addImage(dataUrl, 'png', 0, -20, 790, 600)
               doc.save(`Statina - batch ${batchId}.pdf`)
               setIsLoading(false)
             })
