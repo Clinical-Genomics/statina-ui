@@ -74,7 +74,6 @@ const buildLayout = (response: ZScoreGraph, chromosome: number): Layout => {
       showgrid: true,
     },
     yaxis: {
-      range: [-10, 10],
       title: response?.ncv_chrom_data[chromosome]?.ncv_values,
     },
     margin: {

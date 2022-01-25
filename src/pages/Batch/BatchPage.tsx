@@ -65,7 +65,7 @@ export const BatchPage = () => {
             </Col>
             <Col>
               <div className={styles.downloadButtons}>
-                <BatchTablePDF batchId={batchId} />
+                <BatchTablePDF batchId={batchId} batchComment={batch?.comment} />
                 {batchDownloadFileTypes.map((type) => (
                   <BatchDownloadFile batchId={batchId} fileType={type} key={type.name} />
                 ))}

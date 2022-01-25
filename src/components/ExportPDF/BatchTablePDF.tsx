@@ -9,12 +9,14 @@ import { UserContext } from '../../services/userContext'
 import { CloudDownloadOutlined, LoadingOutlined } from '@ant-design/icons'
 import { ScatterData, Layout } from 'react-plotly.js'
 import { FetalFractionXYGraph } from '../../services/interfaces'
-import { buildFFXYGraphData, buildFFXYGraphLayout } from '../FetalFractionXYGraph/FetalFractionXY'
+import {
+  buildFFXYGraphData,
+  buildFFXYGraphLayout,
+  fFXYGraphHeight,
+  fFXYGraphWidth,
+} from '../FetalFractionXYGraph/FetalFractionXY'
 
-const fFXYGraphHeight = 1000
-const fFXYGraphWidth = 1200
-
-export const BatchTablePDF = ({ batchId }) => {
+export const BatchTablePDF = ({ batchId, batchComment }) => {
   const [data, setData] = useState<ScatterData[]>()
   const [layout, setLayout] = useState<Layout>()
   const userContext = useContext(UserContext)
@@ -25,7 +27,7 @@ export const BatchTablePDF = ({ batchId }) => {
   useEffect(() => {
     getFetalFractionXYGraph(batchId, userContext).then((response: FetalFractionXYGraph) => {
       setData(buildFFXYGraphData(response))
-      setLayout(buildFFXYGraphLayout(response, true))
+      setLayout(buildFFXYGraphLayout(response))
     })
   }, [])
 
@@ -42,20 +44,10 @@ export const BatchTablePDF = ({ batchId }) => {
 
       doc.setFontSize(15)
 
-      const title = `Batch ${batchId} results`
+      const title = `Batch ${batchId} report`
+      const subtitle = `${batchComment}`
       const headers = [
-        [
-          'Sample',
-          'Zscore13',
-          'Zscore18',
-          'Zscore21',
-          'FFPF(%)',
-          'FFX(%)',
-          'FFY(%)',
-          'Sex',
-          'Warning',
-          'Comment',
-        ],
+        ['Sample', 'Z_13', 'Z_18', 'Z_21', 'FFPF', 'FFX', 'FFY', 'Sex', 'Warning', 'Comment'],
       ]
 
       const pdfData = documents.map((item) => [
@@ -71,8 +63,10 @@ export const BatchTablePDF = ({ batchId }) => {
         item.comment,
       ])
 
+      const contentStart = batchComment.match(/(.{1,100})/g).length * 20 + 50
+
       const content = {
-        startY: 50,
+        startY: contentStart,
         head: headers,
         body: pdfData,
         theme: 'grid',
@@ -87,6 +81,9 @@ export const BatchTablePDF = ({ batchId }) => {
       }
 
       doc.text(title, marginLeft, 40)
+      doc.text(subtitle, marginLeft, 60, {
+        maxWidth: 750,
+      })
       doc.autoTable(content)
 
       if (graph && data && layout) {
@@ -95,11 +92,12 @@ export const BatchTablePDF = ({ batchId }) => {
             format: 'png',
             width: fFXYGraphWidth,
             height: fFXYGraphHeight,
+            scale: 1,
           })
             .then(function (dataUrl) {
               doc.setFontSize(40)
               doc.addPage()
-              doc.addImage(dataUrl, 'png', 15, 40, 800, 500)
+              doc.addImage(dataUrl, 'png', 0, -20, 790, 600)
               doc.save(`Statina - batch ${batchId}.pdf`)
               setIsLoading(false)
             })
