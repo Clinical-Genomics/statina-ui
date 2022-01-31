@@ -381,7 +381,7 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
             rowKey="sample_id"
             size="small"
             bordered
-            scroll={{ x: 1600 }}
+            scroll={{ x: 1600, y: 600 }}
             rowSelection={{
               ...rowSelection,
               hideSelectAll: batchId ? false : true,
