@@ -50,7 +50,7 @@ describe('Samples Table', () => {
     const sample_id = await waitFor(() => getByText(mockSamples[0].sample_id))
     await waitFor(() => expect(sample_id).toBeVisible())
     const batch_id = await waitFor(() => queryAllByText(mockSamples[0].batch_id))
-    await waitFor(() => expect(batch_id[0]).toBeVisible())
+    await waitFor(() => expect(batch_id[1]).toBeVisible())
   })
   test('Batch ID column should not render in the batch samples page', async () => {
     mockedAxios.get.mockReturnValueOnce(
