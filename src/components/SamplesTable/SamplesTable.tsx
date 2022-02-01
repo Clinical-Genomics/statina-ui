@@ -378,7 +378,7 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
           <Table
             columns={columns.filter((column) => (!batchId ? column : column.key !== 'batch_id'))}
             dataSource={filteredSamples}
-            rowKey={(record) => `${record.sample_id}${record.z_score[13]}${record.z_score[18]}`}
+            rowKey="sample_id"
             size="small"
             bordered
             scroll={{ x: 1600, y: 600 }}
