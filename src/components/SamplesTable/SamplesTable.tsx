@@ -253,13 +253,8 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
       key: 'FFX',
       width: 63,
       sorter: true,
-      render(fetalFraction, sample) {
+      render(fetalFraction) {
         return {
-          props: {
-            style: {
-              background: sample.text_warning.includes('fetal_fraction_x') ? red[1] : null,
-            },
-          },
           children: <div>{fetalFraction.x}</div>,
         }
       },
