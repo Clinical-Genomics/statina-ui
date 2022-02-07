@@ -10,7 +10,7 @@ import {
 import { Input, Table, Tag, Tooltip, Typography } from 'antd'
 import { Link } from 'react-router-dom'
 import { CloudDownloadOutlined, QuestionCircleOutlined } from '@ant-design/icons'
-import { red } from '@ant-design/colors'
+import { red, gold } from '@ant-design/colors'
 import { sampleStatusTags, sexTags, tagColors } from 'services/helpers/constants'
 import { createFileDownload, escapeRegExp, SuccessNotification } from 'services/helpers/helpers'
 import { Loading } from '../Loading'
@@ -169,7 +169,12 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
         return {
           props: {
             style: {
-              background: sample.text_warning.includes('z_score_13') ? red[1] : null,
+              background:
+                sample.warnings.z_score_13 === 'danger'
+                  ? red[1]
+                  : sample.warnings.z_score_13 === 'warning'
+                  ? gold[1]
+                  : null,
             },
           },
           children: <div>{score['13']}</div>,
@@ -186,7 +191,12 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
         return {
           props: {
             style: {
-              background: sample.text_warning.includes('z_score_18') ? red[1] : null,
+              background:
+                sample.warnings.z_score_18 === 'danger'
+                  ? red[1]
+                  : sample.warnings.z_score_18 === 'warning'
+                  ? gold[1]
+                  : null,
             },
           },
           children: <div>{score['18']}</div>,
@@ -203,7 +213,12 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
         return {
           props: {
             style: {
-              background: sample.text_warning.includes('z_score_21') ? red[1] : null,
+              background:
+                sample.warnings.z_score_21 === 'danger'
+                  ? red[1]
+                  : sample.warnings.z_score_21 === 'warning'
+                  ? gold[1]
+                  : null,
             },
           },
           children: <div>{score['21']}</div>,
@@ -220,7 +235,12 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
         return {
           props: {
             style: {
-              background: sample.text_warning.includes('fetal_fraction_pf') ? red[1] : null,
+              background:
+                sample.warnings.fetal_fraction_preface === 'danger'
+                  ? red[1]
+                  : sample.warnings.fetal_fraction_preface === 'warning'
+                  ? gold[1]
+                  : null,
             },
           },
           children: <div>{fetalFraction.preface}</div>,
@@ -233,13 +253,8 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
       key: 'FFX',
       width: 63,
       sorter: true,
-      render(fetalFraction, sample) {
+      render(fetalFraction) {
         return {
-          props: {
-            style: {
-              background: sample.text_warning.includes('fetal_fraction_x') ? red[1] : null,
-            },
-          },
           children: <div>{fetalFraction.x}</div>,
         }
       },
@@ -254,7 +269,12 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
         return {
           props: {
             style: {
-              background: sample.text_warning.includes('fetal_fraction_y') ? red[1] : null,
+              background:
+                sample.warnings.fetal_fraction_y === 'danger'
+                  ? red[1]
+                  : sample.warnings.fetal_fraction_y === 'warning'
+                  ? gold[1]
+                  : null,
             },
           },
           children: <div>{fetalFraction.y}</div>,
