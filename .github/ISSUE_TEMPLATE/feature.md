@@ -1,6 +1,7 @@
 ---
 name: Feature
 about: Template for new features
+labels: ["Frontend"]
 ---
 
 ## Description
