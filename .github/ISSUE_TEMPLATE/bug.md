@@ -1,6 +1,7 @@
 ---
 name: Bug Report
 about: Template for reporting bugs or issues
+labels: ["Frontend" , "Bug"]
 ---
 
 ## Description
