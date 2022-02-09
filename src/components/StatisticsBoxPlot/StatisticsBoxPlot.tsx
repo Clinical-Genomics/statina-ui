@@ -18,7 +18,7 @@ const buildData = (selectedPlot: string, statistics: any): BoxPlotData[] => {
 
 const buildLayout = (selectedPlot: string, statistics: any): Layout => {
   return {
-    title: `${selectedPlot} - ${statistics.nr_batches} most recent batches`,
+    title: `${selectedPlot} - ${statistics.batch_ids.length} most recent batches`,
     hovermode: 'closest',
     margin: { b: 100 },
     height: 600,

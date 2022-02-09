@@ -187,8 +187,8 @@ export const getChromosomeRatioGraph = async (
   return axiosGET(endPoint, context)
 }
 
-export const getStatistics = async (context: UserContext): Promise<any> => {
-  const endPoint = `${REACT_APP_BACKEND_URL}/statistics`
+export const getStatistics = async (context: UserContext, numOfBatches): Promise<any> => {
+  const endPoint = `${REACT_APP_BACKEND_URL}/statistics?nr_batches=${numOfBatches}`
   return axiosGET(endPoint, context)
 }
 
