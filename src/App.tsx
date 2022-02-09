@@ -82,7 +82,7 @@ export const App = () => {
               </Menu.Item>
               <Menu.Item key="/statistics" disabled={!token}>
                 <Link to="/statistics">
-                  <span>Statistics</span>
+                  <span>Quality Control</span>
                 </Link>
               </Menu.Item>
               {user?.scopes?.includes('admin') && (
