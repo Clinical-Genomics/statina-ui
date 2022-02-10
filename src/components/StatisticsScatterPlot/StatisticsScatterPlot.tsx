@@ -4,6 +4,7 @@ import Plot, { Layout, ScatterPlotData } from 'react-plotly.js'
 type StatisticsScatterPlotProps = {
   selectedPlot: string
   statistics: any
+  showTotal: boolean
 }
 
 const buildData = (selectedPlot: string, statistics: any): ScatterPlotData[] => {
@@ -20,9 +21,11 @@ const buildData = (selectedPlot: string, statistics: any): ScatterPlotData[] => 
   })
 }
 
-const buildLayout = (selectedPlot: string, statistics: any): Layout => {
+const buildLayout = (selectedPlot: string, statistics: any, showTotal: boolean): Layout => {
   return {
-    title: `${selectedPlot} - ${statistics.nr_batches} most recent batches`,
+    title: showTotal
+      ? `${selectedPlot} - all batches (${statistics.batch_ids.length})`
+      : `${selectedPlot} - ${statistics.batch_ids.length} most recent batches`,
     hovermode: 'closest',
     margin: { b: 100 },
     height: 600,
@@ -47,11 +50,15 @@ const buildLayout = (selectedPlot: string, statistics: any): Layout => {
   }
 }
 
-export const StatisticsScatterPlot = ({ selectedPlot, statistics }: StatisticsScatterPlotProps) => {
+export const StatisticsScatterPlot = ({
+  selectedPlot,
+  statistics,
+  showTotal,
+}: StatisticsScatterPlotProps) => {
   return (
     <Plot
       data={buildData(selectedPlot, statistics)}
-      layout={buildLayout(selectedPlot, statistics)}
+      layout={buildLayout(selectedPlot, statistics, showTotal)}
       style={{ width: '100%' }}
     />
   )

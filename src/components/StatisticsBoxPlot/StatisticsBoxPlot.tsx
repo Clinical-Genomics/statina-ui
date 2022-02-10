@@ -4,6 +4,7 @@ import Plot, { Layout, BoxPlotData } from 'react-plotly.js'
 type StatisticsBoxPlotProps = {
   selectedPlot: string
   statistics: any
+  showTotal: boolean
 }
 
 const buildData = (selectedPlot: string, statistics: any): BoxPlotData[] => {
@@ -16,9 +17,11 @@ const buildData = (selectedPlot: string, statistics: any): BoxPlotData[] => {
   }))
 }
 
-const buildLayout = (selectedPlot: string, statistics: any): Layout => {
+const buildLayout = (selectedPlot: string, statistics: any, showTotal: boolean): Layout => {
   return {
-    title: `${selectedPlot} - ${statistics.batch_ids.length} most recent batches`,
+    title: showTotal
+      ? `${selectedPlot} - all batches (${statistics.batch_ids.length})`
+      : `${selectedPlot} - ${statistics.batch_ids.length} most recent batches`,
     hovermode: 'closest',
     margin: { b: 100 },
     height: 600,
@@ -43,11 +46,15 @@ const buildLayout = (selectedPlot: string, statistics: any): Layout => {
   }
 }
 
-export const StatisticsBoxPlot = ({ selectedPlot, statistics }: StatisticsBoxPlotProps) => {
+export const StatisticsBoxPlot = ({
+  selectedPlot,
+  statistics,
+  showTotal,
+}: StatisticsBoxPlotProps) => {
   return (
     <Plot
       data={buildData(selectedPlot, statistics)}
-      layout={buildLayout(selectedPlot, statistics)}
+      layout={buildLayout(selectedPlot, statistics, showTotal)}
       style={{ width: '100%' }}
     />
   )
