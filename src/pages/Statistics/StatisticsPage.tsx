@@ -32,7 +32,7 @@ export function StatisticsPage() {
   }
 
   const onNumberOfBatchesChange = (value: number) => {
-    if (value !== null) {
+    if (value !== null && value > 0) {
       setNumberOfcases(value)
       getStatistics(userContext, value)
         .then((response) => {
@@ -40,11 +40,15 @@ export function StatisticsPage() {
           setIsLoading(false)
           if (value > response.batch_ids.length) {
             setShowTotal(true)
-            setNumberOfcases(response.batch_ids.length)
           } else setShowTotal(false)
         })
         .catch(() => setIsLoading(false))
     }
+  }
+
+  const onPressEnter = (value) => {
+    const num = parseInt(value.target.value)
+    isNaN(num) ? onNumberOfBatchesChange(20) : onNumberOfBatchesChange(num)
   }
 
   return isLoading ? (
@@ -79,8 +83,9 @@ export function StatisticsPage() {
         addonBefore="Number of batches"
         value={numberOfcases}
         step={10}
-        onChange={onNumberOfBatchesChange}
         min={10}
+        onStep={onNumberOfBatchesChange}
+        onPressEnter={onPressEnter}
         style={{ marginTop: '30px' }}
         autoFocus={true}
       />
