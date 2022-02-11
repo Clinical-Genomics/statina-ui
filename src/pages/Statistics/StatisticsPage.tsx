@@ -1,10 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Tabs, Card, InputNumber, message } from 'antd'
+import { Tabs, Card, InputNumber } from 'antd'
 import { getStatistics } from '../../services/StatinaApi'
 import { UserContext } from '../../services/userContext'
 import { StatisticsBoxPlot } from '../../components/StatisticsBoxPlot/StatisticsBoxPlot'
 import { StatisticsScatterPlot } from '../../components/StatisticsScatterPlot/StatisticsScatterPlot'
 import { Loading } from '../../components/Loading'
+import { ErrorNotification } from 'services/helpers/helpers'
 
 const { TabPane } = Tabs
 
@@ -44,14 +45,21 @@ export function StatisticsPage() {
         })
         .catch(() => setIsLoading(false))
     } else {
-      message.error('Please insert a value above 10')
+      ErrorNotification({
+        type: 'error',
+        message: 'Please insert a value above 10',
+      })
     }
   }
 
   const onPressEnter = (value) => {
     const num = parseInt(value.target.value)
     isNaN(num)
-      ? (onNumberOfBatchesChange(20), message.error('Please insert a number above 10'))
+      ? (onNumberOfBatchesChange(20),
+        ErrorNotification({
+          type: 'error',
+          message: 'Please insert a number above 10',
+        }))
       : onNumberOfBatchesChange(num)
   }
 
