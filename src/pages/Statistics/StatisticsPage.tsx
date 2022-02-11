@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Tabs, Card, InputNumber } from 'antd'
+import { Tabs, Card, InputNumber, message } from 'antd'
 import { getStatistics } from '../../services/StatinaApi'
 import { UserContext } from '../../services/userContext'
 import { StatisticsBoxPlot } from '../../components/StatisticsBoxPlot/StatisticsBoxPlot'
@@ -32,7 +32,7 @@ export function StatisticsPage() {
   }
 
   const onNumberOfBatchesChange = (value: number) => {
-    if (value !== null && value > 0) {
+    if (value > 9) {
       setNumberOfcases(value)
       getStatistics(userContext, value)
         .then((response) => {
@@ -43,12 +43,16 @@ export function StatisticsPage() {
           } else setShowTotal(false)
         })
         .catch(() => setIsLoading(false))
+    } else {
+      message.error('Please insert a value above 10')
     }
   }
 
   const onPressEnter = (value) => {
     const num = parseInt(value.target.value)
-    isNaN(num) ? onNumberOfBatchesChange(20) : onNumberOfBatchesChange(num)
+    isNaN(num)
+      ? (onNumberOfBatchesChange(20), message.error('Please insert a number above 10'))
+      : onNumberOfBatchesChange(num)
   }
 
   return isLoading ? (
