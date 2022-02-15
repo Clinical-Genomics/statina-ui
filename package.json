@@ -7,7 +7,7 @@
     "@types/jspdf": "^2.0.0",
     "@types/plotly.js": "^1.54.16",
     "antd": "^4.6.2",
-    "axios": "^0.21.1",
+    "axios": "0.26.0",
     "craco-less": "^1.20.0",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.5",
@@ -93,7 +93,6 @@
     "ansi-regex": "5.0.1",
     "nth-check": "2.0.1",
     "browserslist": "4.16.5",
-    "vm2": "3.9.7",
-    "node-fetch": "3.2.0"
+    "vm2": "3.9.7"
   }
 }
