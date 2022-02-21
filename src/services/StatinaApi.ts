@@ -201,11 +201,26 @@ export const getSample = async (sampleId: string, context: UserContext): Promise
 export const editSample = async (
   sampleId: string,
   body,
-  request: 'comment' | 'include' | string,
+  request: 'include' | string,
   context: UserContext
 ): Promise<any> => {
   const endPoint = `${REACT_APP_BACKEND_URL}/sample/${sampleId}/${request}`
   return axiosPUT(endPoint, body, context)
+}
+
+export const putSampleComment = async (
+  sampleId: string,
+  comment,
+  context: UserContext
+): Promise<any> => {
+  const endPoint = `${REACT_APP_BACKEND_URL}/sample/${sampleId}/comment`
+  return axiosPUT(
+    endPoint,
+    qs.stringify({
+      comment: comment,
+    }),
+    context
+  )
 }
 
 export const includeBatchSamples = async (
