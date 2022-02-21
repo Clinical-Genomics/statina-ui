@@ -252,7 +252,7 @@ export const downloadBatchFiles = async (
   return axiosGETDownloadFile(endPoint, context)
 }
 
-export const downloadSeqmentalCalls = async (
+export const downloadSegmentalCalls = async (
   sample_id: string,
   context: UserContext
 ): Promise<any> => {

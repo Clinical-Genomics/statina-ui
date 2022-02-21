@@ -4,7 +4,7 @@ import {
   getSamples,
   includeSample,
   includeBatchSamples,
-  downloadSeqmentalCalls,
+  downloadSegmentalCalls,
   editSample,
 } from '../../services/StatinaApi'
 import { Input, Table, Tag, Tooltip, Typography } from 'antd'
@@ -111,7 +111,7 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
   }
 
   const downloadSC = (sample) => {
-    downloadSeqmentalCalls(sample.sample_id, userContext).then((file) => {
+    downloadSegmentalCalls(sample.sample_id, userContext).then((file) => {
       createFileDownload(file)
     })
   }
