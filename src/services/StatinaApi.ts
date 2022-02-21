@@ -1,6 +1,7 @@
 import { createParamURL, handleBackendError } from './helpers/helpers'
 import { Login, RegisterUser } from './interfaces'
 import { UserContext } from './userContext'
+import qs from 'qs'
 
 export const { REACT_APP_BACKEND_URL } = process.env
 
@@ -226,11 +227,17 @@ export const includeSample = async (
 }
 export const editBatchComment = async (
   batchId: string,
-  body,
+  comment,
   context: UserContext
 ): Promise<any> => {
   const endPoint = `${REACT_APP_BACKEND_URL}/batch/${batchId}/comment`
-  return axiosPUT(endPoint, body, context)
+  return axiosPUT(
+    endPoint,
+    qs.stringify({
+      comment: comment,
+    }),
+    context
+  )
 }
 
 export const login = async (formInput: Login): Promise<any> => {
