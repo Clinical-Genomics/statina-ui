@@ -4,8 +4,8 @@ import {
   getSamples,
   includeSample,
   includeBatchSamples,
-  downloadSeqmentalCalls,
-  editSample,
+  downloadSegmentalCalls,
+  putSampleComment,
 } from '../../services/StatinaApi'
 import { Input, Table, Tag, Tooltip, Typography } from 'antd'
 import { Link } from 'react-router-dom'
@@ -111,13 +111,13 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
   }
 
   const downloadSC = (sample) => {
-    downloadSeqmentalCalls(sample.sample_id, userContext).then((file) => {
+    downloadSegmentalCalls(sample.sample_id, userContext).then((file) => {
       createFileDownload(file)
     })
   }
 
-  const onCommentChange = ({ sample_id }, e) => {
-    editSample(sample_id, `comment=${e ? e : ' '}`, 'comment', userContext).then(() => {
+  const onCommentChange = ({ sample_id }, comment) => {
+    putSampleComment(sample_id, comment.length > 0 ? comment : ' ', userContext).then(() => {
       SuccessNotification({
         type: 'success',
         message: 'Comment updated',

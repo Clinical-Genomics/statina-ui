@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Card, Space, Typography, Table, Select, Descriptions, Tag } from 'antd'
-import { editSample, getSample } from '../../services/StatinaApi'
+import { editSample, getSample, putSampleComment } from '../../services/StatinaApi'
 import { Link, useLocation } from 'react-router-dom'
 import { UserContext } from '../../services/userContext'
 import { Loading } from '../../components/Loading'
@@ -87,8 +87,8 @@ export function SamplePage() {
       .catch(() => setError(true))
   }
 
-  const onCommentChange = (e) => {
-    editSample(sampleId, `comment=${e ? e : ' '}`, 'comment', userContext).then(() => {
+  const onCommentChange = (comment) => {
+    putSampleComment(sampleId, comment.length > 0 ? comment : ' ', userContext).then(() => {
       getSample(sampleId, userContext).then((sampleResponse) => {
         setSample(sampleResponse)
         SuccessNotification({

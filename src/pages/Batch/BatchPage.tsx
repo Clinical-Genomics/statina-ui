@@ -40,8 +40,8 @@ export const BatchPage = () => {
       })
   }, [batchId])
 
-  const updateComment = (e) => {
-    editBatchComment(batchId, `comment=${e ? e : ' '}`, userContext).then(() => {
+  const updateComment = (comment) => {
+    editBatchComment(batchId, comment.length > 0 ? comment : ' ', userContext).then(() => {
       getBatch(batchId, userContext).then((batch) => {
         setBatch(batch)
       })

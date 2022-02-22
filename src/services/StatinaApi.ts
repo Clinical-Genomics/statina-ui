@@ -1,6 +1,7 @@
 import { createParamURL, handleBackendError } from './helpers/helpers'
 import { Login, RegisterUser } from './interfaces'
 import { UserContext } from './userContext'
+import qs from 'qs'
 
 export const { REACT_APP_BACKEND_URL } = process.env
 
@@ -200,11 +201,26 @@ export const getSample = async (sampleId: string, context: UserContext): Promise
 export const editSample = async (
   sampleId: string,
   body,
-  request: 'comment' | 'include' | string,
+  request: 'include' | string,
   context: UserContext
 ): Promise<any> => {
   const endPoint = `${REACT_APP_BACKEND_URL}/sample/${sampleId}/${request}`
   return axiosPUT(endPoint, body, context)
+}
+
+export const putSampleComment = async (
+  sampleId: string,
+  comment,
+  context: UserContext
+): Promise<any> => {
+  const endPoint = `${REACT_APP_BACKEND_URL}/sample/${sampleId}/comment`
+  return axiosPUT(
+    endPoint,
+    qs.stringify({
+      comment: comment,
+    }),
+    context
+  )
 }
 
 export const includeBatchSamples = async (
@@ -226,11 +242,17 @@ export const includeSample = async (
 }
 export const editBatchComment = async (
   batchId: string,
-  body,
+  comment,
   context: UserContext
 ): Promise<any> => {
   const endPoint = `${REACT_APP_BACKEND_URL}/batch/${batchId}/comment`
-  return axiosPUT(endPoint, body, context)
+  return axiosPUT(
+    endPoint,
+    qs.stringify({
+      comment: comment,
+    }),
+    context
+  )
 }
 
 export const login = async (formInput: Login): Promise<any> => {
@@ -252,7 +274,7 @@ export const downloadBatchFiles = async (
   return axiosGETDownloadFile(endPoint, context)
 }
 
-export const downloadSeqmentalCalls = async (
+export const downloadSegmentalCalls = async (
   sample_id: string,
   context: UserContext
 ): Promise<any> => {
