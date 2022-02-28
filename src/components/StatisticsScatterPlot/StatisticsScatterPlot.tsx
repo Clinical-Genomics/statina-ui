@@ -16,7 +16,7 @@ const buildData = (selectedPlot: string, statistics: any): ScatterPlotData[] => 
       mode: 'markers',
       showlegend: false,
       name: batchId,
-      text: `Date Run: ${statistics.scatter_stat[batchId].date}`,
+      text: Object.values(statistics.scatter_stat).map((value: any) => `Date run: ${value?.date}`),
     }
   })
 }
