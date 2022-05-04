@@ -61,7 +61,7 @@ export const BatchPage = () => {
           <Row justify={'space-between'}>
             <Col style={{ marginBottom: 15 }}>
               <Title>{batchId}</Title>
-              <Text strong>Sequencing date:</Text> {batch?.sequencing_date}
+              <Text strong>Dataset:</Text> {batch?.dataset}
             </Col>
             <Col>
               <div className={styles.downloadButtons}>
@@ -71,6 +71,9 @@ export const BatchPage = () => {
                 ))}
               </div>
             </Col>
+          </Row>
+          <Row>
+            <Text strong>Sequencing date:</Text> {batch?.sequencing_date}
           </Row>
           <Row>
             <Text strong>{`Comment:\u00A0`}</Text>
