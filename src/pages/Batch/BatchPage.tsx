@@ -1,9 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Card, Tabs, Row, Col, Typography } from 'antd'
+import { Card, Tabs, Row, Col, Typography, Select } from 'antd'
 import { useLocation } from 'react-router-dom'
 import { ZscoreGraph } from '../../components/ZscoreGraph/ZscoreGraph'
 import { BatchTablePDF } from '../../components/ExportPDF/BatchTablePDF'
-import { editBatchComment, getBatch } from '../../services/StatinaApi'
+import {
+  editBatchComment,
+  editBatchDataset,
+  getBatch,
+  getDatasetOptions,
+} from '../../services/StatinaApi'
 import { UserContext } from '../../services/userContext'
 import { SuccessNotification } from '../../services/helpers/helpers'
 import { Batch } from '../../services/interfaces'
@@ -24,12 +29,16 @@ export const BatchPage = () => {
   const userContext = useContext(UserContext)
   const { permissions } = userContext
   const [batch, setBatch] = useState<Batch | null>()
+  const [datasets, setDatasets] = useState<string[]>()
   const { pathname } = useLocation()
   const batchId = pathname.substring(pathname.lastIndexOf('/') + 1, pathname.length)
   const [isLoading, setIsLoading] = React.useState<boolean>(true)
   const [error, setError] = useState<any>()
 
+  const { Option } = Select
+
   useEffect(() => {
+    getDatasetOptions(userContext).then((response) => setDatasets(response))
     getBatch(batchId, userContext)
       .then((batch) => {
         setBatch(batch)
@@ -39,6 +48,15 @@ export const BatchPage = () => {
         setIsLoading(false), setError(error)
       })
   }, [batchId])
+
+  const editDataset = (dataset) => {
+    editBatchDataset(batchId, dataset, userContext).then(() =>
+      SuccessNotification({
+        type: 'success',
+        message: 'Dataset updated',
+      })
+    )
+  }
 
   const updateComment = (comment) => {
     editBatchComment(batchId, comment.length > 0 ? comment : ' ', userContext).then(() => {
@@ -61,7 +79,18 @@ export const BatchPage = () => {
           <Row justify={'space-between'}>
             <Col style={{ marginBottom: 15 }}>
               <Title>{batchId}</Title>
-              <Text strong>Dataset:</Text> {batch?.dataset}
+              <Text strong>Dataset:</Text>{' '}
+              {datasets ? (
+                <Select defaultValue={batch?.dataset} style={{ width: 120 }} onChange={editDataset}>
+                  {datasets.map((set) => (
+                    <Option key={set} value={set}>
+                      {set}
+                    </Option>
+                  ))}
+                </Select>
+              ) : (
+                batch?.dataset
+              )}
             </Col>
             <Col>
               <div className={styles.downloadButtons}>
