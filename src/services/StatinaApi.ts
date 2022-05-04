@@ -4,6 +4,7 @@ import { UserContext } from './userContext'
 import qs from 'qs'
 
 export const { REACT_APP_BACKEND_URL } = process.env
+const REACT_APP_BACKEND_URL_V2 = `${REACT_APP_BACKEND_URL}/v2`
 
 const axios = require('axios').default
 
@@ -317,4 +318,9 @@ export const validateUserEmail = async (
 ): Promise<any> => {
   const endPoint = `${REACT_APP_BACKEND_URL}/user/${username}/validate?verification_hex=${verificationhex}`
   return axiosPATCH(endPoint, username)
+}
+
+export const getDatasetOptions = async (context: UserContext): Promise<any> => {
+  const endPoint = `${REACT_APP_BACKEND_URL_V2}/dataset_options`
+  return axiosGET(endPoint, context)
 }
