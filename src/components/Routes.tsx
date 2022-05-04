@@ -10,6 +10,7 @@ import { LoginPage } from '../pages/Login/LoginPage'
 import { PageNotFound } from 'pages/PageNotFound/PageNotFound'
 import { AdminPage } from '../pages/Admin/AdminPage'
 import { ConfirmedResult } from './NoPermissonResults/ConfirmedResult'
+import { Datasets } from './Datasets/Datasets'
 
 type RoutesProps = {
   isLoggedIn: boolean
@@ -45,6 +46,13 @@ export const Routes = (props: RoutesProps) => {
         exact
         render={() =>
           isLoggedIn === true ? <AdminPage /> : <Redirect to={{ pathname: '/login' }} />
+        }
+      />
+      <Route
+        path="/datasets"
+        exact
+        render={() =>
+          isLoggedIn === true ? <Datasets /> : <Redirect to={{ pathname: '/datasets' }} />
         }
       />
       <Route

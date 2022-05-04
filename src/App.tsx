@@ -85,6 +85,11 @@ export const App = () => {
                   <span>Quality Control</span>
                 </Link>
               </Menu.Item>
+              <Menu.Item key="/datasets" disabled={!token}>
+                <Link to="/datasets">
+                  <span>Datasets</span>
+                </Link>
+              </Menu.Item>
               {user?.scopes?.includes('admin') && (
                 <Menu.Item key="/admin" disabled={!token}>
                   <Link to="/admin">
