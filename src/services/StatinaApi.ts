@@ -240,6 +240,7 @@ export const includeSample = async (
   const endPoint = `${REACT_APP_BACKEND_URL}/sample/${sampleId}/include?include=${include}`
   return axiosIncludePUT(endPoint, context)
 }
+
 export const editBatchComment = async (
   batchId: string,
   comment,
@@ -250,6 +251,21 @@ export const editBatchComment = async (
     endPoint,
     qs.stringify({
       comment: comment,
+    }),
+    context
+  )
+}
+
+export const editBatchDataset = async (
+  batchId: string,
+  dataset,
+  context: UserContext
+): Promise<any> => {
+  const endPoint = `${REACT_APP_BACKEND_URL}/batch/${batchId}/dataset`
+  return axiosPUT(
+    endPoint,
+    qs.stringify({
+      dataset: dataset,
     }),
     context
   )
@@ -321,5 +337,10 @@ export const validateUserEmail = async (
 
 export const getDatasets = async (context: UserContext, query_string: string): Promise<any> => {
   const endPoint = `${REACT_APP_BACKEND_URL}/datasets?query_string=${query_string}`
+  return axiosGET(endPoint, context)
+}
+
+export const getDatasetOptions = async (context: UserContext): Promise<any> => {
+  const endPoint = `${REACT_APP_BACKEND_URL}/dataset_options`
   return axiosGET(endPoint, context)
 }

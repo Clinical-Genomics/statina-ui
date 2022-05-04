@@ -82,6 +82,11 @@ export const BatchesTable = () => {
       key: 'flowcell',
     },
     {
+      title: 'Dataset',
+      dataIndex: 'dataset',
+      key: 'dataset',
+    },
+    {
       title: 'Delete Batch',
       key: 'delete_batch_id',
       hidden: !permissions?.includes('RW'),

@@ -14,6 +14,7 @@ export interface Chromosomes {
 
 export interface Batch {
   batch_id: string
+  dataset: string
   result_file: string
   multiqc_report: string
   segmental_calls: string
