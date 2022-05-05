@@ -1,15 +1,17 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { UserContext } from '../../services/userContext'
-import { getDatasets } from 'services/StatinaApi'
+import { getDatasets, postDataset } from 'services/StatinaApi'
 import { Link } from 'react-router-dom'
-import { Input, Table, Tooltip, Typography } from 'antd'
+import { Input, Popconfirm, Table, Tooltip, Typography } from 'antd'
 import { escapeRegExp } from 'services/helpers/helpers'
 import { ErrorPage } from 'pages/Error/ErrorPage'
 import { Loading } from 'components/Loading'
-import { NewDatasetModal } from '../NewDatasetModal/NewDatasetModal'
+import { PlusCircleTwoTone } from '@ant-design/icons'
+import { Dataset } from '../../services/interfaces'
 
 export const Datasets = () => {
   const userContext = useContext(UserContext)
+  const { permissions } = userContext
   const [filteredDatasets, setFilteredDatasets] = useState<any>([])
   const [datasetsCount, setDatasetsCount] = useState(0)
   const [error, setError] = useState<any>()
@@ -31,6 +33,14 @@ export const Datasets = () => {
       .catch((error) => {
         setIsLoading(false), setError(error)
       })
+  }
+
+  const cloneDataset = (dataset: Dataset) => {
+    postDataset(
+      `${dataset.name}_copy_${Math.floor(Math.random() * 1000)}`,
+      dataset,
+      userContext
+    ).then(() => getDatasetsList())
   }
 
   const onSearch = (searchInput) => {
@@ -157,7 +167,24 @@ export const Datasets = () => {
       dataIndex: 'comment',
       key: 'comment',
     },
-  ]
+    {
+      title: 'Action',
+      key: 'action',
+      ellipsis: true,
+      fixed: 'right',
+      hidden: !permissions?.includes('RW'),
+      render: (dataset) => (
+        <Popconfirm
+          title="Are you sure you want to clone this dataset?"
+          onConfirm={() => cloneDataset(dataset)}
+          okText="Yes"
+          cancelText="No"
+        >
+          <PlusCircleTwoTone style={{ fontSize: '20px' }} />
+        </Popconfirm>
+      ),
+    },
+  ].filter((column) => !column.hidden)
   return isLoading ? (
     <Loading />
   ) : (
@@ -181,11 +208,6 @@ export const Datasets = () => {
             bordered
             pagination={false}
             showSorterTooltip={false}
-            title={() => (
-              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <NewDatasetModal updateDatasets={getDatasetsList} />
-              </div>
-            )}
           />
         </>
       )}

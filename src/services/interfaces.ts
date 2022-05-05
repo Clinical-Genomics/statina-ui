@@ -85,6 +85,8 @@ export interface RegisterUser {
 }
 
 export interface Dataset {
+  name: string
+  comment?: string
   fetal_fraction_preface: number
   fetal_fraction_y_for_trisomy: number
   fetal_fraction_y_max: number
