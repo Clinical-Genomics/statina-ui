@@ -38,33 +38,18 @@ export const NewDatasetModal = ({ updateDatasets }) => {
         {!isRegistrationSuccessful && (
           <Form name="basic" onFinish={registerDataset} autoComplete="off">
             <Form.Item
-              name="email"
+              name="Dataset name"
               rules={[
                 {
                   required: true,
-                  message: 'Please input an email',
-                  type: 'email',
                 },
               ]}
             >
-              <Input placeholder="Email" />
+              <Input placeholder="name" />
             </Form.Item>
-            <Form.Item
-              name="name"
-              rules={[
-                {
-                  required: true,
-                  message: `Please input the dataset's full name`,
-                },
-              ]}
-            >
-              <Input placeholder="Full name" />
-            </Form.Item>
-            <Form.Item>
-              <Button htmlType="submit" type={'primary'}>
-                Add dataset
-              </Button>
-            </Form.Item>
+            <Button htmlType="submit" type={'primary'}>
+              Add dataset
+            </Button>
           </Form>
         )}
         {isRegistrationSuccessful && (
