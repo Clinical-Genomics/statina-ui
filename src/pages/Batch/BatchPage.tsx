@@ -39,6 +39,20 @@ export const BatchPage = () => {
 
   useEffect(() => {
     getDatasetOptions(userContext).then((response) => setDatasets(response))
+    getBatchInfo()
+  }, [batchId])
+
+  const editDataset = (dataset) => {
+    editBatchDataset(batchId, dataset, userContext).then(() => {
+      getBatchInfo()
+      SuccessNotification({
+        type: 'success',
+        message: 'Dataset updated',
+      })
+    })
+  }
+
+  const getBatchInfo = () => {
     getBatch(batchId, userContext)
       .then((batch) => {
         setBatch(batch)
@@ -47,15 +61,6 @@ export const BatchPage = () => {
       .catch((error) => {
         setIsLoading(false), setError(error)
       })
-  }, [batchId])
-
-  const editDataset = (dataset) => {
-    editBatchDataset(batchId, dataset, userContext).then(() =>
-      SuccessNotification({
-        type: 'success',
-        message: 'Dataset updated',
-      })
-    )
   }
 
   const updateComment = (comment) => {
