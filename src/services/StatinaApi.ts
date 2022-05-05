@@ -82,12 +82,13 @@ const axiosIncludePATCH = (endPoint, { token, logout }: UserContext) => {
   })
 }
 
-const axiosPostToken = (endPoint, formInput) => {
+const axiosPostToken = (endPoint, formInput, context?: UserContext) => {
   return new Promise((resolve, reject) => {
     const params = new URLSearchParams(formInput)
     axios
       .post(endPoint, params, {
         headers: {
+          Authorization: `Bearer ${context?.token}`,
           'Content-Type': 'application/x-www-form-urlencoded',
         },
       })
@@ -345,7 +346,11 @@ export const getDatasetOptions = async (context: UserContext): Promise<any> => {
   return axiosGET(endPoint, context)
 }
 
-export const postDataset = async (name: string, formInput: Dataset): Promise<any> => {
+export const postDataset = async (
+  name: string,
+  formInput: Dataset,
+  context: UserContext
+): Promise<any> => {
   const endPoint = `${REACT_APP_BACKEND_URL}/dataset/${name}`
-  return axiosPostToken(endPoint, formInput)
+  return axiosPostToken(endPoint, formInput, context)
 }

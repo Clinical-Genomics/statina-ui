@@ -1,9 +1,11 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Button, Form, Input, Modal, Result, Tooltip } from 'antd'
 import { PlusOutlined } from '@ant-design/icons'
 import { postDataset } from '../../services/StatinaApi'
+import { UserContext } from '../../services/userContext'
 
 export const NewDatasetModal = ({ updateDatasets }) => {
+  const userContext = useContext(UserContext)
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [isRegistrationSuccessful, setIsRegistrationSuccessful] = useState(false)
 
@@ -12,7 +14,7 @@ export const NewDatasetModal = ({ updateDatasets }) => {
   }
 
   const registerDataset = (dataset) => {
-    postDataset('etetet', dataset).then((response) => {
+    postDataset('etetet', dataset, userContext).then((response) => {
       updateDatasets()
       setIsRegistrationSuccessful(true)
     })
@@ -27,7 +29,12 @@ export const NewDatasetModal = ({ updateDatasets }) => {
       <Tooltip title={'Add new dataset'}>
         <Button onClick={showModal} type="primary" shape="circle" icon={<PlusOutlined />} />
       </Tooltip>
-      <Modal title="Add new dataset" visible={isModalVisible} footer={null} onCancel={handleCancel}>
+      <Modal
+        title="Add new dataset"
+        visible={isModalVisible}
+        onCancel={handleCancel}
+        maskClosable={false}
+      >
         {!isRegistrationSuccessful && (
           <Form name="basic" onFinish={registerDataset} autoComplete="off">
             <Form.Item
