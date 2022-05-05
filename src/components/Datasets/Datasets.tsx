@@ -6,6 +6,7 @@ import { Input, Table, Tooltip, Typography } from 'antd'
 import { escapeRegExp } from 'services/helpers/helpers'
 import { ErrorPage } from 'pages/Error/ErrorPage'
 import { Loading } from 'components/Loading'
+import { NewDatasetModal } from '../NewDatasetModal/NewDatasetModal'
 
 export const Datasets = () => {
   const userContext = useContext(UserContext)
@@ -18,6 +19,10 @@ export const Datasets = () => {
   const searchValue = ''
 
   useEffect(() => {
+    getDatasetsList()
+  }, [])
+
+  const getDatasetsList = () => {
     getDatasets(userContext, searchValue)
       .then((response) => {
         setFilteredDatasets(response?.documents), setDatasetsCount(response?.document_count)
@@ -26,7 +31,7 @@ export const Datasets = () => {
       .catch((error) => {
         setIsLoading(false), setError(error)
       })
-  }, [])
+  }
 
   const onSearch = (searchInput) => {
     const escapeInput = escapeRegExp(searchInput)
@@ -176,6 +181,11 @@ export const Datasets = () => {
             bordered
             pagination={false}
             showSorterTooltip={false}
+            title={() => (
+              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <NewDatasetModal updateDatasets={getDatasetsList} />
+              </div>
+            )}
           />
         </>
       )}

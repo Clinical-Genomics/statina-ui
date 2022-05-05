@@ -1,5 +1,5 @@
 import { createParamURL, handleBackendError } from './helpers/helpers'
-import { Login, RegisterUser } from './interfaces'
+import { Login, Dataset, RegisterUser } from './interfaces'
 import { UserContext } from './userContext'
 import qs from 'qs'
 
@@ -343,4 +343,9 @@ export const getDatasets = async (context: UserContext, query_string: string): P
 export const getDatasetOptions = async (context: UserContext): Promise<any> => {
   const endPoint = `${REACT_APP_BACKEND_URL}/dataset_options`
   return axiosGET(endPoint, context)
+}
+
+export const postDataset = async (name: string, formInput: Dataset): Promise<any> => {
+  const endPoint = `${REACT_APP_BACKEND_URL}/dataset/${name}`
+  return axiosPostToken(endPoint, formInput)
 }
