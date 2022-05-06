@@ -2,11 +2,11 @@ import React, { useContext, useEffect, useState } from 'react'
 import { UserContext } from '../../services/userContext'
 import { getDatasets, postDataset } from 'services/StatinaApi'
 import { Link } from 'react-router-dom'
-import { Input, Popconfirm, Table, Tooltip, Typography } from 'antd'
+import { Input, Popover, Table, Tooltip, Typography, Form, Button } from 'antd'
 import { escapeRegExp } from 'services/helpers/helpers'
 import { ErrorPage } from 'pages/Error/ErrorPage'
 import { Loading } from 'components/Loading'
-import { PlusCircleTwoTone } from '@ant-design/icons'
+import { CopyTwoTone } from '@ant-design/icons'
 import { Dataset } from '../../services/interfaces'
 
 export const Datasets = () => {
@@ -35,12 +35,8 @@ export const Datasets = () => {
       })
   }
 
-  const cloneDataset = (dataset: Dataset) => {
-    postDataset(
-      `${dataset.name}_copy_${Math.floor(Math.random() * 1000)}`,
-      dataset,
-      userContext
-    ).then(() => getDatasetsList())
+  const cloneDataset = (dataset: Dataset, { datasetName }) => {
+    postDataset(datasetName, dataset, userContext).then(() => getDatasetsList())
   }
 
   const onSearch = (searchInput) => {
@@ -60,7 +56,7 @@ export const Datasets = () => {
       title: 'Name',
       dataIndex: 'name',
       key: 'name',
-      fixed: 'left',
+      width: 150,
       sorter: (a, b) => a.name.length - b.name.length,
       render: (name: any) => <Link to={`/${name}`}>{name}</Link>,
     },
@@ -111,77 +107,85 @@ export const Datasets = () => {
       dataIndex: 'k_upper',
       key: 'k_upper',
       sorter: (a, b) => a.k_upper - b.k_upper,
-      width: 90,
     },
     {
       title: 'M low',
       dataIndex: 'm_lower',
       key: 'm_lower',
       sorter: (a, b) => a.m_lower - b.m_lower,
-      width: 90,
     },
     {
       title: 'M up',
       dataIndex: 'm_upper',
       key: 'm_upper',
       sorter: (a, b) => a.m_upper - b.m_upper,
-      width: 90,
     },
     {
       title: 'Tris hard max',
       dataIndex: 'trisomy_hard_max',
       key: 'trisomy_hard_max',
       sorter: (a, b) => a.trisomy_hard_max - b.trisomy_hard_max,
-      width: 150,
     },
     {
       title: 'Tris hard min',
       dataIndex: 'trisomy_hard_min',
       key: 'trisomy_hard_min',
       sorter: (a, b) => a.trisomy_hard_min - b.trisomy_hard_min,
-      width: 150,
     },
     {
       title: 'Tris soft max',
       dataIndex: 'trisomy_soft_max',
       key: 'trisomy_soft_max',
       sorter: (a, b) => a.trisomy_soft_max - b.trisomy_soft_max,
-      width: 150,
     },
     {
       title: 'Y axis max',
       dataIndex: 'y_axis_max',
       key: 'y_axis_max',
       sorter: (a, b) => a.y_axis_max - b.y_axis_max,
-      width: 110,
     },
     {
       title: 'Y axis min',
       dataIndex: 'y_axis_min',
       key: 'y_axis_min',
       sorter: (a, b) => a.y_axis_min - b.y_axis_min,
-      width: 110,
     },
     {
       title: 'Comment',
       dataIndex: 'comment',
       key: 'comment',
+      width: 110,
     },
     {
       title: 'Action',
       key: 'action',
       ellipsis: true,
-      fixed: 'right',
       hidden: !permissions?.includes('RW'),
       render: (dataset) => (
-        <Popconfirm
-          title="Are you sure you want to clone this dataset?"
-          onConfirm={() => cloneDataset(dataset)}
-          okText="Yes"
-          cancelText="No"
+        <Popover
+          trigger="click"
+          content={
+            <Form name="cloneDataset" onFinish={(values) => cloneDataset(dataset, values)}>
+              <Form.Item
+                label="Insert new dataset name:"
+                name="datasetName"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please input the dataset name',
+                  },
+                ]}
+              >
+                <Input />
+              </Form.Item>
+              <Button type="primary" htmlType="submit">
+                Clone dataset
+              </Button>
+            </Form>
+          }
         >
-          <PlusCircleTwoTone style={{ fontSize: '20px' }} />
-        </Popconfirm>
+          <CopyTwoTone style={{ fontSize: '20px' }} />
+        </Popover>
       ),
     },
   ].filter((column) => !column.hidden)
