@@ -172,7 +172,7 @@ export const Datasets = () => {
       ellipsis: true,
       hidden: !permissions?.includes('RW'),
       render: (dataset) => (
-        <div>
+        <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
           <Popover
             trigger="click"
             content={
