@@ -69,6 +69,11 @@ export const createErrorMessage = (error: AxiosError) => {
         errorMessage: 'Something went wrong in the backend',
         errorDescription: `${error?.message} ${error?.config?.url}`,
       }
+    case 406:
+      return {
+        errorMessage: 'Cannot perform this action',
+        errorDescription: `${error?.response?.data}`,
+      }
     default:
       return {
         errorMessage: `Could not fetch data from backend, make sure you are connected to the VPN`,

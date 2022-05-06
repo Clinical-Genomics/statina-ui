@@ -354,3 +354,8 @@ export const postDataset = async (
   const endPoint = `${REACT_APP_BACKEND_URL}/dataset/${name}`
   return axiosPostToken(endPoint, formInput, context)
 }
+
+export const deleteDataset = async (datasetName: string, context: UserContext): Promise<any> => {
+  const endPoint = `${REACT_APP_BACKEND_URL}/dataset/${datasetName}`
+  return axiosDELETE(endPoint, datasetName, context)
+}

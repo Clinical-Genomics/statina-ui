@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { UserContext } from '../../services/userContext'
-import { getDatasets, postDataset } from 'services/StatinaApi'
+import { deleteDataset, getDatasets, postDataset } from 'services/StatinaApi'
 import { Link } from 'react-router-dom'
-import { Input, Popover, Table, Tooltip, Typography, Form, Button } from 'antd'
-import { escapeRegExp } from 'services/helpers/helpers'
+import { Input, Popover, Table, Tooltip, Typography, Form, Button, Popconfirm } from 'antd'
+import { escapeRegExp, SuccessNotification } from 'services/helpers/helpers'
 import { ErrorPage } from 'pages/Error/ErrorPage'
 import { Loading } from 'components/Loading'
-import { CopyTwoTone } from '@ant-design/icons'
+import { CopyTwoTone, DeleteTwoTone } from '@ant-design/icons'
 import { Dataset } from '../../services/interfaces'
 
 export const Datasets = () => {
@@ -37,6 +37,16 @@ export const Datasets = () => {
 
   const cloneDataset = (dataset: Dataset, { datasetName }) => {
     postDataset(datasetName, dataset, userContext).then(() => getDatasetsList())
+  }
+
+  const confirmDeleteDataset = (datasetName: string) => {
+    deleteDataset(datasetName, userContext).then(() => {
+      SuccessNotification({
+        type: 'success',
+        message: `${datasetName} deleted`,
+      })
+      getDatasetsList()
+    })
   }
 
   const onSearch = (searchInput) => {
@@ -162,30 +172,40 @@ export const Datasets = () => {
       ellipsis: true,
       hidden: !permissions?.includes('RW'),
       render: (dataset) => (
-        <Popover
-          trigger="click"
-          content={
-            <Form name="cloneDataset" onFinish={(values) => cloneDataset(dataset, values)}>
-              <Form.Item
-                label="Insert new dataset name:"
-                name="datasetName"
-                rules={[
-                  {
-                    required: true,
-                    message: 'Please input the dataset name',
-                  },
-                ]}
-              >
-                <Input />
-              </Form.Item>
-              <Button type="primary" htmlType="submit">
-                Clone dataset
-              </Button>
-            </Form>
-          }
-        >
-          <CopyTwoTone style={{ fontSize: '20px' }} />
-        </Popover>
+        <div>
+          <Popover
+            trigger="click"
+            content={
+              <Form name="cloneDataset" onFinish={(values) => cloneDataset(dataset, values)}>
+                <Form.Item
+                  label="Insert new dataset name:"
+                  name="datasetName"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please input the dataset name',
+                    },
+                  ]}
+                >
+                  <Input />
+                </Form.Item>
+                <Button type="primary" htmlType="submit">
+                  Clone dataset
+                </Button>
+              </Form>
+            }
+          >
+            <CopyTwoTone style={{ fontSize: '20px' }} />
+          </Popover>
+          <Popconfirm
+            title="Are you sure you want to delete this dataset? All the batches with this dataset will be set to 'default'"
+            onConfirm={() => confirmDeleteDataset(dataset?.name)}
+            okText="Yes"
+            cancelText="No"
+          >
+            <DeleteTwoTone style={{ fontSize: '20px' }} />
+          </Popconfirm>
+        </div>
       ),
     },
   ].filter((column) => !column.hidden)
