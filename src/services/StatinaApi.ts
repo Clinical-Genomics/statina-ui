@@ -1,5 +1,5 @@
 import { createParamURL, handleBackendError } from './helpers/helpers'
-import { Login, RegisterUser } from './interfaces'
+import { Login, Dataset, RegisterUser } from './interfaces'
 import { UserContext } from './userContext'
 import qs from 'qs'
 
@@ -82,12 +82,13 @@ const axiosIncludePATCH = (endPoint, { token, logout }: UserContext) => {
   })
 }
 
-const axiosPostToken = (endPoint, formInput) => {
+const axiosPostToken = (endPoint, formInput, context?: UserContext) => {
   return new Promise((resolve, reject) => {
     const params = new URLSearchParams(formInput)
     axios
       .post(endPoint, params, {
         headers: {
+          Authorization: `Bearer ${context?.token}`,
           'Content-Type': 'application/x-www-form-urlencoded',
         },
       })
@@ -336,11 +337,20 @@ export const validateUserEmail = async (
 }
 
 export const getDatasets = async (context: UserContext, query_string: string): Promise<any> => {
-  const endPoint = `${REACT_APP_BACKEND_URL}/datasets?query_string=${query_string}`
+  const endPoint = `${REACT_APP_BACKEND_URL}/datasets?query_string=${query_string}&page_size=${100}&page_num=0`
   return axiosGET(endPoint, context)
 }
 
 export const getDatasetOptions = async (context: UserContext): Promise<any> => {
   const endPoint = `${REACT_APP_BACKEND_URL}/dataset_options`
   return axiosGET(endPoint, context)
+}
+
+export const postDataset = async (
+  name: string,
+  formInput: Dataset,
+  context: UserContext
+): Promise<any> => {
+  const endPoint = `${REACT_APP_BACKEND_URL}/dataset/${name}`
+  return axiosPostToken(endPoint, formInput, context)
 }
