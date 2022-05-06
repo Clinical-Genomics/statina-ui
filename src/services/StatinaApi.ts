@@ -340,6 +340,11 @@ export const getDatasets = async (context: UserContext, query_string: string): P
   return axiosGET(endPoint, context)
 }
 
+export const getDataset = async (context: UserContext, datasetId: string): Promise<any> => {
+  const endPoint = `${REACT_APP_BACKEND_URL}/dataset/${datasetId}`
+  return axiosGET(endPoint, context)
+}
+
 export const getDatasetOptions = async (context: UserContext): Promise<any> => {
   const endPoint = `${REACT_APP_BACKEND_URL}/dataset_options`
   return axiosGET(endPoint, context)

@@ -47,7 +47,7 @@ export const Datasets = () => {
       key: 'name',
       fixed: 'left',
       sorter: (a, b) => a.name.length - b.name.length,
-      render: (name: any) => <Link to={`/${name}`}>{name}</Link>,
+      render: (name: any) => <Link to={`datasets/${name}`}>{name}</Link>,
       width: 150,
     },
     {
