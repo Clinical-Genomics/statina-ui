@@ -21,7 +21,7 @@ export function DatasetPage() {
     <>
       {dataset && (
         <>
-          <Title>Name: {dataset.name}</Title>
+          <Title>Dataset {dataset.name}</Title>
           <Card>
             <Descriptions bordered column={3} labelStyle={{ fontWeight: 'bold' }} size="small">
               <Descriptions.Item label="Fetal fraction preface">
