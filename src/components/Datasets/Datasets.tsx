@@ -187,7 +187,7 @@ export const Datasets = () => {
                     },
                   ]}
                 >
-                  <Input />
+                  <Input maxLength={20} />
                 </Form.Item>
                 <Button type="primary" htmlType="submit">
                   Clone dataset
@@ -209,6 +209,7 @@ export const Datasets = () => {
       ),
     },
   ].filter((column) => !column.hidden)
+
   return isLoading ? (
     <Loading />
   ) : (
