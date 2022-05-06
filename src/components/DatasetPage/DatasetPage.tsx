@@ -1,25 +1,36 @@
-import { Card, Descriptions, Typography } from 'antd'
 import React, { useContext, useEffect, useState } from 'react'
+import { Card, Descriptions, Typography } from 'antd'
+import { Loading } from 'components/Loading'
 import { useLocation } from 'react-router-dom'
 import { getDataset } from 'services/StatinaApi'
 import { UserContext } from 'services/userContext'
+import { ErrorPage } from 'pages/Error/ErrorPage'
 
 export function DatasetPage() {
   const [dataset, setDataset] = useState<any>()
+  const [isLoading, setIsLoading] = useState<boolean>(true)
+  const [error, setError] = useState<any>()
   const { pathname } = useLocation()
   const userContext = useContext(UserContext)
   const datasetName = pathname.substring(pathname.lastIndexOf('/') + 1, pathname.length)
   const { Title } = Typography
 
   useEffect(() => {
-    getDataset(userContext, datasetName).then((dataset) => {
-      setDataset(dataset)
-    })
+    getDataset(userContext, datasetName)
+      .then((dataset) => {
+        setDataset(dataset)
+        setIsLoading(false)
+      })
+      .catch((error) => {
+        setIsLoading(false), setError(error)
+      })
   }, [])
 
-  return (
+  return isLoading ? (
+    <Loading />
+  ) : (
     <>
-      {dataset && (
+      {!error && (
         <>
           <Title>Dataset {dataset.name}</Title>
           <Card>
@@ -64,6 +75,7 @@ export function DatasetPage() {
           </Card>
         </>
       )}
+      {error && <ErrorPage error={error} />}
     </>
   )
 }

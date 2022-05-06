@@ -15,7 +15,7 @@ export const Datasets = () => {
   const [filteredDatasets, setFilteredDatasets] = useState<any>([])
   const [datasetsCount, setDatasetsCount] = useState(0)
   const [error, setError] = useState<any>()
-  const [isLoading, setIsLoading] = React.useState<boolean>(true)
+  const [isLoading, setIsLoading] = useState<boolean>(true)
   const { Text } = Typography
   const { Search } = Input
   const searchValue = ''
