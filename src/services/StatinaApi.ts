@@ -336,8 +336,13 @@ export const validateUserEmail = async (
   return axiosPATCH(endPoint, username)
 }
 
-export const getDatasets = async (context: UserContext, query_string: string): Promise<any> => {
-  const endPoint = `${REACT_APP_BACKEND_URL}/datasets?query_string=${query_string}&page_size=${100}&page_num=0`
+export const getDatasets = async (
+  context: UserContext,
+  queryString,
+  page: number,
+  pageSize: number
+): Promise<any> => {
+  const endPoint = `${REACT_APP_BACKEND_URL}/datasets?query_string=${queryString}&page_size=${pageSize}&page_num=${page}`
   return axiosGET(endPoint, context)
 }
 

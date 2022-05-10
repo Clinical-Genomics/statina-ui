@@ -14,18 +14,20 @@ export const Datasets = () => {
   const { permissions } = userContext
   const [filteredDatasets, setFilteredDatasets] = useState<any>([])
   const [datasetsCount, setDatasetsCount] = useState(0)
+  const [currentPage, setCurrentPage] = useState(1)
+  const [currentSearchValue, setCurrentSearchValue] = useState('')
   const [error, setError] = useState<any>()
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const { Text } = Typography
   const { Search } = Input
-  const searchValue = ''
+  const tablePageSize = 20
 
   useEffect(() => {
-    getDatasetsList()
+    getDatasetsList(currentPage)
   }, [])
 
-  const getDatasetsList = () => {
-    getDatasets(userContext, searchValue)
+  const getDatasetsList = (page, searchValue = currentSearchValue, pageSize = tablePageSize) => {
+    getDatasets(userContext, searchValue, page, pageSize)
       .then((response) => {
         setFilteredDatasets(response?.documents), setDatasetsCount(response?.document_count)
         setIsLoading(false)
@@ -36,7 +38,12 @@ export const Datasets = () => {
   }
 
   const cloneDataset = (dataset: Dataset, { datasetName }) => {
-    postDataset(datasetName, dataset, userContext).then(() => getDatasetsList())
+    postDataset(datasetName, dataset, userContext).then(() => getDatasetsList(currentPage))
+  }
+
+  const onPaginationChange = (data) => {
+    setCurrentPage(data.current)
+    getDatasetsList(data.current)
   }
 
   const confirmDeleteDataset = (datasetName: string) => {
@@ -45,20 +52,15 @@ export const Datasets = () => {
         type: 'success',
         message: `${datasetName} deleted`,
       })
-      getDatasetsList()
+      getDatasetsList(currentPage)
     })
   }
 
   const onSearch = (searchInput) => {
     const escapeInput = escapeRegExp(searchInput)
-    getDatasets(userContext, escapeInput)
-      .then((response) => {
-        setFilteredDatasets(response?.documents), setDatasetsCount(response?.document_count)
-        setIsLoading(false)
-      })
-      .catch((error) => {
-        setIsLoading(false), setError(error)
-      })
+    setCurrentPage(1)
+    getDatasetsList(1, escapeInput)
+    setCurrentSearchValue(escapeInput)
   }
 
   const columns: any = [
@@ -231,8 +233,12 @@ export const Datasets = () => {
             rowKey={(record: any) => record.name}
             size="small"
             bordered
-            pagination={false}
             showSorterTooltip={false}
+            onChange={onPaginationChange}
+            pagination={{
+              total: datasetsCount,
+              defaultPageSize: tablePageSize,
+            }}
           />
         </>
       )}
