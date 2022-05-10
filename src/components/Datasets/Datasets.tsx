@@ -15,7 +15,7 @@ export const Datasets = () => {
   const [filteredDatasets, setFilteredDatasets] = useState<any>([])
   const [datasetsCount, setDatasetsCount] = useState(0)
   const [error, setError] = useState<any>()
-  const [isLoading, setIsLoading] = React.useState<boolean>(true)
+  const [isLoading, setIsLoading] = useState<boolean>(true)
   const { Text } = Typography
   const { Search } = Input
   const searchValue = ''
@@ -68,7 +68,7 @@ export const Datasets = () => {
       key: 'name',
       width: 150,
       sorter: (a, b) => a.name.length - b.name.length,
-      render: (name: any) => <Link to={`/${name}`}>{name}</Link>,
+      render: (name: any) => <Link to={`datasets/${name}`}>{name}</Link>,
     },
     {
       title: <Tooltip title="Fetal fraction X0">FFX0</Tooltip>,
