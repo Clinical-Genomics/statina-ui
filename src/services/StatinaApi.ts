@@ -381,9 +381,9 @@ export const deleteDataset = async (datasetName: string, context: UserContext): 
 
 export const editDataset = async (
   datasetName: string,
-  data: string,
+  editedDataset: string,
   context: UserContext
 ): Promise<any> => {
   const endPoint = `${REACT_APP_BACKEND_URL}/dataset/${datasetName}`
-  return axiosDatasetPATCH(endPoint, data, context)
+  return axiosDatasetPATCH(endPoint, editedDataset, context)
 }

@@ -9,11 +9,10 @@ import { Dataset } from '../../services/interfaces'
 import { SuccessNotification } from 'services/helpers/helpers'
 
 export function DatasetPage() {
-  const [dataset, setDataset] = useState<any>()
   const [edit, setEdit] = useState<boolean>(false)
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const [error, setError] = useState<any>()
-  const [editedDataset, setEditedDataset] = useState<Dataset>({
+  const [dataset, setDataset] = useState<Dataset>({
     fetal_fraction_preface: 0,
     fetal_fraction_y_for_trisomy: 0,
     fetal_fraction_y_max: 0,
@@ -43,8 +42,7 @@ export function DatasetPage() {
   const getDatasetData = () => {
     getDataset(userContext, datasetName)
       .then((dataset) => {
-        setDataset(dataset)
-        setEditedDataset({
+        setDataset({
           fetal_fraction_y_max: dataset?.fetal_fraction_y_max,
           fetal_fraction_preface: dataset?.fetal_fraction_preface,
           trisomy_hard_min: dataset?.trisomy_hard_min,
@@ -70,100 +68,99 @@ export function DatasetPage() {
   }
 
   const onChange = (e) => {
-    console.log(e.target.name)
     switch (e.target.name) {
       case 'FFP':
-        setEditedDataset((prevStat) => ({
+        setDataset((prevStat) => ({
           ...prevStat,
           fetal_fraction_preface: Number(e.target.value),
         }))
         break
       case 'FFY_tris':
-        setEditedDataset((prevStat) => ({
+        setDataset((prevStat) => ({
           ...prevStat,
           fetal_fraction_y_for_trisomy: Number(e.target.value),
         }))
         break
       case 'FFY_max':
-        setEditedDataset((prevStat) => ({
+        setDataset((prevStat) => ({
           ...prevStat,
           fetal_fraction_y_max: Number(e.target.value),
         }))
         break
       case 'FFY_min':
-        setEditedDataset((prevStat) => ({
+        setDataset((prevStat) => ({
           ...prevStat,
           fetal_fraction_y_min: Number(e.target.value),
         }))
         break
       case 'FFXXX':
-        setEditedDataset((prevStat) => ({
+        setDataset((prevStat) => ({
           ...prevStat,
           fetal_fraction_XXX: Number(e.target.value),
         }))
         break
       case 'FFX0':
-        setEditedDataset((prevStat) => ({
+        setDataset((prevStat) => ({
           ...prevStat,
           fetal_fraction_X0: Number(e.target.value),
         }))
         break
       case 'y_axis_min':
-        setEditedDataset((prevStat) => ({
+        setDataset((prevStat) => ({
           ...prevStat,
           y_axis_min: Number(e.target.value),
         }))
         break
       case 'y_axis_max':
-        setEditedDataset((prevStat) => ({
+        setDataset((prevStat) => ({
           ...prevStat,
           y_axis_max: Number(e.target.value),
         }))
         break
       case 'k_upper':
-        setEditedDataset((prevStat) => ({
+        setDataset((prevStat) => ({
           ...prevStat,
           k_upper: Number(e.target.value),
         }))
         break
       case 'k_lower':
-        setEditedDataset((prevStat) => ({
+        setDataset((prevStat) => ({
           ...prevStat,
           k_lower: Number(e.target.value),
         }))
         break
       case 'm_lower':
-        setEditedDataset((prevStat) => ({
+        setDataset((prevStat) => ({
           ...prevStat,
           m_lower: Number(e.target.value),
         }))
         break
       case 'm_upper':
-        setEditedDataset((prevStat) => ({
+        setDataset((prevStat) => ({
           ...prevStat,
           m_upper: Number(e.target.value),
         }))
         break
       case 'trisomy_soft_max':
-        setEditedDataset((prevStat) => ({
+        setDataset((prevStat) => ({
           ...prevStat,
           trisomy_soft_max: Number(e.target.value),
         }))
         break
       case 'trisomy_hard_max':
-        setEditedDataset((prevStat) => ({
+        setDataset((prevStat) => ({
           ...prevStat,
           trisomy_hard_max: Number(e.target.value),
         }))
         break
       case 'trisomy_hard_min':
-        setEditedDataset((prevStat) => ({
+        setDataset((prevStat) => ({
           ...prevStat,
           trisomy_hard_min: Number(e.target.value),
         }))
         break
       case 'comment':
-        setEditedDataset((prevStat) => ({
+        setDataset((prevStat) => ({
           ...prevStat,
           comment: e.target.value,
         }))
@@ -179,11 +176,11 @@ export function DatasetPage() {
 
   const saveButton = () => {
     setEdit((value) => !value)
-    const data = JSON.stringify(editedDataset)
+    const editedDataset = JSON.stringify(dataset)
       .replace(/[{}"]/g, '')
       .replace(/:/g, '=')
       .replace(/,/g, '&')
-    editDataset(dataset.name, data, userContext)
+    editDataset(datasetName, editedDataset, userContext)
       .then(() => {
         getDatasetData()
         SuccessNotification({
@@ -202,7 +199,7 @@ export function DatasetPage() {
     <>
       {!error && (
         <>
-          <Title>Dataset {dataset.name}</Title>
+          <Title>Dataset {datasetName}</Title>
           <Card>
             <Descriptions
               bordered
@@ -226,7 +223,7 @@ export function DatasetPage() {
                   <Paragraph style={{ margin: 0, width: 30 }}>
                     <Input
                       onChange={onChange}
-                      defaultValue={editedDataset.fetal_fraction_preface}
+                      defaultValue={dataset.fetal_fraction_preface}
                       name="FFP"
                       bordered={false}
                       style={{ width: 100, padding: 0 }}
@@ -234,7 +231,7 @@ export function DatasetPage() {
                     />
                   </Paragraph>
                 ) : (
-                  <>{editedDataset.fetal_fraction_preface}</>
+                  <>{dataset.fetal_fraction_preface}</>
                 )}
               </Descriptions.Item>
               <Descriptions.Item label="Fetal fraction y for trisomy">
@@ -242,7 +239,7 @@ export function DatasetPage() {
                   <Paragraph style={{ margin: 0, width: 30 }}>
                     <Input
                       onChange={onChange}
-                      defaultValue={editedDataset.fetal_fraction_y_for_trisomy}
+                      defaultValue={dataset.fetal_fraction_y_for_trisomy}
                       name="FFY_tris"
                       bordered={false}
                       style={{ width: 100, padding: 0 }}
@@ -250,7 +247,7 @@ export function DatasetPage() {
                     />
                   </Paragraph>
                 ) : (
-                  <>{editedDataset.fetal_fraction_y_for_trisomy}</>
+                  <>{dataset.fetal_fraction_y_for_trisomy}</>
                 )}
               </Descriptions.Item>
               <Descriptions.Item label="Fetal fraction y max">
@@ -258,7 +255,7 @@ export function DatasetPage() {
                   <Paragraph style={{ margin: 0, width: 30 }}>
                     <Input
                       onChange={onChange}
-                      defaultValue={editedDataset.fetal_fraction_y_max}
+                      defaultValue={dataset.fetal_fraction_y_max}
                       name="FFY_max"
                       bordered={false}
                       style={{ width: 100, padding: 0 }}
@@ -266,7 +263,7 @@ export function DatasetPage() {
                     />
                   </Paragraph>
                 ) : (
-                  <>{editedDataset.fetal_fraction_y_max}</>
+                  <>{dataset.fetal_fraction_y_max}</>
                 )}
               </Descriptions.Item>
               <Descriptions.Item label="Fetal fraction y min">
@@ -274,7 +271,7 @@ export function DatasetPage() {
                   <Paragraph style={{ margin: 0, width: 30 }}>
                     <Input
                       onChange={onChange}
-                      defaultValue={editedDataset.fetal_fraction_y_min}
+                      defaultValue={dataset.fetal_fraction_y_min}
                       name="FFY_min"
                       bordered={false}
                       style={{ width: 100, padding: 0 }}
@@ -282,7 +279,7 @@ export function DatasetPage() {
                     />
                   </Paragraph>
                 ) : (
-                  <>{editedDataset.fetal_fraction_y_min}</>
+                  <>{dataset.fetal_fraction_y_min}</>
                 )}
               </Descriptions.Item>
               <Descriptions.Item label="Fetal fraction XXX">
@@ -290,7 +287,7 @@ export function DatasetPage() {
                   <Paragraph style={{ margin: 0, width: 30 }}>
                     <Input
                       onChange={onChange}
-                      defaultValue={editedDataset.fetal_fraction_XXX}
+                      defaultValue={dataset.fetal_fraction_XXX}
                       name="FFXXX"
                       bordered={false}
                       style={{ width: 100, padding: 0 }}
@@ -298,7 +295,7 @@ export function DatasetPage() {
                     />
                   </Paragraph>
                 ) : (
-                  <>{editedDataset.fetal_fraction_XXX}</>
+                  <>{dataset.fetal_fraction_XXX}</>
                 )}
               </Descriptions.Item>
               <Descriptions.Item label="Fetal fraction X0">
@@ -306,7 +303,7 @@ export function DatasetPage() {
                   <Paragraph style={{ margin: 0, width: 30 }}>
                     <Input
                       onChange={onChange}
-                      defaultValue={editedDataset.fetal_fraction_X0}
+                      defaultValue={dataset.fetal_fraction_X0}
                       name="FFX0"
                       bordered={false}
                       style={{ width: 100, padding: 0 }}
@@ -314,7 +311,7 @@ export function DatasetPage() {
                     />
                   </Paragraph>
                 ) : (
-                  <>{editedDataset.fetal_fraction_X0}</>
+                  <>{dataset.fetal_fraction_X0}</>
                 )}
               </Descriptions.Item>
               <Descriptions.Item label="Y axis min">
@@ -322,7 +319,7 @@ export function DatasetPage() {
                   <Paragraph style={{ margin: 0, width: 30 }}>
                     <Input
                       onChange={onChange}
-                      defaultValue={editedDataset.y_axis_min}
+                      defaultValue={dataset.y_axis_min}
                       name="y_axis_min"
                       bordered={false}
                       style={{ width: 100, padding: 0 }}
@@ -330,7 +327,7 @@ export function DatasetPage() {
                     />
                   </Paragraph>
                 ) : (
-                  <>{editedDataset.y_axis_min}</>
+                  <>{dataset.y_axis_min}</>
                 )}
               </Descriptions.Item>
               <Descriptions.Item label="Y axis max">
@@ -338,7 +335,7 @@ export function DatasetPage() {
                   <Paragraph style={{ margin: 0, width: 30 }}>
                     <Input
                       onChange={onChange}
-                      defaultValue={editedDataset.y_axis_max}
+                      defaultValue={dataset.y_axis_max}
                       name="y_axis_max"
                       bordered={false}
                       style={{ width: 100, padding: 0 }}
@@ -346,7 +343,7 @@ export function DatasetPage() {
                     />
                   </Paragraph>
                 ) : (
-                  <>{editedDataset.y_axis_max}</>
+                  <>{dataset.y_axis_max}</>
                 )}
               </Descriptions.Item>
               <Descriptions.Item label="K upper">
@@ -354,7 +351,7 @@ export function DatasetPage() {
                   <Paragraph style={{ margin: 0, width: 30 }}>
                     <Input
                       onChange={onChange}
-                      defaultValue={editedDataset.k_upper}
+                      defaultValue={dataset.k_upper}
                       name="k_upper"
                       bordered={false}
                       style={{ width: 100, padding: 0 }}
@@ -362,7 +359,7 @@ export function DatasetPage() {
                     />
                   </Paragraph>
                 ) : (
-                  <>{editedDataset.k_upper}</>
+                  <>{dataset.k_upper}</>
                 )}
               </Descriptions.Item>
               <Descriptions.Item label="K lower">
@@ -370,7 +367,7 @@ export function DatasetPage() {
                   <Paragraph style={{ margin: 0, width: 30 }}>
                     <Input
                       onChange={onChange}
-                      defaultValue={editedDataset.k_lower}
+                      defaultValue={dataset.k_lower}
                       name="k_lower"
                       bordered={false}
                       style={{ width: 100, padding: 0 }}
@@ -378,7 +375,7 @@ export function DatasetPage() {
                     />
                   </Paragraph>
                 ) : (
-                  <>{editedDataset.k_lower}</>
+                  <>{dataset.k_lower}</>
                 )}
               </Descriptions.Item>
               <Descriptions.Item label="M lower">
@@ -386,7 +383,7 @@ export function DatasetPage() {
                   <Paragraph style={{ margin: 0, width: 30 }}>
                     <Input
                       onChange={onChange}
-                      defaultValue={editedDataset.m_lower}
+                      defaultValue={dataset.m_lower}
                       name="m_lower"
                       bordered={false}
                       style={{ width: 100, padding: 0 }}
@@ -394,7 +391,7 @@ export function DatasetPage() {
                     />
                   </Paragraph>
                 ) : (
-                  <>{editedDataset.m_lower}</>
+                  <>{dataset.m_lower}</>
                 )}
               </Descriptions.Item>
               <Descriptions.Item label="M upper">
@@ -402,7 +399,7 @@ export function DatasetPage() {
                   <Paragraph style={{ margin: 0, width: 30 }}>
                     <Input
                       onChange={onChange}
-                      defaultValue={editedDataset.m_upper}
+                      defaultValue={dataset.m_upper}
                       name="m_upper"
                       bordered={false}
                       style={{ width: 100, padding: 0 }}
@@ -410,7 +407,7 @@ export function DatasetPage() {
                     />
                   </Paragraph>
                 ) : (
-                  <>{editedDataset.m_upper}</>
+                  <>{dataset.m_upper}</>
                 )}
               </Descriptions.Item>
               <Descriptions.Item label="Trisomy soft max">
@@ -418,7 +415,7 @@ export function DatasetPage() {
                   <Paragraph style={{ margin: 0, width: 30 }}>
                     <Input
                       onChange={onChange}
-                      defaultValue={editedDataset.trisomy_soft_max}
+                      defaultValue={dataset.trisomy_soft_max}
                       name="trisomy_soft_max"
                       bordered={false}
                       style={{ width: 100, padding: 0 }}
@@ -426,7 +423,7 @@ export function DatasetPage() {
                     />
                   </Paragraph>
                 ) : (
-                  <>{editedDataset.trisomy_soft_max}</>
+                  <>{dataset.trisomy_soft_max}</>
                 )}
               </Descriptions.Item>
               <Descriptions.Item label="Trisomy hard max">
@@ -434,7 +431,7 @@ export function DatasetPage() {
                   <Paragraph style={{ margin: 0, width: 30 }}>
                     <Input
                       onChange={onChange}
-                      defaultValue={editedDataset.trisomy_hard_max}
+                      defaultValue={dataset.trisomy_hard_max}
                       name="trisomy_hard_max"
                       bordered={false}
                       style={{ width: 100, padding: 0 }}
@@ -442,7 +439,7 @@ export function DatasetPage() {
                     />
                   </Paragraph>
                 ) : (
-                  <>{editedDataset.trisomy_hard_max}</>
+                  <>{dataset.trisomy_hard_max}</>
                 )}
               </Descriptions.Item>
               <Descriptions.Item label="Trisomy hard min">
@@ -450,7 +447,7 @@ export function DatasetPage() {
                   <Paragraph style={{ margin: 0, width: 30 }}>
                     <Input
                       onChange={onChange}
-                      defaultValue={editedDataset.trisomy_hard_min}
+                      defaultValue={dataset.trisomy_hard_min}
                       name="trisomy_hard_min"
                       bordered={false}
                       style={{ width: 100, padding: 0 }}
@@ -458,7 +455,7 @@ export function DatasetPage() {
                     />
                   </Paragraph>
                 ) : (
-                  <>{editedDataset.trisomy_hard_min}</>
+                  <>{dataset.trisomy_hard_min}</>
                 )}
               </Descriptions.Item>
               <Descriptions.Item label="Comment" span={3}>
@@ -466,14 +463,14 @@ export function DatasetPage() {
                   <Paragraph style={{ margin: 0 }}>
                     <Input
                       onChange={onChange}
-                      defaultValue={editedDataset.comment}
+                      defaultValue={dataset.comment}
                       name="comment"
                       bordered={false}
                       style={{ padding: 0 }}
                     />
                   </Paragraph>
                 ) : (
-                  <>{editedDataset.comment}</>
+                  <>{dataset.comment}</>
                 )}
               </Descriptions.Item>
             </Descriptions>
