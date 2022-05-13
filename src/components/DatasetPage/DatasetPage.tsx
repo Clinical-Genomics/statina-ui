@@ -5,7 +5,7 @@ import { useLocation } from 'react-router-dom'
 import { editDataset, getDataset } from 'services/StatinaApi'
 import { UserContext } from 'services/userContext'
 import { ErrorPage } from 'pages/Error/ErrorPage'
-import { SuccessNotification } from 'services/helpers/helpers'
+import { objectToString, SuccessNotification } from 'services/helpers/helpers'
 
 export function DatasetPage() {
   const [edit, setEdit] = useState<boolean>(false)
@@ -35,10 +35,7 @@ export function DatasetPage() {
 
   const onFinish = (values: any) => {
     setEdit((value) => !value)
-    const editedDataset = JSON.stringify(values)
-      .replace(/[{}"]/g, '')
-      .replace(/:/g, '=')
-      .replace(/,/g, '&')
+    const editedDataset = objectToString(values)
     editDataset(datasetName, editedDataset, userContext)
       .then(() => {
         SuccessNotification({
