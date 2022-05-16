@@ -6,6 +6,7 @@ import { editDataset, getDataset } from 'services/StatinaApi'
 import { UserContext } from 'services/userContext'
 import { ErrorPage } from 'pages/Error/ErrorPage'
 import { objectToString, SuccessNotification } from 'services/helpers/helpers'
+import styles from './DatasetPage.module.css'
 
 export function DatasetPage() {
   const [edit, setEdit] = useState<boolean>(false)
@@ -104,8 +105,8 @@ export function DatasetPage() {
                   <Form.Item name="fetal_fraction_preface">
                     <InputNumber
                       bordered={edit ? true : false}
-                      style={!edit ? { color: '#000000d9', backgroundColor: '#fff' } : {}}
-                      disabled={!edit ? true : false}
+                      disabled={edit ? false : true}
+                      className={edit ? undefined : styles.input}
                     />
                   </Form.Item>
                 </Descriptions.Item>
@@ -113,8 +114,8 @@ export function DatasetPage() {
                   <Form.Item name="fetal_fraction_y_for_trisomy">
                     <InputNumber
                       bordered={edit ? true : false}
-                      style={!edit ? { color: '#000000d9', backgroundColor: '#fff' } : {}}
-                      disabled={!edit ? true : false}
+                      disabled={edit ? false : true}
+                      className={edit ? undefined : styles.input}
                     />
                   </Form.Item>
                 </Descriptions.Item>
@@ -122,8 +123,8 @@ export function DatasetPage() {
                   <Form.Item name="fetal_fraction_y_max">
                     <InputNumber
                       bordered={edit ? true : false}
-                      style={!edit ? { color: '#000000d9', backgroundColor: '#fff' } : {}}
-                      disabled={!edit ? true : false}
+                      disabled={edit ? false : true}
+                      className={edit ? undefined : styles.input}
                     />
                   </Form.Item>
                 </Descriptions.Item>
@@ -131,8 +132,8 @@ export function DatasetPage() {
                   <Form.Item name="fetal_fraction_y_min">
                     <InputNumber
                       bordered={edit ? true : false}
-                      style={!edit ? { color: '#000000d9', backgroundColor: '#fff' } : {}}
-                      disabled={!edit ? true : false}
+                      disabled={edit ? false : true}
+                      className={edit ? undefined : styles.input}
                     />
                   </Form.Item>
                 </Descriptions.Item>
@@ -140,8 +141,8 @@ export function DatasetPage() {
                   <Form.Item name="fetal_fraction_XXX">
                     <InputNumber
                       bordered={edit ? true : false}
-                      style={!edit ? { color: '#000000d9', backgroundColor: '#fff' } : {}}
-                      disabled={!edit ? true : false}
+                      disabled={edit ? false : true}
+                      className={edit ? undefined : styles.input}
                     />
                   </Form.Item>
                 </Descriptions.Item>
@@ -149,8 +150,8 @@ export function DatasetPage() {
                   <Form.Item name="fetal_fraction_X0">
                     <InputNumber
                       bordered={edit ? true : false}
-                      style={!edit ? { color: '#000000d9', backgroundColor: '#fff' } : {}}
-                      disabled={!edit ? true : false}
+                      disabled={edit ? false : true}
+                      className={edit ? undefined : styles.input}
                     />
                   </Form.Item>
                 </Descriptions.Item>
@@ -158,8 +159,8 @@ export function DatasetPage() {
                   <Form.Item name="y_axis_min">
                     <InputNumber
                       bordered={edit ? true : false}
-                      style={!edit ? { color: '#000000d9', backgroundColor: '#fff' } : {}}
-                      disabled={!edit ? true : false}
+                      disabled={edit ? false : true}
+                      className={edit ? undefined : styles.input}
                     />
                   </Form.Item>
                 </Descriptions.Item>
@@ -167,8 +168,8 @@ export function DatasetPage() {
                   <Form.Item name="y_axis_max">
                     <InputNumber
                       bordered={edit ? true : false}
-                      style={!edit ? { color: '#000000d9', backgroundColor: '#fff' } : {}}
-                      disabled={!edit ? true : false}
+                      disabled={edit ? false : true}
+                      className={edit ? undefined : styles.input}
                     />
                   </Form.Item>
                 </Descriptions.Item>
@@ -176,8 +177,8 @@ export function DatasetPage() {
                   <Form.Item name="k_upper">
                     <InputNumber
                       bordered={edit ? true : false}
-                      style={!edit ? { color: '#000000d9', backgroundColor: '#fff' } : {}}
-                      disabled={!edit ? true : false}
+                      disabled={edit ? false : true}
+                      className={edit ? undefined : styles.input}
                     />
                   </Form.Item>
                 </Descriptions.Item>
@@ -185,8 +186,8 @@ export function DatasetPage() {
                   <Form.Item name="k_lower">
                     <InputNumber
                       bordered={edit ? true : false}
-                      style={!edit ? { color: '#000000d9', backgroundColor: '#fff' } : {}}
-                      disabled={!edit ? true : false}
+                      disabled={edit ? false : true}
+                      className={edit ? undefined : styles.input}
                     />
                   </Form.Item>
                 </Descriptions.Item>
@@ -194,8 +195,8 @@ export function DatasetPage() {
                   <Form.Item name="m_lower">
                     <InputNumber
                       bordered={edit ? true : false}
-                      style={!edit ? { color: '#000000d9', backgroundColor: '#fff' } : {}}
-                      disabled={!edit ? true : false}
+                      disabled={edit ? false : true}
+                      className={edit ? undefined : styles.input}
                     />
                   </Form.Item>
                 </Descriptions.Item>
@@ -203,8 +204,8 @@ export function DatasetPage() {
                   <Form.Item name="m_upper">
                     <InputNumber
                       bordered={edit ? true : false}
-                      style={!edit ? { color: '#000000d9', backgroundColor: '#fff' } : {}}
-                      disabled={!edit ? true : false}
+                      disabled={edit ? false : true}
+                      className={edit ? undefined : styles.input}
                     />
                   </Form.Item>
                 </Descriptions.Item>
@@ -212,8 +213,8 @@ export function DatasetPage() {
                   <Form.Item name="trisomy_soft_max">
                     <InputNumber
                       bordered={edit ? true : false}
-                      style={!edit ? { color: '#000000d9', backgroundColor: '#fff' } : {}}
-                      disabled={!edit ? true : false}
+                      disabled={edit ? false : true}
+                      className={edit ? undefined : styles.input}
                     />
                   </Form.Item>
                 </Descriptions.Item>
@@ -221,8 +222,8 @@ export function DatasetPage() {
                   <Form.Item name="trisomy_hard_max">
                     <InputNumber
                       bordered={edit ? true : false}
-                      style={!edit ? { color: '#000000d9', backgroundColor: '#fff' } : {}}
-                      disabled={!edit ? true : false}
+                      disabled={edit ? false : true}
+                      className={edit ? undefined : styles.input}
                     />
                   </Form.Item>
                 </Descriptions.Item>
@@ -230,8 +231,8 @@ export function DatasetPage() {
                   <Form.Item name="trisomy_hard_min">
                     <InputNumber
                       bordered={edit ? true : false}
-                      style={!edit ? { color: '#000000d9', backgroundColor: '#fff' } : {}}
-                      disabled={!edit ? true : false}
+                      disabled={edit ? false : true}
+                      className={edit ? undefined : styles.input}
                     />
                   </Form.Item>
                 </Descriptions.Item>
@@ -239,8 +240,8 @@ export function DatasetPage() {
                   <Form.Item name="comment">
                     <Input
                       bordered={edit ? true : false}
-                      style={!edit ? { color: '#000000d9', backgroundColor: '#fff' } : {}}
-                      disabled={!edit ? true : false}
+                      disabled={edit ? false : true}
+                      className={edit ? undefined : styles.input}
                     />
                   </Form.Item>
                 </Descriptions.Item>
