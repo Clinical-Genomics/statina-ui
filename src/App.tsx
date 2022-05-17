@@ -3,7 +3,7 @@ import styles from './App.module.css'
 import './index.css'
 import { Layout, Menu, Button, Dropdown } from 'antd'
 import { Link, useLocation } from 'react-router-dom'
-import { Routes } from './components/Routes'
+import { datasetsPath, Routes } from './components/Routes'
 import Logo from './assets/logo.png'
 import './App.less'
 import Footer from './components/Footer/Footer'
@@ -85,8 +85,8 @@ export const App = () => {
                   <span>Quality Control</span>
                 </Link>
               </Menu.Item>
-              <Menu.Item key="/datasets" disabled={!token}>
-                <Link to="/datasets">
+              <Menu.Item key={`/${datasetsPath}`} disabled={!token}>
+                <Link to={`/${datasetsPath}`}>
                   <span>Datasets</span>
                 </Link>
               </Menu.Item>
