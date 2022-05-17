@@ -94,15 +94,15 @@ export function DatasetPage() {
                   Object.keys(dataset)
                     .reverse()
                     .map(
-                      (key) =>
-                        key !== 'name' && (
+                      (entry) =>
+                        entry !== 'name' && (
                           <Descriptions.Item
-                            key={key}
-                            label={capitalizeFirstLetter(key)}
-                            span={key === 'comment' ? 3 : 1}
+                            key={entry}
+                            label={capitalizeFirstLetter(entry)}
+                            span={entry === 'comment' ? 3 : 1}
                           >
-                            <Form.Item name={key}>
-                              {key === 'comment' ? (
+                            <Form.Item name={entry}>
+                              {entry === 'comment' ? (
                                 <Input
                                   disabled={!edit}
                                   bordered={edit}
