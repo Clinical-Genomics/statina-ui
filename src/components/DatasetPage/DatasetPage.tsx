@@ -91,38 +91,40 @@ export function DatasetPage() {
                 }
               >
                 {dataset &&
-                  Object.keys(dataset).map(
-                    (key) =>
-                      key !== 'name' && (
-                        <Descriptions.Item
-                          key={key}
-                          label={capitalizeFirstLetter(key)}
-                          span={key === 'comment' ? 3 : 1}
-                        >
-                          <Form.Item name={key}>
-                            {key === 'comment' ? (
-                              <Input
-                                disabled={!edit}
-                                bordered={edit}
-                                style={{
-                                  color: '#000000d9',
-                                  backgroundColor: '#fff',
-                                }}
-                              />
-                            ) : (
-                              <InputNumber
-                                disabled={!edit}
-                                bordered={edit}
-                                style={{
-                                  color: '#000000d9',
-                                  backgroundColor: '#fff',
-                                }}
-                              />
-                            )}
-                          </Form.Item>
-                        </Descriptions.Item>
-                      )
-                  )}
+                  Object.keys(dataset)
+                    .reverse()
+                    .map(
+                      (key) =>
+                        key !== 'name' && (
+                          <Descriptions.Item
+                            key={key}
+                            label={capitalizeFirstLetter(key)}
+                            span={key === 'comment' ? 3 : 1}
+                          >
+                            <Form.Item name={key}>
+                              {key === 'comment' ? (
+                                <Input
+                                  disabled={!edit}
+                                  bordered={edit}
+                                  style={{
+                                    color: '#000000d9',
+                                    backgroundColor: '#fff',
+                                  }}
+                                />
+                              ) : (
+                                <InputNumber
+                                  disabled={!edit}
+                                  bordered={edit}
+                                  style={{
+                                    color: '#000000d9',
+                                    backgroundColor: '#fff',
+                                  }}
+                                />
+                              )}
+                            </Form.Item>
+                          </Descriptions.Item>
+                        )
+                    )}
               </Descriptions>
             </Form>
           </Card>
