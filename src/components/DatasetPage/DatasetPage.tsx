@@ -10,7 +10,6 @@ import {
   objectToString,
   SuccessNotification,
 } from 'services/helpers/helpers'
-import styles from './DatasetPage.module.css'
 import { Dataset } from 'services/interfaces'
 
 export function DatasetPage() {
@@ -38,8 +37,6 @@ export function DatasetPage() {
   const editButton = () => {
     setEdit((value) => !value)
   }
-
-  console.log(dataset)
 
   const onFinish = (values: any) => {
     setEdit((value) => !value)
