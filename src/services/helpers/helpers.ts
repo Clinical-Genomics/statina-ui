@@ -139,11 +139,8 @@ export const escapeRegExp = (input) => {
 }
 
 export const objectToString = (obj) => {
-  const editedDataset = JSON.stringify(obj)
-    .replace(/[{}"]/g, '')
-    .replace(/:/g, '=')
-    .replace(/,/g, '&')
-  return editedDataset
+  const string = JSON.stringify(obj).replace(/[{}"]/g, '').replace(/:/g, '=').replace(/,/g, '&')
+  return string
 }
 
 export const capitalizeFirstLetter = (str) => {
