@@ -17,6 +17,8 @@ type RoutesProps = {
   isLoggedIn: boolean
 }
 
+export const datasetsPath = 'datasets'
+
 export const Routes = (props: RoutesProps) => {
   const { isLoggedIn } = props
   return (
@@ -50,17 +52,17 @@ export const Routes = (props: RoutesProps) => {
         }
       />
       <Route
-        path="/datasets"
+        path={`/${datasetsPath}`}
         exact
         render={() =>
-          isLoggedIn === true ? <Datasets /> : <Redirect to={{ pathname: '/datasets' }} />
+          isLoggedIn === true ? <Datasets /> : <Redirect to={{ pathname: `${datasetsPath}` }} />
         }
       />
       <Route
-        path="/datasets/:datasetId"
+        path={`/${datasetsPath}/:datasetId`}
         exact
         render={() =>
-          isLoggedIn === true ? <DatasetPage /> : <Redirect to={{ pathname: '/datasets' }} />
+          isLoggedIn === true ? <DatasetPage /> : <Redirect to={{ pathname: `${datasetsPath}` }} />
         }
       />
       <Route
