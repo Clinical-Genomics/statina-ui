@@ -146,6 +146,11 @@ export const objectToString = (obj) => {
   return editedDataset
 }
 
+export const capitalizeFirstLetter = (str) => {
+  const string = str.replace(/_/g, ' ')
+  return string.charAt(0).toUpperCase() + string.slice(1)
+}
+
 export const createFileDownload = (response) => {
   const fileBlob: Blob = new Blob([response.data])
   const url = window.URL.createObjectURL(fileBlob)
