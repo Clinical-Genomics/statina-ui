@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Card, Tabs, Row, Col, Typography, Select } from 'antd'
-import { useLocation } from 'react-router-dom'
+import { useLocation, Link } from 'react-router-dom'
 import { ZscoreGraph } from '../../components/ZscoreGraph/ZscoreGraph'
 import { BatchTablePDF } from '../../components/ExportPDF/BatchTablePDF'
 import {
@@ -21,6 +21,7 @@ import { SamplesTable } from 'components/SamplesTable/SamplesTable'
 import { BatchDownloadFile } from '../../components/ExportPDF/BatchDownloadFiles'
 import { batchDownloadFileTypes } from '../../services/helpers/constants'
 import { ErrorPage } from 'pages/Error/ErrorPage'
+import { datasetsPath } from '../../components/Routes'
 
 const { TabPane } = Tabs
 const { Paragraph, Title, Text } = Typography
@@ -94,7 +95,7 @@ export const BatchPage = () => {
                   ))}
                 </Select>
               ) : (
-                batch?.dataset
+                <Link to={`/${datasetsPath}/${batch?.dataset}`}>{batch?.dataset}</Link>
               )}
             </Col>
             <Col>
