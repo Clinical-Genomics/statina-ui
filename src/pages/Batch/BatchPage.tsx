@@ -31,6 +31,7 @@ export const BatchPage = () => {
   const { permissions } = userContext
   const [batch, setBatch] = useState<Batch | null>()
   const [datasets, setDatasets] = useState<string[]>()
+  const [selectedDataset, setSelectedDataset] = useState('')
   const { pathname } = useLocation()
   const batchId = pathname.substring(pathname.lastIndexOf('/') + 1, pathname.length)
   const [isLoading, setIsLoading] = React.useState<boolean>(true)
@@ -45,6 +46,7 @@ export const BatchPage = () => {
 
   const editDataset = (dataset) => {
     editBatchDataset(batchId, dataset, userContext).then(() => {
+      setSelectedDataset(dataset)
       getBatchInfo()
       SuccessNotification({
         type: 'success',
@@ -125,7 +127,7 @@ export const BatchPage = () => {
               <p>{batch?.comment}</p>
             )}
           </Row>
-          <Tabs type="card">
+          <Tabs type="card" key={selectedDataset}>
             <TabPane tab="Summary Table" key="1">
               <SamplesTable batchId={batchId} />
             </TabPane>
