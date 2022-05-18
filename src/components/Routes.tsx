@@ -55,14 +55,14 @@ export const Routes = (props: RoutesProps) => {
         path={`/${datasetsPath}`}
         exact
         render={() =>
-          isLoggedIn === true ? <Datasets /> : <Redirect to={{ pathname: `${datasetsPath}` }} />
+          isLoggedIn === true ? <Datasets /> : <Redirect to={{ pathname: '/login' }} />
         }
       />
       <Route
         path={`/${datasetsPath}/:datasetId`}
         exact
         render={() =>
-          isLoggedIn === true ? <DatasetPage /> : <Redirect to={{ pathname: `${datasetsPath}` }} />
+          isLoggedIn === true ? <DatasetPage /> : <Redirect to={{ pathname: '/login' }} />
         }
       />
       <Route
