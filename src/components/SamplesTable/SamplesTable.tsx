@@ -17,14 +17,14 @@ import { Loading } from '../Loading'
 import { ErrorPage } from 'pages/Error/ErrorPage'
 
 type SamplesProps = {
-  batch?: any
+  batchId?: any
 }
 
 const { Search } = Input
 const { Text } = Typography
 const { Paragraph } = Typography
 
-export const SamplesTable = ({ batch }: SamplesProps) => {
+export const SamplesTable = ({ batchId }: SamplesProps) => {
   const userContext = useContext(UserContext)
   const { permissions } = userContext
   const [filteredSamples, setFilteredSamples] = useState<any[]>([])
@@ -39,7 +39,7 @@ export const SamplesTable = ({ batch }: SamplesProps) => {
   const pageSize = 100
 
   useEffect(() => {
-    getSamples(userContext, pageSize, 0, batch?.batchId, searchValue, sortKey, sortDirection)
+    getSamples(userContext, pageSize, 0, batchId, searchValue, sortKey, sortDirection)
       .then((samples) => {
         setFilteredSamples(samples?.documents),
           setPageCount(samples?.document_count),
@@ -67,13 +67,11 @@ export const SamplesTable = ({ batch }: SamplesProps) => {
     const escapeInput = escapeRegExp(searchInput)
     setSearchValue(escapeInput)
     setCurrentPage(1)
-    getSamples(userContext, 0, 0, batch?.batchId, escapeInput, sortKey, sortDirection).then(
-      (samples) => {
-        setFilteredSamples(samples.documents),
-          setPageCount(samples.document_count),
-          includedSamples(samples?.documents)
-      }
-    )
+    getSamples(userContext, 0, 0, batchId, escapeInput, sortKey, sortDirection).then((samples) => {
+      setFilteredSamples(samples.documents),
+        setPageCount(samples.document_count),
+        includedSamples(samples?.documents)
+    })
   }
 
   const onTableChange = (data, filter, sorter) => {
@@ -83,7 +81,7 @@ export const SamplesTable = ({ batch }: SamplesProps) => {
       userContext,
       data.pageSize,
       data.current,
-      batch.batchId,
+      batchId,
       searchValue,
       sorter?.column?.key,
       sorter?.order
@@ -98,7 +96,7 @@ export const SamplesTable = ({ batch }: SamplesProps) => {
   }
 
   const onSelectAll = (data) => {
-    includeBatchSamples(batch.batchId, userContext, data)
+    includeBatchSamples(batchId, userContext, data)
   }
 
   const rowSelection = {
@@ -128,7 +126,7 @@ export const SamplesTable = ({ batch }: SamplesProps) => {
         userContext,
         pageSize,
         currentPage,
-        batch.batchId,
+        batchId,
         searchValue,
         sortKey,
         sortDirection
@@ -398,9 +396,7 @@ export const SamplesTable = ({ batch }: SamplesProps) => {
           <br />
           <i>Select a sample with the checkbox to include it in the comparison set</i>
           <Table
-            columns={columns.filter((column) =>
-              !batch.batchId ? column : column.key !== 'batch_id'
-            )}
+            columns={columns.filter((column) => (!batchId ? column : column.key !== 'batch_id'))}
             dataSource={filteredSamples}
             rowKey="sample_id"
             size="small"
@@ -408,7 +404,7 @@ export const SamplesTable = ({ batch }: SamplesProps) => {
             scroll={{ x: 1600, y: 600 }}
             rowSelection={{
               ...rowSelection,
-              hideSelectAll: batch.batchId ? false : true,
+              hideSelectAll: batchId ? false : true,
               onSelectAll: onSelectAll,
               onSelect: handleSelect,
             }}
