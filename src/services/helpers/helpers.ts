@@ -138,6 +138,16 @@ export const escapeRegExp = (input) => {
   return input.replace(/[^A-Za-z0-9 _]/g, '\\$&')
 }
 
+export const objectToString = (obj) => {
+  const string = JSON.stringify(obj).replace(/[{}"]/g, '').replace(/:/g, '=').replace(/,/g, '&')
+  return string
+}
+
+export const capitalizeFirstLetter = (str) => {
+  const string = str.replace(/_/g, ' ')
+  return string.charAt(0).toUpperCase() + string.slice(1)
+}
+
 export const createFileDownload = (response) => {
   const fileBlob: Blob = new Blob([response.data])
   const url = window.URL.createObjectURL(fileBlob)

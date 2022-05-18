@@ -52,6 +52,20 @@ const axiosPATCH = (endPoint, body) => {
   })
 }
 
+const axiosDatasetPATCH = (endPoint, body, { token, logout }: UserContext) => {
+  return new Promise((resolve, reject) => {
+    axios
+      .patch(endPoint, body, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          ContentType: 'application/x-www-form-urlencoded',
+        },
+      })
+      .then((response) => resolve(response.data))
+      .catch((error) => handleBackendError(error, reject, logout))
+  })
+}
+
 const axiosIncludePUT = (endPoint, { token, logout }: UserContext) => {
   const body = null
   return new Promise((resolve, reject) => {
@@ -368,4 +382,13 @@ export const postDataset = async (
 export const deleteDataset = async (datasetName: string, context: UserContext): Promise<any> => {
   const endPoint = `${REACT_APP_BACKEND_URL}/dataset/${datasetName}`
   return axiosDELETE(endPoint, datasetName, context)
+}
+
+export const editDataset = async (
+  datasetName: string,
+  editedDataset: string,
+  context: UserContext
+): Promise<any> => {
+  const endPoint = `${REACT_APP_BACKEND_URL}/dataset/${datasetName}`
+  return axiosDatasetPATCH(endPoint, editedDataset, context)
 }
