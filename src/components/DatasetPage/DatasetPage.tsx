@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Button, Card, Descriptions, Form, Input, InputNumber, Typography } from 'antd'
+import { Button, Card, Descriptions, Form, Input, Typography } from 'antd'
 import { Loading } from 'components/Loading'
 import { useLocation } from 'react-router-dom'
 import { editDataset, getDataset } from 'services/StatinaApi'
@@ -10,18 +10,22 @@ import {
   objectToString,
   SuccessNotification,
 } from 'services/helpers/helpers'
-import { Dataset } from 'services/interfaces'
+import { BasicDataset } from 'services/interfaces'
 
 export function DatasetPage() {
   const [edit, setEdit] = useState<boolean>(false)
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const [error, setError] = useState<any>()
-  const [dataset, setDataset] = useState<Dataset>()
+  const [dataset, setDataset] = useState<BasicDataset>()
   const { pathname } = useLocation()
   const userContext = useContext(UserContext)
+  const { permissions } = userContext
   const datasetName = pathname.substring(pathname.lastIndexOf('/') + 1, pathname.length)
   const [form] = Form.useForm()
   const { Title } = Typography
+
+  type Dataset = Array<keyof BasicDataset>
+  const datasetKeys: Dataset = Object.keys(new BasicDataset()) as Dataset
 
   useEffect(() => {
     getDataset(userContext, datasetName)
@@ -77,54 +81,39 @@ export function DatasetPage() {
                 style={{ width: '100%' }}
                 extra={
                   <>
-                    <Form.Item style={edit ? { display: 'none' } : { margin: 0 }}>
-                      <Button htmlType="button" onClick={editButton} type="primary">
-                        Edit
-                      </Button>
-                    </Form.Item>
-                    <Form.Item style={!edit ? { display: 'none' } : { margin: 0 }}>
-                      <Button htmlType="submit" type="primary">
-                        Save
-                      </Button>
-                    </Form.Item>
+                    {permissions?.includes('RW') && (
+                      <>
+                        <Form.Item style={edit ? { display: 'none' } : { margin: 0 }}>
+                          <Button htmlType="button" onClick={editButton} type="primary">
+                            Edit
+                          </Button>
+                        </Form.Item>
+                        <Form.Item style={!edit ? { display: 'none' } : { margin: 0 }}>
+                          <Button htmlType="submit" type="primary">
+                            Save
+                          </Button>
+                        </Form.Item>
+                      </>
+                    )}
                   </>
                 }
               >
                 {dataset &&
-                  Object.keys(dataset)
-                    .reverse()
-                    .map(
-                      (entry) =>
-                        entry !== 'name' && (
-                          <Descriptions.Item
-                            key={entry}
-                            label={capitalizeFirstLetter(entry)}
-                            span={entry === 'comment' ? 3 : 1}
-                          >
-                            <Form.Item name={entry}>
-                              {entry === 'comment' ? (
-                                <Input
-                                  disabled={!edit}
-                                  bordered={edit}
-                                  style={{
-                                    color: '#000000d9',
-                                    backgroundColor: '#fff',
-                                  }}
-                                />
-                              ) : (
-                                <InputNumber
-                                  disabled={!edit}
-                                  bordered={edit}
-                                  style={{
-                                    color: '#000000d9',
-                                    backgroundColor: '#fff',
-                                  }}
-                                />
-                              )}
-                            </Form.Item>
-                          </Descriptions.Item>
-                        )
-                    )}
+                  datasetKeys.reverse().map((entry) => (
+                    <Descriptions.Item key={entry} label={capitalizeFirstLetter(entry)}>
+                      <Form.Item name={entry}>
+                        <Input
+                          disabled={!edit}
+                          bordered={edit}
+                          type={typeof dataset[entry]}
+                          style={{
+                            color: '#000000d9',
+                            backgroundColor: '#fff',
+                          }}
+                        />
+                      </Form.Item>
+                    </Descriptions.Item>
+                  ))}
               </Descriptions>
             </Form>
           </Card>
