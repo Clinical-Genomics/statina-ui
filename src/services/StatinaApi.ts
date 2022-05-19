@@ -1,5 +1,5 @@
 import { createParamURL, handleBackendError } from './helpers/helpers'
-import { Login, RegisterUser } from './interfaces'
+import { Login, Dataset, RegisterUser } from './interfaces'
 import { UserContext } from './userContext'
 import qs from 'qs'
 
@@ -52,6 +52,20 @@ const axiosPATCH = (endPoint, body) => {
   })
 }
 
+const axiosDatasetPATCH = (endPoint, body, { token, logout }: UserContext) => {
+  return new Promise((resolve, reject) => {
+    axios
+      .patch(endPoint, body, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          ContentType: 'application/x-www-form-urlencoded',
+        },
+      })
+      .then((response) => resolve(response.data))
+      .catch((error) => handleBackendError(error, reject, logout))
+  })
+}
+
 const axiosIncludePUT = (endPoint, { token, logout }: UserContext) => {
   const body = null
   return new Promise((resolve, reject) => {
@@ -82,12 +96,13 @@ const axiosIncludePATCH = (endPoint, { token, logout }: UserContext) => {
   })
 }
 
-const axiosPostToken = (endPoint, formInput) => {
+const axiosPostToken = (endPoint, formInput, context?: UserContext) => {
   return new Promise((resolve, reject) => {
     const params = new URLSearchParams(formInput)
     axios
       .post(endPoint, params, {
         headers: {
+          Authorization: `Bearer ${context?.token}`,
           'Content-Type': 'application/x-www-form-urlencoded',
         },
       })
@@ -240,6 +255,7 @@ export const includeSample = async (
   const endPoint = `${REACT_APP_BACKEND_URL}/sample/${sampleId}/include?include=${include}`
   return axiosIncludePUT(endPoint, context)
 }
+
 export const editBatchComment = async (
   batchId: string,
   comment,
@@ -250,6 +266,21 @@ export const editBatchComment = async (
     endPoint,
     qs.stringify({
       comment: comment,
+    }),
+    context
+  )
+}
+
+export const editBatchDataset = async (
+  batchId: string,
+  dataset,
+  context: UserContext
+): Promise<any> => {
+  const endPoint = `${REACT_APP_BACKEND_URL}/batch/${batchId}/dataset`
+  return axiosPUT(
+    endPoint,
+    qs.stringify({
+      dataset: dataset,
     }),
     context
   )
@@ -317,4 +348,47 @@ export const validateUserEmail = async (
 ): Promise<any> => {
   const endPoint = `${REACT_APP_BACKEND_URL}/user/${username}/validate?verification_hex=${verificationhex}`
   return axiosPATCH(endPoint, username)
+}
+
+export const getDatasets = async (
+  context: UserContext,
+  queryString,
+  page: number,
+  pageSize: number
+): Promise<any> => {
+  const endPoint = `${REACT_APP_BACKEND_URL}/datasets?query_string=${queryString}&page_size=${pageSize}&page_num=${page}`
+  return axiosGET(endPoint, context)
+}
+
+export const getDataset = async (context: UserContext, datasetName: string): Promise<any> => {
+  const endPoint = `${REACT_APP_BACKEND_URL}/dataset/${datasetName}`
+  return axiosGET(endPoint, context)
+}
+
+export const getDatasetOptions = async (context: UserContext): Promise<any> => {
+  const endPoint = `${REACT_APP_BACKEND_URL}/dataset_options`
+  return axiosGET(endPoint, context)
+}
+
+export const postDataset = async (
+  name: string,
+  formInput: Dataset,
+  context: UserContext
+): Promise<any> => {
+  const endPoint = `${REACT_APP_BACKEND_URL}/dataset/${name}`
+  return axiosPostToken(endPoint, formInput, context)
+}
+
+export const deleteDataset = async (datasetName: string, context: UserContext): Promise<any> => {
+  const endPoint = `${REACT_APP_BACKEND_URL}/dataset/${datasetName}`
+  return axiosDELETE(endPoint, datasetName, context)
+}
+
+export const editDataset = async (
+  datasetName: string,
+  editedDataset: string,
+  context: UserContext
+): Promise<any> => {
+  const endPoint = `${REACT_APP_BACKEND_URL}/dataset/${datasetName}`
+  return axiosDatasetPATCH(endPoint, editedDataset, context)
 }

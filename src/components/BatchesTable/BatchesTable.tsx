@@ -9,6 +9,7 @@ import { ExportCSV } from 'components/ExportCSV/ExportCSV'
 import { BatchesTablePDF } from 'components/ExportPDF/BatchesTablePDF'
 import { DownOutlined, DeleteTwoTone } from '@ant-design/icons'
 import { ErrorPage } from 'pages/Error/ErrorPage'
+import { datasetsPath } from '../Routes'
 
 const { Search } = Input
 const { Text } = Typography
@@ -80,6 +81,12 @@ export const BatchesTable = () => {
       title: 'Flowcell ID',
       dataIndex: 'flowcell',
       key: 'flowcell',
+    },
+    {
+      title: 'Dataset',
+      dataIndex: 'dataset',
+      key: 'dataset',
+      render: (dataset: string) => <Link to={`/${datasetsPath}/${dataset}`}>{dataset}</Link>,
     },
     {
       title: 'Delete Batch',

@@ -1,9 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Card, Tabs, Row, Col, Typography } from 'antd'
-import { useLocation } from 'react-router-dom'
+import { Card, Tabs, Row, Col, Typography, Select } from 'antd'
+import { useLocation, Link } from 'react-router-dom'
 import { ZscoreGraph } from '../../components/ZscoreGraph/ZscoreGraph'
 import { BatchTablePDF } from '../../components/ExportPDF/BatchTablePDF'
-import { editBatchComment, getBatch } from '../../services/StatinaApi'
+import {
+  editBatchComment,
+  editBatchDataset,
+  getBatch,
+  getDatasetOptions,
+} from '../../services/StatinaApi'
 import { UserContext } from '../../services/userContext'
 import { SuccessNotification } from '../../services/helpers/helpers'
 import { Batch } from '../../services/interfaces'
@@ -16,6 +21,7 @@ import { SamplesTable } from 'components/SamplesTable/SamplesTable'
 import { BatchDownloadFile } from '../../components/ExportPDF/BatchDownloadFiles'
 import { batchDownloadFileTypes } from '../../services/helpers/constants'
 import { ErrorPage } from 'pages/Error/ErrorPage'
+import { datasetsPath } from '../../components/Routes'
 
 const { TabPane } = Tabs
 const { Paragraph, Title, Text } = Typography
@@ -24,12 +30,32 @@ export const BatchPage = () => {
   const userContext = useContext(UserContext)
   const { permissions } = userContext
   const [batch, setBatch] = useState<Batch | null>()
+  const [datasets, setDatasets] = useState<string[]>()
+  const [selectedDataset, setSelectedDataset] = useState('')
   const { pathname } = useLocation()
   const batchId = pathname.substring(pathname.lastIndexOf('/') + 1, pathname.length)
   const [isLoading, setIsLoading] = React.useState<boolean>(true)
   const [error, setError] = useState<any>()
 
+  const { Option } = Select
+
   useEffect(() => {
+    getDatasetOptions(userContext).then((response) => setDatasets(response))
+    getBatchInfo()
+  }, [batchId])
+
+  const editDataset = (dataset) => {
+    editBatchDataset(batchId, dataset, userContext).then(() => {
+      setSelectedDataset(dataset)
+      getBatchInfo()
+      SuccessNotification({
+        type: 'success',
+        message: 'Dataset updated',
+      })
+    })
+  }
+
+  const getBatchInfo = () => {
     getBatch(batchId, userContext)
       .then((batch) => {
         setBatch(batch)
@@ -38,7 +64,7 @@ export const BatchPage = () => {
       .catch((error) => {
         setIsLoading(false), setError(error)
       })
-  }, [batchId])
+  }
 
   const updateComment = (comment) => {
     editBatchComment(batchId, comment.length > 0 ? comment : ' ', userContext).then(() => {
@@ -61,7 +87,18 @@ export const BatchPage = () => {
           <Row justify={'space-between'}>
             <Col style={{ marginBottom: 15 }}>
               <Title>{batchId}</Title>
-              <Text strong>Sequencing date:</Text> {batch?.sequencing_date}
+              <Text strong>Dataset:</Text>{' '}
+              {datasets && permissions?.includes('RW') ? (
+                <Select defaultValue={batch?.dataset} style={{ width: 120 }} onChange={editDataset}>
+                  {datasets.map((set) => (
+                    <Option key={set} value={set}>
+                      {set}
+                    </Option>
+                  ))}
+                </Select>
+              ) : (
+                <Link to={`/${datasetsPath}/${batch?.dataset}`}>{batch?.dataset}</Link>
+              )}
             </Col>
             <Col>
               <div className={styles.downloadButtons}>
@@ -71,6 +108,9 @@ export const BatchPage = () => {
                 ))}
               </div>
             </Col>
+          </Row>
+          <Row>
+            <Text strong>Sequencing date:</Text> {batch?.sequencing_date}
           </Row>
           <Row>
             <Text strong>{`Comment:\u00A0`}</Text>
@@ -87,7 +127,7 @@ export const BatchPage = () => {
               <p>{batch?.comment}</p>
             )}
           </Row>
-          <Tabs type="card">
+          <Tabs type="card" key={selectedDataset}>
             <TabPane tab="Summary Table" key="1">
               <SamplesTable batchId={batchId} />
             </TabPane>

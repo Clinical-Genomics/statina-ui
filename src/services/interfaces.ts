@@ -14,6 +14,7 @@ export interface Chromosomes {
 
 export interface Batch {
   batch_id: string
+  dataset: string
   result_file: string
   multiqc_report: string
   segmental_calls: string
@@ -81,6 +82,29 @@ export interface RegisterUser {
   password: string
   username: string
   email: string
+}
+
+export class BasicDataset {
+  comment!: string
+  fetal_fraction_preface!: number
+  fetal_fraction_y_for_trisomy!: number
+  fetal_fraction_y_max!: number
+  fetal_fraction_y_min!: number
+  fetal_fraction_XXX!: number
+  fetal_fraction_X0!: number
+  y_axis_min!: number
+  y_axis_max!: number
+  k_upper!: number
+  k_lower!: number
+  m_lower!: number
+  m_upper!: number
+  trisomy_soft_max!: number
+  trisomy_hard_max!: number
+  trisomy_hard_min!: number
+}
+
+export interface Dataset extends BasicDataset {
+  name: string
 }
 
 export interface GrahCromosomeData {
