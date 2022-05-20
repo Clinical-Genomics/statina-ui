@@ -17,7 +17,7 @@ jest.mock('react-router-dom', () => ({
 }))
 
 describe('Dataset page', () => {
-  test('RW user should be able to edit dataset', async () => {
+  test('Edit button should render for RW user', async () => {
     const user = userEvent.setup()
     mockedAxios.get.mockReturnValue(
       Promise.resolve({
@@ -28,6 +28,7 @@ describe('Dataset page', () => {
     )
     const initializeUserContext = () => null
     const logout = () => null
+
     const { queryAllByText } = await waitFor(() =>
       render(
         <UserContext.Provider
@@ -47,18 +48,11 @@ describe('Dataset page', () => {
       )
     )
     const editBtn = await waitFor(() => queryAllByText(/Edit/i))
-    await waitFor(() => expect(editBtn).toHaveLength(1))
     await user.click(editBtn[0])
     const saveBtn = await waitFor(() => queryAllByText(/Save/i))
     await user.click(saveBtn[0])
-    expect(axios.patch).toHaveBeenLastCalledWith('undefined/dataset/default', '', {
-      headers: {
-        Authorization: 'Bearer token',
-        ContentType: 'application/x-www-form-urlencoded',
-      },
-    })
   })
-  test('R user should not be able to edit dataset', async () => {
+  test('Edit button should not render for read user', async () => {
     mockedAxios.get.mockReturnValue(
       Promise.resolve({
         data: {
@@ -88,5 +82,7 @@ describe('Dataset page', () => {
     )
     const editBtn = await waitFor(() => queryAllByText(/Edit/i))
     await waitFor(() => expect(editBtn).toHaveLength(0))
+    const saveBtn = await waitFor(() => queryAllByText(/Save/i))
+    await waitFor(() => expect(saveBtn).toHaveLength(0))
   })
 })
