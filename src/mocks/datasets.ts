@@ -437,23 +437,3 @@ export const mockDatasets = [
     trisomy_hard_min: -8.0,
   },
 ]
-
-export const mockDataset = {
-  name: 'default',
-  comment: 'Base dataset',
-  fetal_fraction_preface: 4.0,
-  fetal_fraction_y_for_trisomy: 4.0,
-  fetal_fraction_y_max: 3.0,
-  fetal_fraction_y_min: 0.6,
-  fetal_fraction_XXX: -1.0,
-  fetal_fraction_X0: 3.4,
-  y_axis_min: -1.0,
-  y_axis_max: 50.0,
-  k_upper: 0.9809,
-  k_lower: 0.9799,
-  m_lower: -4.3987,
-  m_upper: 6.5958,
-  trisomy_soft_max: 3.0,
-  trisomy_hard_max: 4.0,
-  trisomy_hard_min: -8.0,
-}

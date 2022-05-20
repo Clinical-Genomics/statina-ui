@@ -1,7 +1,7 @@
 import React from 'react'
 import { render, waitFor } from '@testing-library/react'
 import { DatasetPage } from './DatasetPage'
-import { mockDataset } from 'mocks/datasets'
+import { mockDatasets } from 'mocks/datasets'
 import { MemoryRouter } from 'react-router-dom'
 import { UserContext } from 'services/userContext'
 import axios from 'axios'
@@ -22,7 +22,7 @@ describe('Dataset page', () => {
     mockedAxios.get.mockReturnValue(
       Promise.resolve({
         data: {
-          dataset: mockDataset,
+          dataset: mockDatasets[0],
         },
       })
     )
@@ -56,7 +56,7 @@ describe('Dataset page', () => {
     mockedAxios.get.mockReturnValue(
       Promise.resolve({
         data: {
-          dataset: mockDataset,
+          dataset: mockDatasets[0],
         },
       })
     )
