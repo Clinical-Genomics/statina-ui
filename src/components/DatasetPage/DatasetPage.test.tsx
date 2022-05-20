@@ -5,7 +5,6 @@ import { mockDatasets } from 'mocks/datasets'
 import { MemoryRouter } from 'react-router-dom'
 import { UserContext } from 'services/userContext'
 import axios from 'axios'
-import userEvent from '@testing-library/user-event'
 
 jest.mock('axios')
 const mockedAxios = axios as jest.Mocked<typeof axios>
