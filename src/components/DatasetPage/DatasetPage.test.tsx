@@ -18,7 +18,6 @@ jest.mock('react-router-dom', () => ({
 
 describe('Dataset page', () => {
   test('Edit button should render for RW user', async () => {
-    const user = userEvent.setup()
     mockedAxios.get.mockReturnValue(
       Promise.resolve({
         data: {
@@ -48,9 +47,9 @@ describe('Dataset page', () => {
       )
     )
     const editBtn = await waitFor(() => queryAllByText(/Edit/i))
-    await user.click(editBtn[0])
+    await waitFor(() => expect(editBtn).toHaveLength(1))
     const saveBtn = await waitFor(() => queryAllByText(/Save/i))
-    await user.click(saveBtn[0])
+    await waitFor(() => expect(saveBtn).toHaveLength(1))
   })
   test('Edit button should not render for read user', async () => {
     mockedAxios.get.mockReturnValue(
