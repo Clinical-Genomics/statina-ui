@@ -53,7 +53,7 @@ describe('Dataset page', () => {
     await waitFor(() => expect(saveBtn[0]).toBeVisible())
     await waitFor(() => expect(editBtn[0]).not.toBeVisible())
   })
-  test('Call to backend should be correct when save dataset', async () => {
+  test('Call to backend should be correct when edit the comment and save', async () => {
     const user = userEvent.setup()
     mockedAxios.get.mockReturnValue(
       Promise.resolve({
