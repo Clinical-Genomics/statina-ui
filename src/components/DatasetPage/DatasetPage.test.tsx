@@ -52,7 +52,6 @@ describe('Dataset page', () => {
     await user.click(editBtn[0])
     await waitFor(() => expect(saveBtn[0]).toBeVisible())
     await waitFor(() => expect(editBtn[0]).not.toBeVisible())
-    await user.click(saveBtn[0])
   })
   test('Call to backend should be correct when save dataset', async () => {
     const user = userEvent.setup()
