@@ -1,5 +1,5 @@
 import React from 'react'
-import { queryByDisplayValue, render, waitFor } from '@testing-library/react'
+import { render, waitFor } from '@testing-library/react'
 import { DatasetPage } from './DatasetPage'
 import { mockDatasets } from 'mocks/datasets'
 import { MemoryRouter } from 'react-router-dom'
