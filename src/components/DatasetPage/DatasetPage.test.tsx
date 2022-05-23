@@ -17,7 +17,7 @@ jest.mock('react-router-dom', () => ({
 }))
 
 describe('Dataset page', () => {
-  test('Edit button should render for RW user', async () => {
+  test('Edit/Save button should render for RW user', async () => {
     const user = userEvent.setup()
     mockedAxios.get.mockReturnValue(
       Promise.resolve({
@@ -54,7 +54,7 @@ describe('Dataset page', () => {
     await waitFor(() => expect(editBtn[0]).not.toBeVisible())
     await user.click(saveBtn[0])
   })
-  test('RW user should be able to edit dataset ', async () => {
+  test('Call to backend should be correct when save dataset', async () => {
     const user = userEvent.setup()
     mockedAxios.get.mockReturnValue(
       Promise.resolve({
