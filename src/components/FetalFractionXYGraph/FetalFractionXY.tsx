@@ -4,6 +4,7 @@ import { getFetalFractionXYGraph } from '../../services/StatinaApi'
 import { UserContext } from '../../services/userContext'
 import { FetalFractionXYGraph } from '../../services/interfaces'
 import { Loading } from '../Loading'
+import { Checkbox } from 'antd'
 
 type FetalFractionXYGraphProps = {
   batchId: string
@@ -79,6 +80,7 @@ export const buildFFXYGraphData = (response: FetalFractionXYGraph): ScatterData[
 
 export const buildFFXYGraphLayout = (
   response: FetalFractionXYGraph,
+  showOutliers: boolean,
   height = fFXYGraphHeight,
   width = fFXYGraphWidth
 ): Layout => {
@@ -89,7 +91,7 @@ export const buildFFXYGraphLayout = (
     legend: { hovermode: 'closest', orientation: 'h' },
     hovermode: 'closest',
     xaxis: {
-      range: [response.max_x, response.min_x],
+      range: showOutliers ? [response.max_x, response.min_x] : [response.max_x, response.min_x],
       showline: true,
       zeroline: false,
       linecolor: '#636363',
@@ -114,16 +116,27 @@ export const FetalFractionXY = ({ batchId }: FetalFractionXYGraphProps) => {
   const [data, setData] = useState<ScatterData[]>()
   const [layout, setLayout] = useState<Layout>()
   const [isLoading, setIsLoading] = React.useState<boolean>(true)
+  const [showOutliers, setShowOutliers] = useState<boolean>(false)
 
   useEffect(() => {
     getFetalFractionXYGraph(batchId, userContext)
       .then((response: FetalFractionXYGraph) => {
         setData(buildFFXYGraphData(response))
-        setLayout(buildFFXYGraphLayout(response))
+        setLayout(buildFFXYGraphLayout(response, showOutliers))
         setIsLoading(false)
       })
       .catch(() => setIsLoading(false))
   }, [])
 
-  return isLoading ? <Loading /> : <Plot data={data} layout={layout} />
+  return isLoading ? (
+    <Loading />
+  ) : (
+    <>
+      <Checkbox onChange={(e) => setShowOutliers(e.target.checked)}>
+        Resize plot to display FFX outliers
+      </Checkbox>
+      <br />
+      <Plot data={data} layout={layout} />
+    </>
+  )
 }
