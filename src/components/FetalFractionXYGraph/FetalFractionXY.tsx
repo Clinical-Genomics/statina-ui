@@ -5,6 +5,7 @@ import { UserContext } from '../../services/userContext'
 import { FetalFractionXYGraph } from '../../services/interfaces'
 import { Loading } from '../Loading'
 import { Checkbox } from 'antd'
+import { mockFetalFractionXY } from '../../mocks/fetalFractionXY'
 
 type FetalFractionXYGraphProps = {
   batchId: string
@@ -91,7 +92,7 @@ export const buildFFXYGraphLayout = (
     legend: { hovermode: 'closest', orientation: 'h' },
     hovermode: 'closest',
     xaxis: {
-      range: showOutliers ? [response.max_x, response.min_x] : [response.max_x, response.min_x],
+      range: showOutliers ? [] : [response.max_x, response.min_x],
       showline: true,
       zeroline: false,
       linecolor: '#636363',
@@ -121,22 +122,23 @@ export const FetalFractionXY = ({ batchId }: FetalFractionXYGraphProps) => {
   useEffect(() => {
     getFetalFractionXYGraph(batchId, userContext)
       .then((response: FetalFractionXYGraph) => {
-        setData(buildFFXYGraphData(response))
-        setLayout(buildFFXYGraphLayout(response, showOutliers))
+        setData(buildFFXYGraphData(mockFetalFractionXY))
+        setLayout(buildFFXYGraphLayout(mockFetalFractionXY, showOutliers))
         setIsLoading(false)
       })
       .catch(() => setIsLoading(false))
   }, [])
 
-  return isLoading ? (
-    <Loading />
-  ) : (
+  const reRenderPlot = (e) => {
+    setIsLoading(true)
+    setShowOutliers(e.target.checked)
+    setIsLoading(false)
+  }
+
+  return (
     <>
-      <Checkbox onChange={(e) => setShowOutliers(e.target.checked)}>
-        Resize plot to display FFX outliers
-      </Checkbox>
-      <br />
-      <Plot data={data} layout={layout} />
+      <Checkbox onChange={(e) => reRenderPlot(e)}>Resize plot to display FFX outliers</Checkbox>
+      {!isLoading && <Plot data={data} layout={layout}>{`${showOutliers}eheh`}</Plot>}
     </>
   )
 }

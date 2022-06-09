@@ -3,6 +3,7 @@
 /public
 /src/assets
 /coverage
+/src/mocks
 *.css
 *.snap
 *.less
