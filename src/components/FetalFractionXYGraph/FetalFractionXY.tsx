@@ -79,17 +79,21 @@ export const buildFFXYGraphData = (response: FetalFractionXYGraph): ScatterData[
 
 export const buildFFXYGraphLayout = (
   response: FetalFractionXYGraph,
+  showOutliers: boolean,
+  title: string,
   height = fFXYGraphHeight,
   width = fFXYGraphWidth
 ): Layout => {
   return {
     annotations: [],
+    title: title,
     height: height,
     width: width,
     legend: { hovermode: 'closest', orientation: 'h' },
     hovermode: 'closest',
     xaxis: {
-      range: [response.max_x, response.min_x],
+      range: showOutliers ? null : [response.max_x, response.min_x],
+      autorange: showOutliers ? 'reversed' : null,
       showline: true,
       zeroline: false,
       linecolor: '#636363',
@@ -112,6 +116,7 @@ export const buildFFXYGraphLayout = (
 export const FetalFractionXY = ({ batchId }: FetalFractionXYGraphProps) => {
   const userContext = useContext(UserContext)
   const [data, setData] = useState<ScatterData[]>()
+  const [outliersLayout, setOutliersLayout] = useState<Layout>()
   const [layout, setLayout] = useState<Layout>()
   const [isLoading, setIsLoading] = React.useState<boolean>(true)
 
@@ -119,11 +124,19 @@ export const FetalFractionXY = ({ batchId }: FetalFractionXYGraphProps) => {
     getFetalFractionXYGraph(batchId, userContext)
       .then((response: FetalFractionXYGraph) => {
         setData(buildFFXYGraphData(response))
-        setLayout(buildFFXYGraphLayout(response))
+        setLayout(buildFFXYGraphLayout(response, false, 'Default range'))
+        setOutliersLayout(buildFFXYGraphLayout(response, true, 'Outliers range'))
         setIsLoading(false)
       })
       .catch(() => setIsLoading(false))
   }, [])
 
-  return isLoading ? <Loading /> : <Plot data={data} layout={layout} />
+  return isLoading ? (
+    <Loading />
+  ) : (
+    <>
+      <Plot data={data} layout={layout} />
+      <Plot data={data} layout={outliersLayout} />
+    </>
+  )
 }
