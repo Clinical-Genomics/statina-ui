@@ -165,21 +165,19 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
       key: 'Zscore_13',
       width: 70,
       sorter: true,
-      render(score, sample) {
+      onCell: (sample) => {
         return {
-          props: {
-            style: {
-              background:
-                sample.warnings.z_score_13 === 'danger'
-                  ? red[1]
-                  : sample.warnings.z_score_13 === 'warning'
-                  ? gold[1]
-                  : null,
-            },
+          style: {
+            background:
+              sample.warnings.z_score_13 === 'danger'
+                ? red[1]
+                : sample.warnings.z_score_13 === 'warning'
+                ? gold[1]
+                : null,
           },
-          children: <div>{score['13']}</div>,
         }
       },
+      render: (score) => <div>{score['13']}</div>,
     },
     {
       title: 'Z_18',
@@ -187,21 +185,19 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
       key: 'Zscore_18',
       width: 70,
       sorter: true,
-      render(score, sample) {
+      onCell: (sample) => {
         return {
-          props: {
-            style: {
-              background:
-                sample.warnings.z_score_18 === 'danger'
-                  ? red[1]
-                  : sample.warnings.z_score_18 === 'warning'
-                  ? gold[1]
-                  : null,
-            },
+          style: {
+            background:
+              sample.warnings.z_score_18 === 'danger'
+                ? red[1]
+                : sample.warnings.z_score_18 === 'warning'
+                ? gold[1]
+                : null,
           },
-          children: <div>{score['18']}</div>,
         }
       },
+      render: (score) => <div>{score['18']}</div>,
     },
     {
       title: 'Z_21',
@@ -209,21 +205,19 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
       key: 'Zscore_21',
       sorter: true,
       width: 70,
-      render(score, sample) {
+      onCell: (sample) => {
         return {
-          props: {
-            style: {
-              background:
-                sample.warnings.z_score_21 === 'danger'
-                  ? red[1]
-                  : sample.warnings.z_score_21 === 'warning'
-                  ? gold[1]
-                  : null,
-            },
+          style: {
+            background:
+              sample.warnings.z_score_21 === 'danger'
+                ? red[1]
+                : sample.warnings.z_score_21 === 'warning'
+                ? gold[1]
+                : null,
           },
-          children: <div>{score['21']}</div>,
         }
       },
+      render: (score) => <div>{score['21']}</div>,
     },
     {
       title: 'FFPF',
@@ -231,21 +225,19 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
       key: 'FF_Formatted',
       sorter: true,
       width: 63,
-      render(fetalFraction, sample) {
+      onCell: (sample) => {
         return {
-          props: {
-            style: {
-              background:
-                sample.warnings.fetal_fraction_preface === 'danger'
-                  ? red[1]
-                  : sample.warnings.fetal_fraction_preface === 'warning'
-                  ? gold[1]
-                  : null,
-            },
+          style: {
+            background:
+              sample.warnings.fetal_fraction_preface === 'danger'
+                ? red[1]
+                : sample.warnings.fetal_fraction_preface === 'warning'
+                ? gold[1]
+                : null,
           },
-          children: <div>{fetalFraction.preface}</div>,
         }
       },
+      render: (fetalFraction) => <div>{fetalFraction.preface}</div>,
     },
     {
       title: 'FFX',
@@ -253,11 +245,19 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
       key: 'FFX',
       width: 63,
       sorter: true,
-      render(fetalFraction) {
+      onCell: (sample) => {
         return {
-          children: <div>{fetalFraction.x}</div>,
+          style: {
+            background:
+              sample.warnings.fetal_fraction_x === 'danger'
+                ? red[1]
+                : sample.warnings.fetal_fraction_x === 'warning'
+                ? gold[1]
+                : null,
+          },
         }
       },
+      render: (fetalFraction) => <div>{fetalFraction.x}</div>,
     },
     {
       title: 'FFY',
@@ -265,21 +265,19 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
       key: 'FFY',
       width: 63,
       sorter: true,
-      render(fetalFraction, sample) {
+      onCell: (sample) => {
         return {
-          props: {
-            style: {
-              background:
-                sample.warnings.fetal_fraction_y === 'danger'
-                  ? red[1]
-                  : sample.warnings.fetal_fraction_y === 'warning'
-                  ? gold[1]
-                  : null,
-            },
+          style: {
+            background:
+              sample.warnings.fetal_fraction_y === 'danger'
+                ? red[1]
+                : sample.warnings.fetal_fraction_y === 'warning'
+                ? gold[1]
+                : null,
           },
-          children: <div>{fetalFraction.y}</div>,
         }
       },
+      render: (fetalFraction) => <div>{fetalFraction.y}</div>,
     },
     {
       title: 'Sex',
