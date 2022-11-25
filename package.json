@@ -99,6 +99,7 @@
     "eventsource": "1.1.1",
     "ejs": "3.1.7",
     "shell-quote": "1.7.3",
-    "vm2": "3.9.11"
+    "vm2": "3.9.11",
+    "loader-utils": "2.0.4"
   }
 }
