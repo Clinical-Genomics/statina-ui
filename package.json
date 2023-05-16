@@ -32,9 +32,9 @@
     "xlsx": "https://cdn.sheetjs.com/xlsx-0.19.3/xlsx-0.19.3.tgz"
   },
   "scripts": {
-    "start": "craco --max_old_space_size=120096 start",
-    "build": "craco --max_old_space_size=120096 build",
-    "test": "craco test",
+    "start": "craco --max_old_space_size=4096 start",
+    "build": "craco --max_old_space_size=4096 build",
+    "test": "craco --max_old_space_size=4096 test",
     "coverage": "craco test --coverage --watchAll",
     "lint": "eslint 'src/**'"
   },
