@@ -29,7 +29,7 @@
     "stylelint-config-standard": "^22.0.0",
     "typescript": "~3.8.2",
     "universal-cookie": "^4.0.4",
-    "xlsx": "^0.17.2"
+    "xlsx": "^0.18.5"
   },
   "scripts": {
     "start": "craco --max_old_space_size=4096 start",
@@ -81,7 +81,7 @@
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-react": "^7.21.5",
     "eslint-plugin-react-hooks": "^1.7.0",
-    "firebase-tools": "^11.2.0",
+    "firebase-tools": "^12.0.0",
     "prettier": "^2.1.1",
     "raw.macro": "^0.4.2",
     "react-markdown": "^6.0.2"
@@ -99,7 +99,7 @@
     "eventsource": "1.1.1",
     "ejs": "3.1.7",
     "shell-quote": "1.7.3",
-    "vm2": "3.9.11",
+    "vm2": "3.9.18",
     "loader-utils": "2.0.4"
   }
 }
