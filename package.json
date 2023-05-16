@@ -33,7 +33,7 @@
   },
   "scripts": {
     "start": "craco --max_old_space_size=4096 start",
-    "build": "craco --max_old_space_size=4096 build",
+    "build": "craco --max_old_space_size=4096 --openssl-legacy-provider build",
     "test": "craco --max_old_space_size=4096 test",
     "coverage": "craco test --coverage --watchAll",
     "lint": "eslint 'src/**'"
