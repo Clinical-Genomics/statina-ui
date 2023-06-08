@@ -3,13 +3,32 @@ import ReactDOM from 'react-dom'
 import { App } from './App'
 import * as serviceWorker from './serviceWorker'
 import { BrowserRouter } from 'react-router-dom'
+import { ConfigProvider } from 'antd'
+import { setTwoToneColor } from '@ant-design/icons'
+
+setTwoToneColor('#16a4f2')
 
 ReactDOM.render(
-  <BrowserRouter>
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
-  </BrowserRouter>,
+  <ConfigProvider
+    theme={{
+      token: {
+        colorPrimary: '#43C59E',
+        colorLink: '#16a4f2',
+      },
+      components: {
+        Menu: { itemBg: '#14453d', horizontalItemHoverBg: '#43C59E' },
+        Layout: {
+          colorBgHeader: '#14453d',
+        },
+      },
+    }}
+  >
+    <BrowserRouter>
+      <React.StrictMode>
+        <App />
+      </React.StrictMode>
+    </BrowserRouter>
+  </ConfigProvider>,
   document.getElementById('root')
 )
 
