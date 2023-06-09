@@ -6,7 +6,7 @@ import { BrowserRouter } from 'react-router-dom'
 import { ConfigProvider } from 'antd'
 import { setTwoToneColor } from '@ant-design/icons'
 
-setTwoToneColor('#16a4f2')
+setTwoToneColor('#16a4f2') // set icons color
 
 ReactDOM.render(
   <ConfigProvider
