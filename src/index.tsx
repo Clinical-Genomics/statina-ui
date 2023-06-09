@@ -14,6 +14,7 @@ ReactDOM.render(
       token: {
         colorPrimary: '#43C59E',
         colorLink: '#16a4f2',
+        colorTextSecondary: '#000000D9',
       },
       components: {
         Menu: { itemBg: '#14453d', horizontalItemHoverBg: '#43C59E' },
