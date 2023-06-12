@@ -38,6 +38,8 @@ export const App = () => {
       })
   }, [])
 
+  console.log('test-node-version')
+
   const initializeUserContext = (user) => {
     setToken(user?.access_token)
     setUser(user)
