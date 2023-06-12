@@ -24,12 +24,7 @@ export const RegisterModal = () => {
   return (
     <>
       <Button onClick={showModal}>Create new account</Button>
-      <Modal
-        title="Create new account"
-        visible={isModalVisible}
-        footer={null}
-        onCancel={handleCancel}
-      >
+      <Modal title="Create new account" open={isModalVisible} footer={null} onCancel={handleCancel}>
         {!isRegistrationSuccessful && (
           <Form name="basic" onFinish={signUp} autoComplete="off">
             <Form.Item
