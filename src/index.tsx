@@ -1,14 +1,16 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
+import { createRoot } from 'react-dom/client'
 import { App } from './App'
 import * as serviceWorker from './serviceWorker'
 import { BrowserRouter } from 'react-router-dom'
 import { ConfigProvider } from 'antd'
 import { setTwoToneColor } from '@ant-design/icons'
 
+const container = document.getElementById('root')
+const root = createRoot(container)
 setTwoToneColor('#16a4f2') // set icons color
 
-ReactDOM.render(
+root.render(
   <ConfigProvider
     theme={{
       token: {
@@ -29,8 +31,7 @@ ReactDOM.render(
         <App />
       </React.StrictMode>
     </BrowserRouter>
-  </ConfigProvider>,
-  document.getElementById('root')
+  </ConfigProvider>
 )
 
 // If you want your app to work offline and load faster, you can change
