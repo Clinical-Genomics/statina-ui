@@ -12,7 +12,6 @@ export const ErrorNotification = ({ type, message, description }: Notification) 
     description,
     btn: null,
     key,
-    closeIcon: null,
     duration: 0,
   })
 }
