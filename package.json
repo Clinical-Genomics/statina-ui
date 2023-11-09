@@ -101,7 +101,6 @@
     "eventsource": "1.1.1",
     "ejs": "3.1.7",
     "shell-quote": "1.7.3",
-    "vm2": "3.9.18",
     "loader-utils": "2.0.4",
     "browserify-sign": "^4.2.2"
   }
