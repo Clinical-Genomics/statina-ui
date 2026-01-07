@@ -72,6 +72,7 @@
     "@types/react-router-dom": "^5.1.5",
     "@typescript-eslint/eslint-plugin": "^4.8.2",
     "@typescript-eslint/parser": "^4.8.2",
+    "@vitejs/plugin-react": "^5.1.2",
     "eslint": "^7.2.0",
     "eslint-config-airbnb": "18.2.1",
     "eslint-config-prettier": "^6.11.0",
@@ -85,7 +86,8 @@
     "eslint-plugin-react-hooks": "^1.7.0",
     "prettier": "^2.1.1",
     "raw.macro": "^0.4.2",
-    "react-markdown": "^6.0.2"
+    "react-markdown": "^6.0.2",
+    "vite": "^7.3.1"
   },
   "resolutions": {
     "ansi-html": "https://registry.yarnpkg.com/ansi-html-community/-/ansi-html-community-0.0.8.tgz#69fbc4d6ccbe383f9736934ae34c3f8290f1bf41",
