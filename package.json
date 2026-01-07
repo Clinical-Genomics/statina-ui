@@ -64,7 +64,7 @@
     "@testing-library/user-event": "^14.1.1",
     "@types/jest": "^24.0.0",
     "@types/jwt-decode": "^2.2.1",
-    "@types/node": "^12.0.0",
+    "@types/node": "^22.10.0",
     "@types/react": "^17.0.24",
     "@types/react-dom": "^17.0.9",
     "@types/react-router-dom": "^5.1.5",
@@ -85,7 +85,8 @@
     "prettier": "^2.1.1",
     "raw.macro": "^0.4.2",
     "react-markdown": "^6.0.2",
-    "vite": "^7.3.1"
+    "vite": "^7.3.1",
+    "vite-tsconfig-paths": "^6.0.3"
   },
   "resolutions": {
     "ansi-html": "https://registry.yarnpkg.com/ansi-html-community/-/ansi-html-community-0.0.8.tgz#69fbc4d6ccbe383f9736934ae34c3f8290f1bf41",
