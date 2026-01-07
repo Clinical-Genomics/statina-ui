@@ -103,7 +103,6 @@
     "shell-quote": "1.7.3",
     "loader-utils": "2.0.4",
     "browserify-sign": "^4.2.2",
-    "webpack-dev-middleware": "^5.3.4"
-    
+    "webpack-dev-middleware": "3.7.3"
   }
 }
