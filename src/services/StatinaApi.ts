@@ -1,11 +1,10 @@
 import { createParamURL, handleBackendError } from './helpers/helpers'
 import { Login, Dataset, RegisterUser } from './interfaces'
 import { UserContext } from './userContext'
+import axios from 'axios'
 import qs from 'qs'
 
-export const { REACT_APP_BACKEND_URL } = process.env
-
-const axios = require('axios').default
+export const REACT_APP_BACKEND_URL = import.meta.env.VITE_BACKEND_URL ?? ''
 
 const axiosGET = (endPoint, { token, logout }: UserContext) => {
   return new Promise((resolve, reject) => {
