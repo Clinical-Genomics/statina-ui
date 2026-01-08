@@ -11,8 +11,10 @@ export default defineConfig({
   resolve: {
     alias: {
       'buffer/': 'buffer',
-      'plotly.js': path.resolve(__dirname, 'node_modules/plotly.js/dist/plotly.min.js'),
-      'plotly.js/dist/plotly': path.resolve(__dirname, 'node_modules/plotly.js/dist/plotly.min.js'),
+      'plotly.js/dist/plotly': path.resolve(
+        __dirname,
+        'node_modules/plotly.js/dist/plotly-basic.min.js'
+      ),
       services: path.resolve(__dirname, 'src/services'),
       components: path.resolve(__dirname, 'src/components'),
       pages: path.resolve(__dirname, 'src/pages'),
