@@ -79,8 +79,8 @@ export const buildFFXYGraphData = (response: FetalFractionXYGraph): ScatterData[
 
 export const buildFFXYGraphLayout = (
   response: FetalFractionXYGraph,
-  showOutliers: boolean,
-  title: string,
+  showOutliers?: boolean,
+  title?: string,
   height = fFXYGraphHeight,
   width = fFXYGraphWidth
 ): Layout => {
