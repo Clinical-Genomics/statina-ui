@@ -6,6 +6,9 @@ import { ConfigProvider } from 'antd'
 import { setTwoToneColor } from '@ant-design/icons'
 
 const container = document.getElementById('root')
+if (!container) {
+  throw new Error('Root element not found')
+}
 const root = createRoot(container)
 setTwoToneColor('#16a4f2') // set icons color
 
