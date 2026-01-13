@@ -6,9 +6,10 @@ import { MemoryRouter } from 'react-router-dom'
 import { UserContext } from 'services/userContext'
 import axios from 'axios'
 import { REACT_APP_BACKEND_URL } from '../../services/StatinaApi'
+import type { Mocked } from 'vitest'
 
-jest.mock('axios')
-const mockedAxios = axios as jest.Mocked<typeof axios>
+vi.mock('axios')
+const mockedAxios = axios as Mocked<typeof axios>
 
 const initializeUserContext = () => null
 const logout = () => null

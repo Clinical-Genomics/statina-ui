@@ -6,11 +6,12 @@ import { MemoryRouter } from 'react-router-dom'
 import { UserContext } from 'services/userContext'
 import axios from 'axios'
 import userEvent from '@testing-library/user-event'
+import type { Mocked } from 'vitest'
 
-jest.mock('axios')
-const mockedAxios = axios as jest.Mocked<typeof axios>
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
+vi.mock('axios')
+const mockedAxios = axios as Mocked<typeof axios>
+vi.mock('react-router-dom', async () => ({
+  ...(await vi.importActual<typeof import('react-router-dom')>('react-router-dom')),
   useLocation: () => ({
     pathname: 'https://statina.scilifelab.se/datasets',
   }),
@@ -50,7 +51,7 @@ describe('Datasets Table', () => {
     await user.type(getByPlaceholderText('Search datasets'), 'testSearch')
     await user.keyboard('{enter}')
     expect(axios.get).toHaveBeenLastCalledWith(
-      `undefined/datasets?query_string=testSearch&page_size=20&page_num=1`,
+      `/datasets?query_string=testSearch&page_size=20&page_num=1`,
       {
         headers: {
           Authorization: 'Bearer token',
@@ -59,7 +60,7 @@ describe('Datasets Table', () => {
     )
     await user.click(getAllByText(/2/i)[1])
     expect(axios.get).toHaveBeenLastCalledWith(
-      `undefined/datasets?query_string=testSearch&page_size=20&page_num=2`,
+      `/datasets?query_string=testSearch&page_size=20&page_num=2`,
       {
         headers: {
           Authorization: 'Bearer token',

@@ -6,9 +6,10 @@ import { App } from './App'
 import { Router } from 'react-router-dom'
 import { createMemoryHistory } from 'history'
 import { mockAdminCookie, mockInactiveCookie, mockUnconfirmedCookie } from './mocks/cookies'
+import type { Mocked } from 'vitest'
 
-jest.mock('axios')
-const mockedAxios = axios as jest.Mocked<typeof axios>
+vi.mock('axios')
+const mockedAxios = axios as Mocked<typeof axios>
 
 describe('App', () => {
   test('not signed in App should display login page', async () => {
