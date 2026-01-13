@@ -5,7 +5,7 @@ import { mockUsers } from 'mocks/users'
 import { MemoryRouter } from 'react-router-dom'
 import { UserContext } from 'services/userContext'
 import axios from 'axios'
-import { REACT_APP_BACKEND_URL } from '../../services/StatinaApi'
+import { VITE_BACKEND_URL } from '../../services/StatinaApi'
 import type { Mocked } from 'vitest'
 
 vi.mock('axios')
@@ -81,7 +81,7 @@ describe('Users Table', () => {
     await waitFor(() => fireEvent.mouseDown(editStatus))
     await waitFor(() => fireEvent.click(getByText(/inactive/i)))
     expect(axios.put).toHaveBeenCalledWith(
-      `${REACT_APP_BACKEND_URL}/user/${mockUsers[0].username}/role?role=inactive`,
+      `${VITE_BACKEND_URL}/user/${mockUsers[0].username}/role?role=inactive`,
       null,
       {
         headers: {
