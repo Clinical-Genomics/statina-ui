@@ -1,5 +1,5 @@
 import React from 'react'
-import { fireEvent, getByText, render, waitFor } from '@testing-library/react'
+import { fireEvent, render, waitFor } from '@testing-library/react'
 import { UsersTable } from './UsersTable'
 import { mockUsers } from 'mocks/users'
 import { MemoryRouter } from 'react-router-dom'
