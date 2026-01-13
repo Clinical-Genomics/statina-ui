@@ -18,7 +18,7 @@
     "noImplicitAny": false,
     "isolatedModules": true,
     "downlevelIteration": true,
-    "types": ["vite/client", "vitest/globals"]
+    "types": ["vitest/globals", "vite/client"]
   },
   "include": ["src"]
 }
