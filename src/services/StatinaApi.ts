@@ -4,7 +4,7 @@ import { UserContext } from './userContext'
 import axios from 'axios'
 import qs from 'qs'
 
-export const REACT_APP_BACKEND_URL = import.meta.env.VITE_BACKEND_URL ?? ''
+export const VITE_BACKEND_URL = import.meta.env.VITE_BACKEND_URL ?? ''
 
 const axiosGET = (endPoint, { token, logout }: UserContext) => {
   return new Promise((resolve, reject) => {
@@ -133,7 +133,7 @@ export const getBatches = async (
   currentPage,
   query_string?
 ): Promise<any> => {
-  const endPoint = `${REACT_APP_BACKEND_URL}/batches?page_size=${pageSize}&page_num=${currentPage}&query_string=${query_string}`
+  const endPoint = `${VITE_BACKEND_URL}/batches?page_size=${pageSize}&page_num=${currentPage}&query_string=${query_string}`
   return axiosGET(endPoint, context)
 }
 
@@ -147,7 +147,7 @@ export const getSamples = async (
   sortDirection?: 'ascend' | 'descend'
 ): Promise<any> => {
   return axiosGET(
-    createParamURL(`${REACT_APP_BACKEND_URL}/samples?`, {
+    createParamURL(`${VITE_BACKEND_URL}/samples?`, {
       page_size: pageSize,
       page_num: currentPage,
       batch_id: batchId,
@@ -160,7 +160,7 @@ export const getSamples = async (
 }
 
 export const getBatch = async (batchId: string, context: UserContext): Promise<any> => {
-  const endPoint = `${REACT_APP_BACKEND_URL}/batch/${batchId}`
+  const endPoint = `${VITE_BACKEND_URL}/batch/${batchId}`
   return axiosGET(endPoint, context)
 }
 
@@ -169,12 +169,12 @@ export const getZScoreGraph = async (
   chromosome: number,
   context: UserContext
 ): Promise<any> => {
-  const endPoint = `${REACT_APP_BACKEND_URL}/batch/${batchId}/zscore_plot?ncv=${chromosome}`
+  const endPoint = `${VITE_BACKEND_URL}/batch/${batchId}/zscore_plot?ncv=${chromosome}`
   return axiosGET(endPoint, context)
 }
 
 export const getSamplePlot = async (sampleId: string, context: UserContext): Promise<any> => {
-  const endPoint = `${REACT_APP_BACKEND_URL}/sample/${sampleId}/tris`
+  const endPoint = `${VITE_BACKEND_URL}/sample/${sampleId}/tris`
   return axiosGET(endPoint, context)
 }
 
@@ -182,7 +182,7 @@ export const getFetalFractionXYGraph = async (
   batchId: string,
   context: UserContext
 ): Promise<any> => {
-  const endPoint = `${REACT_APP_BACKEND_URL}/batch/${batchId}/fetal_fraction_XY`
+  const endPoint = `${VITE_BACKEND_URL}/batch/${batchId}/fetal_fraction_XY`
   return axiosGET(endPoint, context)
 }
 
@@ -190,7 +190,7 @@ export const getFetalFractionPrefaceGraph = async (
   batchId: string,
   context: UserContext
 ): Promise<any> => {
-  const endPoint = `${REACT_APP_BACKEND_URL}/batch/${batchId}/fetal_fraction`
+  const endPoint = `${VITE_BACKEND_URL}/batch/${batchId}/fetal_fraction`
   return axiosGET(endPoint, context)
 }
 
@@ -198,17 +198,17 @@ export const getChromosomeRatioGraph = async (
   batchId: string,
   context: UserContext
 ): Promise<any> => {
-  const endPoint = `${REACT_APP_BACKEND_URL}/batch/${batchId}/coverage`
+  const endPoint = `${VITE_BACKEND_URL}/batch/${batchId}/coverage`
   return axiosGET(endPoint, context)
 }
 
 export const getStatistics = async (context: UserContext, numOfBatches): Promise<any> => {
-  const endPoint = `${REACT_APP_BACKEND_URL}/statistics?nr_batches=${numOfBatches}`
+  const endPoint = `${VITE_BACKEND_URL}/statistics?nr_batches=${numOfBatches}`
   return axiosGET(endPoint, context)
 }
 
 export const getSample = async (sampleId: string, context: UserContext): Promise<any> => {
-  const endPoint = `${REACT_APP_BACKEND_URL}/sample/${sampleId}`
+  const endPoint = `${VITE_BACKEND_URL}/sample/${sampleId}`
   return axiosGET(endPoint, context)
 }
 
@@ -218,7 +218,7 @@ export const editSample = async (
   request: 'include' | string,
   context: UserContext
 ): Promise<any> => {
-  const endPoint = `${REACT_APP_BACKEND_URL}/sample/${sampleId}/${request}`
+  const endPoint = `${VITE_BACKEND_URL}/sample/${sampleId}/${request}`
   return axiosPUT(endPoint, body, context)
 }
 
@@ -227,7 +227,7 @@ export const putSampleComment = async (
   comment,
   context: UserContext
 ): Promise<any> => {
-  const endPoint = `${REACT_APP_BACKEND_URL}/sample/${sampleId}/comment`
+  const endPoint = `${VITE_BACKEND_URL}/sample/${sampleId}/comment`
   return axiosPUT(
     endPoint,
     qs.stringify({
@@ -242,7 +242,7 @@ export const includeBatchSamples = async (
   context: UserContext,
   include
 ): Promise<any> => {
-  const endPoint = `${REACT_APP_BACKEND_URL}/batch/${batchId}/include_samples?include=${include}`
+  const endPoint = `${VITE_BACKEND_URL}/batch/${batchId}/include_samples?include=${include}`
   return axiosIncludePATCH(endPoint, context)
 }
 
@@ -251,7 +251,7 @@ export const includeSample = async (
   context: UserContext,
   include
 ): Promise<any> => {
-  const endPoint = `${REACT_APP_BACKEND_URL}/sample/${sampleId}/include?include=${include}`
+  const endPoint = `${VITE_BACKEND_URL}/sample/${sampleId}/include?include=${include}`
   return axiosIncludePUT(endPoint, context)
 }
 
@@ -260,7 +260,7 @@ export const editBatchComment = async (
   comment,
   context: UserContext
 ): Promise<any> => {
-  const endPoint = `${REACT_APP_BACKEND_URL}/batch/${batchId}/comment`
+  const endPoint = `${VITE_BACKEND_URL}/batch/${batchId}/comment`
   return axiosPUT(
     endPoint,
     qs.stringify({
@@ -275,7 +275,7 @@ export const editBatchDataset = async (
   dataset,
   context: UserContext
 ): Promise<any> => {
-  const endPoint = `${REACT_APP_BACKEND_URL}/batch/${batchId}/dataset`
+  const endPoint = `${VITE_BACKEND_URL}/batch/${batchId}/dataset`
   return axiosPUT(
     endPoint,
     qs.stringify({
@@ -286,12 +286,12 @@ export const editBatchDataset = async (
 }
 
 export const login = async (formInput: Login): Promise<any> => {
-  const endPoint = `${REACT_APP_BACKEND_URL}/token`
+  const endPoint = `${VITE_BACKEND_URL}/token`
   return axiosPostToken(endPoint, formInput)
 }
 
 export const registerUser = async (formInput: RegisterUser): Promise<any> => {
-  const endPoint = `${REACT_APP_BACKEND_URL}/user/register`
+  const endPoint = `${VITE_BACKEND_URL}/user/register`
   return axiosPostToken(endPoint, formInput)
 }
 
@@ -300,7 +300,7 @@ export const downloadBatchFiles = async (
   fileType: 'segmental_calls' | 'result_file' | 'multiqc_report',
   context: UserContext
 ): Promise<any> => {
-  const endPoint = `${REACT_APP_BACKEND_URL}/batch/${batchId}/download/${fileType}`
+  const endPoint = `${VITE_BACKEND_URL}/batch/${batchId}/download/${fileType}`
   return axiosGETDownloadFile(endPoint, context)
 }
 
@@ -308,12 +308,12 @@ export const downloadSegmentalCalls = async (
   sample_id: string,
   context: UserContext
 ): Promise<any> => {
-  const endPoint = `${REACT_APP_BACKEND_URL}/sample/${sample_id}/download/segmental_calls`
+  const endPoint = `${VITE_BACKEND_URL}/sample/${sample_id}/download/segmental_calls`
   return axiosGETDownloadFile(endPoint, context)
 }
 
 export const deleteBatch = async (batchId: string, context: UserContext): Promise<any> => {
-  const endPoint = `${REACT_APP_BACKEND_URL}/batch/${batchId}`
+  const endPoint = `${VITE_BACKEND_URL}/batch/${batchId}`
   return axiosDELETE(endPoint, batchId, context)
 }
 
@@ -323,12 +323,12 @@ export const getUsers = async (
   currentPage,
   query_string?
 ): Promise<any> => {
-  const endPoint = `${REACT_APP_BACKEND_URL}/users?page_size=${pageSize}&page_num=${currentPage}&query_string=${query_string}`
+  const endPoint = `${VITE_BACKEND_URL}/users?page_size=${pageSize}&page_num=${currentPage}&query_string=${query_string}`
   return axiosGET(endPoint, context)
 }
 
 export const deleteUser = async (username: string, context: UserContext): Promise<any> => {
-  const endPoint = `${REACT_APP_BACKEND_URL}/user/${username}`
+  const endPoint = `${VITE_BACKEND_URL}/user/${username}`
   return axiosDELETE(endPoint, username, context)
 }
 
@@ -337,7 +337,7 @@ export const putUserRole = async (
   role: string,
   context: UserContext
 ): Promise<any> => {
-  const endPoint = `${REACT_APP_BACKEND_URL}/user/${username}/role?role=${role}`
+  const endPoint = `${VITE_BACKEND_URL}/user/${username}/role?role=${role}`
   return axiosPUT(endPoint, null, context)
 }
 
@@ -345,7 +345,7 @@ export const validateUserEmail = async (
   username: string,
   verificationhex: string
 ): Promise<any> => {
-  const endPoint = `${REACT_APP_BACKEND_URL}/user/${username}/validate?verification_hex=${verificationhex}`
+  const endPoint = `${VITE_BACKEND_URL}/user/${username}/validate?verification_hex=${verificationhex}`
   return axiosPATCH(endPoint, username)
 }
 
@@ -355,17 +355,17 @@ export const getDatasets = async (
   page: number,
   pageSize: number
 ): Promise<any> => {
-  const endPoint = `${REACT_APP_BACKEND_URL}/datasets?query_string=${queryString}&page_size=${pageSize}&page_num=${page}`
+  const endPoint = `${VITE_BACKEND_URL}/datasets?query_string=${queryString}&page_size=${pageSize}&page_num=${page}`
   return axiosGET(endPoint, context)
 }
 
 export const getDataset = async (context: UserContext, datasetName: string): Promise<any> => {
-  const endPoint = `${REACT_APP_BACKEND_URL}/dataset/${datasetName}`
+  const endPoint = `${VITE_BACKEND_URL}/dataset/${datasetName}`
   return axiosGET(endPoint, context)
 }
 
 export const getDatasetOptions = async (context: UserContext): Promise<any> => {
-  const endPoint = `${REACT_APP_BACKEND_URL}/dataset_options`
+  const endPoint = `${VITE_BACKEND_URL}/dataset_options`
   return axiosGET(endPoint, context)
 }
 
@@ -374,12 +374,12 @@ export const postDataset = async (
   formInput: Dataset,
   context: UserContext
 ): Promise<any> => {
-  const endPoint = `${REACT_APP_BACKEND_URL}/dataset/${name}`
+  const endPoint = `${VITE_BACKEND_URL}/dataset/${name}`
   return axiosPostToken(endPoint, formInput, context)
 }
 
 export const deleteDataset = async (datasetName: string, context: UserContext): Promise<any> => {
-  const endPoint = `${REACT_APP_BACKEND_URL}/dataset/${datasetName}`
+  const endPoint = `${VITE_BACKEND_URL}/dataset/${datasetName}`
   return axiosDELETE(endPoint, datasetName, context)
 }
 
@@ -388,6 +388,6 @@ export const editDataset = async (
   editedDataset: string,
   context: UserContext
 ): Promise<any> => {
-  const endPoint = `${REACT_APP_BACKEND_URL}/dataset/${datasetName}`
+  const endPoint = `${VITE_BACKEND_URL}/dataset/${datasetName}`
   return axiosDatasetPATCH(endPoint, editedDataset, context)
 }
