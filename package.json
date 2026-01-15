@@ -23,7 +23,7 @@
     "stylelint-config-standard": "^39.0.1",
     "typescript": "^5.8.3",
     "universal-cookie": "^4.0.4",
-    "xlsx": "https://cdn.sheetjs.com/xlsx-0.19.3/xlsx-0.19.3.tgz"
+    "xlsx": "https://cdn.sheetjs.com/xlsx-latest/xlsx-latest.tgz"
   },
   "scripts": {
     "dev": "vite",
