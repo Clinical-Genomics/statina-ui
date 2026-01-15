@@ -130,7 +130,7 @@ export const getCookies = (cookieName = userCookie) => {
 
 export const removeCookies = (cookieName = userCookie) => {
   const cookies = new Cookies()
-  cookies.remove(cookieName)
+  cookies.remove(cookieName, { path: '/' })
 }
 
 export const escapeRegExp = (input) => {
