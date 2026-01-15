@@ -72,6 +72,7 @@
   },
   "resolutions": {
     "es5-ext": "^0.10.63",
-    "path-to-regexp": "^1.9.0"
+    "path-to-regexp": "^1.9.0",
+    "@ctrl/tinycolor": "3.6.0"
   }
 }
