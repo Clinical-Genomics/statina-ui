@@ -70,7 +70,5 @@
     "vite-tsconfig-paths": "^6.0.3",
     "vitest": "^4.0.8"
   },
-  "resolutions": {
-    "@ctrl/tinycolor": "3.6.1"
-  }
+  "resolutions": {}
 }
