@@ -3,6 +3,7 @@ import { Batch } from 'services/interfaces'
 export const mockBatches: Batch[] = [
   {
     batch_id: '2117030_NIPT',
+    dataset: 'default',
     result_file:
       '/home/proj/production/housekeeper-bundles/usefulkrill/2021-10-16/2117030_NIPT.csv',
     multiqc_report:
@@ -29,6 +30,7 @@ export const mockBatches: Batch[] = [
   },
   {
     batch_id: '2116928_NIPT',
+    dataset: 'default',
     result_file: '/home/proj/production/housekeeper-bundles/tidyguinea/2021-10-14/2116928_NIPT.csv',
     multiqc_report:
       '/home/proj/production/housekeeper-bundles/tidyguinea/2021-10-14/multiqc_report.html',
@@ -54,6 +56,7 @@ export const mockBatches: Batch[] = [
   },
   {
     batch_id: '2116723_NIPT',
+    dataset: 'default',
     result_file:
       '/home/proj/production/housekeeper-bundles/simplesalmon/2021-10-11/2116723_NIPT.csv',
     multiqc_report:
@@ -80,6 +83,7 @@ export const mockBatches: Batch[] = [
   },
   {
     batch_id: '2116562_NIPT',
+    dataset: 'default',
     result_file:
       '/home/proj/production/housekeeper-bundles/daringfeline/2021-10-08/2116562_NIPT.csv',
     multiqc_report:
@@ -105,6 +109,7 @@ export const mockBatches: Batch[] = [
   },
   {
     batch_id: '2116464_2_NIPT',
+    dataset: 'default',
     result_file:
       '/home/proj/production/housekeeper-bundles/worthybobcat/2021-10-07/2116464_2_NIPT.csv',
     multiqc_report:
@@ -133,6 +138,7 @@ export const mockBatches: Batch[] = [
 
 export const mockBatch: any = {
   batch_id: '2116562_NIPT',
+  dataset: 'default',
   result_file: '/home/proj/production/housekeeper-bundles/daringfeline/2021-10-08/2116562_NIPT.csv',
   multiqc_report:
     '/home/proj/production/housekeeper-bundles/daringfeline/2021-10-08/multiqc_report.html',

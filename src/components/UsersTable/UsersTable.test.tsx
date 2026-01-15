@@ -1,14 +1,15 @@
 import React from 'react'
-import { fireEvent, getByText, render, waitFor } from '@testing-library/react'
+import { fireEvent, render, waitFor } from '@testing-library/react'
 import { UsersTable } from './UsersTable'
 import { mockUsers } from 'mocks/users'
 import { MemoryRouter } from 'react-router-dom'
 import { UserContext } from 'services/userContext'
 import axios from 'axios'
-import { REACT_APP_BACKEND_URL } from '../../services/StatinaApi'
+import { VITE_BACKEND_URL } from '../../services/StatinaApi'
+import type { Mocked } from 'vitest'
 
-jest.mock('axios')
-const mockedAxios = axios as jest.Mocked<typeof axios>
+vi.mock('axios')
+const mockedAxios = axios as Mocked<typeof axios>
 
 const initializeUserContext = () => null
 const logout = () => null
@@ -80,7 +81,7 @@ describe('Users Table', () => {
     await waitFor(() => fireEvent.mouseDown(editStatus))
     await waitFor(() => fireEvent.click(getByText(/inactive/i)))
     expect(axios.put).toHaveBeenCalledWith(
-      `${REACT_APP_BACKEND_URL}/user/${mockUsers[0].username}/role?role=inactive`,
+      `${VITE_BACKEND_URL}/user/${mockUsers[0].username}/role?role=inactive`,
       null,
       {
         headers: {

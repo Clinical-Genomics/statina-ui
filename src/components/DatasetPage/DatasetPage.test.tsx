@@ -6,11 +6,12 @@ import { MemoryRouter } from 'react-router-dom'
 import { UserContext } from 'services/userContext'
 import axios from 'axios'
 import userEvent from '@testing-library/user-event'
+import type { Mocked } from 'vitest'
 
-jest.mock('axios')
-const mockedAxios = axios as jest.Mocked<typeof axios>
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
+vi.mock('axios')
+const mockedAxios = axios as Mocked<typeof axios>
+vi.mock('react-router-dom', async () => ({
+  ...(await vi.importActual<typeof import('react-router-dom')>('react-router-dom')),
   useLocation: () => ({
     pathname: 'https://statina.scilifelab.se/datasets/default',
   }),
@@ -91,7 +92,7 @@ describe('Dataset page', () => {
     const saveBtn = await waitFor(() => queryAllByText(/Save/i))
     await user.click(saveBtn[0])
     expect(axios.patch).toHaveBeenLastCalledWith(
-      `undefined/dataset/${mockDatasets[0].name}`,
+      `/dataset/${mockDatasets[0].name}`,
       `trisomy_hard_min=${mockDatasets[0].trisomy_hard_min}&trisomy_hard_max=${mockDatasets[0].trisomy_hard_max}&trisomy_soft_max=${mockDatasets[0].trisomy_soft_max}&m_upper=6.5958&m_lower=${mockDatasets[0].m_lower}&k_lower=${mockDatasets[0].k_lower}&k_upper=${mockDatasets[0].k_upper}&y_axis_max=${mockDatasets[0].y_axis_max}&y_axis_min=${mockDatasets[0].y_axis_min}&fetal_fraction_X0=${mockDatasets[0].fetal_fraction_X0}&fetal_fraction_XXX=${mockDatasets[0].fetal_fraction_XXX}&fetal_fraction_y_min=${mockDatasets[0].fetal_fraction_y_min}&fetal_fraction_y_max=${mockDatasets[0].fetal_fraction_y_max}&fetal_fraction_y_for_trisomy=${mockDatasets[0].fetal_fraction_y_for_trisomy}&fetal_fraction_preface=${mockDatasets[0].fetal_fraction_preface}&comment=New comment`,
       {
         headers: {

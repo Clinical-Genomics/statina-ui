@@ -3,7 +3,7 @@ import Plot, { Layout, BoxPlotData } from 'react-plotly.js'
 import { getChromosomeRatioGraph } from '../../services/StatinaApi'
 import { FetalFractionXYGraph } from '../../services/interfaces'
 import { UserContext } from '../../services/userContext'
-import { ScatterData } from 'plotly.js'
+import type { ScatterData } from 'plotly.js'
 import { Loading } from '../Loading'
 
 type ChromosomesRatioPlotProps = {

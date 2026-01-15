@@ -5,15 +5,16 @@ import { mockSamples } from 'mocks/samples'
 import { MemoryRouter } from 'react-router-dom'
 import { UserContext } from 'services/userContext'
 import axios from 'axios'
-import { REACT_APP_BACKEND_URL } from '../../services/StatinaApi'
+import { VITE_BACKEND_URL } from '../../services/StatinaApi'
+import type { Mocked } from 'vitest'
 
 const initializeUserContext = () => null
 const logout = () => null
 
-jest.mock('axios')
-const mockedAxios = axios as jest.Mocked<typeof axios>
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
+vi.mock('axios')
+const mockedAxios = axios as Mocked<typeof axios>
+vi.mock('react-router-dom', async () => ({
+  ...(await vi.importActual<typeof import('react-router-dom')>('react-router-dom')),
   useLocation: () => ({
     pathname: 'https://statina.scilifelab.se/batches',
   }),
@@ -116,7 +117,7 @@ test('Call to backend has correct query parameters on sort', async () => {
   )
   await waitFor(() => fireEvent.click(getAllByText(/Sample/i)[0]))
   expect(axios.get).toHaveBeenLastCalledWith(
-    `${REACT_APP_BACKEND_URL}/samples?&page_size=100&page_num=0&batch_id=${batch}&query_string=&sort_key=sample_id&sort_direction=ascend`,
+    `${VITE_BACKEND_URL}/samples?&page_size=100&page_num=0&batch_id=${batch}&query_string=&sort_key=sample_id&sort_direction=ascend`,
     expect.any(Object)
   )
 })
