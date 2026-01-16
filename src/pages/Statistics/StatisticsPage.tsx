@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Tabs, Card, InputNumber } from 'antd'
+import { Tabs, Card, InputNumber, Space, Typography } from 'antd'
 import { getStatistics } from '../../services/StatinaApi'
 import { UserContext } from '../../services/userContext'
 import { StatisticsBoxPlot } from '../../components/StatisticsBoxPlot/StatisticsBoxPlot'
@@ -96,16 +96,17 @@ export function StatisticsPage() {
           })),
         ]}
       />
-      <InputNumber
-        addonBefore="Number of batches"
-        value={numberOfcases}
-        step={10}
-        min={10}
-        onStep={onNumberOfBatchesChange}
-        onPressEnter={onPressEnter}
-        style={{ marginTop: '30px' }}
-        autoFocus={true}
-      />
+      <Space align="center" style={{ marginTop: '30px' }}>
+        <Typography.Text>Number of batches</Typography.Text>
+        <InputNumber
+          value={numberOfcases}
+          step={10}
+          min={10}
+          onStep={onNumberOfBatchesChange}
+          onPressEnter={onPressEnter}
+          autoFocus={true}
+        />
+      </Space>
     </Card>
   )
 }
