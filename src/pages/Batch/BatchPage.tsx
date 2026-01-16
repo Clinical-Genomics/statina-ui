@@ -23,7 +23,6 @@ import { batchDownloadFileTypes } from '../../services/helpers/constants'
 import { ErrorPage } from 'pages/Error/ErrorPage'
 import { datasetsPath } from '../../components/Routes'
 
-const { TabPane } = Tabs
 const { Paragraph, Title, Text } = Typography
 
 export const BatchPage = () => {
@@ -127,33 +126,52 @@ export const BatchPage = () => {
               <p>{batch?.comment}</p>
             )}
           </Row>
-          <Tabs type="card" key={selectedDataset}>
-            <TabPane tab="Summary Table" key="1">
-              <SamplesTable batchId={batchId} />
-            </TabPane>
-            <TabPane tab="Zscore 13" key="Zscore_13" className={styles.tab}>
-              <ZscoreGraph batchId={batchId} chromosome={13} />
-            </TabPane>
-            <TabPane tab="Zscore 18" key="Zscore_18" className={styles.tab}>
-              <ZscoreGraph batchId={batchId} chromosome={18} />
-            </TabPane>
-            <TabPane tab="Zscore 21" key="Zscore_21" className={styles.tab}>
-              <ZscoreGraph batchId={batchId} chromosome={21} />
-            </TabPane>
-            <TabPane
-              tab="Fetal Fraction Preface"
-              key="Fetal_Fraction_Preface"
-              className={styles.tab}
-            >
-              <FetalFractionPreface batchId={batchId} chromosome={21} />
-            </TabPane>
-            <TabPane tab="Fetal Fraction X/Y" key="Fetal_Fraction_X/Y" className={styles.tab}>
-              <FetalFractionXY batchId={batchId} chromosome={21} />
-            </TabPane>
-            <TabPane tab="Ratio (Chromosomes 1-22)" key="ratio">
-              <ChromosomesRatioPlot batchId={batchId} />
-            </TabPane>
-          </Tabs>
+          <Tabs
+            type="card"
+            key={selectedDataset}
+            items={[
+              {
+                key: '1',
+                label: 'Summary Table',
+                children: <SamplesTable batchId={batchId} />,
+              },
+              {
+                key: 'Zscore_13',
+                label: 'Zscore 13',
+                className: styles.tab,
+                children: <ZscoreGraph batchId={batchId} chromosome={13} />,
+              },
+              {
+                key: 'Zscore_18',
+                label: 'Zscore 18',
+                className: styles.tab,
+                children: <ZscoreGraph batchId={batchId} chromosome={18} />,
+              },
+              {
+                key: 'Zscore_21',
+                label: 'Zscore 21',
+                className: styles.tab,
+                children: <ZscoreGraph batchId={batchId} chromosome={21} />,
+              },
+              {
+                key: 'Fetal_Fraction_Preface',
+                label: 'Fetal Fraction Preface',
+                className: styles.tab,
+                children: <FetalFractionPreface batchId={batchId} chromosome={21} />,
+              },
+              {
+                key: 'Fetal_Fraction_X/Y',
+                label: 'Fetal Fraction X/Y',
+                className: styles.tab,
+                children: <FetalFractionXY batchId={batchId} chromosome={21} />,
+              },
+              {
+                key: 'ratio',
+                label: 'Ratio (Chromosomes 1-22)',
+                children: <ChromosomesRatioPlot batchId={batchId} />,
+              },
+            ]}
+          />
         </Card>
       )}
       {error && <ErrorPage error={error} />}

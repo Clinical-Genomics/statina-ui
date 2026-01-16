@@ -7,8 +7,6 @@ import { StatisticsScatterPlot } from '../../components/StatisticsScatterPlot/St
 import { Loading } from '../../components/Loading'
 import { ErrorNotification } from 'services/helpers/helpers'
 
-const { TabPane } = Tabs
-
 export function StatisticsPage() {
   const userContext = useContext(UserContext)
   const [statistics, setStatistics] = useState<any>()
@@ -67,30 +65,37 @@ export function StatisticsPage() {
     <Loading />
   ) : (
     <Card>
-      <Tabs defaultActiveKey={defaultTabKey.toString()} onChange={onTabChange} type="card">
-        {statistics?.box_plots.map((box) => (
-          <TabPane tab={box} key={box}>
-            {statistics && selectedPlot && (
-              <StatisticsBoxPlot
-                selectedPlot={selectedPlot}
-                statistics={statistics}
-                showTotal={showTotal}
-              />
-            )}
-          </TabPane>
-        ))}
-        {statistics?.scatter_plots.map((scatter) => (
-          <TabPane tab={scatter} key={scatter}>
-            {statistics && selectedPlot && (
-              <StatisticsScatterPlot
-                selectedPlot={selectedPlot}
-                statistics={statistics}
-                showTotal={showTotal}
-              />
-            )}
-          </TabPane>
-        ))}
-      </Tabs>
+      <Tabs
+        defaultActiveKey={defaultTabKey.toString()}
+        onChange={onTabChange}
+        type="card"
+        items={[
+          ...(statistics?.box_plots ?? []).map((box) => ({
+            key: box,
+            label: box,
+            children:
+              statistics && selectedPlot ? (
+                <StatisticsBoxPlot
+                  selectedPlot={selectedPlot}
+                  statistics={statistics}
+                  showTotal={showTotal}
+                />
+              ) : null,
+          })),
+          ...(statistics?.scatter_plots ?? []).map((scatter) => ({
+            key: scatter,
+            label: scatter,
+            children:
+              statistics && selectedPlot ? (
+                <StatisticsScatterPlot
+                  selectedPlot={selectedPlot}
+                  statistics={statistics}
+                  showTotal={showTotal}
+                />
+              ) : null,
+          })),
+        ]}
+      />
       <InputNumber
         addonBefore="Number of batches"
         value={numberOfcases}
