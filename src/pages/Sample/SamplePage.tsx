@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { Card, Space, Typography, Table, Select, Descriptions, Tag } from 'antd'
 import { editSample, getSample, putSampleComment } from '../../services/StatinaApi'
 import { Link, useLocation } from 'react-router-dom'
@@ -22,11 +22,7 @@ export function SamplePage() {
   const { pathname } = useLocation()
   const sampleId = pathname.substring(pathname.lastIndexOf('/') + 1, pathname.length)
 
-  useEffect(() => {
-    if (sampleId) retrieveSample()
-  }, [sampleId])
-
-  const retrieveSample = () => {
+  const retrieveSample = useCallback(() => {
     getSample(sampleId, userContext)
       .then((sampleResponse) => {
         setSample(sampleResponse)
@@ -40,7 +36,11 @@ export function SamplePage() {
       .catch((error) => {
         setError(error)
       })
-  }
+  }, [sampleId, userContext])
+
+  useEffect(() => {
+    if (sampleId) retrieveSample()
+  }, [sampleId, retrieveSample])
 
   const columns = [
     {

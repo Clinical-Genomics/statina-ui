@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { UserContext } from '../../services/userContext'
 import { deleteDataset, getDatasets, postDataset } from 'services/StatinaApi'
 import { Link } from 'react-router-dom'
@@ -22,20 +22,23 @@ export const Datasets = () => {
   const { Search } = Input
   const tablePageSize = 20
 
+  const getDatasetsList = useCallback(
+    (page, searchValue = currentSearchValue, pageSize = tablePageSize) => {
+      getDatasets(userContext, searchValue, page, pageSize)
+        .then((response) => {
+          setFilteredDatasets(response?.documents), setDatasetsCount(response?.document_count)
+          setIsLoading(false)
+        })
+        .catch((error) => {
+          setIsLoading(false), setError(error)
+        })
+    },
+    [currentSearchValue, tablePageSize, userContext]
+  )
+
   useEffect(() => {
     getDatasetsList(currentPage)
-  }, [])
-
-  const getDatasetsList = (page, searchValue = currentSearchValue, pageSize = tablePageSize) => {
-    getDatasets(userContext, searchValue, page, pageSize)
-      .then((response) => {
-        setFilteredDatasets(response?.documents), setDatasetsCount(response?.document_count)
-        setIsLoading(false)
-      })
-      .catch((error) => {
-        setIsLoading(false), setError(error)
-      })
-  }
+  }, [currentPage, getDatasetsList])
 
   const cloneDataset = (dataset: Dataset, { datasetName }) => {
     postDataset(datasetName, dataset, userContext).then(() => getDatasetsList(currentPage))

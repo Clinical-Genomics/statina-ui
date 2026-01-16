@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { Card, Tabs, Row, Col, Typography, Select } from 'antd'
 import { useLocation, Link } from 'react-router-dom'
 import { ZscoreGraph } from '../../components/ZscoreGraph/ZscoreGraph'
@@ -39,10 +39,21 @@ export const BatchPage = () => {
 
   const { Option } = Select
 
+  const getBatchInfo = useCallback(() => {
+    getBatch(batchId, userContext)
+      .then((batch) => {
+        setBatch(batch)
+        setIsLoading(false)
+      })
+      .catch((error) => {
+        setIsLoading(false), setError(error)
+      })
+  }, [batchId, userContext])
+
   useEffect(() => {
     getDatasetOptions(userContext).then((response) => setDatasets(response))
     getBatchInfo()
-  }, [batchId])
+  }, [batchId, getBatchInfo, userContext])
 
   const editDataset = (dataset) => {
     editBatchDataset(batchId, dataset, userContext).then(() => {
@@ -53,17 +64,6 @@ export const BatchPage = () => {
         message: 'Dataset updated',
       })
     })
-  }
-
-  const getBatchInfo = () => {
-    getBatch(batchId, userContext)
-      .then((batch) => {
-        setBatch(batch)
-        setIsLoading(false)
-      })
-      .catch((error) => {
-        setIsLoading(false), setError(error)
-      })
   }
 
   const updateComment = (comment) => {
