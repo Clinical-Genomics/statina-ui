@@ -21,9 +21,12 @@ root.render(
         colorTextSecondary: '#000000D9',
       },
       components: {
-        Menu: { itemBg: '#14453d', horizontalItemHoverBg: '#43C59E' },
+        Menu: {
+          horizontalItemHoverBg: '#43C59E',
+          darkItemBg: '#14453d',
+        },
         Layout: {
-          colorBgHeader: '#14453d',
+          headerBg: '#14453d',
         },
       },
     }}
