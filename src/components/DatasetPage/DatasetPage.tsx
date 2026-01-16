@@ -34,7 +34,7 @@ export function DatasetPage() {
         setIsLoading(false)
       })
       .catch((error) => {
-        setIsLoading(false), setError(error)
+        ;(setIsLoading(false), setError(error))
       })
   }, [datasetName, userContext])
 
@@ -53,7 +53,7 @@ export function DatasetPage() {
         })
       })
       .catch((error) => {
-        setIsLoading(false), setError(error)
+        ;(setIsLoading(false), setError(error))
       })
   }
 
@@ -76,9 +76,9 @@ export function DatasetPage() {
               <Descriptions
                 bordered
                 column={3}
-                labelStyle={{ fontWeight: 'bold' }}
                 size="small"
                 style={{ width: '100%' }}
+                styles={{ label: { fontWeight: 'bold' } }}
                 extra={
                   <>
                     {permissions?.includes('RW') && (
@@ -104,7 +104,7 @@ export function DatasetPage() {
                       <Form.Item name={entry}>
                         <Input
                           disabled={!edit}
-                          bordered={edit}
+                          variant={edit ? 'outlined' : 'borderless'}
                           type={typeof dataset[entry]}
                           style={{
                             color: '#000000d9',

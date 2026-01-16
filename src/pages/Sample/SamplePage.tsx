@@ -111,8 +111,8 @@ export function SamplePage() {
                   <Descriptions
                     bordered
                     column={2}
-                    labelStyle={{ fontWeight: 'bold' }}
                     size="small"
+                    styles={{ label: { fontWeight: 'bold' } }}
                   >
                     <Descriptions.Item label="Batch">
                       <Link to={`/batches/${sample.batch_id}`}>{sample.batch_id}</Link>
