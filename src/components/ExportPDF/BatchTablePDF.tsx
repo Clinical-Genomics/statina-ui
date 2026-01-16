@@ -29,7 +29,7 @@ export const BatchTablePDF = ({ batchId, batchComment }) => {
       setData(buildFFXYGraphData(response))
       setLayout(buildFFXYGraphLayout(response))
     })
-  }, [])
+  }, [batchId, userContext])
 
   const exportPDF = () => {
     setIsLoading(true)

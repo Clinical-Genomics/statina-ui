@@ -31,7 +31,7 @@ export const BatchesTable = () => {
       .catch((error) => {
         setError(error)
       })
-  }, [])
+  }, [searchValue, userContext])
 
   const onSearch = (searchInput) => {
     const escapeInput = escapeRegExp(searchInput)

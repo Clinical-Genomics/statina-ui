@@ -26,7 +26,7 @@ export function StatisticsPage() {
         setIsLoading(false)
       })
       .catch(() => setIsLoading(false))
-  }, [])
+  }, [numberOfcases, userContext])
 
   const onTabChange = (key: string) => {
     setSelectedPlot(key)

@@ -97,7 +97,7 @@ export const ZscoreGraph = ({ batchId, chromosome }: ZscoreGraphProps) => {
         setIsLoading(false)
       })
       .catch(() => setIsLoading(false))
-  }, [])
+  }, [batchId, chromosome, userContext])
 
   return isLoading ? <Loading /> : <Plot data={data} layout={layout} style={{ width: '100%' }} />
 }

@@ -129,7 +129,7 @@ export const FetalFractionXY = ({ batchId }: FetalFractionXYGraphProps) => {
         setIsLoading(false)
       })
       .catch(() => setIsLoading(false))
-  }, [])
+  }, [batchId, userContext])
 
   return isLoading ? (
     <Loading />

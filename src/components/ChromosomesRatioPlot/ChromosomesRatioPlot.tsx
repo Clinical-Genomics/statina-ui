@@ -73,6 +73,6 @@ export const ChromosomesRatioPlot = ({ batchId }: ChromosomesRatioPlotProps) => 
         setIsLoading(false)
       })
       .catch(() => setIsLoading(false))
-  }, [])
+  }, [batchId, userContext])
   return isLoading ? <Loading /> : <Plot data={data} layout={layout} style={{ width: '100%' }} />
 }

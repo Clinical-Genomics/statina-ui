@@ -142,7 +142,7 @@ export const FetalFractionPreface = ({ batchId }: FetalFractionPrefaceProps) => 
         setIsLoading(false)
       })
       .catch(() => setIsLoading(false))
-  }, [])
+  }, [batchId, userContext])
 
   return isLoading ? (
     <Loading />

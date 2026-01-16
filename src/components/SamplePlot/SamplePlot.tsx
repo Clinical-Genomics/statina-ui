@@ -95,7 +95,7 @@ export const SamplePlot = ({ sampleId }: SamplePlotProps) => {
       setData(buildData(sampleId, response))
       setLayout(buildLayout(sampleId))
     })
-  }, [])
+  }, [sampleId, userContext])
 
   return <Plot data={data} layout={layout} style={{ width: '100%' }} />
 }

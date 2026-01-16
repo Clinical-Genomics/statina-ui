@@ -14,7 +14,7 @@ export const ConfirmedResult = () => {
     validateUserEmail(userName, verificationHex).catch((error) => {
       setError(error)
     })
-  }, [])
+  }, [userName, verificationHex])
   return (
     <>
       {!error && (

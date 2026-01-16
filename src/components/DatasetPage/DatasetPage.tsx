@@ -36,7 +36,7 @@ export function DatasetPage() {
       .catch((error) => {
         setIsLoading(false), setError(error)
       })
-  }, [])
+  }, [datasetName, userContext])
 
   const editButton = () => {
     setEdit((value) => !value)
