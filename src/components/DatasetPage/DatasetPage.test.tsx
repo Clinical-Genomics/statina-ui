@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, waitFor } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import { DatasetPage } from './DatasetPage'
 import { mockDatasets } from 'mocks/datasets'
 import { MemoryRouter } from 'react-router-dom'
@@ -28,27 +28,25 @@ describe('Dataset page', () => {
     const initializeUserContext = () => null
     const logout = () => null
 
-    const { queryAllByText } = await waitFor(() =>
-      render(
-        <UserContext.Provider
-          value={{
-            initializeUserContext,
-            logout,
-            token: 'token',
-            username: 'elevu',
-            email: 'testemail',
-            permissions: ['RW'],
-          }}
-        >
-          <MemoryRouter>
-            <DatasetPage />
-          </MemoryRouter>
-        </UserContext.Provider>
-      )
+    render(
+      <UserContext.Provider
+        value={{
+          initializeUserContext,
+          logout,
+          token: 'token',
+          username: 'elevu',
+          email: 'testemail',
+          permissions: ['RW'],
+        }}
+      >
+        <MemoryRouter>
+          <DatasetPage />
+        </MemoryRouter>
+      </UserContext.Provider>
     )
-    const editBtn = await waitFor(() => queryAllByText(/Edit/i))
+    const editBtn = await screen.findAllByText(/Edit/i)
     await waitFor(() => expect(editBtn[0]).toBeVisible())
-    const saveBtn = await waitFor(() => queryAllByText(/Save/i))
+    const saveBtn = screen.queryAllByText(/Save/i)
     await waitFor(() => expect(saveBtn[0]).not.toBeVisible())
     await user.click(editBtn[0])
     await waitFor(() => expect(saveBtn[0]).toBeVisible())
@@ -64,32 +62,30 @@ describe('Dataset page', () => {
     const initializeUserContext = () => null
     const logout = () => null
 
-    const { queryAllByText, queryByDisplayValue } = await waitFor(() =>
-      render(
-        <UserContext.Provider
-          value={{
-            initializeUserContext,
-            logout,
-            token: 'token',
-            username: 'elevu',
-            email: 'testemail',
-            permissions: ['RW'],
-          }}
-        >
-          <MemoryRouter>
-            <DatasetPage />
-          </MemoryRouter>
-        </UserContext.Provider>
-      )
+    render(
+      <UserContext.Provider
+        value={{
+          initializeUserContext,
+          logout,
+          token: 'token',
+          username: 'elevu',
+          email: 'testemail',
+          permissions: ['RW'],
+        }}
+      >
+        <MemoryRouter>
+          <DatasetPage />
+        </MemoryRouter>
+      </UserContext.Provider>
     )
-    const editBtn = await waitFor(() => queryAllByText(/Edit/i))
-    await editBtn[0].click()
-    const comment = (await waitFor(() =>
-      queryByDisplayValue(mockDatasets[0].comment)
+    const editBtn = await screen.findAllByText(/Edit/i)
+    await user.click(editBtn[0])
+    const comment = (await screen.findByDisplayValue(
+      mockDatasets[0].comment
     )) as HTMLInputElement
     await user.clear(comment)
     await user.type(comment, 'New comment')
-    const saveBtn = await waitFor(() => queryAllByText(/Save/i))
+    const saveBtn = await screen.findAllByText(/Save/i)
     await user.click(saveBtn[0])
     expect(axios.patch).toHaveBeenLastCalledWith(
       `/dataset/${mockDatasets[0].name}`,
@@ -110,27 +106,26 @@ describe('Dataset page', () => {
     )
     const initializeUserContext = () => null
     const logout = () => null
-    const { queryAllByText } = await waitFor(() =>
-      render(
-        <UserContext.Provider
-          value={{
-            initializeUserContext,
-            logout,
-            token: 'token',
-            username: 'elevu',
-            email: 'testemail',
-            permissions: ['R'],
-          }}
-        >
-          <MemoryRouter>
-            <DatasetPage />
-          </MemoryRouter>
-        </UserContext.Provider>
-      )
+    render(
+      <UserContext.Provider
+        value={{
+          initializeUserContext,
+          logout,
+          token: 'token',
+          username: 'elevu',
+          email: 'testemail',
+          permissions: ['R'],
+        }}
+      >
+        <MemoryRouter>
+          <DatasetPage />
+        </MemoryRouter>
+      </UserContext.Provider>
     )
-    const editBtn = await waitFor(() => queryAllByText(/Edit/i))
+    await screen.findByText(/Dataset/i)
+    const editBtn = screen.queryAllByText(/Edit/i)
     await waitFor(() => expect(editBtn).toHaveLength(0))
-    const saveBtn = await waitFor(() => queryAllByText(/Save/i))
+    const saveBtn = screen.queryAllByText(/Save/i)
     await waitFor(() => expect(saveBtn).toHaveLength(0))
   })
 })
