@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { UserContext } from '../../services/userContext'
 import { deleteBatch, getBatches } from '../../services/StatinaApi'
-import { Button, Col, Dropdown, Input, Menu, Row, Table, Typography, Popconfirm } from 'antd'
+import { Button, Col, Dropdown, Input, Row, Table, Typography, Popconfirm } from 'antd'
 import { escapeRegExp, SuccessNotification } from 'services/helpers/helpers'
 import { Batch } from 'services/interfaces'
 import { Link } from 'react-router-dom'
@@ -105,16 +105,16 @@ export const BatchesTable = () => {
     },
   ].filter((column) => !column.hidden)
 
-  const downloadMenu = (
-    <Menu style={{ width: 100, textAlign: 'center' }}>
-      <Menu.Item key="excel">
-        <ExportCSV fileName={'Statina'} searchValue={searchValue} />
-      </Menu.Item>
-      <Menu.Item key="pdf">
-        <BatchesTablePDF searchValue={searchValue} />
-      </Menu.Item>
-    </Menu>
-  )
+  const downloadMenuItems = [
+    {
+      key: 'excel',
+      label: <ExportCSV fileName={'Statina'} searchValue={searchValue} />,
+    },
+    {
+      key: 'pdf',
+      label: <BatchesTablePDF searchValue={searchValue} />,
+    },
+  ]
 
   return (
     <>
@@ -122,7 +122,7 @@ export const BatchesTable = () => {
         <>
           <Row justify="space-between" style={{ paddingBottom: 20 }}>
             <Col span={2}>
-              <Dropdown overlay={downloadMenu}>
+              <Dropdown menu={{ items: downloadMenuItems }}>
                 <Button type={'primary'}>
                   Download batches list <DownOutlined />
                 </Button>

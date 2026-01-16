@@ -126,7 +126,16 @@ export const App = () => {
                         disabled: !token,
                         style: { marginLeft: 'auto' },
                         label: (
-                          <Dropdown overlay={<ProfileDropdown user={user} logout={logout} />}>
+                          <Dropdown
+                            menu={{
+                              items: [
+                                {
+                                  key: 'profile',
+                                  label: <ProfileDropdown user={user} logout={logout} />,
+                                },
+                              ],
+                            }}
+                          >
                             <Button type="primary">
                               {user?.username} <DownOutlined />
                             </Button>
