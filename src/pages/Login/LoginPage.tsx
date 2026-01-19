@@ -44,7 +44,7 @@ export const LoginPage = () => {
                 },
               ]}
             >
-              <Input placeholder="Username" />
+              <Input placeholder="Username" autoComplete="username" />
             </Form.Item>
             <Form.Item
               name="password"
@@ -55,7 +55,7 @@ export const LoginPage = () => {
                 },
               ]}
             >
-              <Input.Password placeholder="Password" />
+              <Input.Password placeholder="Password" autoComplete="current-password" />
             </Form.Item>
             <Form.Item>
               <Button htmlType="submit" type={'primary'}>

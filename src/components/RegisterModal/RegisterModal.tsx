@@ -26,7 +26,7 @@ export const RegisterModal = () => {
       <Button onClick={showModal}>Create new account</Button>
       <Modal title="Create new account" open={isModalVisible} footer={null} onCancel={handleCancel}>
         {!isRegistrationSuccessful && (
-          <Form name="basic" onFinish={signUp} autoComplete="off">
+          <Form name="register" onFinish={signUp} autoComplete="off">
             <Form.Item
               name="email"
               rules={[
@@ -37,7 +37,7 @@ export const RegisterModal = () => {
                 },
               ]}
             >
-              <Input placeholder="Email" />
+              <Input placeholder="Email" autoComplete="email" />
             </Form.Item>
             <Form.Item
               name="username"
@@ -48,7 +48,7 @@ export const RegisterModal = () => {
                 },
               ]}
             >
-              <Input placeholder="Username" />
+              <Input placeholder="Username" autoComplete="username" />
             </Form.Item>
             <Form.Item
               name="password"
@@ -59,7 +59,7 @@ export const RegisterModal = () => {
                 },
               ]}
             >
-              <Input.Password placeholder="Password" />
+              <Input.Password placeholder="Password" autoComplete="new-password" />
             </Form.Item>
             <Form.Item
               name="password_repeated"
@@ -82,7 +82,7 @@ export const RegisterModal = () => {
                 }),
               ]}
             >
-              <Input.Password placeholder="Confirm password" />
+              <Input.Password placeholder="Confirm password" autoComplete="new-password" />
             </Form.Item>
             <Form.Item>
               <Button htmlType="submit" type={'primary'}>
