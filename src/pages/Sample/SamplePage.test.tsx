@@ -35,7 +35,7 @@ describe('Sample Page', () => {
             permissions: ['R'],
           }}
         >
-          <BrowserRouter>
+          <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
             <SamplePage />
           </BrowserRouter>
         </UserContext.Provider>
@@ -60,7 +60,7 @@ describe('Sample Page', () => {
             permissions: ['RW'],
           }}
         >
-          <BrowserRouter>
+          <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
             <SamplePage />
           </BrowserRouter>
         </UserContext.Provider>
@@ -86,7 +86,7 @@ describe('Sample Page', () => {
             permissions: ['RW'],
           }}
         >
-          <BrowserRouter>
+          <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
             <SamplePage />
           </BrowserRouter>
         </UserContext.Provider>
@@ -111,7 +111,7 @@ describe('Sample Page', () => {
             permissions: ['R'],
           }}
         >
-          <BrowserRouter>
+          <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
             <SamplePage />
           </BrowserRouter>
         </UserContext.Provider>
@@ -137,7 +137,7 @@ describe('Sample Page', () => {
             permissions: ['R'],
           }}
         >
-          <BrowserRouter>
+          <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
             <SamplePage />
           </BrowserRouter>
         </UserContext.Provider>
@@ -161,7 +161,7 @@ describe('Sample Page', () => {
             permissions: ['R'],
           }}
         >
-          <BrowserRouter>
+          <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
             <SamplePage />
           </BrowserRouter>
         </UserContext.Provider>

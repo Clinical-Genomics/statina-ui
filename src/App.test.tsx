@@ -14,7 +14,7 @@ describe('App', () => {
   test('not signed in App should display login page', async () => {
     const { getByText } = await waitFor(() =>
       render(
-        <MemoryRouter>
+        <MemoryRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
           <App />
         </MemoryRouter>
       )
@@ -32,7 +32,7 @@ describe('App', () => {
     mockedAxios.get.mockReturnValue(Promise.resolve(mockBatches))
     const { getByText } = await waitFor(() =>
       render(
-        <MemoryRouter>
+        <MemoryRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
           <App />
         </MemoryRouter>
       )
@@ -50,7 +50,7 @@ describe('App', () => {
     mockedAxios.get.mockReturnValue(Promise.resolve(mockBatches))
     const { getByText } = await waitFor(() =>
       render(
-        <MemoryRouter>
+        <MemoryRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
           <App />
         </MemoryRouter>
       )
@@ -67,7 +67,7 @@ describe('App', () => {
 
     const { getByText } = await waitFor(() =>
       render(
-        <MemoryRouter>
+        <MemoryRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
           <App />
         </MemoryRouter>
       )
@@ -83,7 +83,7 @@ describe('App', () => {
 
     const { getByText } = await waitFor(() =>
       render(
-        <MemoryRouter>
+        <MemoryRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
           <App />
         </MemoryRouter>
       )
