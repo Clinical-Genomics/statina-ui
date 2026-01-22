@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { Result } from 'antd'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 interface UnauthorizedPageProps {
   isLoggedIn: boolean
@@ -8,12 +8,11 @@ interface UnauthorizedPageProps {
 
 export const UnauthorizedPage = (props: UnauthorizedPageProps) => {
   const { isLoggedIn } = props
-  const history = useHistory()
+  const navigate = useNavigate()
 
   useEffect(() => {
-    if (isLoggedIn) history.push('/')
-  }, [history, isLoggedIn])
-
+    if (isLoggedIn) navigate('/', { replace: true })
+  }, [navigate, isLoggedIn])
   return (
     <Result
       status="403"
