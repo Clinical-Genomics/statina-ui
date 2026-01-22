@@ -1,13 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Tabs, Card, InputNumber } from 'antd'
+import { Tabs, Card, InputNumber, Space, Typography } from 'antd'
 import { getStatistics } from '../../services/StatinaApi'
 import { UserContext } from '../../services/userContext'
 import { StatisticsBoxPlot } from '../../components/StatisticsBoxPlot/StatisticsBoxPlot'
 import { StatisticsScatterPlot } from '../../components/StatisticsScatterPlot/StatisticsScatterPlot'
 import { Loading } from '../../components/Loading'
 import { ErrorNotification } from 'services/helpers/helpers'
-
-const { TabPane } = Tabs
 
 export function StatisticsPage() {
   const userContext = useContext(UserContext)
@@ -26,7 +24,7 @@ export function StatisticsPage() {
         setIsLoading(false)
       })
       .catch(() => setIsLoading(false))
-  }, [])
+  }, [numberOfcases, userContext])
 
   const onTabChange = (key: string) => {
     setSelectedPlot(key)
@@ -67,40 +65,48 @@ export function StatisticsPage() {
     <Loading />
   ) : (
     <Card>
-      <Tabs defaultActiveKey={defaultTabKey.toString()} onChange={onTabChange} type="card">
-        {statistics?.box_plots.map((box) => (
-          <TabPane tab={box} key={box}>
-            {statistics && selectedPlot && (
-              <StatisticsBoxPlot
-                selectedPlot={selectedPlot}
-                statistics={statistics}
-                showTotal={showTotal}
-              />
-            )}
-          </TabPane>
-        ))}
-        {statistics?.scatter_plots.map((scatter) => (
-          <TabPane tab={scatter} key={scatter}>
-            {statistics && selectedPlot && (
-              <StatisticsScatterPlot
-                selectedPlot={selectedPlot}
-                statistics={statistics}
-                showTotal={showTotal}
-              />
-            )}
-          </TabPane>
-        ))}
-      </Tabs>
-      <InputNumber
-        addonBefore="Number of batches"
-        value={numberOfcases}
-        step={10}
-        min={10}
-        onStep={onNumberOfBatchesChange}
-        onPressEnter={onPressEnter}
-        style={{ marginTop: '30px' }}
-        autoFocus={true}
+      <Tabs
+        defaultActiveKey={defaultTabKey.toString()}
+        onChange={onTabChange}
+        type="card"
+        items={[
+          ...(statistics?.box_plots ?? []).map((box) => ({
+            key: box,
+            label: box,
+            children:
+              statistics && selectedPlot ? (
+                <StatisticsBoxPlot
+                  selectedPlot={selectedPlot}
+                  statistics={statistics}
+                  showTotal={showTotal}
+                />
+              ) : null,
+          })),
+          ...(statistics?.scatter_plots ?? []).map((scatter) => ({
+            key: scatter,
+            label: scatter,
+            children:
+              statistics && selectedPlot ? (
+                <StatisticsScatterPlot
+                  selectedPlot={selectedPlot}
+                  statistics={statistics}
+                  showTotal={showTotal}
+                />
+              ) : null,
+          })),
+        ]}
       />
+      <Space align="center" style={{ marginTop: '30px' }}>
+        <Typography.Text>Number of batches</Typography.Text>
+        <InputNumber
+          value={numberOfcases}
+          step={10}
+          min={10}
+          onStep={onNumberOfBatchesChange}
+          onPressEnter={onPressEnter}
+          autoFocus={true}
+        />
+      </Space>
     </Card>
   )
 }

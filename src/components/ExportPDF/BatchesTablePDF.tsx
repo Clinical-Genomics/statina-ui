@@ -1,7 +1,8 @@
 import React, { useContext } from 'react'
 import { UserContext } from '../../services/userContext'
 import { getBatches } from '../../services/StatinaApi'
-import jsPDF from 'jspdf'
+import { jsPDF } from 'jspdf'
+import autoTable, { type UserOptions } from 'jspdf-autotable'
 import { Tooltip } from 'antd'
 import { ErrorNotification } from 'services/helpers/helpers'
 
@@ -26,7 +27,7 @@ export function BatchesTablePDF({ searchValue }: BatchesTablePDFProps) {
         const orientation = 'portrait'
 
         const marginLeft = 40
-        const doc = new jsPDF(orientation, unit, size) as any
+        const doc = new jsPDF(orientation, unit, size)
 
         doc.setFontSize(15)
 
@@ -37,7 +38,7 @@ export function BatchesTablePDF({ searchValue }: BatchesTablePDFProps) {
 
         const data = documents.map((item) => [item.batch_id, item.sequencing_date, item.flowcell])
 
-        const content = {
+        const content: UserOptions = {
           startY: 50,
           head: headers,
           body: data,
@@ -45,7 +46,7 @@ export function BatchesTablePDF({ searchValue }: BatchesTablePDFProps) {
         }
 
         doc.text(title, marginLeft, 40)
-        doc.autoTable(content)
+        autoTable(doc, content)
         doc.save('Statina.pdf')
       }
     })

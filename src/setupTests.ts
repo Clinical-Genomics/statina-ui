@@ -17,3 +17,14 @@ globalThis.matchMedia =
       removeListener: vi.fn(),
     }
   }
+
+const originalGetComputedStyle = window.getComputedStyle
+window.getComputedStyle = (element, pseudoElement) => {
+  if (pseudoElement) {
+    return {
+      getPropertyValue: () => '',
+    } as unknown as CSSStyleDeclaration
+  }
+
+  return originalGetComputedStyle(element)
+}

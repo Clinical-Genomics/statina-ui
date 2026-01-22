@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
-import jsPDF from 'jspdf'
-import 'jspdf-autotable'
+import { jsPDF } from 'jspdf'
+import autoTable, { type UserOptions } from 'jspdf-autotable'
 import { Button } from 'antd'
 import { ErrorNotification } from '../../services/helpers/helpers'
 import Plotly from 'plotly.js/dist/plotly-basic'
@@ -29,7 +29,7 @@ export const BatchTablePDF = ({ batchId, batchComment }) => {
       setData(buildFFXYGraphData(response))
       setLayout(buildFFXYGraphLayout(response))
     })
-  }, [])
+  }, [batchId, userContext])
 
   const exportPDF = () => {
     setIsLoading(true)
@@ -40,7 +40,7 @@ export const BatchTablePDF = ({ batchId, batchComment }) => {
       const orientation = 'landscape'
 
       const marginLeft = 40
-      const doc = new jsPDF(orientation, unit, size) as any
+      const doc = new jsPDF(orientation, unit, size)
 
       doc.setFontSize(15)
 
@@ -65,7 +65,7 @@ export const BatchTablePDF = ({ batchId, batchComment }) => {
 
       const contentStart = batchComment ? batchComment.match(/(.{1,100})/g).length * 20 + 50 : 70
 
-      const content = {
+      const content: UserOptions = {
         startY: contentStart,
         head: headers,
         body: pdfData,
@@ -81,7 +81,7 @@ export const BatchTablePDF = ({ batchId, batchComment }) => {
       doc.text(subtitle, marginLeft, 60, {
         maxWidth: 750,
       })
-      doc.autoTable(content)
+      autoTable(doc, content)
 
       if (graph && data && layout) {
         Plotly.newPlot(graph, data, layout).then((plot) =>

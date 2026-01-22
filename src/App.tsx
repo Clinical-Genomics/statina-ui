@@ -25,6 +25,7 @@ export const App = () => {
   const [isLoading, setIsLoading] = React.useState<boolean>(true)
   const [user, setUser] = React.useState<any>()
   const [token, setToken] = React.useState<any>()
+  const location = useLocation()
 
   useEffect(() => {
     getCookies()
@@ -67,45 +68,84 @@ export const App = () => {
               theme="dark"
               mode="horizontal"
               defaultSelectedKeys={['home']}
-              selectedKeys={[useLocation().pathname]}
-            >
-              <Menu.Item key="/batches" disabled={!token}>
-                <Link to="/batches">
-                  <span>Batches</span>
-                </Link>
-              </Menu.Item>
-              <Menu.Item key="/samples" disabled={!token}>
-                <Link to="/samples">
-                  <span>Samples</span>
-                </Link>
-              </Menu.Item>
-              <Menu.Item key="/statistics" disabled={!token}>
-                <Link to="/statistics">
-                  <span>Quality Control</span>
-                </Link>
-              </Menu.Item>
-              <Menu.Item key={`/${datasetsPath}`} disabled={!token}>
-                <Link to={`/${datasetsPath}`}>
-                  <span>Datasets</span>
-                </Link>
-              </Menu.Item>
-              {user?.scopes?.includes('admin') && (
-                <Menu.Item key="/admin" disabled={!token}>
-                  <Link to="/admin">
-                    Admin <ToolFilled />
-                  </Link>
-                </Menu.Item>
-              )}
-              {!!token && !!user?.username && (
-                <Menu.Item key="/user" disabled={!token} style={{ marginLeft: 'auto' }}>
-                  <Dropdown overlay={<ProfileDropdown user={user} logout={logout} />}>
-                    <Button type="primary">
-                      {user?.username} <DownOutlined />
-                    </Button>
-                  </Dropdown>
-                </Menu.Item>
-              )}
-            </Menu>
+              selectedKeys={[location.pathname]}
+              items={[
+                {
+                  key: '/batches',
+                  disabled: !token,
+                  label: (
+                    <Link to="/batches">
+                      <span>Batches</span>
+                    </Link>
+                  ),
+                },
+                {
+                  key: '/samples',
+                  disabled: !token,
+                  label: (
+                    <Link to="/samples">
+                      <span>Samples</span>
+                    </Link>
+                  ),
+                },
+                {
+                  key: '/statistics',
+                  disabled: !token,
+                  label: (
+                    <Link to="/statistics">
+                      <span>Quality Control</span>
+                    </Link>
+                  ),
+                },
+                {
+                  key: `/${datasetsPath}`,
+                  disabled: !token,
+                  label: (
+                    <Link to={`/${datasetsPath}`}>
+                      <span>Datasets</span>
+                    </Link>
+                  ),
+                },
+                ...(user?.scopes?.includes('admin')
+                  ? [
+                      {
+                        key: '/admin',
+                        disabled: !token,
+                        label: (
+                          <Link to="/admin">
+                            Admin <ToolFilled />
+                          </Link>
+                        ),
+                      },
+                    ]
+                  : []),
+                ...(!!token && !!user?.username
+                  ? [
+                      {
+                        key: '/user',
+                        disabled: !token,
+                        style: { marginLeft: 'auto' },
+                        label: (
+                          <Dropdown
+                            menu={{
+                              items: [
+                                {
+                                  key: 'profile',
+                                  label: <ProfileDropdown user={user} logout={logout} />,
+                                },
+                              ],
+                            }}
+                          >
+                            <Button type="primary">
+                              {user?.username} <DownOutlined />
+                            </Button>
+                          </Dropdown>
+                        ),
+                      },
+                    ]
+                  : []),
+              ]}
+            />
           </Header>
           <Content
             className={styles.siteLayout}

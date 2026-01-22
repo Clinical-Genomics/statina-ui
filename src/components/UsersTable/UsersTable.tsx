@@ -21,7 +21,7 @@ export const UsersTable = () => {
     getUsers(userContext, 10, 0, searchValue).then((users) => {
       setUsers(users?.documents), setPageCount(users?.document_count)
     })
-  }, [])
+  }, [searchValue, userContext])
 
   const onSearch = (searchInput) => {
     const escapeInput = escapeRegExp(searchInput)

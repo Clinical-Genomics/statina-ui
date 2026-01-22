@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { UserContext } from '../../services/userContext'
 import {
   getSamples,
@@ -38,6 +38,18 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
   const [error, setError] = useState<any>()
   const pageSize = 100
 
+  const includedSamples = useCallback((samples) => {
+    if (samples?.length > 0) {
+      const selectedKey: string[] = []
+      samples.forEach((sample) => {
+        if (sample.included.include) {
+          selectedKey.push(sample?.sample_id)
+        }
+      })
+      setSelectedRowKeys(selectedKey)
+    }
+  }, [])
+
   useEffect(() => {
     getSamples(userContext, pageSize, 0, batchId, searchValue, sortKey, sortDirection)
       .then((samples) => {
@@ -49,19 +61,7 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
       .catch((error) => {
         setIsLoading(false), setError(error)
       })
-  }, [])
-
-  const includedSamples = (samples) => {
-    if (samples?.length > 0) {
-      const selectedKey: string[] = []
-      samples.forEach((sample) => {
-        if (sample.included.include) {
-          selectedKey.push(sample?.sample_id)
-        }
-      })
-      setSelectedRowKeys(selectedKey)
-    }
-  }
+  }, [batchId, includedSamples, pageSize, searchValue, sortDirection, sortKey, userContext])
 
   const onSearch = (searchInput) => {
     const escapeInput = escapeRegExp(searchInput)
