@@ -1,5 +1,5 @@
 import React from 'react'
-import { Switch, Redirect, Route } from 'react-router-dom'
+import { Routes, Navigate, Route } from 'react-router-dom'
 import { UnauthorizedPage } from 'pages/UnauthorizedPage'
 import { BatchesPage } from 'pages/Batches/BatchesPage'
 import { BatchPage } from 'pages/Batch/BatchPage'
@@ -19,95 +19,63 @@ type RoutesProps = {
 
 export const datasetsPath = 'datasets'
 
-export const Routes = (props: RoutesProps) => {
+export const AppRoutes = (props: RoutesProps) => {
   const { isLoggedIn } = props
   return (
-    <Switch>
-      <Route path="/unauthorized" exact>
-        <UnauthorizedPage isLoggedIn={isLoggedIn} />
-      </Route>
+    <Routes>
+      <Route path="/unauthorized" element={<UnauthorizedPage isLoggedIn={isLoggedIn} />} />
+
       <Route
         path="/login"
-        exact
-        render={() =>
-          isLoggedIn === true ? <Redirect to={{ pathname: '/batches' }} /> : <LoginPage />
-        }
+        element={isLoggedIn === true ? <Navigate to="/batches" replace /> : <LoginPage />}
       />
       <Route
         path="/"
-        exact
-        render={() =>
+        element={
           isLoggedIn === true ? (
-            <Redirect to={{ pathname: '/batches' }} />
+            <Navigate to="/batches" replace />
           ) : (
-            <Redirect to={{ pathname: '/login' }} />
+            <Navigate to="/login" replace />
           )
         }
       />
       <Route
         path="/admin"
-        exact
-        render={() =>
-          isLoggedIn === true ? <AdminPage /> : <Redirect to={{ pathname: '/login' }} />
-        }
+        element={isLoggedIn === true ? <AdminPage /> : <Navigate to="/login" replace />}
       />
       <Route
         path={`/${datasetsPath}`}
-        exact
-        render={() =>
-          isLoggedIn === true ? <Datasets /> : <Redirect to={{ pathname: '/login' }} />
-        }
+        element={isLoggedIn === true ? <Datasets /> : <Navigate to="/login" replace />}
       />
       <Route
         path={`/${datasetsPath}/:datasetId`}
-        exact
-        render={() =>
-          isLoggedIn === true ? <DatasetPage /> : <Redirect to={{ pathname: '/login' }} />
-        }
+        element={isLoggedIn === true ? <DatasetPage /> : <Navigate to="/login" replace />}
       />
       <Route
         path="/batches"
-        exact
-        render={() =>
-          isLoggedIn === true ? <BatchesPage /> : <Redirect to={{ pathname: '/login' }} />
-        }
+        element={isLoggedIn === true ? <BatchesPage /> : <Navigate to="/login" replace />}
       />
       <Route
         path="/batches/:batchId"
-        exact
-        render={() =>
-          isLoggedIn === true ? <BatchPage /> : <Redirect to={{ pathname: '/login' }} />
-        }
+        element={isLoggedIn === true ? <BatchPage /> : <Navigate to="/login" replace />}
       />
       <Route
         path="/samples"
-        exact
-        render={() =>
-          isLoggedIn === true ? <SamplesPage /> : <Redirect to={{ pathname: '/login' }} />
-        }
+        element={isLoggedIn === true ? <SamplesPage /> : <Navigate to="/login" replace />}
       />
       <Route
         path="/samples/:sampleId"
-        exact
-        render={() =>
-          isLoggedIn === true ? <SamplePage /> : <Redirect to={{ pathname: '/login' }} />
-        }
+        element={isLoggedIn === true ? <SamplePage /> : <Navigate to="/login" replace />}
       />
       <Route
         path="/statistics"
-        exact
-        render={() =>
-          isLoggedIn === true ? <StatisticsPage /> : <Redirect to={{ pathname: '/login' }} />
-        }
+        element={isLoggedIn === true ? <StatisticsPage /> : <Navigate to="/login" replace />}
       />
-      <Route path="/:username/:verificationhex" exact render={() => <ConfirmedResult />} />
+      <Route path="/:username/:verificationhex" element={<ConfirmedResult />} />
       <Route
         path="*"
-        exact
-        render={() =>
-          isLoggedIn === true ? <PageNotFound /> : <Redirect to={{ pathname: '/login' }} />
-        }
+        element={isLoggedIn === true ? <PageNotFound /> : <Navigate to="/login" replace />}
       />
-    </Switch>
+    </Routes>
   )
 }
