@@ -3,8 +3,7 @@ import { render, waitFor } from '@testing-library/react'
 import axios from 'axios'
 import { mockBatches } from './mocks/batches'
 import { App } from './App'
-import { Router } from 'react-router-dom'
-import { createMemoryHistory } from 'history'
+import { MemoryRouter } from 'react-router-dom'
 import { mockAdminCookie, mockInactiveCookie, mockUnconfirmedCookie } from './mocks/cookies'
 import type { Mocked } from 'vitest'
 
@@ -13,12 +12,11 @@ const mockedAxios = axios as Mocked<typeof axios>
 
 describe('App', () => {
   test('not signed in App should display login page', async () => {
-    const history = createMemoryHistory()
     const { getByText } = await waitFor(() =>
       render(
-        <Router history={history}>
+        <MemoryRouter>
           <App />
-        </Router>
+        </MemoryRouter>
       )
     )
     const signInButton = await waitFor(() => getByText(/Sign in/i))
@@ -32,13 +30,11 @@ describe('App', () => {
     })
 
     mockedAxios.get.mockReturnValue(Promise.resolve(mockBatches))
-    const history = createMemoryHistory()
-
     const { getByText } = await waitFor(() =>
       render(
-        <Router history={history}>
+        <MemoryRouter>
           <App />
-        </Router>
+        </MemoryRouter>
       )
     )
     const batchPageTitle = await waitFor(() => getByText(/NIPT Batches/i))
@@ -52,13 +48,11 @@ describe('App', () => {
     })
 
     mockedAxios.get.mockReturnValue(Promise.resolve(mockBatches))
-    const history = createMemoryHistory()
-
     const { getByText } = await waitFor(() =>
       render(
-        <Router history={history}>
+        <MemoryRouter>
           <App />
-        </Router>
+        </MemoryRouter>
       )
     )
     const username = await waitFor(() => getByText(/elevu/i))
@@ -71,13 +65,11 @@ describe('App', () => {
       value: mockUnconfirmedCookie,
     })
 
-    const history = createMemoryHistory()
-
     const { getByText } = await waitFor(() =>
       render(
-        <Router history={history}>
+        <MemoryRouter>
           <App />
-        </Router>
+        </MemoryRouter>
       )
     )
     const message = await waitFor(() => getByText(/You didn't confirm your email address/i))
@@ -89,13 +81,11 @@ describe('App', () => {
       value: mockInactiveCookie,
     })
 
-    const history = createMemoryHistory()
-
     const { getByText } = await waitFor(() =>
       render(
-        <Router history={history}>
+        <MemoryRouter>
           <App />
-        </Router>
+        </MemoryRouter>
       )
     )
     const message = await waitFor(() => getByText(/Your account is inactive/i))
