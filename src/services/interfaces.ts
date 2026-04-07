@@ -129,6 +129,14 @@ export interface Threshold {
   soft_min: ThresholdData
 }
 
+export interface RatioGraphInteface {
+  abnormal_data: GrahCromosomeData
+  chromosomes: string[]
+  ncv_chrom_data: GrahCromosomeData
+  normal_data: GrahCromosomeData
+  tris_thresholds
+}
+
 export interface ZScoreGraph {
   abnormal_data: GrahCromosomeData
   chromosomes: string[]
