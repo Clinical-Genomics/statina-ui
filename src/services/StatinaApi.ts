@@ -164,6 +164,15 @@ export const getBatch = async (batchId: string, context: UserContext): Promise<a
   return axiosGET(endPoint, context)
 }
 
+export const getZScoreGraph = async (
+  batchId: string,
+  chromosome: number,
+  context: UserContext
+): Promise<any> => {
+  const endPoint = `${VITE_BACKEND_URL}/batch/${batchId}/zscore_plot?ncv=${chromosome}`
+  return axiosGET(endPoint, context)
+}
+
 export const getRatioGraph = async (
   batchId: string,
   chromosome: number,
