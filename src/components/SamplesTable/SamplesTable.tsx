@@ -37,7 +37,6 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
   const [isLoading, setIsLoading] = React.useState<boolean>(true)
   const [error, setError] = useState<any>()
   const pageSize = 100
-
   const includedSamples = useCallback((samples) => {
     if (samples?.length > 0) {
       const selectedKey: string[] = []
@@ -53,13 +52,14 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
   useEffect(() => {
     getSamples(userContext, pageSize, 0, batchId, searchValue, sortKey, sortDirection)
       .then((samples) => {
-        setFilteredSamples(samples?.documents),
+        ;(setFilteredSamples(samples?.documents),
           setPageCount(samples?.document_count),
-          includedSamples(samples?.documents)
+          includedSamples(samples?.documents))
         setIsLoading(false)
       })
       .catch((error) => {
-        setIsLoading(false), setError(error)
+        setIsLoading(false)
+        setError(error)
       })
   }, [batchId, includedSamples, pageSize, searchValue, sortDirection, sortKey, userContext])
 
@@ -68,9 +68,9 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
     setSearchValue(escapeInput)
     setCurrentPage(1)
     getSamples(userContext, 0, 0, batchId, escapeInput, sortKey, sortDirection).then((samples) => {
-      setFilteredSamples(samples.documents),
-        setPageCount(samples.document_count),
-        includedSamples(samples?.documents)
+      setFilteredSamples(samples.documents)
+      setPageCount(samples.document_count)
+      includedSamples(samples?.documents)
     })
   }
 
@@ -86,8 +86,10 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
       sorter?.column?.key,
       sorter?.order
     ).then((samples) => {
-      setFilteredSamples(samples.documents), setPageCount(samples.document_count)
-      setCurrentPage(data.current), includedSamples(samples.documents)
+      setFilteredSamples(samples.documents)
+      setPageCount(samples.document_count)
+      setCurrentPage(data.current)
+      includedSamples(samples.documents)
     })
   }
 
@@ -131,9 +133,9 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
         sortKey,
         sortDirection
       ).then((samples) => {
-        setFilteredSamples(samples?.documents),
-          setPageCount(samples?.document_count),
-          includedSamples(samples?.documents)
+        setFilteredSamples(samples?.documents)
+        setPageCount(samples?.document_count)
+        includedSamples(samples?.documents)
         setIsLoading(false)
       })
     })
@@ -160,10 +162,10 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
       render: (batch_id: any) => <Link to={`/batches/${batch_id}`}>{batch_id}</Link>,
     },
     {
-      title: 'Z_13',
-      dataIndex: 'z_score',
-      key: 'Zscore_13',
-      width: 70,
+      title: 'R13',
+      dataIndex: 'ratio',
+      key: 'Chr13_Ratio',
+      width: 90,
       sorter: true,
       onCell: (sample) => {
         return {
@@ -172,18 +174,18 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
               sample.warnings.z_score_13 === 'danger'
                 ? red[1]
                 : sample.warnings.z_score_13 === 'warning'
-                ? gold[1]
-                : null,
+                  ? gold[1]
+                  : null,
           },
         }
       },
-      render: (score) => <div>{score['13']}</div>,
+      render: (ratio) => <div>{ratio?.R13}</div>,
     },
     {
-      title: 'Z_18',
-      dataIndex: 'z_score',
-      key: 'Zscore_18',
-      width: 70,
+      title: 'R18',
+      dataIndex: 'ratio',
+      key: 'Chr18_Ratio',
+      width: 90,
       sorter: true,
       onCell: (sample) => {
         return {
@@ -192,19 +194,19 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
               sample.warnings.z_score_18 === 'danger'
                 ? red[1]
                 : sample.warnings.z_score_18 === 'warning'
-                ? gold[1]
-                : null,
+                  ? gold[1]
+                  : null,
           },
         }
       },
-      render: (score) => <div>{score['18']}</div>,
+      render: (ratio) => <div>{ratio?.R18}</div>,
     },
     {
-      title: 'Z_21',
-      dataIndex: 'z_score',
-      key: 'Zscore_21',
+      title: 'R21',
+      dataIndex: 'ratio',
+      key: 'Chr21_Ratio',
       sorter: true,
-      width: 70,
+      width: 90,
       onCell: (sample) => {
         return {
           style: {
@@ -212,12 +214,12 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
               sample.warnings.z_score_21 === 'danger'
                 ? red[1]
                 : sample.warnings.z_score_21 === 'warning'
-                ? gold[1]
-                : null,
+                  ? gold[1]
+                  : null,
           },
         }
       },
-      render: (score) => <div>{score['21']}</div>,
+      render: (ratio) => <div>{ratio?.R21}</div>,
     },
     {
       title: 'FFPF',
@@ -232,8 +234,8 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
               sample.warnings.fetal_fraction_preface === 'danger'
                 ? red[1]
                 : sample.warnings.fetal_fraction_preface === 'warning'
-                ? gold[1]
-                : null,
+                  ? gold[1]
+                  : null,
           },
         }
       },
@@ -252,8 +254,8 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
               sample.warnings.fetal_fraction_x === 'danger'
                 ? red[1]
                 : sample.warnings.fetal_fraction_x === 'warning'
-                ? gold[1]
-                : null,
+                  ? gold[1]
+                  : null,
           },
         }
       },
@@ -272,8 +274,8 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
               sample.warnings.fetal_fraction_y === 'danger'
                 ? red[1]
                 : sample.warnings.fetal_fraction_y === 'warning'
-                ? gold[1]
-                : null,
+                  ? gold[1]
+                  : null,
           },
         }
       },
