@@ -2,6 +2,7 @@ import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { Card, Tabs, Row, Col, Typography, Select } from 'antd'
 import { useLocation, Link } from 'react-router-dom'
 import { ZscoreGraph } from '../../components/ZscoreGraph/ZscoreGraph'
+import { RatioGraph } from '../../components/RatioGraph/RatioGraph'
 import { BatchTablePDF } from '../../components/ExportPDF/BatchTablePDF'
 import {
   editBatchComment,
@@ -45,7 +46,7 @@ export const BatchPage = () => {
         setIsLoading(false)
       })
       .catch((error) => {
-        setIsLoading(false), setError(error)
+        ;(setIsLoading(false), setError(error))
       })
   }, [batchId, userContext])
 
@@ -152,6 +153,24 @@ export const BatchPage = () => {
                 label: 'Zscore 21',
                 className: styles.tab,
                 children: <ZscoreGraph batchId={batchId} chromosome={21} />,
+              },
+              {
+                key: 'Ratio_13',
+                label: 'Ratio 13',
+                className: styles.tab,
+                children: <RatioGraph batchId={batchId} chromosome={13} />,
+              },
+              {
+                key: 'Ratio_18',
+                label: 'Ratio 18',
+                className: styles.tab,
+                children: <RatioGraph batchId={batchId} chromosome={18} />,
+              },
+              {
+                key: 'Ratio_21',
+                label: 'Ratio 21',
+                className: styles.tab,
+                children: <RatioGraph batchId={batchId} chromosome={21} />,
               },
               {
                 key: 'Fetal_Fraction_Preface',
