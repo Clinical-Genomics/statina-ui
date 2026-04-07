@@ -62,6 +62,9 @@ export const mockSample: Sample = {
     '21': '1.19',
     x: '-0.82',
   },
+  Chr13_Ratio: '1.06',
+  Chr18_Ratio: '0.95',
+  Chr21_Ratio: '1.02',
   fetal_fraction: {
     x: '0.96',
     y: '4.17',

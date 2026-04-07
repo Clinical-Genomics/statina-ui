@@ -63,6 +63,9 @@ export const mockSamples: Sample[] = [
       '21': '0.24',
       x: '-12.05',
     },
+    Chr13_Ratio: '1.02',
+    Chr18_Ratio: '0.98',
+    Chr21_Ratio: '1.01',
     fetal_fraction: {
       x: '12.9',
       y: '12.61',
@@ -131,6 +134,9 @@ export const mockSamples: Sample[] = [
       '21': '-0.29',
       x: '0.22',
     },
+    Chr13_Ratio: '0.99',
+    Chr18_Ratio: '1.03',
+    Chr21_Ratio: '0.97',
     fetal_fraction: {
       x: '0.85',
       y: '0.0',
@@ -199,6 +205,9 @@ export const mockSamples: Sample[] = [
       '21': '-0.28',
       x: '-5.67',
     },
+    Chr13_Ratio: '1.00',
+    Chr18_Ratio: '0.96',
+    Chr21_Ratio: '1.04',
     fetal_fraction: {
       x: '7.01',
       y: '7.73',
@@ -267,6 +276,9 @@ export const mockSamples: Sample[] = [
       '21': '-0.62',
       x: '-2.56',
     },
+    Chr13_Ratio: '1.05',
+    Chr18_Ratio: '0.95',
+    Chr21_Ratio: '0.94',
     fetal_fraction: {
       x: '4.02',
       y: '4.23',
@@ -335,6 +347,9 @@ export const mockSamples: Sample[] = [
       '21': '-0.27',
       x: '0.47',
     },
+    Chr13_Ratio: '1.01',
+    Chr18_Ratio: '0.97',
+    Chr21_Ratio: '0.98',
     fetal_fraction: {
       x: '1.48',
       y: '0.0',
