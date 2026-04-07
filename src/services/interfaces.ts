@@ -58,6 +58,9 @@ export interface Sample {
     '21': string
     x: string
   }
+  Chr13_Ratio: string
+  Chr18_Ratio: string
+  Chr21_Ratio: string
   fetal_fraction: {
     x: string
     y: string
