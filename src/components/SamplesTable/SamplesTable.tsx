@@ -171,9 +171,9 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
         return {
           style: {
             background:
-              sample.warnings.z_score_13 === 'danger'
+              sample.warnings.chr13_ratio === 'danger'
                 ? red[1]
-                : sample.warnings.z_score_13 === 'warning'
+                : sample.warnings.chr13_ratio === 'warning'
                   ? gold[1]
                   : null,
           },
@@ -191,9 +191,9 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
         return {
           style: {
             background:
-              sample.warnings.z_score_18 === 'danger'
+              sample.warnings.chr18_ratio === 'danger'
                 ? red[1]
-                : sample.warnings.z_score_18 === 'warning'
+                : sample.warnings.chr18_ratio === 'warning'
                   ? gold[1]
                   : null,
           },
@@ -211,9 +211,9 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
         return {
           style: {
             background:
-              sample.warnings.z_score_21 === 'danger'
+              sample.warnings.chr21_ratio === 'danger'
                 ? red[1]
-                : sample.warnings.z_score_21 === 'warning'
+                : sample.warnings.chr21_ratio === 'warning'
                   ? gold[1]
                   : null,
           },
