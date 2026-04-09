@@ -18,9 +18,9 @@ const getBatchesWithData = (selectedPlot: string, statistics: any): string[] => 
 
 const buildData = (selectedPlot: string, statistics: any): BoxPlotData[] => {
   return getBatchesWithData(selectedPlot, statistics).map((batchId: string) => ({
+    name: batchId,
     y: statistics.box_stat[batchId][selectedPlot],
     type: 'box',
-    name: batchId,
     text: statistics.box_stat[batchId]?.sample_ids,
     showlegend: false,
     boxpoints: 'all',
@@ -32,8 +32,8 @@ const buildLayout = (selectedPlot: string, statistics: any, showTotal: boolean):
 
   return {
     title: showTotal
-      ? `${selectedPlot} - all batches (${statistics.batch_ids.length})`
-      : `${selectedPlot} - ${statistics.batch_ids.length} most recent batches`,
+      ? `${selectedPlot} - all batches with data (${batchesWithData.length})`
+      : `${selectedPlot} - ${batchesWithData.length} most recent batches with data`,
     hovermode: 'closest',
     margin: { b: 100 },
     height: 600,
