@@ -1,7 +1,6 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { Card, Tabs, Row, Col, Typography, Select } from 'antd'
 import { useLocation, Link } from 'react-router-dom'
-import { ZscoreGraph } from '../../components/ZscoreGraph/ZscoreGraph'
 import { RatioGraph } from '../../components/RatioGraph/RatioGraph'
 import { BatchTablePDF } from '../../components/ExportPDF/BatchTablePDF'
 import {
@@ -135,24 +134,6 @@ export const BatchPage = () => {
                 key: '1',
                 label: 'Summary Table',
                 children: <SamplesTable batchId={batchId} />,
-              },
-              {
-                key: 'Zscore_13',
-                label: 'Zscore 13',
-                className: styles.tab,
-                children: <ZscoreGraph batchId={batchId} chromosome={13} />,
-              },
-              {
-                key: 'Zscore_18',
-                label: 'Zscore 18',
-                className: styles.tab,
-                children: <ZscoreGraph batchId={batchId} chromosome={18} />,
-              },
-              {
-                key: 'Zscore_21',
-                label: 'Zscore 21',
-                className: styles.tab,
-                children: <ZscoreGraph batchId={batchId} chromosome={21} />,
               },
               {
                 key: 'Ratio_13',
