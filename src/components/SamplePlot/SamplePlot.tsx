@@ -67,7 +67,7 @@ const buildLayout = (sampleId): Layout => {
     xaxis: {
       showline: true,
       tickvals: [1, 2, 3],
-      ticktext: ['Zscore 13', 'Zscore 18', 'Zscore 21'],
+      ticktext: ['Ratio 13', 'Ratio 18', 'Ratio 21'],
       linecolor: '#636363',
       linewidth: 5,
       showgrid: true,
@@ -80,7 +80,7 @@ const buildLayout = (sampleId): Layout => {
       showgrid: false,
       linecolor: '#636363',
       linewidth: 5,
-      title: 'Zscore',
+      title: 'Ratio',
     },
   }
 }
