@@ -47,14 +47,14 @@ export const BatchTablePDF = ({ batchId, batchComment }) => {
       const title = `Batch ${batchId} report`
       const subtitle = `${batchComment}`
       const headers = [
-        ['Sample', 'Z_13', 'Z_18', 'Z_21', 'FFPF', 'FFX', 'FFY', 'Sex', 'Warning', 'Comment'],
+        ['Sample', 'R_13', 'R_18', 'R_21', 'FFPF', 'FFX', 'FFY', 'Sex', 'Warning', 'Comment'],
       ]
 
       const pdfData = documents.map((item) => [
         item.sample_id,
-        item.z_score['13'],
-        item.z_score['18'],
-        item.z_score['21'],
+        item.ratio['R13'],
+        item.ratio['R18'],
+        item.ratio['R21'],
         item.fetal_fraction?.preface,
         item.fetal_fraction?.x,
         item.fetal_fraction?.y,
