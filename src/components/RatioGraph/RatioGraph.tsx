@@ -49,7 +49,7 @@ const buildData = (response: RatioGraphInteface, chromosome: number): ScatterDat
           response?.ncv_chrom_data[chromosome].names.length - 1
         ],
       ],
-      y: [response.tris_thresholds[line].Zscore, response.tris_thresholds[line].Zscore],
+      y: [response.tris_thresholds[line].ratio, response.tris_thresholds[line].ratio],
       mode: 'lines',
       text: response.tris_thresholds[line].text,
       showlegend: false,
