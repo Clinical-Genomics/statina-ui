@@ -2,6 +2,7 @@ import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { UserContext } from '../../services/userContext'
 import { deleteDataset, getDatasets, postDataset } from 'services/StatinaApi'
 import { Link } from 'react-router-dom'
+import { datasetsPath } from '../Routes'
 import { Input, Popover, Table, Tooltip, Typography, Form, Button, Popconfirm } from 'antd'
 import { escapeRegExp, SuccessNotification } from 'services/helpers/helpers'
 import { ErrorPage } from 'pages/Error/ErrorPage'
@@ -26,11 +27,11 @@ export const Datasets = () => {
     (page, searchValue = currentSearchValue, pageSize = tablePageSize) => {
       getDatasets(userContext, searchValue, page, pageSize)
         .then((response) => {
-          setFilteredDatasets(response?.documents), setDatasetsCount(response?.document_count)
+          ;(setFilteredDatasets(response?.documents), setDatasetsCount(response?.document_count))
           setIsLoading(false)
         })
         .catch((error) => {
-          setIsLoading(false), setError(error)
+          ;(setIsLoading(false), setError(error))
         })
     },
     [currentSearchValue, tablePageSize, userContext]
@@ -73,7 +74,7 @@ export const Datasets = () => {
       key: 'name',
       width: 150,
       sorter: (a, b) => a.name.length - b.name.length,
-      render: (name: any) => <Link to={`datasets/${name}`}>{name}</Link>,
+      render: (name: any) => <Link to={`/${datasetsPath}/${name}`}>{name}</Link>,
     },
     {
       title: <Tooltip title="Fetal fraction X0">FFX0</Tooltip>,
