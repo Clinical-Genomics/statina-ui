@@ -290,7 +290,7 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
     },
     {
       title: (
-        <Tooltip title="Warning for chomosome abnormality. Automatically generated. Based on pre defined Ratio and Fetal Fraction thresholds">
+        <Tooltip title="Warning for chromosome abnormality. Automatically generated based on predefined ratio and fetal fraction thresholds.">
           Warning
           <QuestionCircleOutlined />
         </Tooltip>
