@@ -88,7 +88,7 @@ export const BatchPage = () => {
               <Title>{batchId}</Title>
               <Text strong>Dataset:</Text>{' '}
               {datasets && permissions?.includes('RW') ? (
-                <Select defaultValue={batch?.dataset} style={{ width: 120 }} onChange={editDataset}>
+                <Select defaultValue={batch?.dataset} style={{ width: 220 }} onChange={editDataset}>
                   {datasets.map((set) => (
                     <Option key={set} value={set}>
                       {set}
