@@ -27,7 +27,7 @@ const buildData = (response: RatioGraphInteface, chromosome: number): ScatterDat
       marker: {
         color: '#ccccb3',
       },
-      name: `Negative ${response?.ncv_chrom_data[chromosome].count}`,
+      name: `Negative ${response?.normal_data[chromosome].count}`,
     },
   ]
   Object.keys(response.abnormal_data[chromosome]).forEach((status) => {
