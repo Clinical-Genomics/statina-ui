@@ -9,10 +9,11 @@ export const mockSample: Sample = {
   batch_id: '2117030_NIPT',
   warnings: {
     fetal_fraction_preface: 'default',
+    fetal_fraction_x: 'default',
     fetal_fraction_y: 'default',
-    z_score_13: 'default',
-    z_score_18: 'default',
-    z_score_21: 'default',
+    chr13_ratio: 'default',
+    chr18_ratio: 'default',
+    chr21_ratio: 'default',
     x0: 'default',
     xxx: 'default',
     other: 'default',
@@ -56,11 +57,10 @@ export const mockSample: Sample = {
     include: true,
     edited: 'Lab Tech 2021/10/18 11:09:42',
   },
-  z_score: {
-    '13': '1.92',
-    '18': '-0.71',
-    '21': '1.19',
-    x: '-0.82',
+  ratio: {
+    R13: '1.06',
+    R18: '0.95',
+    R21: '1.02',
   },
   fetal_fraction: {
     x: '0.96',

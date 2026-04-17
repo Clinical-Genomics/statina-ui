@@ -1,16 +1,16 @@
 import React, { useContext, useEffect, useState } from 'react'
 import Plot, { ScatterData, Layout } from 'react-plotly.js'
-import { getZScoreGraph } from '../../services/StatinaApi'
+import { getRatioGraph } from '../../services/StatinaApi'
 import { UserContext } from '../../services/userContext'
-import { ZScoreGraph } from '../../services/interfaces'
+import { RatioGraphInteface } from '../../services/interfaces'
 import { Loading } from '../Loading'
 
-type ZscoreGraphProps = {
+type RatioGraphProps = {
   batchId: string
   chromosome: number
 }
 
-const buildData = (response: ZScoreGraph, chromosome: number): ScatterData[] => {
+const buildData = (response: RatioGraphInteface, chromosome: number): ScatterData[] => {
   const data: ScatterData[] = [
     {
       name: `Current batch ${response?.ncv_chrom_data[chromosome].count}`,
@@ -27,7 +27,7 @@ const buildData = (response: ZScoreGraph, chromosome: number): ScatterData[] => 
       marker: {
         color: '#ccccb3',
       },
-      name: `Negative ${response?.ncv_chrom_data[chromosome].count}`,
+      name: `Negative ${response?.normal_data[chromosome].count}`,
     },
   ]
   Object.keys(response.abnormal_data[chromosome]).forEach((status) => {
@@ -49,7 +49,7 @@ const buildData = (response: ZScoreGraph, chromosome: number): ScatterData[] => 
           response?.ncv_chrom_data[chromosome].names.length - 1
         ],
       ],
-      y: [response.tris_thresholds[line].Zscore, response.tris_thresholds[line].Zscore],
+      y: [response.tris_thresholds[line].ratio, response.tris_thresholds[line].ratio],
       mode: 'lines',
       text: response.tris_thresholds[line].text,
       showlegend: false,
@@ -64,7 +64,7 @@ const buildData = (response: ZScoreGraph, chromosome: number): ScatterData[] => 
   return data
 }
 
-const buildLayout = (response: ZScoreGraph, chromosome: number): Layout => {
+const buildLayout = (response: RatioGraphInteface, chromosome: number): Layout => {
   return {
     legend: { hovermode: 'closest' },
     hovermode: 'closest',
@@ -83,14 +83,14 @@ const buildLayout = (response: ZScoreGraph, chromosome: number): Layout => {
   }
 }
 
-export const ZscoreGraph = ({ batchId, chromosome }: ZscoreGraphProps) => {
+export const RatioGraph = ({ batchId, chromosome }: RatioGraphProps) => {
   const userContext = useContext(UserContext)
   const [data, setData] = useState<ScatterData[]>()
   const [layout, setLayout] = useState<Layout>()
   const [isLoading, setIsLoading] = React.useState<boolean>(true)
 
   useEffect(() => {
-    getZScoreGraph(batchId, chromosome, userContext)
+    getRatioGraph(batchId, chromosome, userContext)
       .then((response) => {
         setData(buildData(response, chromosome))
         setLayout(buildLayout(response, chromosome))

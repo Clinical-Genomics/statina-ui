@@ -7,8 +7,18 @@ type StatisticsBoxPlotProps = {
   showTotal: boolean
 }
 
+const getBatchesWithData = (selectedPlot: string, statistics: any): string[] => {
+  return (
+    statistics.batch_ids?.filter((batchId: string) => {
+      const values = statistics.box_stat[batchId]?.[selectedPlot]
+      return Array.isArray(values) && values.length > 0
+    }) ?? []
+  )
+}
+
 const buildData = (selectedPlot: string, statistics: any): BoxPlotData[] => {
-  return statistics.batch_ids?.map((batchId: string) => ({
+  return getBatchesWithData(selectedPlot, statistics).map((batchId: string) => ({
+    name: batchId,
     y: statistics.box_stat[batchId][selectedPlot],
     type: 'box',
     text: statistics.box_stat[batchId]?.sample_ids,
@@ -18,17 +28,19 @@ const buildData = (selectedPlot: string, statistics: any): BoxPlotData[] => {
 }
 
 const buildLayout = (selectedPlot: string, statistics: any, showTotal: boolean): Layout => {
+  const batchesWithData = getBatchesWithData(selectedPlot, statistics)
+
   return {
     title: showTotal
-      ? `${selectedPlot} - all batches (${statistics.batch_ids.length})`
-      : `${selectedPlot} - ${statistics.batch_ids.length} most recent batches`,
+      ? `${selectedPlot} - all batches with data (${batchesWithData.length})`
+      : `${selectedPlot} - ${batchesWithData.length} most recent batches with data`,
     hovermode: 'closest',
     margin: { b: 100 },
     height: 600,
     xaxis: {
       showline: true,
-      tickvals: statistics.ticks,
-      ticktext: statistics.batch_ids,
+      tickvals: batchesWithData.map((_, index) => index),
+      ticktext: batchesWithData,
       tickangle: 40,
       zeroline: false,
       linecolor: '#636363',

@@ -1,7 +1,7 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { Card, Tabs, Row, Col, Typography, Select } from 'antd'
 import { useLocation, Link } from 'react-router-dom'
-import { ZscoreGraph } from '../../components/ZscoreGraph/ZscoreGraph'
+import { RatioGraph } from '../../components/RatioGraph/RatioGraph'
 import { BatchTablePDF } from '../../components/ExportPDF/BatchTablePDF'
 import {
   editBatchComment,
@@ -45,7 +45,7 @@ export const BatchPage = () => {
         setIsLoading(false)
       })
       .catch((error) => {
-        setIsLoading(false), setError(error)
+        ;(setIsLoading(false), setError(error))
       })
   }, [batchId, userContext])
 
@@ -88,7 +88,7 @@ export const BatchPage = () => {
               <Title>{batchId}</Title>
               <Text strong>Dataset:</Text>{' '}
               {datasets && permissions?.includes('RW') ? (
-                <Select defaultValue={batch?.dataset} style={{ width: 120 }} onChange={editDataset}>
+                <Select defaultValue={batch?.dataset} style={{ width: 220 }} onChange={editDataset}>
                   {datasets.map((set) => (
                     <Option key={set} value={set}>
                       {set}
@@ -136,22 +136,22 @@ export const BatchPage = () => {
                 children: <SamplesTable batchId={batchId} />,
               },
               {
-                key: 'Zscore_13',
-                label: 'Zscore 13',
+                key: 'Ratio_13',
+                label: 'Ratio 13',
                 className: styles.tab,
-                children: <ZscoreGraph batchId={batchId} chromosome={13} />,
+                children: <RatioGraph batchId={batchId} chromosome={13} />,
               },
               {
-                key: 'Zscore_18',
-                label: 'Zscore 18',
+                key: 'Ratio_18',
+                label: 'Ratio 18',
                 className: styles.tab,
-                children: <ZscoreGraph batchId={batchId} chromosome={18} />,
+                children: <RatioGraph batchId={batchId} chromosome={18} />,
               },
               {
-                key: 'Zscore_21',
-                label: 'Zscore 21',
+                key: 'Ratio_21',
+                label: 'Ratio 21',
                 className: styles.tab,
-                children: <ZscoreGraph batchId={batchId} chromosome={21} />,
+                children: <RatioGraph batchId={batchId} chromosome={21} />,
               },
               {
                 key: 'Fetal_Fraction_Preface',

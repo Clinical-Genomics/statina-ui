@@ -34,10 +34,11 @@ export interface Sample {
   batch_id: string
   warnings: {
     fetal_fraction_preface: string
+    fetal_fraction_x: string
     fetal_fraction_y: string
-    z_score_13: string
-    z_score_18: string
-    z_score_21: string
+    chr13_ratio: string
+    chr18_ratio: string
+    chr21_ratio: string
     x0: string
     xxx: string
     other: string
@@ -52,11 +53,10 @@ export interface Sample {
     include: true
     edited: string
   }
-  z_score: {
-    '13': string
-    '18': string
-    '21': string
-    x: string
+  ratio: {
+    R13: string
+    R18: string
+    R21: string
   }
   fetal_fraction: {
     x: string
@@ -114,7 +114,7 @@ export interface GrahCromosomeData {
 }
 
 export interface ThresholdData {
-  Zscore: number
+  ratio: number
   color: string
   text: string
 }
@@ -126,7 +126,7 @@ export interface Threshold {
   soft_min: ThresholdData
 }
 
-export interface ZScoreGraph {
+export interface RatioGraphInteface {
   abnormal_data: GrahCromosomeData
   chromosomes: string[]
   ncv_chrom_data: GrahCromosomeData
