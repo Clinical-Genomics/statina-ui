@@ -45,7 +45,8 @@ export const BatchPage = () => {
         setIsLoading(false)
       })
       .catch((error) => {
-        ;(setIsLoading(false), setError(error))
+        setIsLoading(false)
+        setError(error)
       })
   }, [batchId, userContext])
 

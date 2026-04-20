@@ -26,7 +26,8 @@ export const BatchesTable = () => {
   useEffect(() => {
     getBatches(userContext, 10, 0, searchValue)
       .then((batches) => {
-        setFilteredBatches(batches?.documents), setPageCount(batches?.document_count)
+        setFilteredBatches(batches?.documents)
+        setPageCount(batches?.document_count)
       })
       .catch((error) => {
         setError(error)
@@ -38,13 +39,15 @@ export const BatchesTable = () => {
     setSearchValue(escapeInput)
     setCurrentPage(1)
     getBatches(userContext, 0, 0, escapeInput).then((batches) => {
-      setFilteredBatches(batches?.documents), setPageCount(batches?.document_count)
+      setFilteredBatches(batches?.documents)
+      setPageCount(batches?.document_count)
     })
   }
 
   const onChange = (data) => {
     getBatches(userContext, data.pageSize, data.current, searchValue).then((batches) => {
-      setFilteredBatches(batches?.documents), setPageCount(batches?.document_count)
+      setFilteredBatches(batches?.documents)
+      setPageCount(batches?.document_count)
       setCurrentPage(data.current)
     })
   }
@@ -60,7 +63,8 @@ export const BatchesTable = () => {
         message: `Batch ${batch_id} deleted`,
       })
       getBatches(userContext, 10, 0, searchValue).then((batches) => {
-        setFilteredBatches(batches?.documents), setPageCount(batches?.document_count)
+        setFilteredBatches(batches?.documents)
+        setPageCount(batches?.document_count)
       })
     })
   }

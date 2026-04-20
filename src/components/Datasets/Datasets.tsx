@@ -27,11 +27,13 @@ export const Datasets = () => {
     (page, searchValue = currentSearchValue, pageSize = tablePageSize) => {
       getDatasets(userContext, searchValue, page, pageSize)
         .then((response) => {
-          ;(setFilteredDatasets(response?.documents), setDatasetsCount(response?.document_count))
+          setFilteredDatasets(response?.documents)
+          setDatasetsCount(response?.document_count)
           setIsLoading(false)
         })
         .catch((error) => {
-          ;(setIsLoading(false), setError(error))
+          setIsLoading(false)
+          setError(error)
         })
     },
     [currentSearchValue, tablePageSize, userContext]

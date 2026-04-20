@@ -52,9 +52,9 @@ export const SamplesTable = ({ batchId }: SamplesProps) => {
   useEffect(() => {
     getSamples(userContext, pageSize, 0, batchId, searchValue, sortKey, sortDirection)
       .then((samples) => {
-        ;(setFilteredSamples(samples?.documents),
-          setPageCount(samples?.document_count),
-          includedSamples(samples?.documents))
+        setFilteredSamples(samples?.documents)
+        setPageCount(samples?.document_count)
+        includedSamples(samples?.documents)
         setIsLoading(false)
       })
       .catch((error) => {

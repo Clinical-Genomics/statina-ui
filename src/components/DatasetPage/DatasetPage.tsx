@@ -34,7 +34,8 @@ export function DatasetPage() {
         setIsLoading(false)
       })
       .catch((error) => {
-        ;(setIsLoading(false), setError(error))
+        setIsLoading(false)
+        setError(error)
       })
   }, [datasetName, userContext])
 
@@ -53,7 +54,8 @@ export function DatasetPage() {
         })
       })
       .catch((error) => {
-        ;(setIsLoading(false), setError(error))
+        setIsLoading(false)
+        setError(error)
       })
   }
 

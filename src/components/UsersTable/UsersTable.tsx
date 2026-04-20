@@ -19,7 +19,8 @@ export const UsersTable = () => {
 
   useEffect(() => {
     getUsers(userContext, 10, 0, searchValue).then((users) => {
-      setUsers(users?.documents), setPageCount(users?.document_count)
+      setUsers(users?.documents)
+      setPageCount(users?.document_count)
     })
   }, [searchValue, userContext])
 
@@ -28,13 +29,15 @@ export const UsersTable = () => {
     setSearchValue(escapeInput)
     setCurrentPage(1)
     getUsers(userContext, 0, 0, escapeInput).then((users) => {
-      setUsers(users?.documents), setPageCount(users?.document_count)
+      setUsers(users?.documents)
+      setPageCount(users?.document_count)
     })
   }
 
   const onChange = (data) => {
     getUsers(userContext, data.pageSize, data.current, searchValue).then((users) => {
-      setUsers(users?.documents), setPageCount(users?.document_count)
+      setUsers(users?.documents)
+      setPageCount(users?.document_count)
       setCurrentPage(data.current)
     })
   }
@@ -50,7 +53,8 @@ export const UsersTable = () => {
           type: 'success',
           message: `${username} updated to ${role}`,
         })
-        setUsers(users?.documents), setPageCount(users?.document_count)
+        setUsers(users?.documents)
+        setPageCount(users?.document_count)
       })
     })
   }
