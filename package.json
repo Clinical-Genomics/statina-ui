@@ -61,6 +61,7 @@
     "@types/react": "18.2.66",
     "@types/react-dom": "18.2.25",
     "es5-ext": "^0.10.63",
-    "path-to-regexp": "^1.9.0"
+    "path-to-regexp": "^1.9.0",
+    "rollup": "4.59.0"
   }
 }
