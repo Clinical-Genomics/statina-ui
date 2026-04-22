@@ -1,6 +1,6 @@
 import { Result } from 'antd'
 import React from 'react'
-import { statinaBackendRepo } from '../../services/helpers/constants'
+import { statinaBackendRepo } from '@/services/helpers/constants'
 
 export const InactiveResult = () => (
   <Result

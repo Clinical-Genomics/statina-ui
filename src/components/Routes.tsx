@@ -6,12 +6,12 @@ import { BatchPage } from '@/pages/Batch/BatchPage'
 import { SamplesPage } from '@/pages/Samples/SamplesPage'
 import { StatisticsPage } from '@/pages/Statistics/StatisticsPage'
 import { SamplePage } from '@/pages/Sample/SamplePage'
-import { LoginPage } from '../pages/Login/LoginPage'
+import { LoginPage } from '@/pages/Login/LoginPage'
 import { PageNotFound } from '@/pages/PageNotFound/PageNotFound'
-import { AdminPage } from '../pages/Admin/AdminPage'
-import { ConfirmedResult } from './NoPermissonResults/ConfirmedResult'
-import { Datasets } from './Datasets/Datasets'
-import { DatasetPage } from './DatasetPage/DatasetPage'
+import { AdminPage } from '@/pages/Admin/AdminPage'
+import { ConfirmedResult } from '@/components/NoPermissonResults/ConfirmedResult'
+import { Datasets } from '@/components/Datasets/Datasets'
+import { DatasetPage } from '@/components/DatasetPage/DatasetPage'
 
 type RoutesProps = {
   isLoggedIn: boolean

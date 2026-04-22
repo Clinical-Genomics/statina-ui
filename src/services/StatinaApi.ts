@@ -1,6 +1,6 @@
-import { createParamURL, handleBackendError } from './helpers/helpers'
-import { Login, Dataset, RegisterUser } from './interfaces'
-import { UserContext } from './userContext'
+import { createParamURL, handleBackendError } from '@/services/helpers/helpers'
+import { Login, Dataset, RegisterUser } from '@/services/interfaces'
+import { UserContext } from '@/services/userContext'
 import axios from 'axios'
 import qs from 'qs'
 

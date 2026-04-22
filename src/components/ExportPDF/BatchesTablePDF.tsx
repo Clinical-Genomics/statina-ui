@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
-import { UserContext } from '../../services/userContext'
-import { getBatches } from '../../services/StatinaApi'
+import { UserContext } from '@/services/userContext'
+import { getBatches } from '@/services/StatinaApi'
 import { jsPDF } from 'jspdf'
 import autoTable, { type UserOptions } from 'jspdf-autotable'
 import { Tooltip } from 'antd'

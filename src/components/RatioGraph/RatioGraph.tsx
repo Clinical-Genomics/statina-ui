@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react'
 import Plot, { ScatterData, Layout } from 'react-plotly.js'
-import { getRatioGraph } from '../../services/StatinaApi'
-import { UserContext } from '../../services/userContext'
-import { RatioGraphInteface } from '../../services/interfaces'
-import { Loading } from '../Loading'
+import { getRatioGraph } from '@/services/StatinaApi'
+import { UserContext } from '@/services/userContext'
+import { RatioGraphInteface } from '@/services/interfaces'
+import { Loading } from '@/components/Loading'
 
 type RatioGraphProps = {
   batchId: string

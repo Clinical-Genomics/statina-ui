@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { UserContext } from '../../services/userContext'
-import { deleteBatch, getBatches } from '../../services/StatinaApi'
+import { UserContext } from '@/services/userContext'
+import { deleteBatch, getBatches } from '@/services/StatinaApi'
 import { Button, Col, Dropdown, Input, Row, Table, Typography, Popconfirm } from 'antd'
 import { escapeRegExp, SuccessNotification } from '@/services/helpers/helpers'
 import { Batch } from '@/services/interfaces'
@@ -9,7 +9,7 @@ import { ExportCSV } from '@/components/ExportCSV/ExportCSV'
 import { BatchesTablePDF } from '@/components/ExportPDF/BatchesTablePDF'
 import { DownOutlined, DeleteTwoTone } from '@ant-design/icons'
 import { ErrorPage } from '@/pages/Error/ErrorPage'
-import { datasetsPath } from '../Routes'
+import { datasetsPath } from '@/components/Routes'
 
 const { Search } = Input
 const { Text } = Typography

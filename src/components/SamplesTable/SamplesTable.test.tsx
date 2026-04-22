@@ -1,11 +1,11 @@
 import React from 'react'
 import { fireEvent, render, waitFor } from '@testing-library/react'
-import { SamplesTable } from './SamplesTable'
+import { SamplesTable } from '@/components/SamplesTable/SamplesTable'
 import { mockSamples } from '@/mocks/samples'
 import { MemoryRouter } from 'react-router-dom'
 import { UserContext } from '@/services/userContext'
 import axios from 'axios'
-import { VITE_BACKEND_URL } from '../../services/StatinaApi'
+import { VITE_BACKEND_URL } from '@/services/StatinaApi'
 import type { Mocked } from 'vitest'
 
 const initializeUserContext = () => null

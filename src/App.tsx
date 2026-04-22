@@ -3,11 +3,11 @@ import styles from './App.module.css'
 import './index.css'
 import { Layout, Menu, Button, Dropdown } from 'antd'
 import { Link, useLocation } from 'react-router-dom'
-import { datasetsPath, AppRoutes as Routes } from './components/Routes'
+import { datasetsPath, AppRoutes as Routes } from '@/components/Routes'
 import Logo from './assets/logo.png'
-import Footer from './components/Footer/Footer'
+import Footer from '@/components/Footer/Footer'
 import { UserContext } from '@/services/userContext'
-import { ProfileDropdown } from './components/ProfileDropdown/ProfileDropdown'
+import { ProfileDropdown } from '@/components/ProfileDropdown/ProfileDropdown'
 import { DownOutlined, ToolFilled } from '@ant-design/icons'
 import {
   getCookies,
@@ -15,10 +15,10 @@ import {
   isUserUnconfirmed,
   removeCookies,
   setCookies,
-} from './services/helpers/helpers'
-import { Loading } from './components/Loading'
-import { UnconfirmedResult } from './components/NoPermissonResults/UnconfirmedResult'
-import { InactiveResult } from './components/NoPermissonResults/InactiveResult'
+} from '@/services/helpers/helpers'
+import { Loading } from '@/components/Loading'
+import { UnconfirmedResult } from '@/components/NoPermissonResults/UnconfirmedResult'
+import { InactiveResult } from '@/components/NoPermissonResults/InactiveResult'
 
 const { Header, Content } = Layout
 export const App = () => {

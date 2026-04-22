@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { UserContext } from '../../services/userContext'
-import { deleteUser, getUsers, putUserRole } from '../../services/StatinaApi'
+import { UserContext } from '@/services/userContext'
+import { deleteUser, getUsers, putUserRole } from '@/services/StatinaApi'
 import { Col, Row, Table, Popconfirm, Select, Typography } from 'antd'
 import { escapeRegExp, SuccessNotification, userRoles } from '@/services/helpers/helpers'
 import { DeleteTwoTone } from '@ant-design/icons'
-import { User } from '../../services/interfaces'
+import { User } from '@/services/interfaces'
 import Search from 'antd/lib/input/Search'
 
 export const UsersTable = () => {

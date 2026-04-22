@@ -1,14 +1,14 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react'
-import { UserContext } from '../../services/userContext'
+import { UserContext } from '@/services/userContext'
 import { deleteDataset, getDatasets, postDataset } from '@/services/StatinaApi'
 import { Link } from 'react-router-dom'
-import { datasetsPath } from '../Routes'
+import { datasetsPath } from '@/components/Routes'
 import { Input, Popover, Table, Tooltip, Typography, Form, Button, Popconfirm } from 'antd'
 import { escapeRegExp, SuccessNotification } from '@/services/helpers/helpers'
 import { ErrorPage } from '@/pages/Error/ErrorPage'
 import { Loading } from '@/components/Loading'
 import { CopyTwoTone, DeleteTwoTone } from '@ant-design/icons'
-import { Dataset } from '../../services/interfaces'
+import { Dataset } from '@/services/interfaces'
 
 export const Datasets = () => {
   const userContext = useContext(UserContext)

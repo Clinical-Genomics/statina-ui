@@ -1,4 +1,4 @@
-import { Sample } from '../services/interfaces'
+import { Sample } from '@/services/interfaces'
 
 export const mockSample: Sample = {
   sample_type: '',

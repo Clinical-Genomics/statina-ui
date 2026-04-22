@@ -1,10 +1,10 @@
 import * as React from 'react'
 import styles from './LoginPage.module.css'
 import { Form, Input, Button } from 'antd'
-import { login } from '../../services/StatinaApi'
-import { UserContext } from '../../services/userContext'
+import { login } from '@/services/StatinaApi'
+import { UserContext } from '@/services/userContext'
 import { useContext } from 'react'
-import { RegisterModal } from '../../components/RegisterModal/RegisterModal'
+import { RegisterModal } from '@/components/RegisterModal/RegisterModal'
 
 export const LoginPage = () => {
   const { initializeUserContext } = useContext(UserContext)

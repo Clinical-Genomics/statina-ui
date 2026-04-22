@@ -1,27 +1,27 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { Card, Tabs, Row, Col, Typography, Select } from 'antd'
 import { useLocation, Link } from 'react-router-dom'
-import { RatioGraph } from '../../components/RatioGraph/RatioGraph'
-import { BatchTablePDF } from '../../components/ExportPDF/BatchTablePDF'
+import { RatioGraph } from '@/components/RatioGraph/RatioGraph'
+import { BatchTablePDF } from '@/components/ExportPDF/BatchTablePDF'
 import {
   editBatchComment,
   editBatchDataset,
   getBatch,
   getDatasetOptions,
-} from '../../services/StatinaApi'
-import { UserContext } from '../../services/userContext'
-import { SuccessNotification } from '../../services/helpers/helpers'
-import { Batch } from '../../services/interfaces'
-import { FetalFractionXY } from '../../components/FetalFractionXYGraph/FetalFractionXY'
-import { FetalFractionPreface } from '../../components/FetalFractionPrefaceGraph/FetalFractionPreface'
-import { ChromosomesRatioPlot } from '../../components/ChromosomesRatioPlot/ChromosomesRatioPlot'
-import { Loading } from '../../components/Loading'
+} from '@/services/StatinaApi'
+import { UserContext } from '@/services/userContext'
+import { SuccessNotification } from '@/services/helpers/helpers'
+import { Batch } from '@/services/interfaces'
+import { FetalFractionXY } from '@/components/FetalFractionXYGraph/FetalFractionXY'
+import { FetalFractionPreface } from '@/components/FetalFractionPrefaceGraph/FetalFractionPreface'
+import { ChromosomesRatioPlot } from '@/components/ChromosomesRatioPlot/ChromosomesRatioPlot'
+import { Loading } from '@/components/Loading'
 import styles from './BatchPage.module.css'
 import { SamplesTable } from '@/components/SamplesTable/SamplesTable'
-import { BatchDownloadFile } from '../../components/ExportPDF/BatchDownloadFiles'
-import { batchDownloadFileTypes } from '../../services/helpers/constants'
+import { BatchDownloadFile } from '@/components/ExportPDF/BatchDownloadFiles'
+import { batchDownloadFileTypes } from '@/services/helpers/constants'
 import { ErrorPage } from '@/pages/Error/ErrorPage'
-import { datasetsPath } from '../../components/Routes'
+import { datasetsPath } from '@/components/Routes'
 
 const { Paragraph, Title, Text } = Typography
 

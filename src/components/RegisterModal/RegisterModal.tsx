@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Button, Form, Input, Modal, Result } from 'antd'
-import { registerUser } from '../../services/StatinaApi'
+import { registerUser } from '@/services/StatinaApi'
 
 export const RegisterModal = () => {
   const [isModalVisible, setIsModalVisible] = useState(false)

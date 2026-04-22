@@ -1,6 +1,6 @@
 import React from 'react'
 import { render, screen, waitFor } from '@testing-library/react'
-import { DatasetPage } from './DatasetPage'
+import { DatasetPage } from '@/components/DatasetPage/DatasetPage'
 import { mockDatasets } from '@/mocks/datasets'
 import { MemoryRouter } from 'react-router-dom'
 import { UserContext } from '@/services/userContext'

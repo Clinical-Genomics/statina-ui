@@ -1,11 +1,11 @@
 import React from 'react'
 import { fireEvent, render, waitFor } from '@testing-library/react'
-import { UsersTable } from './UsersTable'
+import { UsersTable } from '@/components/UsersTable/UsersTable'
 import { mockUsers } from '@/mocks/users'
 import { MemoryRouter } from 'react-router-dom'
 import { UserContext } from '@/services/userContext'
 import axios from 'axios'
-import { VITE_BACKEND_URL } from '../../services/StatinaApi'
+import { VITE_BACKEND_URL } from '@/services/StatinaApi'
 import type { Mocked } from 'vitest'
 
 vi.mock('axios')

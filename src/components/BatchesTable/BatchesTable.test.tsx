@@ -1,6 +1,6 @@
 import React from 'react'
 import { fireEvent, render, waitFor } from '@testing-library/react'
-import { BatchesTable } from './BatchesTable'
+import { BatchesTable } from '@/components/BatchesTable/BatchesTable'
 import { mockBatches } from '@/mocks/batches'
 import { MemoryRouter } from 'react-router-dom'
 import { UserContext } from '@/services/userContext'

@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Tabs, Card, InputNumber, Space, Typography } from 'antd'
-import { getStatistics } from '../../services/StatinaApi'
-import { UserContext } from '../../services/userContext'
-import { StatisticsBoxPlot } from '../../components/StatisticsBoxPlot/StatisticsBoxPlot'
-import { StatisticsScatterPlot } from '../../components/StatisticsScatterPlot/StatisticsScatterPlot'
-import { Loading } from '../../components/Loading'
+import { getStatistics } from '@/services/StatinaApi'
+import { UserContext } from '@/services/userContext'
+import { StatisticsBoxPlot } from '@/components/StatisticsBoxPlot/StatisticsBoxPlot'
+import { StatisticsScatterPlot } from '@/components/StatisticsScatterPlot/StatisticsScatterPlot'
+import { Loading } from '@/components/Loading'
 import { ErrorNotification } from '@/services/helpers/helpers'
 
 export function StatisticsPage() {

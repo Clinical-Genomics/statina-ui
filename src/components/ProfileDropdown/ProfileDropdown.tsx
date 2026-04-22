@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button, Card, Tag } from 'antd'
-import { getUserRole } from '../../services/helpers/helpers'
+import { getUserRole } from '@/services/helpers/helpers'
 
 interface ProfileDropdownProps {
   logout: () => void
