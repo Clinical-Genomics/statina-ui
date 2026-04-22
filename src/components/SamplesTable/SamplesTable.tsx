@@ -11,10 +11,10 @@ import { Input, Table, Tag, Tooltip, Typography } from 'antd'
 import { Link } from 'react-router-dom'
 import { CloudDownloadOutlined, QuestionCircleOutlined } from '@ant-design/icons'
 import { red, gold } from '@ant-design/colors'
-import { sampleStatusTags, sexTags, tagColors } from 'services/helpers/constants'
-import { createFileDownload, escapeRegExp, SuccessNotification } from 'services/helpers/helpers'
+import { sampleStatusTags, sexTags, tagColors } from '@/services/helpers/constants'
+import { createFileDownload, escapeRegExp, SuccessNotification } from '@/services/helpers/helpers'
 import { Loading } from '../Loading'
-import { ErrorPage } from 'pages/Error/ErrorPage'
+import { ErrorPage } from '@/pages/Error/ErrorPage'
 
 type SamplesProps = {
   batchId?: any

@@ -4,7 +4,7 @@ import { SamplePage } from '../Sample/SamplePage'
 import axios from 'axios'
 import { mockSample, mockSamplePlot } from '../../mocks/sample'
 import { BrowserRouter } from 'react-router-dom'
-import { UserContext } from 'services/userContext'
+import { UserContext } from '@/services/userContext'
 import type { Mocked } from 'vitest'
 
 vi.mock('axios')

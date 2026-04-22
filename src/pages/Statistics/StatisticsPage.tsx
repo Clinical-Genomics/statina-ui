@@ -5,7 +5,7 @@ import { UserContext } from '../../services/userContext'
 import { StatisticsBoxPlot } from '../../components/StatisticsBoxPlot/StatisticsBoxPlot'
 import { StatisticsScatterPlot } from '../../components/StatisticsScatterPlot/StatisticsScatterPlot'
 import { Loading } from '../../components/Loading'
-import { ErrorNotification } from 'services/helpers/helpers'
+import { ErrorNotification } from '@/services/helpers/helpers'
 
 export function StatisticsPage() {
   const userContext = useContext(UserContext)

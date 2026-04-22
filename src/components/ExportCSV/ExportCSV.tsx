@@ -4,7 +4,7 @@ import { getBatches } from '../../services/StatinaApi'
 import { Tooltip } from 'antd'
 import * as FileSaver from 'file-saver'
 import * as XLSX from 'xlsx'
-import { ErrorNotification } from 'services/helpers/helpers'
+import { ErrorNotification } from '@/services/helpers/helpers'
 
 type BatchesTablePDFProps = {
   fileName: string

@@ -4,7 +4,7 @@ import { getBatches } from '../../services/StatinaApi'
 import { jsPDF } from 'jspdf'
 import autoTable, { type UserOptions } from 'jspdf-autotable'
 import { Tooltip } from 'antd'
-import { ErrorNotification } from 'services/helpers/helpers'
+import { ErrorNotification } from '@/services/helpers/helpers'
 
 type BatchesTablePDFProps = {
   searchValue: string

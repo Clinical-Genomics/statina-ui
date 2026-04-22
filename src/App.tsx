@@ -6,7 +6,7 @@ import { Link, useLocation } from 'react-router-dom'
 import { datasetsPath, AppRoutes as Routes } from './components/Routes'
 import Logo from './assets/logo.png'
 import Footer from './components/Footer/Footer'
-import { UserContext } from 'services/userContext'
+import { UserContext } from '@/services/userContext'
 import { ProfileDropdown } from './components/ProfileDropdown/ProfileDropdown'
 import { DownOutlined, ToolFilled } from '@ant-design/icons'
 import {

@@ -17,10 +17,10 @@ import { FetalFractionPreface } from '../../components/FetalFractionPrefaceGraph
 import { ChromosomesRatioPlot } from '../../components/ChromosomesRatioPlot/ChromosomesRatioPlot'
 import { Loading } from '../../components/Loading'
 import styles from './BatchPage.module.css'
-import { SamplesTable } from 'components/SamplesTable/SamplesTable'
+import { SamplesTable } from '@/components/SamplesTable/SamplesTable'
 import { BatchDownloadFile } from '../../components/ExportPDF/BatchDownloadFiles'
 import { batchDownloadFileTypes } from '../../services/helpers/constants'
-import { ErrorPage } from 'pages/Error/ErrorPage'
+import { ErrorPage } from '@/pages/Error/ErrorPage'
 import { datasetsPath } from '../../components/Routes'
 
 const { Paragraph, Title, Text } = Typography
