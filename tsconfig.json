@@ -1,6 +1,8 @@
 {
   "compilerOptions": {
-    "baseUrl": "src",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
     "target": "ESNext",
     "module": "ESNext",
     "moduleResolution": "bundler",
@@ -17,7 +19,6 @@
     "noEmit": true,
     "noImplicitAny": false,
     "isolatedModules": true,
-    "downlevelIteration": true,
     "types": ["vitest/globals", "vite/client"]
   },
   "include": ["src"]

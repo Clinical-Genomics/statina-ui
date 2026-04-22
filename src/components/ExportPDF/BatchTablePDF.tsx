@@ -2,19 +2,19 @@ import React, { useContext, useEffect, useState } from 'react'
 import { jsPDF } from 'jspdf'
 import autoTable, { type UserOptions } from 'jspdf-autotable'
 import { Button } from 'antd'
-import { ErrorNotification } from '../../services/helpers/helpers'
+import { ErrorNotification } from '@/services/helpers/helpers'
 import Plotly from 'plotly.js/dist/plotly-basic'
-import { getSamples, getFetalFractionXYGraph } from '../../services/StatinaApi'
-import { UserContext } from '../../services/userContext'
+import { getSamples, getFetalFractionXYGraph } from '@/services/StatinaApi'
+import { UserContext } from '@/services/userContext'
 import { CloudDownloadOutlined, LoadingOutlined } from '@ant-design/icons'
 import { ScatterData, Layout } from 'react-plotly.js'
-import { FetalFractionXYGraph } from '../../services/interfaces'
+import { FetalFractionXYGraph } from '@/services/interfaces'
 import {
   buildFFXYGraphData,
   buildFFXYGraphLayout,
   fFXYGraphHeight,
   fFXYGraphWidth,
-} from '../FetalFractionXYGraph/FetalFractionXY'
+} from '@/components/FetalFractionXYGraph/FetalFractionXY'
 
 export const BatchTablePDF = ({ batchId, batchComment }) => {
   const [data, setData] = useState<ScatterData[]>()

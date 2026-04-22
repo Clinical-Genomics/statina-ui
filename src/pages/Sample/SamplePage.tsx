@@ -1,14 +1,14 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { Card, Space, Typography, Table, Select, Descriptions, Tag } from 'antd'
-import { editSample, getSample, putSampleComment } from '../../services/StatinaApi'
+import { editSample, getSample, putSampleComment } from '@/services/StatinaApi'
 import { Link, useLocation } from 'react-router-dom'
-import { UserContext } from '../../services/userContext'
-import { Loading } from '../../components/Loading'
-import { ErrorPage } from '../Error/ErrorPage'
-import { SuccessNotification } from '../../services/helpers/helpers'
-import { Sample } from '../../services/interfaces'
-import { sampleStatusTags, sexTags } from '../../services/helpers/constants'
-import { SamplePlot } from '../../components/SamplePlot/SamplePlot'
+import { UserContext } from '@/services/userContext'
+import { Loading } from '@/components/Loading'
+import { ErrorPage } from '@/pages/Error/ErrorPage'
+import { SuccessNotification } from '@/services/helpers/helpers'
+import { Sample } from '@/services/interfaces'
+import { sampleStatusTags, sexTags } from '@/services/helpers/constants'
+import { SamplePlot } from '@/components/SamplePlot/SamplePlot'
 
 const { Paragraph, Title } = Typography
 

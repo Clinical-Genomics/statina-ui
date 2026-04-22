@@ -1,9 +1,9 @@
 import React, { useContext, useState } from 'react'
 import { Button } from 'antd'
-import { downloadBatchFiles } from '../../services/StatinaApi'
-import { UserContext } from '../../services/userContext'
+import { downloadBatchFiles } from '@/services/StatinaApi'
+import { UserContext } from '@/services/userContext'
 import { CloudDownloadOutlined, LoadingOutlined } from '@ant-design/icons'
-import { createFileDownload } from '../../services/helpers/helpers'
+import { createFileDownload } from '@/services/helpers/helpers'
 
 export const BatchDownloadFile = ({ batchId, fileType }) => {
   const userContext = useContext(UserContext)

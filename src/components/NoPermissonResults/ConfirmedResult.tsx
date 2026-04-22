@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { CheckOutlined } from '@ant-design/icons'
 import { Button, Result } from 'antd'
-import { validateUserEmail } from 'services/StatinaApi'
+import { validateUserEmail } from '@/services/StatinaApi'
 import { useParams } from 'react-router-dom'
 
 export const ConfirmedResult = () => {

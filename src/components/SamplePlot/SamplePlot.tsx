@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react'
 import Plot, { ScatterData, Layout } from 'react-plotly.js'
-import { getSamplePlot } from '../../services/StatinaApi'
-import { UserContext } from '../../services/userContext'
-import { sampleStatusTags } from '../../services/helpers/constants'
+import { getSamplePlot } from '@/services/StatinaApi'
+import { UserContext } from '@/services/userContext'
+import { sampleStatusTags } from '@/services/helpers/constants'
 
 type SamplePlotProps = {
   sampleId: string

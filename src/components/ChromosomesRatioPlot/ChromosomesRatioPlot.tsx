@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react'
 import Plot, { Layout, BoxPlotData } from 'react-plotly.js'
-import { getChromosomeRatioGraph } from '../../services/StatinaApi'
-import { FetalFractionXYGraph } from '../../services/interfaces'
-import { UserContext } from '../../services/userContext'
+import { getChromosomeRatioGraph } from '@/services/StatinaApi'
+import { FetalFractionXYGraph } from '@/services/interfaces'
+import { UserContext } from '@/services/userContext'
 import type { ScatterData } from 'plotly.js'
-import { Loading } from '../Loading'
+import { Loading } from '@/components/Loading'
 
 type ChromosomesRatioPlotProps = {
   batchId: string
