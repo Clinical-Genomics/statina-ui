@@ -17,7 +17,6 @@
     "noEmit": true,
     "noImplicitAny": false,
     "isolatedModules": true,
-    "downlevelIteration": true,
     "types": ["vitest/globals", "vite/client"]
   },
   "include": ["src"]
