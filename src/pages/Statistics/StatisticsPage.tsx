@@ -12,20 +12,20 @@ export function StatisticsPage() {
   const [statistics, setStatistics] = useState<any>()
   const [selectedPlot, setSelectedPlot] = useState<string | undefined>()
   const [isLoading, setIsLoading] = React.useState<boolean>(true)
-  const [numberOfcases, setNumberOfcases] = useState<number>(20)
+  const [numberOfBatches, setNumberOfBatches] = useState<number>(20)
   const [showTotal, setShowTotal] = useState<boolean>(false)
   const defaultTabKey = 0
 
   useEffect(() => {
-    getStatistics(userContext, numberOfcases)
+    getStatistics(userContext, numberOfBatches)
       .then((response) => {
         setStatistics(response)
         setSelectedPlot((currentPlot) => currentPlot ?? response.box_plots[defaultTabKey])
-        setShowTotal(numberOfcases > response.batch_ids.length)
+        setShowTotal(numberOfBatches > response.batch_ids.length)
         setIsLoading(false)
       })
       .catch(() => setIsLoading(false))
-  }, [numberOfcases, userContext])
+  }, [numberOfBatches, userContext])
 
   const onTabChange = (key: string) => {
     setSelectedPlot(key)
@@ -33,7 +33,7 @@ export function StatisticsPage() {
 
   const onNumberOfBatchesChange = (value: number) => {
     if (value > 9) {
-      setNumberOfcases(value)
+      setNumberOfBatches(value)
     } else {
       ErrorNotification({
         type: 'error',
@@ -91,7 +91,7 @@ export function StatisticsPage() {
       <Space align="center" style={{ marginTop: '30px' }}>
         <Typography.Text>Number of batches</Typography.Text>
         <InputNumber
-          value={numberOfcases}
+          value={numberOfBatches}
           step={10}
           min={10}
           onStep={onNumberOfBatchesChange}
