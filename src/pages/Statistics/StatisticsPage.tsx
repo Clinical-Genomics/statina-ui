@@ -7,6 +7,16 @@ import { StatisticsScatterPlot } from '@/components/StatisticsScatterPlot/Statis
 import { Loading } from '@/components/Loading'
 import { ErrorNotification } from '@/services/helpers/helpers'
 
+const statisticsTabLabels = {
+  FF_Formated: 'FFPF',
+  DuplicationRate: 'DR',
+  MappedReads: 'MR',
+  GC_Dropout: 'GCD',
+  AT_Dropout: 'ATD',
+  Bin2BinVariance: 'B2BV',
+  Library_nM: 'Lib_nM',
+}
+
 export function StatisticsPage() {
   const userContext = useContext(UserContext)
   const [statistics, setStatistics] = useState<any>()
@@ -78,7 +88,7 @@ export function StatisticsPage() {
         items={[
           ...(statistics?.box_plots ?? []).map((box) => ({
             key: box,
-            label: box,
+            label: statisticsTabLabels[box] ?? box,
             children:
               statistics && selectedPlot ? (
                 <StatisticsBoxPlot
@@ -90,7 +100,7 @@ export function StatisticsPage() {
           })),
           ...(statistics?.scatter_plots ?? []).map((scatter) => ({
             key: scatter,
-            label: scatter,
+            label: statisticsTabLabels[scatter] ?? scatter,
             children:
               statistics && selectedPlot ? (
                 <StatisticsScatterPlot
