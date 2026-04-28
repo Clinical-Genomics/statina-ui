@@ -11,7 +11,7 @@ export function StatisticsPage() {
   const userContext = useContext(UserContext)
   const [statistics, setStatistics] = useState<any>()
   const [selectedPlot, setSelectedPlot] = useState<string | undefined>()
-  const [isLoading, setIsLoading] = React.useState<boolean>(true)
+  const [isLoading, setIsLoading] = useState<boolean>(true)
   const [numberOfBatches, setNumberOfBatches] = useState<number>(20)
   const [showTotal, setShowTotal] = useState<boolean>(false)
   const defaultTabKey = 0
