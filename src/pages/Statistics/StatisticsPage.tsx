@@ -20,7 +20,7 @@ export function StatisticsPage() {
     getStatistics(userContext, numberOfcases)
       .then((response) => {
         setStatistics(response)
-        setSelectedPlot(response.box_plots[defaultTabKey])
+        setSelectedPlot((currentPlot) => currentPlot ?? response.box_plots[defaultTabKey])
         setIsLoading(false)
       })
       .catch(() => setIsLoading(false))
@@ -66,7 +66,7 @@ export function StatisticsPage() {
   ) : (
     <Card>
       <Tabs
-        defaultActiveKey={defaultTabKey.toString()}
+        activeKey={selectedPlot}
         onChange={onTabChange}
         type="card"
         items={[
