@@ -17,14 +17,28 @@ export function StatisticsPage() {
   const defaultTabKey = 0
 
   useEffect(() => {
+    let ignoreResponse = false
+
     getStatistics(userContext, numberOfBatches)
       .then((response) => {
+        if (ignoreResponse) {
+          return
+        }
+
         setStatistics(response)
         setSelectedPlot((currentPlot) => currentPlot ?? response.box_plots[defaultTabKey])
         setShowTotal(numberOfBatches > response.batch_ids.length)
         setIsLoading(false)
       })
-      .catch(() => setIsLoading(false))
+      .catch(() => {
+        if (!ignoreResponse) {
+          setIsLoading(false)
+        }
+      })
+
+    return () => {
+      ignoreResponse = true
+    }
   }, [numberOfBatches, userContext])
 
   const onTabChange = (key: string) => {
