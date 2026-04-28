@@ -1,20 +1,20 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react'
-import { UserContext } from '../../services/userContext'
+import { UserContext } from '@/services/userContext'
 import {
   getSamples,
   includeSample,
   includeBatchSamples,
   downloadSegmentalCalls,
   putSampleComment,
-} from '../../services/StatinaApi'
+} from '@/services/StatinaApi'
 import { Input, Table, Tag, Tooltip, Typography } from 'antd'
 import { Link } from 'react-router-dom'
 import { CloudDownloadOutlined, QuestionCircleOutlined } from '@ant-design/icons'
 import { red, gold } from '@ant-design/colors'
-import { sampleStatusTags, sexTags, tagColors } from 'services/helpers/constants'
-import { createFileDownload, escapeRegExp, SuccessNotification } from 'services/helpers/helpers'
-import { Loading } from '../Loading'
-import { ErrorPage } from 'pages/Error/ErrorPage'
+import { sampleStatusTags, sexTags, tagColors } from '@/services/helpers/constants'
+import { createFileDownload, escapeRegExp, SuccessNotification } from '@/services/helpers/helpers'
+import { Loading } from '@/components/Loading'
+import { ErrorPage } from '@/pages/Error/ErrorPage'
 
 type SamplesProps = {
   batchId?: any

@@ -1,10 +1,10 @@
 import React from 'react'
 import { render, waitFor } from '@testing-library/react'
 import axios from 'axios'
-import { mockBatches } from './mocks/batches'
-import { App } from './App'
+import { mockBatches } from '@/mocks/batches'
+import { App } from '@/App'
 import { MemoryRouter } from 'react-router-dom'
-import { mockAdminCookie, mockInactiveCookie, mockUnconfirmedCookie } from './mocks/cookies'
+import { mockAdminCookie, mockInactiveCookie, mockUnconfirmedCookie } from '@/mocks/cookies'
 import type { Mocked } from 'vitest'
 
 vi.mock('axios')

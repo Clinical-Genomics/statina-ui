@@ -1,16 +1,16 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Button, Card, Descriptions, Form, Input, Typography } from 'antd'
-import { Loading } from 'components/Loading'
+import { Loading } from '@/components/Loading'
 import { useLocation } from 'react-router-dom'
-import { editDataset, getDataset } from 'services/StatinaApi'
-import { UserContext } from 'services/userContext'
-import { ErrorPage } from 'pages/Error/ErrorPage'
+import { editDataset, getDataset } from '@/services/StatinaApi'
+import { UserContext } from '@/services/userContext'
+import { ErrorPage } from '@/pages/Error/ErrorPage'
 import {
   capitalizeFirstLetter,
   objectToString,
   SuccessNotification,
-} from 'services/helpers/helpers'
-import { BasicDataset } from 'services/interfaces'
+} from '@/services/helpers/helpers'
+import { BasicDataset } from '@/services/interfaces'
 
 export function DatasetPage() {
   const [edit, setEdit] = useState<boolean>(false)

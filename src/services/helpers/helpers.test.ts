@@ -1,4 +1,4 @@
-import { createErrorMessage, dateToNumber, sortDate } from './helpers'
+import { createErrorMessage, dateToNumber, sortDate } from '@/services/helpers/helpers'
 import { AxiosError } from 'axios'
 
 describe('Helpers', () => {

@@ -1,4 +1,4 @@
-import { User } from '../services/interfaces'
+import { User } from '@/services/interfaces'
 
 export const mockUsers: User[] = [
   {

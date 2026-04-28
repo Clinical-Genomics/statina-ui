@@ -1,8 +1,8 @@
-import { Notification } from '../interfaces'
+import { Notification } from '@/services/interfaces'
 import { notification } from 'antd'
 import { AxiosError } from 'axios'
 import Cookies from 'universal-cookie'
-import { userCookie } from './constants'
+import { userCookie } from '@/services/helpers/constants'
 import { isNil } from 'ramda'
 
 export const ErrorNotification = ({ type, message, description }: Notification) => {

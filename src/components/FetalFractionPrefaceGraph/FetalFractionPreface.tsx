@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react'
 import Plot, { ScatterData, Layout } from 'react-plotly.js'
-import { getFetalFractionPrefaceGraph } from '../../services/StatinaApi'
-import { FetalFractionPrefaceGraph } from '../../services/interfaces'
-import { UserContext } from '../../services/userContext'
-import { Loading } from '../Loading'
+import { getFetalFractionPrefaceGraph } from '@/services/StatinaApi'
+import { FetalFractionPrefaceGraph } from '@/services/interfaces'
+import { UserContext } from '@/services/userContext'
+import { Loading } from '@/components/Loading'
 
 type FetalFractionPrefaceProps = {
   batchId: string
