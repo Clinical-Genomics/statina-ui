@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Tabs, Card, InputNumber, Space, Typography } from 'antd'
+import { Tabs, Card, InputNumber, Space, Tooltip, Typography } from 'antd'
 import { getStatistics } from '@/services/StatinaApi'
 import { UserContext } from '@/services/userContext'
 import { StatisticsBoxPlot } from '@/components/StatisticsBoxPlot/StatisticsBoxPlot'
@@ -88,7 +88,7 @@ export function StatisticsPage() {
         items={[
           ...(statistics?.box_plots ?? []).map((box) => ({
             key: box,
-            label: statisticsTabLabels[box] ?? box,
+            label: <Tooltip title={box}>{statisticsTabLabels[box] ?? box}</Tooltip>,
             children:
               statistics && selectedPlot ? (
                 <StatisticsBoxPlot
@@ -100,7 +100,7 @@ export function StatisticsPage() {
           })),
           ...(statistics?.scatter_plots ?? []).map((scatter) => ({
             key: scatter,
-            label: statisticsTabLabels[scatter] ?? scatter,
+            label: <Tooltip title={scatter}>{statisticsTabLabels[scatter] ?? scatter}</Tooltip>,
             children:
               statistics && selectedPlot ? (
                 <StatisticsScatterPlot
