@@ -21,6 +21,7 @@ export function StatisticsPage() {
       .then((response) => {
         setStatistics(response)
         setSelectedPlot((currentPlot) => currentPlot ?? response.box_plots[defaultTabKey])
+        setShowTotal(numberOfcases > response.batch_ids.length)
         setIsLoading(false)
       })
       .catch(() => setIsLoading(false))
@@ -33,15 +34,6 @@ export function StatisticsPage() {
   const onNumberOfBatchesChange = (value: number) => {
     if (value > 9) {
       setNumberOfcases(value)
-      getStatistics(userContext, value)
-        .then((response) => {
-          setStatistics(response)
-          setIsLoading(false)
-          if (value > response.batch_ids.length) {
-            setShowTotal(true)
-          } else setShowTotal(false)
-        })
-        .catch(() => setIsLoading(false))
     } else {
       ErrorNotification({
         type: 'error',
