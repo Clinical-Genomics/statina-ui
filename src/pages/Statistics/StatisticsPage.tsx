@@ -7,6 +7,26 @@ import { StatisticsScatterPlot } from '@/components/StatisticsScatterPlot/Statis
 import { Loading } from '@/components/Loading'
 import { ErrorNotification } from '@/services/helpers/helpers'
 
+const statisticsTabLabels = {
+  Chr13_Ratio: 'R13',
+  Chr18_Ratio: 'R18',
+  Chr21_Ratio: 'R21',
+  Chr13_Ratio_uncorrected: 'R13_unc',
+  Chr18_Ratio_uncorrected: 'R18_unc',
+  Chr21_Ratio_uncorrected: 'R21_unc',
+  FF_Formatted: 'FFPF',
+  FFY: 'FFY',
+  DuplicationRate: 'DR',
+  MappedReads: 'MR',
+  GC_Dropout: 'GCD',
+  AT_Dropout: 'ATD',
+  Bin2BinVariance: 'B2BV',
+  Library_nM: 'Lib_nM',
+  Stdev_13: 'SD13',
+  Stdev_18: 'SD18',
+  Stdev_21: 'SD21',
+}
+
 export function StatisticsPage() {
   const userContext = useContext(UserContext)
   const [statistics, setStatistics] = useState<any>()
@@ -78,7 +98,7 @@ export function StatisticsPage() {
         items={[
           ...(statistics?.box_plots ?? []).map((box) => ({
             key: box,
-            label: box,
+            label: statisticsTabLabels[box] ?? box,
             children:
               statistics && selectedPlot ? (
                 <StatisticsBoxPlot
@@ -90,7 +110,7 @@ export function StatisticsPage() {
           })),
           ...(statistics?.scatter_plots ?? []).map((scatter) => ({
             key: scatter,
-            label: scatter,
+            label: statisticsTabLabels[scatter] ?? scatter,
             children:
               statistics && selectedPlot ? (
                 <StatisticsScatterPlot

@@ -31,9 +31,11 @@ const buildLayout = (selectedPlot: string, statistics: any, showTotal: boolean):
   const batchesWithData = getBatchesWithData(selectedPlot, statistics)
 
   return {
-    title: showTotal
-      ? `${selectedPlot} - all batches with data (${batchesWithData.length})`
-      : `${selectedPlot} - ${batchesWithData.length} most recent batches with data`,
+    title: {
+      text: showTotal
+        ? `${selectedPlot} - all batches with data (${batchesWithData.length})`
+        : `${selectedPlot} - ${batchesWithData.length} most recent batches with data`,
+    },
     hovermode: 'closest',
     margin: { b: 100 },
     height: 600,
@@ -53,7 +55,6 @@ const buildLayout = (selectedPlot: string, statistics: any, showTotal: boolean):
       showgrid: false,
       linecolor: '#636363',
       linewidth: 5,
-      title: selectedPlot,
     },
   }
 }

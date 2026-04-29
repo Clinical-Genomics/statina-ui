@@ -23,9 +23,11 @@ const buildData = (selectedPlot: string, statistics: any): ScatterPlotData[] => 
 
 const buildLayout = (selectedPlot: string, statistics: any, showTotal: boolean): Layout => {
   return {
-    title: showTotal
-      ? `${selectedPlot} - all batches (${statistics.batch_ids.length})`
-      : `${selectedPlot} - ${statistics.batch_ids.length} most recent batches`,
+    title: {
+      text: showTotal
+        ? `${selectedPlot} - all batches (${statistics.batch_ids.length})`
+        : `${selectedPlot} - ${statistics.batch_ids.length} most recent batches`,
+    },
     hovermode: 'closest',
     margin: { b: 100 },
     height: 600,
@@ -45,7 +47,6 @@ const buildLayout = (selectedPlot: string, statistics: any, showTotal: boolean):
       showgrid: false,
       linecolor: '#636363',
       linewidth: 5,
-      title: selectedPlot,
     },
   }
 }
