@@ -11,20 +11,35 @@ export function StatisticsPage() {
   const userContext = useContext(UserContext)
   const [statistics, setStatistics] = useState<any>()
   const [selectedPlot, setSelectedPlot] = useState<string | undefined>()
-  const [isLoading, setIsLoading] = React.useState<boolean>(true)
-  const [numberOfcases, setNumberOfcases] = useState<number>(20)
+  const [isLoading, setIsLoading] = useState<boolean>(true)
+  const [numberOfBatches, setNumberOfBatches] = useState<number>(20)
   const [showTotal, setShowTotal] = useState<boolean>(false)
   const defaultTabKey = 0
 
   useEffect(() => {
-    getStatistics(userContext, numberOfcases)
+    let ignoreResponse = false
+
+    getStatistics(userContext, numberOfBatches)
       .then((response) => {
+        if (ignoreResponse) {
+          return
+        }
+
         setStatistics(response)
-        setSelectedPlot(response.box_plots[defaultTabKey])
+        setSelectedPlot((currentPlot) => currentPlot ?? response.box_plots[defaultTabKey])
+        setShowTotal(numberOfBatches > response.batch_ids.length)
         setIsLoading(false)
       })
-      .catch(() => setIsLoading(false))
-  }, [numberOfcases, userContext])
+      .catch(() => {
+        if (!ignoreResponse) {
+          setIsLoading(false)
+        }
+      })
+
+    return () => {
+      ignoreResponse = true
+    }
+  }, [numberOfBatches, userContext])
 
   const onTabChange = (key: string) => {
     setSelectedPlot(key)
@@ -32,16 +47,7 @@ export function StatisticsPage() {
 
   const onNumberOfBatchesChange = (value: number) => {
     if (value > 9) {
-      setNumberOfcases(value)
-      getStatistics(userContext, value)
-        .then((response) => {
-          setStatistics(response)
-          setIsLoading(false)
-          if (value > response.batch_ids.length) {
-            setShowTotal(true)
-          } else setShowTotal(false)
-        })
-        .catch(() => setIsLoading(false))
+      setNumberOfBatches(value)
     } else {
       ErrorNotification({
         type: 'error',
@@ -66,7 +72,7 @@ export function StatisticsPage() {
   ) : (
     <Card>
       <Tabs
-        defaultActiveKey={defaultTabKey.toString()}
+        activeKey={selectedPlot}
         onChange={onTabChange}
         type="card"
         items={[
@@ -99,7 +105,7 @@ export function StatisticsPage() {
       <Space align="center" style={{ marginTop: '30px' }}>
         <Typography.Text>Number of batches</Typography.Text>
         <InputNumber
-          value={numberOfcases}
+          value={numberOfBatches}
           step={10}
           min={10}
           onStep={onNumberOfBatchesChange}
