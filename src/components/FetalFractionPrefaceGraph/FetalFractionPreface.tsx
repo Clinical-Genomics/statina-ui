@@ -55,7 +55,8 @@ const buildFFPFYGraphLayout = (
       linewidth: 5,
       showgrid: false,
       gridcolor: '#bdbdbd',
-      title: 'Fetal fraction Y',
+      title: { text: 'FFY' },
+      automargin: true,
     },
     yaxis: {
       zeroline: false,
@@ -63,7 +64,8 @@ const buildFFPFYGraphLayout = (
       showgrid: false,
       linecolor: '#636363',
       linewidth: 5,
-      title: 'Fetal fraction Preface (%)',
+      title: { text: 'FFPF' },
+      automargin: true,
     },
   }
 }
@@ -111,7 +113,8 @@ const buildFFPFXGraphLayout = (
       linewidth: 5,
       showgrid: false,
       gridcolor: '#bdbdbd',
-      title: 'Fetal fraction X',
+      title: { text: 'FFX' },
+      automargin: true,
     },
     yaxis: {
       zeroline: false,
@@ -119,7 +122,8 @@ const buildFFPFXGraphLayout = (
       showgrid: false,
       linecolor: '#636363',
       linewidth: 5,
-      title: 'Fetal fraction Preface (%)',
+      title: { text: 'FFPF' },
+      automargin: true,
     },
   }
 }

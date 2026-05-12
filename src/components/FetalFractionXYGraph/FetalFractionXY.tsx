@@ -100,7 +100,8 @@ export const buildFFXYGraphLayout = (
       linewidth: 5,
       showgrid: false,
       gridcolor: '#bdbdbd',
-      title: 'Fetal Fraction X',
+      title: { text: 'FFX' },
+      automargin: true,
     },
     yaxis: {
       zeroline: false,
@@ -108,7 +109,8 @@ export const buildFFXYGraphLayout = (
       showgrid: false,
       linecolor: '#636363',
       linewidth: 5,
-      title: 'Fetal Fraction Y',
+      title: { text: 'FFY' },
+      automargin: true,
     },
   }
 }
