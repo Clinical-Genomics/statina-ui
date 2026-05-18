@@ -59,7 +59,7 @@ const buildData = (sampleId, response): ScatterData[] => {
 
 const buildLayout = (sampleId): Layout => {
   return {
-    title: `Sample: ${sampleId}`,
+    title: { text: `Sample: ${sampleId}` },
     legend: { hovermode: 'closest' },
     height: 500,
     hovermode: 'closest',
@@ -80,7 +80,8 @@ const buildLayout = (sampleId): Layout => {
       showgrid: false,
       linecolor: '#636363',
       linewidth: 5,
-      title: 'Ratio',
+      title: { text: 'Ratio' },
+      automargin: true,
     },
   }
 }
