@@ -47,7 +47,7 @@ const buildFFPFYGraphLayout = (
     height: height,
     legend: { hovermode: 'closest', orientation: 'v' },
     hovermode: 'closest',
-    title: 'Fetal fraction Y and Preface correlation.',
+    title: { text: 'Fetal fraction Y and Preface correlation.' },
     xaxis: {
       showline: true,
       zeroline: false,
@@ -105,7 +105,7 @@ const buildFFPFXGraphLayout = (
     height: height,
     legend: { hovermode: 'closest', orientation: 'v' },
     hovermode: 'closest',
-    title: 'Fetal fraction X and Preface correlation.',
+    title: { text: 'Fetal fraction X and Preface correlation.' },
     xaxis: {
       showline: true,
       zeroline: false,

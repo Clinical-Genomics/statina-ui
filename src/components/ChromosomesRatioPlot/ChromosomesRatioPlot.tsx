@@ -45,7 +45,8 @@ const buildLayout = (statistics: any): Layout => {
       linewidth: 5,
       showgrid: true,
       gridcolor: '#bdbdbd',
-      title: 'Chromosome',
+      title: { text: 'Chromosome' },
+      automargin: true,
       tickvals: statistics.x_axis,
     },
     yaxis: {
@@ -54,7 +55,8 @@ const buildLayout = (statistics: any): Layout => {
       showgrid: false,
       linecolor: '#636363',
       linewidth: 5,
-      title: 'Coverage Ratio',
+      title: { text: 'Coverage Ratio' },
+      automargin: true,
     },
   }
 }

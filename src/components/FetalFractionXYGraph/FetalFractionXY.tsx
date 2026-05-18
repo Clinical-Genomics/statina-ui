@@ -86,7 +86,7 @@ export const buildFFXYGraphLayout = (
 ): Layout => {
   return {
     annotations: [],
-    title: title,
+    title: title ? { text: title } : undefined,
     height: height,
     width: width,
     legend: { hovermode: 'closest', orientation: 'h' },
