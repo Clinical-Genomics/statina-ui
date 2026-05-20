@@ -1,10 +1,11 @@
 import { createParamURL, handleBackendError } from '@/services/helpers/helpers'
+import { getRuntimeConfigValue } from '@/runtimeConfig'
 import { Login, Dataset, RegisterUser } from '@/services/interfaces'
 import { UserContext } from '@/services/userContext'
 import axios from 'axios'
 import qs from 'qs'
 
-export const VITE_BACKEND_URL = import.meta.env.VITE_BACKEND_URL ?? ''
+export const VITE_BACKEND_URL = getRuntimeConfigValue('VITE_BACKEND_URL')
 
 const axiosGET = (endPoint, { token, logout }: UserContext) => {
   return new Promise((resolve, reject) => {
