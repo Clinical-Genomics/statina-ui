@@ -4,6 +4,9 @@ import { App } from '@/App'
 import { BrowserRouter } from 'react-router-dom'
 import { ConfigProvider } from 'antd'
 import { setTwoToneColor } from '@ant-design/icons'
+import { validateRuntimeConfig } from '@/runtimeConfig'
+
+validateRuntimeConfig(['VITE_BACKEND_URL'])
 
 const container = document.getElementById('root')
 if (!container) {
