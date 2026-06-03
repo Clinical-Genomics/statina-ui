@@ -1,0 +1,162 @@
+name: Manual Stage Deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      image_tag:
+        description: "Docker image tag. Defaults to the selected branch name."
+        required: false
+        type: string
+      deploy_firebase:
+        description: "Also deploy the existing Firebase stage site."
+        default: true
+        required: false
+        type: boolean
+      update_cg_helm:
+        description: "Open or update a cg-helm PR for Argo CD stage deployment."
+        default: true
+        required: false
+        type: boolean
+
+permissions:
+  contents: read
+  deployments: write
+
+concurrency:
+  group: statina-ui-stage-${{ github.ref_name }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      STAGE_IMAGE_REPOSITORY: clinicalgenomics/statina-ui-stage
+      CG_HELM_IMAGE: docker.io/clinicalgenomics/statina-ui-stage
+      CG_HELM_IMAGE_PATTERN: statina-ui|statina-ui-stage
+      CG_HELM_APP_NAME: statina-ui
+    steps:
+      - name: Git checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: yarn
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Run lint check
+        run: yarn lint
+
+      - name: Run Stylelint check
+        run: npx stylelint "**/*.css"
+
+      - name: Test
+        run: yarn test:run
+
+      - name: Build Stage
+        run: yarn build
+        env:
+          VITE_BACKEND_URL: ${{ secrets.VITE_BACKEND_STATINA_URL_STAGE }}
+
+      - name: Deploy Stage
+        if: ${{ inputs.deploy_firebase }}
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_STATINA_STAGE }}'
+          channelId: live
+          projectId: statina-stage
+
+      - name: Extract Docker image tag
+        id: image_tag
+        shell: bash
+        env:
+          INPUT_TAG: ${{ inputs.image_tag }}
+        run: |
+          raw_tag="${INPUT_TAG:-${GITHUB_REF_NAME}}"
+          tag="${raw_tag//\//-}"
+          tag="$(printf '%s' "$tag" | tr -c 'A-Za-z0-9_.-' '-')"
+          tag="$(printf '%s' "$tag" | sed -E 's/^[^A-Za-z0-9_]+//')"
+          tag="${tag:0:120}"
+          if [ -z "$tag" ]; then
+            tag="${GITHUB_SHA::12}"
+          fi
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+          echo "image=${STAGE_IMAGE_REPOSITORY}:$tag" >> "$GITHUB_OUTPUT"
+          echo "k8s_image=${CG_HELM_IMAGE}:$tag" >> "$GITHUB_OUTPUT"
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v4
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+
+      - name: Build and push stage image
+        uses: docker/build-push-action@v7
+        with:
+          context: ./
+          file: ./Dockerfile
+          push: true
+          tags: ${{ steps.image_tag.outputs.image }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Check out cg-helm
+        if: ${{ inputs.update_cg_helm }}
+        uses: actions/checkout@v6
+        with:
+          repository: Clinical-Genomics/cg-helm
+          token: ${{ secrets.CG_HELM_DEPLOY_TOKEN }}
+          path: cg-helm
+          ref: main
+
+      - name: Open or update cg-helm stage deploy PR
+        if: ${{ inputs.update_cg_helm }}
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.CG_HELM_DEPLOY_TOKEN }}
+          IMAGE_TAG: ${{ steps.image_tag.outputs.tag }}
+          K8S_IMAGE: ${{ steps.image_tag.outputs.k8s_image }}
+        run: |
+          set -euo pipefail
+          cd cg-helm
+          branch="stage-deploy/${CG_HELM_APP_NAME}-${IMAGE_TAG}"
+          git checkout -B "$branch"
+          python3 - <<'PY'
+          import os
+          import re
+          from pathlib import Path
+
+          path = Path("stage/cg-apps/deployment.yaml")
+          text = path.read_text()
+          pattern = rf"(image:\s*)docker\.io/clinicalgenomics/(?:{os.environ['CG_HELM_IMAGE_PATTERN']}):[^\s]+"
+          replacement = rf"\1{os.environ['K8S_IMAGE']}"
+          updated, count = re.subn(pattern, replacement, text)
+          if count != 1:
+              raise SystemExit(f"Expected one image replacement, found {count}")
+          path.write_text(updated)
+          PY
+          ruby -e 'require "yaml"; YAML.load_stream(File.read("stage/cg-apps/deployment.yaml"))'
+          if git diff --quiet -- stage/cg-apps/deployment.yaml; then
+            echo "cg-helm already points ${CG_HELM_APP_NAME} at ${K8S_IMAGE}"
+            exit 0
+          fi
+          git config user.name "clinicalgenomics-stage-deployer"
+          git config user.email "clinicalgenomics-stage-deployer@users.noreply.github.com"
+          git add stage/cg-apps/deployment.yaml
+          git commit -m "fix: deploy statina stage"
+          git push --force-with-lease origin "$branch"
+          title="Deploy statina-ui stage ${IMAGE_TAG}"
+          body="Updates cg-apps stage to use ${K8S_IMAGE} from ${GITHUB_REPOSITORY}@${GITHUB_SHA}."
+          existing_pr="$(gh pr list --head "$branch" --base main --json number --jq '.[0].number // empty')"
+          if [ -n "$existing_pr" ]; then
+            gh pr edit "$existing_pr" --title "$title" --body "$body"
+          else
+            gh pr create --base main --head "$branch" --title "$title" --body "$body"
+          fi
