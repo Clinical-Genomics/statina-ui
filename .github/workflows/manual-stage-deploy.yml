@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       image_tag:
-        description: "Docker image tag. Defaults to the selected branch name."
+        description: "Docker image tag prefix. Defaults to the selected branch name; the commit SHA is always appended."
         required: false
         type: string
       deploy_firebase:
@@ -76,13 +76,16 @@ jobs:
         env:
           INPUT_TAG: ${{ inputs.image_tag }}
         run: |
-          raw_tag="${INPUT_TAG:-${GITHUB_REF_NAME}}"
-          tag="${raw_tag//\//-}"
-          tag="$(printf '%s' "$tag" | tr -c 'A-Za-z0-9_.-' '-')"
-          tag="$(printf '%s' "$tag" | sed -E 's/^[^A-Za-z0-9_]+//')"
-          tag="${tag:0:120}"
-          if [ -z "$tag" ]; then
-            tag="${GITHUB_SHA::12}"
+          raw_prefix="${INPUT_TAG:-${GITHUB_REF_NAME}}"
+          prefix="${raw_prefix//\//-}"
+          prefix="$(printf '%s' "$prefix" | tr -c 'A-Za-z0-9_.-' '-')"
+          prefix="$(printf '%s' "$prefix" | sed -E 's/^[^A-Za-z0-9_]+//')"
+          prefix="${prefix:0:107}"
+          short_sha="${GITHUB_SHA::12}"
+          if [ -n "$prefix" ]; then
+            tag="${prefix}-${short_sha}"
+          else
+            tag="$short_sha"
           fi
           echo "tag=$tag" >> "$GITHUB_OUTPUT"
           echo "image=${STAGE_IMAGE_REPOSITORY}:$tag" >> "$GITHUB_OUTPUT"
