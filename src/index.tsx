@@ -4,9 +4,19 @@ import { App } from '@/App'
 import { BrowserRouter } from 'react-router-dom'
 import { ConfigProvider } from 'antd'
 import { setTwoToneColor } from '@ant-design/icons'
-import { validateRuntimeConfig } from '@/runtimeConfig'
+import { getRuntimeConfigValue, validateRuntimeConfig } from '@/runtimeConfig'
 
 validateRuntimeConfig(['VITE_BACKEND_URL'])
+
+const getRouterBaseName = () => {
+  const basePath = getRuntimeConfigValue('VITE_BASE_PATH', '/').trim()
+  if (basePath === '' || basePath === '/') {
+    return undefined
+  }
+
+  const normalizedPath = basePath.startsWith('/') ? basePath : `/${basePath}`
+  return normalizedPath.replace(/\/+$/, '')
+}
 
 const container = document.getElementById('root')
 if (!container) {
@@ -34,7 +44,10 @@ root.render(
       },
     }}
   >
-    <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+    <BrowserRouter
+      basename={getRouterBaseName()}
+      future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
+    >
       <React.StrictMode>
         <App />
       </React.StrictMode>
