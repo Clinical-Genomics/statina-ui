@@ -7,6 +7,10 @@ on:
     types:
       - completed
 
+permissions:
+  contents: read
+  pull-requests: read
+
 jobs:
   docker-image-push:
     if: >-
@@ -23,15 +27,30 @@ jobs:
         with:
           ref: ${{ github.event.workflow_run.head_sha }}
 
-      - name: Extract branch tag
+      - name: Extract preview image tag
         id: image_tag
-        shell: bash
-        env:
-          HEAD_BRANCH: ${{ github.event.workflow_run.head_branch }}
-        run: |
-          tag="${HEAD_BRANCH//\//-}"
-          tag="$(printf '%s' "$tag" | tr -c 'A-Za-z0-9_.-' '-')"
-          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+        uses: actions/github-script@v9
+        with:
+          script: |
+            const sha = context.payload.workflow_run.head_sha
+            const prs = context.payload.workflow_run.pull_requests || []
+            let prNumber = prs[0]?.number
+
+            if (!prNumber) {
+              const result = await github.rest.repos.listPullRequestsAssociatedWithCommit({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                commit_sha: sha,
+              })
+              prNumber = result.data.find((pr) => pr.head.sha === sha)?.number || result.data[0]?.number
+            }
+
+            if (!prNumber) {
+              core.setFailed(`Could not find pull request number for ${sha}`)
+              return
+            }
+
+            core.setOutput('tag', `pr-${prNumber}-${sha.slice(0, 8)}`)
 
       - name: Login to Docker Hub
         uses: docker/login-action@v3

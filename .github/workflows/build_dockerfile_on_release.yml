@@ -13,6 +13,9 @@ on:
     types:
       - published
 
+permissions:
+  contents: read
+
 jobs:
   docker-image-release-push:
     if: >-
@@ -33,13 +36,13 @@ jobs:
         shell: bash
         env:
           EVENT_NAME: ${{ github.event_name }}
-          HEAD_BRANCH: ${{ github.event.workflow_run.head_branch }}
+          HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
           RELEASE_TAG: ${{ github.event.release.tag_name }}
         run: |
           if [ "$EVENT_NAME" = "release" ]; then
             tag="$RELEASE_TAG"
           else
-            tag="$HEAD_BRANCH"
+            tag="sha-${HEAD_SHA}"
           fi
           tag="${tag//\//-}"
           tag="$(printf '%s' "$tag" | tr -c 'A-Za-z0-9_.-' '-')"
