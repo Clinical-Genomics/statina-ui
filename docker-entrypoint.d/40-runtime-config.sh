@@ -24,6 +24,7 @@ fi
 
 cat > /usr/share/nginx/html/env.js <<EOF
 window.__RUNTIME_CONFIG__ = {
-  VITE_BACKEND_URL: "$(escape_js "${VITE_BACKEND_URL:-}")"
+  VITE_BACKEND_URL: "$(escape_js "${VITE_BACKEND_URL:-}")",
+  VITE_BASE_PATH: "$(escape_js "${VITE_BASE_PATH:-/}")"
 };
 EOF
