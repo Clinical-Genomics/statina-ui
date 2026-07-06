@@ -9,7 +9,7 @@ on:
 
 permissions:
   contents: read
-  issues: write
+  deployments: write
   pull-requests: read
 
 jobs:
@@ -83,7 +83,7 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
-      - name: Comment cg-orchestration preview URL
+      - name: Publish cg-orchestration preview deployment
         uses: actions/github-script@v9
         with:
           script: |
@@ -91,40 +91,25 @@ jobs:
             const shortSha = '${{ steps.image_tag.outputs.short_sha }}'
             const imageTag = '${{ steps.image_tag.outputs.tag }}'
             const previewUrl = `https://${context.repo.repo}-preview.cg-orchestration.sys.scilifelab.se/pr-${prNumber}/`
-            const marker = '<!-- cg-orchestration-preview-url -->'
-            const body = [
-              marker,
-              `Visit the cg-orchestration preview URL for this PR (updated for commit \`${shortSha}\`):`,
-              '',
-              previewUrl,
-              '',
-              `Image tag: \`clinicalgenomics/statina-ui-stage:${imageTag}\``,
-              '',
-              '_Argo CD may need a few minutes to sync after the image is pushed. This preview is available from internal networks only._',
-            ].join('\n')
 
-            const comments = await github.paginate(github.rest.issues.listComments, {
+            const deployment = await github.rest.repos.createDeployment({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              issue_number: prNumber,
-              per_page: 100,
+              ref: context.payload.workflow_run.head_sha,
+              environment: `preview/${context.repo.repo}/pr-${prNumber}`,
+              description: `cg-orchestration preview for PR ${prNumber}`,
+              auto_merge: false,
+              required_contexts: [],
+              transient_environment: true,
+              production_environment: false,
             })
-            const existing = comments.find((comment) =>
-              comment.user?.type === 'Bot' && comment.body?.includes(marker)
-            )
 
-            if (existing) {
-              await github.rest.issues.updateComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                comment_id: existing.id,
-                body,
-              })
-            } else {
-              await github.rest.issues.createComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                issue_number: prNumber,
-                body,
-              })
-            }
+            await github.rest.repos.createDeploymentStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              deployment_id: deployment.data.id,
+              state: 'success',
+              environment_url: previewUrl,
+              log_url: `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
+              description: `Preview ${shortSha}, image ${imageTag}`,
+            })
