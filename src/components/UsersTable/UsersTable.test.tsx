@@ -36,7 +36,7 @@ describe('Users Table', () => {
             permissions: ['R'],
           }}
         >
-          <MemoryRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+          <MemoryRouter>
             <UsersTable />
           </MemoryRouter>
         </UserContext.Provider>
@@ -70,7 +70,7 @@ describe('Users Table', () => {
             permissions: ['RW'],
           }}
         >
-          <MemoryRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+          <MemoryRouter>
             <UsersTable />
           </MemoryRouter>
         </UserContext.Provider>
@@ -113,7 +113,7 @@ describe('Users Table', () => {
             permissions: ['RW'],
           }}
         >
-          <MemoryRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+          <MemoryRouter>
             <UsersTable />
           </MemoryRouter>
         </UserContext.Provider>

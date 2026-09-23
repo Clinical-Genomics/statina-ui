@@ -44,10 +44,7 @@ root.render(
       },
     }}
   >
-    <BrowserRouter
-      basename={getRouterBaseName()}
-      future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
-    >
+    <BrowserRouter basename={getRouterBaseName()}>
       <React.StrictMode>
         <App />
       </React.StrictMode>

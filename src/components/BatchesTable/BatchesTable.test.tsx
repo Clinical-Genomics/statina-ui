@@ -40,7 +40,7 @@ describe('Batches Table', () => {
             permissions: ['R'],
           }}
         >
-          <MemoryRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+          <MemoryRouter>
             <BatchesTable />
           </MemoryRouter>
         </UserContext.Provider>
@@ -72,7 +72,7 @@ describe('Batches Table', () => {
             permissions: ['R'],
           }}
         >
-          <MemoryRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+          <MemoryRouter>
             <BatchesTable />
           </MemoryRouter>
         </UserContext.Provider>
@@ -104,7 +104,7 @@ describe('Batches Table', () => {
             permissions: ['RW'],
           }}
         >
-          <MemoryRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+          <MemoryRouter>
             <BatchesTable />
           </MemoryRouter>
         </UserContext.Provider>
