@@ -39,7 +39,7 @@ describe('Dataset page', () => {
           permissions: ['RW'],
         }}
       >
-        <MemoryRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+        <MemoryRouter>
           <DatasetPage />
         </MemoryRouter>
       </UserContext.Provider>
@@ -73,7 +73,7 @@ describe('Dataset page', () => {
           permissions: ['RW'],
         }}
       >
-        <MemoryRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+        <MemoryRouter>
           <DatasetPage />
         </MemoryRouter>
       </UserContext.Provider>
@@ -117,7 +117,7 @@ describe('Dataset page', () => {
           permissions: ['R'],
         }}
       >
-        <MemoryRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+        <MemoryRouter>
           <DatasetPage />
         </MemoryRouter>
       </UserContext.Provider>

@@ -42,7 +42,7 @@ describe('Samples Table', () => {
             permissions: ['R'],
           }}
         >
-          <MemoryRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+          <MemoryRouter>
             <SamplesTable />
           </MemoryRouter>
         </UserContext.Provider>
@@ -77,7 +77,7 @@ describe('Samples Table', () => {
             permissions: ['R'],
           }}
         >
-          <MemoryRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+          <MemoryRouter>
             <SamplesTable batchId={'batch_id'} />
           </MemoryRouter>
         </UserContext.Provider>
@@ -112,7 +112,7 @@ test('Call to backend has correct query parameters on sort', async () => {
           permissions: ['RW'],
         }}
       >
-        <MemoryRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+        <MemoryRouter>
           <SamplesTable batchId={batch} />
         </MemoryRouter>
       </UserContext.Provider>
